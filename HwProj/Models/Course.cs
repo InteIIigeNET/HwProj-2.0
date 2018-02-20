@@ -6,6 +6,8 @@ using System.Web;
 
 namespace HwProj.Models
 {
+	//TODO: добавить, закончен ли курс
+
 	/// <summary>
 	/// Модель курса занятий
 	/// </summary>
