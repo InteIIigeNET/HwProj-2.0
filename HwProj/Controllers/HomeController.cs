@@ -13,16 +13,16 @@ namespace HwProj.Controllers
 			return View();
 		}
 
-		public ActionResult About()
+		public ActionResult SignIn()
 		{
-			ViewBag.Message = "Your application description page.";
+			ViewBag.Message = "Лучший в СПбГУ - факультет ПМ-ПУ";
 
 			return View();
 		}
 
-		public ActionResult Contact()
+		public ActionResult SignUp()
 		{
-			ViewBag.Message = "Your contact page.";
+			ViewBag.Message = "МатМех - лучше всех!";
 
 			return View();
 		}

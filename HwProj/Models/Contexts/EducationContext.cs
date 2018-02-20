@@ -19,7 +19,7 @@ namespace HwProj.Models.Contexts
 		/// <summary>
 		/// База ключ - значений CoureId - UserId
 		/// </summary>
-		public DbSet<CourseMate> CourseMate { get; set; }
+		public DbSet<CourseMate> CourseMates { get; set; }
 		/// <summary>
 		/// База всех заданий
 		/// </summary>

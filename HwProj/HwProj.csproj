@@ -158,7 +158,6 @@
     <Compile Include="Models\Enums\StandartEnums.cs" />
     <Compile Include="Models\Homework.cs" />
     <Compile Include="Models\Course.cs" />
-    <Compile Include="Models\Mentor.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Note.cs" />
     <Compile Include="Models\Notification.cs" />
@@ -201,8 +200,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\SignIn.cshtml" />
+    <Content Include="Views\Home\SignUp.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
