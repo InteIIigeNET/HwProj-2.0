@@ -27,5 +27,9 @@ namespace HwProj.Models
 		/// Идентификатор группы, для которой предназначен курс
 		/// </summary>
 		public string GroupId   { get; set; }
-	}
+        /// <summary>
+        /// Коллекция пользователей этого курса
+        /// </summary>
+        public virtual ICollection<User> Users { get; set; } = new List<User>();
+    }
 }

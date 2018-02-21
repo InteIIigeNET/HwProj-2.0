@@ -38,6 +38,9 @@ namespace HwProj.Models
 		/// Тип пользователя (Student или Teacher)
 		/// </summary>
 		public UserType UserType { get; set; }
-
-	}
+        /// <summary>
+        /// Коллекция курсов пользователя
+        /// </summary>
+        public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
+    }
 }

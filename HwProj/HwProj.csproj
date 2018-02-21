@@ -155,7 +155,6 @@
     <Compile Include="Models\Award.cs" />
     <Compile Include="Models\Contexts\EducationContext.cs" />
     <Compile Include="Models\Contexts\UserContext.cs" />
-    <Compile Include="Models\CourseMate.cs" />
     <Compile Include="Models\Enums\StandartEnums.cs" />
     <Compile Include="Models\Homework.cs" />
     <Compile Include="Models\Course.cs" />

@@ -31,16 +31,16 @@ namespace HwProj.Tests.Context
             usersId.Add(user.Id);
 
             //act
-            using (var eduContext = new EducationContext())
+            using (var userContext = new UserContext())
             {
-                eduContext.Users.Add(user);
-                eduContext.SaveChanges();                
+                userContext.Users.Add(user);
+                userContext.SaveChanges();                
             }
 
             //assert
-            using (var eduContext = new EducationContext())
+            using (var userContext = new UserContext())
             {
-                var actualUser = eduContext.Users.Find(user.Id);
+                var actualUser = userContext.Users.Find(user.Id);
                 Assert.AreEqual(user.Id, actualUser.Id);
             }
         }
@@ -48,17 +48,17 @@ namespace HwProj.Tests.Context
         [TestCleanup]
         public void CleanUp()
         {
-            using (var eduContext = new EducationContext())
+            using (var userContext = new UserContext())
             {
                 foreach (var id in usersId)
                 {
-                    var u = eduContext.Users.Find(id);
+                    var u = userContext.Users.Find(id);
                     if (u != null)
                     {
-                        eduContext.Users.Remove(u);                        
+                        userContext.Users.Remove(u);                        
                     }
                 }
-                eduContext.SaveChanges();
+                userContext.SaveChanges();
             }
         }
     }
