@@ -31,14 +31,14 @@ namespace HwProj.Tests.Context
             usersId.Add(user.Id);
 
             //act
-            using (var userContext = new UserContext())
+            using (var userContext = new EduContext())
             {
                 userContext.Users.Add(user);
                 userContext.SaveChanges();                
             }
 
             //assert
-            using (var userContext = new UserContext())
+            using (var userContext = new EduContext())
             {
                 var actualUser = userContext.Users.Find(user.Id);
                 Assert.AreEqual(user.Id, actualUser.Id);
@@ -48,7 +48,7 @@ namespace HwProj.Tests.Context
         [TestCleanup]
         public void CleanUp()
         {
-            using (var userContext = new UserContext())
+            using (var userContext = new EduContext())
             {
                 foreach (var id in usersId)
                 {

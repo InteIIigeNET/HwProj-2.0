@@ -6,7 +6,7 @@ using System.Web;
 
 namespace HwProj.Models.Contexts
 {
-    public class UserContext : DbContext
+    public class EduContext : DbContext
     {
         /// <summary>
         /// Пользователи (студенты и преподаватели)
@@ -16,11 +16,19 @@ namespace HwProj.Models.Contexts
         /// Все курсы
         /// </summary>
         public DbSet<Course> Courses { get; set; }
+        /// <summary>
+        /// База всех заданий
+        /// </summary>
+        public DbSet<Task> Tasks { get; set; }
+        /// <summary>
+        /// База домашних заданий студентов
+        /// </summary>
+        public DbSet<Homework> Homeworks { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Course>().HasMany(c => c.Users)
-                .WithMany(s => s.Courses)
+                .WithMany(u => u.Courses)
                 .Map(t => t.MapLeftKey("CourseId")
                 .MapRightKey("UserId")
                 .ToTable("CourseMates"));
@@ -50,7 +58,5 @@ namespace HwProj.Models.Contexts
                        select u;                
             }
         }
-
-
     }
 }

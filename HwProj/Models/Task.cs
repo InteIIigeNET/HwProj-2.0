@@ -30,5 +30,5 @@ namespace HwProj.Models
 		/// Описание задания 
 		/// </summary>
 		public string Description { get; set; }
-	}
+    }
 }

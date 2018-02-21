@@ -14,6 +14,7 @@ namespace HwProj.Models
     [Table("StudentsHomework")]
 	public class Homework
 	{
+        public int Id { get; set; }
 		/// <summary>
 		/// Идентификатор домашнего задания, которому соотвествует 
 		/// этот экземпляр выполненного задания 
