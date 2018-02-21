@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Linq;
 using System.Web;
@@ -10,7 +11,8 @@ namespace HwProj.Models
 	/// <summary>
 	/// Модель пользователя сервиса
 	/// </summary>
-	public class User
+    [Table("Users")]
+    public class User
 	{
 		/// <summary>
 		/// Уникальный идентификатор

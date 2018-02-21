@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -10,7 +11,8 @@ namespace HwProj.Models
 	/// <summary>
 	/// Модель домашнего задания
 	/// </summary>
-	public class Task
+    [Table("Tasks")]
+    public class Task
 	{
 		/// <summary>
 		/// Уникальный идентификатор задания 

@@ -27,7 +27,7 @@ namespace HwProj.Models.Contexts
 		/// <summary>
 		/// База всех отправленных домашних заданий
 		/// </summary>
-		public DbSet<Task>       Homeworks  { get; set; }
+		public DbSet<Homework>       Homeworks  { get; set; }
 
 	}
 }
