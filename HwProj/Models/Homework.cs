@@ -28,12 +28,12 @@ namespace HwProj.Models
 		/// <summary>
 		/// Идентификатор студента выполнившего задание
 		/// </summary>
-		public Guid UserId   { get; set; }
+		public Guid StudentId   { get; set; }
         // Все для foreign key
         /// <summary>
         /// Пользователь по этому userId
         /// </summary>
-        public User User { get; set; }
+        public Student Student { get; set; }
 		/// <summary>
 		/// Зачтена ли данная попытка сдачи выполненного задания
 		/// </summary>
