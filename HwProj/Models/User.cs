@@ -34,10 +34,6 @@ namespace HwProj.Models
 		/// Пол пользователя
 		/// </summary>
 		public Gender   Gender   { get; set; }
-		/// <summary>
-		/// Тип пользователя (Student или Teacher)
-		/// </summary>
-		public UserType UserType { get; set; }
         /// <summary>
         /// Коллекция курсов пользователя
         /// </summary>

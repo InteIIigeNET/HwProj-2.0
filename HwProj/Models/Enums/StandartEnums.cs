@@ -9,9 +9,4 @@ namespace HwProj.Models.Enums
 	{
 		Male, Female
 	}
-	public enum UserType
-	{
-		Student = 'S',
-        Teacher = 'T'
-	}
 }

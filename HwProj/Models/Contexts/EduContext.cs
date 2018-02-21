@@ -35,30 +35,5 @@ namespace HwProj.Models.Contexts
                 .MapRightKey("UserId")
                 .ToTable("CourseMates"));
         }
-
-        /// <summary>
-        /// Все зарегистрированные студенты
-        /// </summary>
-        public IEnumerable<User> Students
-        {
-            get
-            {
-                return from u in Users
-                       where u.UserType == Enums.UserType.Student
-                       select u;                
-            }
-        }
-        /// <summary>
-        /// Все зарегистрированные преподаватели
-        /// </summary>
-        public IEnumerable<User> Teachers
-        {
-            get
-            {
-                return from u in Users
-                       where u.UserType == Enums.UserType.Teacher
-                       select u;                
-            }
-        }
     }
 }

@@ -19,14 +19,13 @@ namespace HwProj.Tests.Context
         public void ShouldCreateUser()
         {
             //arrange
-            var user = new User
+            var user = new Student
             {
                 Id = Guid.NewGuid(),
                 Name = "Max",
                 Surname = "Vortman",
                 Email = "vortmanmax@gmail.com",
                 Gender = Models.Enums.Gender.Male,
-                UserType = Models.Enums.UserType.Student
             };
 
             usersId.Add(user.Id);
@@ -56,14 +55,13 @@ namespace HwProj.Tests.Context
                 Name = "Matan",
                 GroupName = "241"
             };
-            var user = new User
+            var user = new Student
             {
                 Id = Guid.NewGuid(),
                 Name = "Max",
                 Surname = "Vortman",
                 Email = "vortmanmax@gmail.com",
-                Gender = Models.Enums.Gender.Male,
-                UserType = Models.Enums.UserType.Student                
+                Gender = Models.Enums.Gender.Male              
             };
             course.Users.Add(user);
             user.Courses.Add(course);
