@@ -35,7 +35,7 @@ namespace HwProj.Tests.Context
             using (var userContext = new EduContext())
             {
                 userContext.Users.Add(user);
-                userContext.SaveChanges();                
+                userContext.SaveChanges();
             }
 
             //assert
@@ -52,6 +52,7 @@ namespace HwProj.Tests.Context
             //arrange
             var course = new Course
             {
+                Id = 0,
                 Name = "Matan",
                 GroupName = "241"
             };
@@ -68,19 +69,19 @@ namespace HwProj.Tests.Context
             user.Courses.Add(course);
 
             usersId.Add(user.Id);
-            int courseId;
+            coursesId.Add(course.Id);
             //act
             using (var eduContext = new EduContext())
             {
                 eduContext.Users.Add(user);
-                courseId = eduContext.Courses.Add(course).Id;
+                eduContext.Courses.Add(course);
                 eduContext.SaveChanges();
             }
-            coursesId.Add(courseId);
+
             //assert
             using (var eduContext = new EduContext())
             {
-                var actualCourse = eduContext.Courses.Find(courseId);
+                var actualCourse = eduContext.Courses.Find(course.Id);
                 Assert.AreEqual(course.Name, actualCourse.Name);
             }
         }

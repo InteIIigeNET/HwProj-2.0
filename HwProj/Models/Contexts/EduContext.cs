@@ -25,6 +25,8 @@ namespace HwProj.Models.Contexts
         /// </summary>
         public DbSet<Homework> Homeworks { get; set; }
 
+        public EduContext() : base() { }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Course>().HasMany(c => c.Users)
