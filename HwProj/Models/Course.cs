@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -11,19 +12,32 @@ namespace HwProj.Models
 	/// <summary>
 	/// Модель курса занятий
 	/// </summary>
-	public class Course
+    [Table("Courses")]
+    public class Course
 	{
 		/// <summary>
 		/// Уникальный идентификатор курса
 		/// </summary>
-		public int    CourseId  { get; set; }
+		public int    Id  { get; set; }
 		/// <summary>
 		/// Название курса
 		/// </summary>
-		public string Title     { get; set; }
+		public string Name     { get; set; }
 		/// <summary>
 		/// Идентификатор группы, для которой предназначен курс
 		/// </summary>
-		public string GroupId   { get; set; }
-	}
+		public string GroupName  { get; set; }
+        /// <summary>
+        /// Завершен ли курс?
+        /// </summary>
+        public bool IsComplete { get; set; }
+        /// <summary>
+        /// Коллекция пользователей этого курса
+        /// </summary>
+        public ICollection<User> Users { get; set; } = new List<User>();
+        /// <summary>
+        /// Таски этого курса
+        /// </summary>
+        public ICollection<Task> Tasks { get; set; }
+    }
 }

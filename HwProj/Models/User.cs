@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Linq;
 using System.Web;
@@ -10,7 +11,8 @@ namespace HwProj.Models
 	/// <summary>
 	/// Модель пользователя сервиса
 	/// </summary>
-	public class User
+    [Table("Users")]
+    public class User
 	{
 		/// <summary>
 		/// Уникальный идентификатор
@@ -24,6 +26,10 @@ namespace HwProj.Models
 		/// Фамилия пользователя
 		/// </summary>
 		public string   Surname  { get; set; }
+        /// <summary>
+        /// Почта пользователя
+        /// </summary>
+        public string Email { get; set; }
 		/// <summary>
 		/// Пол пользователя
 		/// </summary>
@@ -32,6 +38,14 @@ namespace HwProj.Models
 		/// Тип пользователя (Student или Teacher)
 		/// </summary>
 		public UserType UserType { get; set; }
-
-	}
+        /// <summary>
+        /// Коллекция курсов пользователя
+        /// </summary>
+        public ICollection<Course> Courses { get; set; } = new List<Course>();
+        /// <summary>
+        /// Дз пользователя
+        /// </summary>
+        /// TODO: надо подумать, может стоит сделать студента отдельно
+        public ICollection<Homework> Homeworks { get; set; }
+    }
 }

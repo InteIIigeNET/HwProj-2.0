@@ -50,9 +50,11 @@ constraint FK_Tasks_CourseId foreign key (CourseId) references Courses (Id) on d
 go
 
 create table StudentsHomework (
+Id int identity(1,1) not null,
 TaskId int,
 StudentId uniqueidentifier,
 IsComplete bit not null,
+constraint PK_StudentsHomework primary key (Id),
 constraint FK_StudentsHomework_TaskId foreign key (TaskId) references Tasks (Id) on delete cascade,
 constraint FK_StudentsHomework_StudentId foreign key (StudentId) references Users (Id) on delete cascade
 );
