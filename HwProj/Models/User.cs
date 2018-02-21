@@ -24,6 +24,10 @@ namespace HwProj.Models
 		/// Фамилия пользователя
 		/// </summary>
 		public string   Surname  { get; set; }
+        /// <summary>
+        /// Почта пользователя
+        /// </summary>
+        public string Email { get; set; }
 		/// <summary>
 		/// Пол пользователя
 		/// </summary>

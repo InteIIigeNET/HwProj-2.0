@@ -154,6 +154,7 @@
     </Compile>
     <Compile Include="Models\Award.cs" />
     <Compile Include="Models\Contexts\EducationContext.cs" />
+    <Compile Include="Models\Contexts\UserContext.cs" />
     <Compile Include="Models\CourseMate.cs" />
     <Compile Include="Models\Enums\StandartEnums.cs" />
     <Compile Include="Models\Homework.cs" />
@@ -161,7 +162,6 @@
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Note.cs" />
     <Compile Include="Models\Notification.cs" />
-    <Compile Include="Models\Student.cs" />
     <Compile Include="Models\Task.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

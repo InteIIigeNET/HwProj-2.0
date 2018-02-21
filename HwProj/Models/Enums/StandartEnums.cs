@@ -11,6 +11,7 @@ namespace HwProj.Models.Enums
 	}
 	public enum UserType
 	{
-		Student, Teacher
+		Student = 'S',
+        Teacher = 'T'
 	}
 }
