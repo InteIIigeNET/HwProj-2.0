@@ -30,5 +30,7 @@ namespace HwProj.Models
 		/// Описание задания 
 		/// </summary>
 		public string Description { get; set; }
+
+        public ICollection<Homework> Homeworks { get; set; }
     }
 }

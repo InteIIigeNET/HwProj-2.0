@@ -42,5 +42,7 @@ namespace HwProj.Models
         /// Коллекция курсов пользователя
         /// </summary>
         public virtual ICollection<Course> Courses { get; set; } = new List<Course>();
+
+        public ICollection<Homework> Homeworks { get; set; }
     }
 }

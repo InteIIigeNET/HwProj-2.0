@@ -19,11 +19,15 @@ namespace HwProj.Models
 		/// Идентификатор домашнего задания, которому соотвествует 
 		/// этот экземпляр выполненного задания 
 		/// </summary>
+        
 		public int  TaskId      { get; set; }
+        public Task Task { get; set; }
 		/// <summary>
-		/// Идентификатор студентаЮ выполнившего задание
+		/// Идентификатор студента выполнившего задание
 		/// </summary>
-		public Guid StudentId   { get; set; }
+        
+		public Guid UserId   { get; set; }
+        public User User { get; set; }
 		/// <summary>
 		/// Зачтена ли данная попытка сдачи выполненного задания
 		/// </summary>
