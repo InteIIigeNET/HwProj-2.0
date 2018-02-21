@@ -22,6 +22,11 @@ namespace HwProj.Models
 		/// Идентификатор курса, для которого предназначено задание
 		/// </summary>
 		public int    CourseId    { get; set; }
+        //Все для foreign key
+        /// <summary>
+        /// Курс по данному courseId
+        /// </summary>
+        public Course Course { get; set; }
 		/// <summary>
 		/// Название задания
 		/// </summary>

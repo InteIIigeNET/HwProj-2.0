@@ -34,6 +34,10 @@ namespace HwProj.Models
         /// <summary>
         /// Коллекция пользователей этого курса
         /// </summary>
-        public virtual ICollection<User> Users { get; set; } = new List<User>();
+        public ICollection<User> Users { get; set; } = new List<User>();
+        /// <summary>
+        /// Таски этого курса
+        /// </summary>
+        public ICollection<Task> Tasks { get; set; }
     }
 }
