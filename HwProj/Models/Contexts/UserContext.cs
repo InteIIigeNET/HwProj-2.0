@@ -7,18 +7,32 @@ namespace HwProj.Models.Contexts
 {
     public class UserContext
     {
-        private IEnumerable<User> students;
+        /// <summary>
+        /// Все зарегистрированные студенты
+        /// </summary>
         public IEnumerable<User> Students
         {
             get
             {
-                if (students != null)
-                    return students;
-
                 using (var eduContext = new EducationContext())
                 {
                     return from u in eduContext.Users
                            where u.UserType == Enums.UserType.Student
+                           select u;
+                }
+            }
+        }
+        /// <summary>
+        /// Все зарегистрированные преподаватели
+        /// </summary>
+        public IEnumerable<User> Teachers
+        {
+            get
+            {
+                using (var eduContext = new EducationContext())
+                {
+                    return from u in eduContext.Users
+                           where u.UserType == Enums.UserType.Teacher
                            select u;
                 }
             }
