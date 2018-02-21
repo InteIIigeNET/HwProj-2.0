@@ -18,15 +18,19 @@ namespace HwProj.Models
 		/// <summary>
 		/// Уникальный идентификатор курса
 		/// </summary>
-		public int    CourseId  { get; set; }
+		public int    Id  { get; set; }
 		/// <summary>
 		/// Название курса
 		/// </summary>
-		public string Title     { get; set; }
+		public string Name     { get; set; }
 		/// <summary>
 		/// Идентификатор группы, для которой предназначен курс
 		/// </summary>
-		public string GroupId   { get; set; }
+		public string GroupName  { get; set; }
+        /// <summary>
+        /// Завершен ли курс?
+        /// </summary>
+        public bool IsComplete { get; set; }
         /// <summary>
         /// Коллекция пользователей этого курса
         /// </summary>

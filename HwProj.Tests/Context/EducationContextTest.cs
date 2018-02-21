@@ -13,6 +13,7 @@ namespace HwProj.Tests.Context
     {
 
         private List<Guid> usersId = new List<Guid>();
+        private List<int> coursesId = new List<int>();
 
         [TestMethod]
         public void ShouldCreateUser()
@@ -45,6 +46,45 @@ namespace HwProj.Tests.Context
             }
         }
 
+        [TestMethod]
+        public void ShouldCreateCourse()
+        {
+            //arrange
+            var course = new Course
+            {
+                Name = "Matan",
+                GroupName = "241"
+            };
+            var user = new User
+            {
+                Id = Guid.NewGuid(),
+                Name = "Max",
+                Surname = "Vortman",
+                Email = "vortmanmax@gmail.com",
+                Gender = Models.Enums.Gender.Male,
+                UserType = Models.Enums.UserType.Student                
+            };
+            course.Users.Add(user);
+            user.Courses.Add(course);
+
+            usersId.Add(user.Id);
+            int courseId;
+            //act
+            using (var eduContext = new EduContext())
+            {
+                eduContext.Users.Add(user);
+                courseId = eduContext.Courses.Add(course).Id;
+                eduContext.SaveChanges();
+            }
+            coursesId.Add(courseId);
+            //assert
+            using (var eduContext = new EduContext())
+            {
+                var actualCourse = eduContext.Courses.Find(courseId);
+                Assert.AreEqual(course.Name, actualCourse.Name);
+            }
+        }
+
         [TestCleanup]
         public void CleanUp()
         {
@@ -56,6 +96,14 @@ namespace HwProj.Tests.Context
                     if (u != null)
                     {
                         userContext.Users.Remove(u);                        
+                    }
+                }
+                foreach (var id in coursesId)
+                {
+                    var c = userContext.Courses.Find(id);
+                    if (c != null)
+                    {
+                        userContext.Courses.Remove(c);
                     }
                 }
                 userContext.SaveChanges();
