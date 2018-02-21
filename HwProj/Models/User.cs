@@ -41,11 +41,6 @@ namespace HwProj.Models
         /// <summary>
         /// Коллекция курсов пользователя
         /// </summary>
-        public ICollection<Course> Courses { get; set; } = new List<Course>();
-        /// <summary>
-        /// Дз пользователя
-        /// </summary>
-        /// TODO: надо подумать, может стоит сделать студента отдельно
-        public ICollection<Homework> Homeworks { get; set; }
+        public ICollection<Course> Courses { get; set; } = new List<Course>();       
     }
 }
