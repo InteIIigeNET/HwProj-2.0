@@ -19,12 +19,5 @@ namespace HwProj.Controllers
 
 			return View();
 		}
-
-		public ActionResult SignUp()
-		{
-			ViewBag.Message = "МатМех - лучше всех!";
-
-			return View();
-		}
 	}
 }
