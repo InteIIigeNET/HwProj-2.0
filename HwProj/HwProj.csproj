@@ -187,9 +187,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\HwProjDB.mdf" />
-    <Content Include="App_Data\HwProjDB_log.ldf">
-      <DependentUpon>HwProjDB.mdf</DependentUpon>
+    <Content Include="App_Data\HwProj.mdf" />
+    <Content Include="App_Data\HwProj_log.ldf">
+      <DependentUpon>HwProj.mdf</DependentUpon>
     </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />

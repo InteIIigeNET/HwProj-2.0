@@ -15,7 +15,9 @@ namespace HwProj.Controllers
         public ActionResult Edit()
         {
 	        if (!User.Identity.IsAuthenticated)
-				ModelState.AddModelError("", "Вы не авторизованы");
+				ModelState.AddModelError("", "Ошибка авторизации");
+
+			
 	        return View();
         }
 
