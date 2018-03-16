@@ -57,7 +57,7 @@ namespace HwProj.Controllers
                 User user = null;
                 using (var db = new AuthContext())
                 {
-                    user = db.Users.FirstOrDefault(u => u.Email == model.Name);
+                    user = db.Users.FirstOrDefault(u => u.Email == model.Email);
                 }
                 if (user == null)
                 {
@@ -71,12 +71,12 @@ namespace HwProj.Controllers
                             Surname = model.Surname,
                             CreatedAt = DateTime.Now,
                             Gender = model.Gender,
-                            Email = model.Name,
+                            Email = model.Email,
                             EncryptedPassword = model.Password
                         });
                         db.SaveChanges();
 
-                        user = db.Users.Where(u => u.Email == model.Name && u.EncryptedPassword == model.Password).FirstOrDefault();
+                        user = db.Users.Where(u => u.Email == model.Email && u.EncryptedPassword == model.Password).FirstOrDefault();
                     }
                     // если пользователь удачно добавлен в бд
                     if (user != null)
