@@ -8,6 +8,7 @@ namespace HwProj.Models.Contexts
 {
     public class EduContext : DbContext
     {
+		public EduContext() : base("DefaultConnection") { }
         /// <summary>
         /// Пользователи (студенты и преподаватели)
         /// </summary>
@@ -24,8 +25,6 @@ namespace HwProj.Models.Contexts
         /// База домашних заданий студентов
         /// </summary>
         public DbSet<Homework> Homeworks { get; set; }
-
-        public EduContext() : base() { }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

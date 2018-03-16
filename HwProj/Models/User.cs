@@ -31,6 +31,22 @@ namespace HwProj.Models
         /// </summary>
         public string Email { get; set; }
 		/// <summary>
+		/// Когда пользователь был создан
+		/// </summary>
+		public DateTime CreatedAt { get; set; }
+		/// <summary>
+		/// Когда пользователь в последний раз обновлял о себе информацию
+		/// </summary>
+		public DateTime UpdatedAt { get; set; }
+		/// <summary>
+		/// Зашифрованный пароль
+		/// </summary>
+		public string EncryptedPassword { get; set; }
+		/// <summary>
+		/// Является ли пользователь преподавателем
+		/// </summary>
+		public bool IsAdmin { get; set; }
+		/// <summary>
 		/// Пол пользователя
 		/// </summary>
 		public Gender   Gender   { get; set; }
