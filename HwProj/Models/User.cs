@@ -33,11 +33,11 @@ namespace HwProj.Models
 		/// <summary>
 		/// Когда пользователь был создан
 		/// </summary>
-		public DateTime CreatedAt { get; set; }
+		public DateTime? CreatedAt { get; set; }
 		/// <summary>
 		/// Когда пользователь в последний раз обновлял о себе информацию
 		/// </summary>
-		public DateTime UpdatedAt { get; set; }
+		public DateTime? UpdatedAt { get; set; }
 		/// <summary>
 		/// Зашифрованный пароль
 		/// </summary>

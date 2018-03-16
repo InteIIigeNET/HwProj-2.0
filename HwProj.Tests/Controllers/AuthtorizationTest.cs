@@ -26,16 +26,6 @@ namespace HwProj.Tests.Controllers
         }
 
         [TestMethod]
-        public void LoginViewEqualIndexCshtml()
-        {
-            var controller = new AuthorizationController();
-
-            var result = controller.LogIn() as ViewResult;
-
-            Assert.AreEqual("LogIn", result.ViewName);
-        }
-
-        [TestMethod]
         public void RegisterViewResultNotNull()
         {
             var controller = new AuthorizationController();
@@ -43,16 +33,6 @@ namespace HwProj.Tests.Controllers
             var result = controller.Register() as ViewResult;
 
             Assert.IsNotNull(result);
-        }
-
-        [TestMethod]
-        public void RegisterViewEqualIndexCshtml()
-        {
-            var controller = new AuthorizationController();
-
-            var result = controller.Register() as ViewResult;
-
-            Assert.AreEqual("Register", result.ViewName);
         }
         #endregion
 

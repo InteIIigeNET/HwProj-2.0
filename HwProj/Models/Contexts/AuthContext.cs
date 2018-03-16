@@ -6,13 +6,13 @@ using System.Web;
 
 namespace HwProj.Models.Contexts
 {
-	public class AuthContext : DbContext
+	public class AuthContext : BaseContext
 	{
-        public AuthContext() : base("DefaultConnection") { }
-
+        
         /// <summary>
         /// Пользователи (студенты и преподаватели)
         /// </summary>
         public DbSet<User> Users { get; set; }
+       
     }
 }

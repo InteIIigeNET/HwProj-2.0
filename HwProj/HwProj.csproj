@@ -171,6 +171,7 @@
     </Compile>
     <Compile Include="Models\Award.cs" />
     <Compile Include="Models\Contexts\AuthContext.cs" />
+    <Compile Include="Models\Contexts\BaseContext.cs" />
     <Compile Include="Models\Contexts\EduContext.cs" />
     <Compile Include="Models\Enums\StandartEnums.cs" />
     <Compile Include="Models\Homework.cs" />
@@ -187,10 +188,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\HwProjDB.mdf" />
-    <Content Include="App_Data\HwProjDB_log.ldf">
-      <DependentUpon>HwProjDB.mdf</DependentUpon>
-    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -238,6 +235,7 @@
     <Content Include="Views\Profile\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Data\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
