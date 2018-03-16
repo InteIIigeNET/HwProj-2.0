@@ -28,6 +28,7 @@ namespace HwProj.Models
         /// Почта пользователя
         /// </summary>
         [Required]
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         /// <summary>
