@@ -1,0 +1,70 @@
+﻿@model HwProj.Models.User
+
+<h2>Редактировать профиль</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    @Html.ValidationSummary(true)
+
+    <div class="form-group">
+        @Html.LabelFor(user => user.Name, "Имя", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(user => user.Name)
+            @Html.ValidationMessageFor(user => user.Name)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(user => user.Surname, "Фамилия", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(user => user.Surname)
+            @Html.ValidationMessageFor(user => user.Surname)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(user => user.Email, "E-Mail", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(user => user.Email)
+            @Html.ValidationMessageFor(user => user.Email)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(user => user.EncryptedPassword, "Новый пароль", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(user => user.EncryptedPassword)
+            @Html.ValidationMessageFor(user => user.EncryptedPassword)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(user => user.EncryptedPassword, "Подтвердите новый пароль", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(user => user.EncryptedPassword)
+            @Html.ValidationMessageFor(user => user.EncryptedPassword)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(user => user.EncryptedPassword, "Старый пароль", new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(user => user.EncryptedPassword)
+            @Html.ValidationMessageFor(user => user.EncryptedPassword)
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Сохранить" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
