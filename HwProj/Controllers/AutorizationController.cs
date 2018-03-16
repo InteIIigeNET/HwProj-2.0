@@ -12,12 +12,6 @@ namespace HwProj.Controllers
 {
     public class AutorizationController : Controller
     {
-        // GET: Autorization
-        public ActionResult Index()
-        {
-            return View();
-        }
-
 	    [HttpPost]
 	    [ValidateAntiForgeryToken]
 	    public ActionResult Login(LoginModel model)
