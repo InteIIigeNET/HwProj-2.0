@@ -64,7 +64,16 @@ namespace HwProj.Controllers
                     // создаем нового пользователя
                     using (var db = new AuthContext())
                     {
-                        db.Users.Add(new User { Email = model.Name, EncryptedPassword = model.Password });
+                        db.Users.Add(new User
+                        {
+                            Id = Guid.NewGuid(),
+                            Name = model.Name,
+                            Surname = model.Surname,
+                            CreatedAt = DateTime.Now,
+                            Gender = model.Gender,
+                            Email = model.Name,
+                            EncryptedPassword = model.Password
+                        });
                         db.SaveChanges();
 
                         user = db.Users.Where(u => u.Email == model.Name && u.EncryptedPassword == model.Password).FirstOrDefault();
