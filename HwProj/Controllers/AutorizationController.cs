@@ -12,9 +12,14 @@ namespace HwProj.Controllers
 {
     public class AutorizationController : Controller
     {
-	    [HttpPost]
+	    public ActionResult LogIn()
+	    {
+		    return View();
+	    }
+
+		[HttpPost]
 	    [ValidateAntiForgeryToken]
-	    public ActionResult Login(LoginModel model)
+	    public ActionResult LogIn(LoginModel model)
 	    {
 		    if (ModelState.IsValid)
 		    {
@@ -22,7 +27,7 @@ namespace HwProj.Controllers
 			    using (EduContext db = new EduContext())
 			    {
 				    user = db.Users.FirstOrDefault(
-						u => u.Email == model.Email && u. == model.Password);
+						u => u.Email == model.Email && u.EncryptedPassword == model.Password);
 
 			    }
 			    if (user != null)
@@ -35,8 +40,13 @@ namespace HwProj.Controllers
 				    ModelState.AddModelError("", "Пользователя с таким логином и паролем нет");
 			    }
 		    }
-
-		    return View(model);
+		    return RedirectToAction("", "Autorization");
+			return View(model);
+	    }
+	    public ActionResult LogOut()
+	    {
+		    FormsAuthentication.SignOut();
+		    return RedirectToAction("Index", "Home");
 	    }
 	}
 }

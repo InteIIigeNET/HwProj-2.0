@@ -12,12 +12,5 @@ namespace HwProj.Controllers
 		{
 			return View();
 		}
-
-		public ActionResult SignIn()
-		{
-			ViewBag.Message = "Лучший в СПбГУ - факультет ПМ-ПУ";
-
-			return View();
-		}
 	}
 }

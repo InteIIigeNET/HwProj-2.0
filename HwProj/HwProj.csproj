@@ -170,6 +170,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Award.cs" />
+    <Compile Include="Models\Contexts\AutorizationContext.cs" />
     <Compile Include="Models\Contexts\EduContext.cs" />
     <Compile Include="Models\Enums\StandartEnums.cs" />
     <Compile Include="Models\Homework.cs" />
