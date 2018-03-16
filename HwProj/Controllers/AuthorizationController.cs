@@ -23,7 +23,7 @@ namespace HwProj.Controllers
 	    {
 		    if (ModelState.IsValid)
 		    {
-			    User user;
+			    User user = null;
 			    using (var db = new AuthContext())
 			    {
 				    user = db.Users.FirstOrDefault(
@@ -76,7 +76,7 @@ namespace HwProj.Controllers
                         });
                         db.SaveChanges();
 
-                        user = db.Users.Where(u => u.Email == model.Email && u.EncryptedPassword == model.Password).FirstOrDefault();
+                        user = db.Users.FirstOrDefault(u => u.Email == model.Name && u.EncryptedPassword == model.Password);
                     }
                     // если пользователь удачно добавлен в бд
                     if (user != null)
