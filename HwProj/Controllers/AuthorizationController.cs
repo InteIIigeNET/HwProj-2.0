@@ -28,7 +28,6 @@ namespace HwProj.Controllers
 			    {
 				    user = db.Users.FirstOrDefault(
 						u => u.Email == model.Email && u.EncryptedPassword == model.Password);
-
 			    }
 			    if (user != null)
 			    {
