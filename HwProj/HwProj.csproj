@@ -176,6 +176,7 @@
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Note.cs" />
     <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\Task.cs" />
     <Compile Include="Models\Teacher.cs" />
