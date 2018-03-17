@@ -327,17 +327,22 @@ namespace HwProj.Controllers
                     return View("ExternalLoginFailure");
                 }
                 var user = new User { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user);
-                if (result.Succeeded)
-                {
-                    result = await UserManager.AddLoginAsync(user.Id, info.Login);
-                    if (result.Succeeded)
-                    {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                        return RedirectToLocal(returnUrl);
-                    }
-                }
-                AddErrors(result);
+	            try
+	            {
+		            var result = await UserManager.CreateAsync(user);
+
+		            if (result.Succeeded)
+		            {
+			            result = await UserManager.AddLoginAsync(user.Id, info.Login);
+			            if (result.Succeeded)
+			            {
+				            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+				            return RedirectToLocal(returnUrl);
+			            }
+		            }
+		            AddErrors(result);
+	            }
+				catch { return View("ExternalLoginFailure"); }
             }
 
             ViewBag.ReturnUrl = returnUrl;

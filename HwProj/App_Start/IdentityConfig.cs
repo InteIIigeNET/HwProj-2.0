@@ -14,6 +14,7 @@ using Microsoft.Owin.Security;
 using HwProj.Models;
 using Task = System.Threading.Tasks.Task;
 using HwProj.Models.Contexts;
+using HwProj.Properties;
 
 namespace HwProj
 {
@@ -22,9 +23,9 @@ namespace HwProj
         public Task SendAsync(IdentityMessage message)
         {
 	        MailMessage mail = new MailMessage();
-	        SmtpClient SmtpServer = new SmtpClient("smtp.yandex.ru");
+	        SmtpClient SmtpServer = new SmtpClient(Settings.Default.MailClient);
 
-			mail.From = new MailAddress("support-team.soft@yandex.ru");
+			mail.From = new MailAddress(Settings.Default.MailUserName);
 	        mail.To.Add(message.Destination);
 	        mail.Subject = message.Subject;
 	        mail.Body = message.Body;
@@ -32,7 +33,8 @@ namespace HwProj
 
 			SmtpServer.UseDefaultCredentials = false;
 	        SmtpServer.Port = 587;
-	        SmtpServer.Credentials = new System.Net.NetworkCredential("support-team.soft@yandex.ru", "Sevastopolkudo1");
+	        SmtpServer.Credentials = new System.Net.NetworkCredential
+				(Settings.Default.MailUserName, Settings.Default.MailPassword);
 	        SmtpServer.EnableSsl = true;
 			
 			// Подключите здесь службу электронной почты для отправки сообщения электронной почты.

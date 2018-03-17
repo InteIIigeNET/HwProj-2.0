@@ -8,7 +8,7 @@ using Owin;
 using HwProj.Models;
 using HwProj.Models.Contexts;
 using KatanaContrib.Security.VK;
-using Microsoft.Owin.Security.OAuth;
+using Microsoft.Owin.Security.Google;
 
 namespace HwProj
 {
@@ -61,11 +61,11 @@ namespace HwProj
 			//   appId: "",
 			//   appSecret: "");
 
-			//app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-			//{
-			//    ClientId = "",
-			//    ClientSecret = ""
-			//});
+			app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+			{
+			    ClientId = "822435394647-2r22d16i8nrfgsj4eoin5io7ir1n0u58.apps.googleusercontent.com",
+			    ClientSecret = "vMR0V7d9VgQ1T8ORQ_yoPJk2"
+			});
 	        app.UseVkontakteAuthentication("6413355", "uo12VNcp8qK5Wc7cpXXW", "email");
         }
 	}
