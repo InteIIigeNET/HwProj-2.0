@@ -15,19 +15,18 @@ namespace HwProj.Controllers
     {
         public ActionResult Edit()
         {
-	        if (!User.Identity.IsAuthenticated)
-				ModelState.AddModelError("", "Ошибка авторизации");
+	        if (!User.Identity.IsAuthenticated) 
+		        return View("Error", new Error(){Message = "Ошибка авторизации."});
 
-	        User dbUser = UserRepository.Instance.Get(u => u.Email == User.Identity.Name);
+			User dbUser = UserRepository.Instance.Get(u => u.Email == User.Identity.Name);
 	        if (dbUser != null)
 	        {
 		        return View(dbUser);
 	        }
 	        else
 	        {
-				ModelState.AddModelError("", "Пользователь не найден");
+		        return View("Error", new Error() { Message = $"Пользователь {User.Identity.Name} не найден." });
 			}
-	        return View();
         }
 
 		[HttpPut]
@@ -35,36 +34,29 @@ namespace HwProj.Controllers
 	    {
 		    if (User.Identity.IsAuthenticated)
 		    {
-			    User dbUser = null;
-			    using (var db = new EduContext())
-			    {
-				    dbUser = db.Users.FirstOrDefault(u => u.Email == user.Email);
-			    }
+			    User dbUser = UserRepository.Instance.Get(u => u.Email == User.Identity.Name);
 			    if (dbUser != null)
 			    {
 				    if (true)//user.EncryptedPassword == dbUser.EncryptedPassword)
 				    {
-						using (var db = new EduContext())
-						{
-							db.Entry(user).State = EntityState.Modified;
-							db.SaveChanges();
-						}
-					}
+					    UserRepository.Instance.Update(user);
+				    }
 				    else
 				    {
-						return View("Error");
+						return View("Error", new Error() {Message = "Неверные данные авторизации."});
 					}
 			    }
 			    else
 			    {
-				    ModelState.AddModelError("", "Пользователь не найден");
-			    }
+				    return View("Error", new Error() { Message = $"Пользователь {User.Identity.Name} не найден." });
+				}
 		    }
 		    else
 		    {
-				return View("Error");
+			    return View("Error", new Error() { Message = $"Ошибка авторизации." });
 			}
-		    return View(user);
+		    ModelState.AddModelError("", "Данные успешно обновлены.");
+			return View(user);
 	    }
 	}
 }

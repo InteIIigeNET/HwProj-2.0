@@ -174,6 +174,7 @@
     <Compile Include="Models\Contexts\BaseContext.cs" />
     <Compile Include="Models\Contexts\EduContext.cs" />
     <Compile Include="Models\Enums\StandartEnums.cs" />
+    <Compile Include="Models\Error.cs" />
     <Compile Include="Models\Homework.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\LoginModel.cs" />
