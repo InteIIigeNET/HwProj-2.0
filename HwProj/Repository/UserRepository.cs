@@ -22,14 +22,14 @@ namespace HwProj.Repository
 			dbContext?.Dispose();
 		}
 
-		public bool Add(User item)
-		{
-				dbContext.Users.Add(item);
-				dbContext.SaveChanges();
+        public bool Add(User item)
+        {
+            dbContext.Users.Add(item);
+            dbContext.SaveChanges();
 
-				return  dbContext.Users.FirstOrDefault(u => u.Email == item.Email && 
-							  u.EncryptedPassword == item.EncryptedPassword) != null;
-		}
+            return dbContext.Users.FirstOrDefault(u => u.Email == item.Email &&
+                         u.EncryptedPassword == item.EncryptedPassword) != null;
+        }
 
 		public bool Remove(User item)
 		{

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using HwProj.Models;
 using HwProj.Models.Contexts;
+using HwProj.Repository;
 using Microsoft.ApplicationInsights.Extensibility.Implementation;
 
 namespace HwProj.Controllers
@@ -24,9 +25,9 @@ namespace HwProj.Controllers
 		    if (ModelState.IsValid)
 		    {
 			    User user = null;
-			    using (var db = new AuthContext())
+			    using (var db = UserRepository.Instance)
 			    {
-				    user = db.Users.FirstOrDefault(
+				    user = db.Get(
 						u => u.Email == model.Email && u.EncryptedPassword == model.Password);
 			    }
 			    if (user != null)
@@ -54,16 +55,16 @@ namespace HwProj.Controllers
             if (ModelState.IsValid)
             {
                 User user = null;
-                using (var db = new AuthContext())
+                using (var db = UserRepository.Instance)
                 {
-                    user = db.Users.FirstOrDefault(u => u.Email == model.Email);
+                    user = db.Get(u => u.Email == model.Email);
                 }
                 if (user == null)
                 {
                     // создаем нового пользователя
-                    using (var db = new AuthContext())
+                    using (var db = UserRepository.Instance)
                     {
-                        db.Users.Add(new User
+                        if (db.Add(new User
                         {
                             Id = Guid.NewGuid(),
                             Name = model.Name,
@@ -72,21 +73,14 @@ namespace HwProj.Controllers
                             Gender = model.Gender,
                             Email = model.Email,
                             EncryptedPassword = model.Password
-                        });
-                        db.SaveChanges();
-
-                        user = db.Users.FirstOrDefault(u => u.Email == model.Name && u.EncryptedPassword == model.Password);
+                        }))
+                        {
+                            FormsAuthentication.SetAuthCookie(model.Name, true);
+                            return RedirectToAction("Index", "Home");
+                        }
+                        else
+                            ModelState.AddModelError("", "Пользователь с таким логином уже существует");
                     }
-                    // если пользователь удачно добавлен в бд
-                    if (user != null)
-                    {
-                        FormsAuthentication.SetAuthCookie(model.Name, true);
-                        return RedirectToAction("Index", "Home");
-                    }
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Пользователь с таким логином уже существует");
                 }
             }
 
