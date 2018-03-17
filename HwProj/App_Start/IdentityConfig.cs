@@ -28,8 +28,9 @@ namespace HwProj
 	        mail.To.Add(message.Destination);
 	        mail.Subject = message.Subject;
 	        mail.Body = message.Body;
+	        mail.IsBodyHtml = true;
 
-	        SmtpServer.UseDefaultCredentials = false;
+			SmtpServer.UseDefaultCredentials = false;
 	        SmtpServer.Port = 587;
 	        SmtpServer.Credentials = new System.Net.NetworkCredential("support-team.soft@yandex.ru", "Sevastopolkudo1");
 	        SmtpServer.EnableSsl = true;

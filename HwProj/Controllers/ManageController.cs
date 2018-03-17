@@ -88,24 +88,22 @@ namespace HwProj.Controllers
 		}
 
 
-	    private async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
+		public async Task<ActionResult> Delete()
 	    {
-	       if (!ModelState.IsValid)
-	        {
-	            return View(model);
-	        }
-	        var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
-	        if (result.Succeeded)
-	        {
-	            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-	            if (user != null)
-	            {
-	                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-	            }
-	
-	        }
-	        AddErrors(result);
-	        return View(model);
+		    return View();
+	    }
+
+		public async Task<ActionResult> ConfirmRemove()
+	    {
+		    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+		    AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+			await UserManager.DeleteAsync(user);
+			return RedirectToAction("Index", "Home");
+		}
+
+		public async Task<ActionResult> Back()
+	    {
+		    return RedirectToAction("Index", "Manage");
 	    }
 
 		////
