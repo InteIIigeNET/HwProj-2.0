@@ -197,6 +197,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Contexts\UserDbContext.cs" />
     <Compile Include="Models\ManagerModels\ApplicationManager.cs" />
     <Compile Include="Models\Award.cs" />
     <Compile Include="Models\Contexts\ApplicationContext.cs" />

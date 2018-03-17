@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
 using HwProj.Models.Enums;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace HwProj.Models
 {
@@ -12,47 +16,21 @@ namespace HwProj.Models
 	/// Модель пользователя сервиса
 	/// </summary>
     [Table("Users")]
-    public class User
-	{
-		/// <summary>
-		/// Уникальный идентификатор
-		/// </summary>
-		public Guid     Id       { get; set; }
-		/// <summary>
-		/// Имя пользователя
-		/// </summary>
-		public string   Name     { get; set; }
-		/// <summary>
-		/// Фамилия пользователя
-		/// </summary>
-		public string   Surname  { get; set; }
-        /// <summary>
-        /// Почта пользователя
-        /// </summary>
-        public string Email { get; set; }
-		/// <summary>
-		/// Когда пользователь был создан
-		/// </summary>
-		public DateTime? CreatedAt { get; set; }
-		/// <summary>
-		/// Когда пользователь в последний раз обновлял о себе информацию
-		/// </summary>
-		public DateTime? UpdatedAt { get; set; }
-		/// <summary>
-		/// Зашифрованный пароль
-		/// </summary>
-		public string EncryptedPassword { get; set; }
-		/// <summary>
-		/// Является ли пользователь преподавателем
-		/// </summary>
-		public bool IsAdmin { get; set; }
-		/// <summary>
-		/// Пол пользователя
-		/// </summary>
-		public Gender   Gender   { get; set; }
+    public class User : IdentityUser
+    {
+        #region Properties
         /// <summary>
         /// Коллекция курсов пользователя
         /// </summary>
-        public ICollection<Course> Courses { get; set; } = new List<Course>();       
+        public ICollection<Course> Courses { get; set; } = new List<Course>();
+        #endregion
+
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
+        {
+            // Обратите внимание, что authenticationType должен совпадать с типом, определенным в CookieAuthenticationOptions.AuthenticationType
+            var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+            // Здесь добавьте утверждения пользователя
+            return userIdentity;
+        }
     }
 }
