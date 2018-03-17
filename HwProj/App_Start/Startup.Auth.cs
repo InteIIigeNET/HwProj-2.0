@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -6,6 +7,8 @@ using Microsoft.Owin.Security.Cookies;
 using Owin;
 using HwProj.Models;
 using HwProj.Models.Contexts;
+using KatanaContrib.Security.VK;
+using Microsoft.Owin.Security.OAuth;
 
 namespace HwProj
 {
@@ -45,24 +48,25 @@ namespace HwProj
             // Точно так же действует параметр RememberMe при входе.
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
-            // Раскомментируйте приведенные далее строки, чтобы включить вход с помощью сторонних поставщиков входа
-            //app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
+			// Раскомментируйте приведенные далее строки, чтобы включить вход с помощью сторонних поставщиков входа
+			//app.UseMicrosoftAccountAuthentication(
+			//    clientId: "",
+			//    clientSecret: "");
 
-            //app.UseTwitterAuthentication(
-            //   consumerKey: "",
-            //   consumerSecret: "");
+			//app.UseTwitterAuthentication(
+			//   consumerKey: "",
+			//   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+			//app.UseFacebookAuthentication(
+			//   appId: "",
+			//   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+			//app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+			//{
+			//    ClientId = "",
+			//    ClientSecret = ""
+			//});
+	        app.UseVkontakteAuthentication("6413355", "uo12VNcp8qK5Wc7cpXXW", "email");
         }
-    }
+	}
 }

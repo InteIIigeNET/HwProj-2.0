@@ -13,7 +13,8 @@ using HwProj.Models.ManagerModels;
 
 namespace HwProj.Controllers
 {
-    [Authorize]
+	[RequireHttps]
+	[Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -236,7 +237,7 @@ namespace HwProj.Controllers
         // POST: /Account/ExternalLogin
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
+		[ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
             // Запрос перенаправления к внешнему поставщику входа
