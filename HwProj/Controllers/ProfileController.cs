@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using HwProj.Models;
 using HwProj.Models.Contexts;
+using HwProj.Repository;
 
 namespace HwProj.Controllers
 {
@@ -17,7 +18,15 @@ namespace HwProj.Controllers
 	        if (!User.Identity.IsAuthenticated)
 				ModelState.AddModelError("", "Ошибка авторизации");
 
-			
+	        User dbUser = UserRepository.Instance.Get(u => u.Email == User.Identity.Name);
+	        if (dbUser != null)
+	        {
+		        return View(dbUser);
+	        }
+	        else
+	        {
+				ModelState.AddModelError("", "Пользователь не найден");
+			}
 	        return View();
         }
 

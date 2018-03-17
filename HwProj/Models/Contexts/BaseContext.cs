@@ -6,7 +6,7 @@ using System.Web;
 
 namespace HwProj.Models.Contexts
 {
-    public class BaseContext : DbContext
+    public abstract class BaseContext : DbContext
     {
         public BaseContext() : base("Hw2") { }
 
