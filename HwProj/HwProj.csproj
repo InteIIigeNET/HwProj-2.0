@@ -195,9 +195,12 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803171559289_DataMigration.cs" />
+    <Compile Include="Migrations\201803171559289_DataMigration.Designer.cs">
+      <DependentUpon>201803171559289_DataMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Contexts\UserDbContext.cs" />
@@ -269,7 +272,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\LogIn.cshtml" />
-    <Content Include="Views\Profile\Edit.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
@@ -277,6 +279,7 @@
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Manage\Index1.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -295,6 +298,11 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201803171559289_DataMigration.resx">
+      <DependentUpon>201803171559289_DataMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

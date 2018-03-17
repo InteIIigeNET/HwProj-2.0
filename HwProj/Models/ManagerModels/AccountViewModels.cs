@@ -43,6 +43,7 @@ namespace HwProj.Models.ManagerModels
 		/// <summary>
 		/// Повтор пароля
 		/// </summary>
+	    [Required]
 		[DataType(DataType.Password)]
 		[Display(Name = "Подтверждение пароля")]
 		[Compare("Password", ErrorMessage = "Пароль и его подтверждение не совпадают.")]

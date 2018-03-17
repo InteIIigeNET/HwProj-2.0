@@ -117,8 +117,7 @@ namespace HwProj.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = $"{model.Name} {model.Surname}",
-									  Email = model.Email, Gender = model.Gender};
+	            var user = (User) model;
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
