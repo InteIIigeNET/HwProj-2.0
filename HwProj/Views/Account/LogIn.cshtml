@@ -1,5 +1,5 @@
 ﻿@using HwProj.Models.ManagerModels
-@model HwProj.Models.ManagerModels.LoginViewModel
+@model LoginViewModel
 @{
     ViewBag.Title = "Выполнить вход";
 }
@@ -44,10 +44,9 @@
                 <p>
                     @Html.ActionLink("Регистрация нового пользователя", "Register")
                 </p>
-                @* Включите, когда будет включено подтверждение учетной записи для функции сброса пароля
-                    <p>
-                        @Html.ActionLink("Забыли пароль?", "ForgotPassword")
-                    </p>*@
+                <p>
+                    @Html.ActionLink("Забыли пароль?", "ForgotPassword")
+                </p>
             }
         </section>
     </div>

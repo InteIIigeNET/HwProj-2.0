@@ -42,7 +42,7 @@
         </div>
     </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.Gender, "Пол", new { @class = "control-label col-md-2" })
+        @Html.LabelFor(model => model.Gender, new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             Мужской @Html.RadioButtonFor(model => model.Gender, 0, new { @checked = true })
             Женский @Html.RadioButtonFor(model => model.Gender, 1, new { @checked = true })

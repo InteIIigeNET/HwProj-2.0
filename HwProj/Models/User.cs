@@ -19,6 +19,7 @@ namespace HwProj.Models
     public class User : IdentityUser
     {
         #region Properties
+		public Gender Gender { get; set; }
         /// <summary>
         /// Коллекция курсов пользователя
         /// </summary>

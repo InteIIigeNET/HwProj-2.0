@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -18,11 +19,24 @@ namespace HwProj
 {
     public class EmailService : IIdentityMessageService
     {
-        public System.Threading.Tasks.Task SendAsync(IdentityMessage message)
+        public Task SendAsync(IdentityMessage message)
         {
-            // Подключите здесь службу электронной почты для отправки сообщения электронной почты.
-            return Task.FromResult(0);
-        }
+	        MailMessage mail = new MailMessage();
+	        SmtpClient SmtpServer = new SmtpClient("smtp.yandex.ru");
+
+			mail.From = new MailAddress("support-team.soft@yandex.ru");
+	        mail.To.Add(message.Destination);
+	        mail.Subject = message.Subject;
+	        mail.Body = message.Body;
+
+	        SmtpServer.UseDefaultCredentials = false;
+	        SmtpServer.Port = 587;
+	        SmtpServer.Credentials = new System.Net.NetworkCredential("support-team.soft@yandex.ru", "Sevastopolkudo1");
+	        SmtpServer.EnableSsl = true;
+			
+			// Подключите здесь службу электронной почты для отправки сообщения электронной почты.
+			return SmtpServer.SendMailAsync(mail);
+		}
     }
 
     // Настройка диспетчера пользователей приложения. UserManager определяется в ASP.NET Identity и используется приложением.
