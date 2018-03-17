@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using HwProj.Models;
 using HwProj.Models.Contexts;
+using HwProj.Models.ManagerModels;
 using HwProj.Repository;
 using Microsoft.ApplicationInsights.Extensibility.Implementation;
 

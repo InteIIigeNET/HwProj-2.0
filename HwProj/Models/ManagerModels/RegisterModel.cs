@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using HwProj.Models.Enums;
 
-namespace HwProj.Models
+namespace HwProj.Models.ManagerModels
 {
     /// <summary>
     /// Модель регистрации пользователя
