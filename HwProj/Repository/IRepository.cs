@@ -10,6 +10,7 @@ namespace HwProj.Repository
 	{
 		bool Add(T item);
 		bool Remove(T item);
+		bool Update(T item);
 		T Get(Func<T, bool> check);
 	}
 }

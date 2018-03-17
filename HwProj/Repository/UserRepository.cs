@@ -41,6 +41,12 @@ namespace HwProj.Repository
 			dbContext.SaveChanges();
 			return true;
 		}
+		public bool Update(User item)
+		{
+			dbContext.Entry(item).State = EntityState.Modified;
+			dbContext.SaveChanges();
+			return true;
+		}
 
 		public User Get(Func<User, bool> check)
 		{
