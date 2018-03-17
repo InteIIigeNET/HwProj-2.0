@@ -15,6 +15,7 @@ using HwProj.Models;
 using Task = System.Threading.Tasks.Task;
 using HwProj.Models.Contexts;
 using HwProj.Properties;
+using HwProj.Validators;
 
 namespace HwProj
 {
@@ -54,10 +55,8 @@ namespace HwProj
         {
             var manager = new ApplicationUserManager(new UserStore<User>(context.Get<UserDbContext>()));
             // Настройка логики проверки имен пользователей
-            manager.UserValidator = new UserValidator<User>(manager)
+            manager.UserValidator = new UserValidator(manager);
             {
-                AllowOnlyAlphanumericUserNames = false,
-                RequireUniqueEmail = true
             };
 
             // Настройка логики проверки паролей
