@@ -13,7 +13,7 @@ using Microsoft.Owin.Security;
 using HwProj.Models;
 using Task = System.Threading.Tasks.Task;
 
-namespace IdentityService
+namespace HwProj
 {
     public class EmailService : IIdentityMessageService
     {
