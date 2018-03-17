@@ -23,10 +23,7 @@ namespace HwProj.Controllers
 	        {
 		        return View(dbUser);
 	        }
-	        else
-	        {
-		        return View("Error", new Error() { Message = $"Пользователь {User.Identity.Name} не найден." });
-			}
+	        return View("Error", new Error() { Message = $"Пользователь {User.Identity.Name} не найден." });
         }
 
 		[HttpPut]
@@ -39,8 +36,10 @@ namespace HwProj.Controllers
 			    {
 				    if (true)//user.EncryptedPassword == dbUser.EncryptedPassword)
 				    {
-					    UserRepository.Instance.Update(user);
-				    }
+						if (UserRepository.Instance.Update(user))
+							ModelState.AddModelError("", "Данные успешно обновлены.");
+						else ModelState.AddModelError("", "Ошибка при обновлении данных.");
+					}
 				    else
 				    {
 						return View("Error", new Error() {Message = "Неверные данные авторизации."});
