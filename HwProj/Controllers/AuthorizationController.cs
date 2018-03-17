@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -51,14 +51,14 @@ namespace HwProj.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterModel model)
+        public ActionResult Register(ViewModels viewModel)
         {
             if (ModelState.IsValid)
             {
                 User user = null;
                 using (var db = UserRepository.Instance)
                 {
-                    user = db.Get(u => u.Email == model.Email);
+                    user = db.Get(u => u.Email == viewModel.Email);
                 }
                 if (user == null)
                 {
@@ -68,15 +68,15 @@ namespace HwProj.Controllers
                         if (db.Add(new User
                         {
                             Id = Guid.NewGuid(),
-                            Name = model.Name,
-                            Surname = model.Surname,
+                            Name = viewModel.Name,
+                            Surname = viewModel.Surname,
                             CreatedAt = DateTime.Now,
-                            Gender = model.Gender,
-                            Email = model.Email,
-                            EncryptedPassword = model.Password
+                            Gender = viewModel.Gender,
+                            Email = viewModel.Email,
+                            EncryptedPassword = viewModel.Password
                         }))
                         {
-                            FormsAuthentication.SetAuthCookie(model.Name, true);
+                            FormsAuthentication.SetAuthCookie(viewModel.Name, true);
                             return RedirectToAction("Index", "Home");
                         }
                         else
@@ -85,7 +85,7 @@ namespace HwProj.Controllers
                 }
             }
 
-            return View(model);
+            return View(viewModel);
         }
 
         public ActionResult LogOut()
@@ -94,4 +94,4 @@ namespace HwProj.Controllers
 		    return RedirectToAction("Index", "Home");
 	    }
 	}
-}
+}*/

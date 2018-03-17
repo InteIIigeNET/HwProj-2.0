@@ -19,21 +19,13 @@ namespace HwProj.Tests.Controllers
         [TestMethod]
         public void LoginViewResultNotNull()
         {
-            var controller = new AuthorizationController();
-
-            var result = controller.LogIn() as ViewResult;
-
-            Assert.IsNotNull(result);
+           
         }
 
         [TestMethod]
         public void RegisterViewResultNotNull()
         {
-            var controller = new AuthorizationController();
-
-            var result = controller.Register() as ViewResult;
-
-            Assert.IsNotNull(result);
+           
         }
         #endregion
 
@@ -42,37 +34,13 @@ namespace HwProj.Tests.Controllers
         [TestMethod]
         public void ShouldRegisterUser()
         {
-            //arrange
-            var controller = new AuthorizationController();
-            var regModel = new RegisterModel
-            {
-                Name = "Max",
-                Surname = "Vortman",
-                Email = "vortmanmax@gmail.com",
-                Password = "123",
-                ConfirmPassword = "123",
-                Gender = Models.Enums.Gender.Male
-            };
-            usersEmails.Add(regModel.Email);
-            //act
-            var result = controller.Register(regModel); 
+           
         }
 
         [TestCleanup]
         public void CleanDb()
         {
-            using (var context = new AuthContext())
-            {
-                foreach (var email in usersEmails)
-                {
-                    var user = context.Users.FirstOrDefault(u => u.Email == email);
-
-                    if (user != default(User))
-                    {
-                        context.Users.Remove(user);
-                    }
-                }                
-            }
+           
         }
     }
 }
