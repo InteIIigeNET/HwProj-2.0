@@ -24,32 +24,35 @@ namespace HwProj.Models
         [Required]
         public string Surname { get; set; }
 
-        /// <summary>
-        /// Почта пользователя
-        /// </summary>
-        [Required]
-        [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
+		/// <summary>
+		/// Почта пользователя
+		/// </summary>
+		[Required]
+		[EmailAddress]
+		[Display(Name = "Адрес электронной почты")]
+		public string Email { get; set; }
 
-        /// <summary>
-        /// Пароль
-        /// </summary>
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
+		/// <summary>
+		/// Пароль
+		/// </summary>
+		[Required]
+		[StringLength(100, ErrorMessage = "Значение {0} должно содержать не менее {2} символов.", MinimumLength = 6)]
+		[DataType(DataType.Password)]
+		[Display(Name = "Пароль")]
+		public string Password { get; set; }
 
-        /// <summary>
-        /// Повтор пароля
-        /// </summary>
-        [Required]
-        [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Пароли не совпадают")]
-        public string ConfirmPassword { get; set; }
+		/// <summary>
+		/// Повтор пароля
+		/// </summary>
+		[DataType(DataType.Password)]
+		[Display(Name = "Подтверждение пароля")]
+		[Compare("Password", ErrorMessage = "Пароль и его подтверждение не совпадают.")]
+		public string ConfirmPassword { get; set; }
 
-        /// <summary>
-        /// Пол пользователя
-        /// </summary>
-        [Required]
+		/// <summary>
+		/// Пол пользователя
+		/// </summary>
+		[Required]
         public Gender Gender { get; set; }
-    }
+	}
 }

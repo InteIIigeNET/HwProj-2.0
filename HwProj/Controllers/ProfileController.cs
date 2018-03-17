@@ -18,7 +18,11 @@ namespace HwProj.Controllers
 	        if (!User.Identity.IsAuthenticated) 
 		        return View("Error", new Error(){Message = "Ошибка авторизации."});
 
-			User dbUser = UserRepository.Instance.Get(u => u.Email == User.Identity.Name);
+	        User dbUser = null;
+	        using (var db = UserRepository.Instance)
+	        {
+		        dbUser = db.Get(u => u.Email == User.Identity.Name);
+	        }
 	        if (dbUser != null)
 	        {
 		        return View(dbUser);
@@ -36,10 +40,13 @@ namespace HwProj.Controllers
 			    {
 				    if (true)//user.EncryptedPassword == dbUser.EncryptedPassword)
 				    {
-						if (UserRepository.Instance.Update(user))
-							ModelState.AddModelError("", "Данные успешно обновлены.");
-						else ModelState.AddModelError("", "Ошибка при обновлении данных.");
-					}
+					    using (var db = UserRepository.Instance)
+					    {
+						    if (db.Update(user))
+							    ModelState.AddModelError("", "Данные успешно обновлены.");
+						    else ModelState.AddModelError("", "Ошибка при обновлении данных.");
+					    }
+				    }
 				    else
 				    {
 						return View("Error", new Error() {Message = "Неверные данные авторизации."});
