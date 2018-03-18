@@ -73,7 +73,7 @@ namespace HwProj.Models
 			    Name = user.Name,
 			    Surname = user.Surname,
 			    Email = user.Email,
-				Role = RolesFactory.GetById(user.Roles.First().RoleId).Name
+				Role = RolesFactory.GetById(user.Roles.FirstOrDefault().RoleId).Name
 		    };
 	    }
 		public void EditFrom(EditViewModel model)

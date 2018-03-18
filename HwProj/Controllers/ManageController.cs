@@ -56,7 +56,6 @@ namespace HwProj.Controllers
 		public ActionResult Index()
 		{
 			var user = UserManager.FindById(User.Identity.GetUserId());
-			ViewBag.Title = "Редактировать профиль";
 			return View((EditViewModel)user);
 		}
 
@@ -69,7 +68,7 @@ namespace HwProj.Controllers
 			    return View(model);
 		    }
 		    var user = UserManager.FindById(User.Identity.GetUserId());
-		    if (await UserManager.CheckPasswordAsync(user, model.OldPassword))
+		    if (await UserManager.CheckPasswordAsync(user, model.Password))
 		    {
 			    user.EditFrom(model);
 			    var result = await UserManager.UpdateAsync(user);
@@ -83,7 +82,10 @@ namespace HwProj.Controllers
 				    AddErrors(result);
 			    }
 		    }
-			else ModelState.AddModelError("", "Введён неверный пароль");
+		    else
+		    {
+			    ModelState.AddModelError("", "Введён неверный пароль");
+		    }
 		    return View(model);
 		}
 
@@ -93,6 +95,7 @@ namespace HwProj.Controllers
 		    return View();
 	    }
 
+		[HttpDelete]
 		public async Task<ActionResult> ConfirmRemove()
 	    {
 		    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
