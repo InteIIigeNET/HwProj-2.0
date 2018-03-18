@@ -6,6 +6,7 @@ using System.Web;
 
 namespace HwProj.Models.Contexts
 {
+	/*
     public class EduContext : BaseContext
     {
 		
@@ -26,4 +27,5 @@ namespace HwProj.Models.Contexts
         /// </summary>
         public DbSet<Homework> Homeworks { get; set; }       
     }
+	*/
 }

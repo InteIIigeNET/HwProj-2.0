@@ -53,7 +53,7 @@ namespace HwProj
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
         {
-            var manager = new ApplicationUserManager(new UserStore<User>(context.Get<UserDbContext>()));
+            var manager = new ApplicationUserManager(new UserStore<User>(context.Get<ApplicationDbContext>()));
             // Настройка логики проверки имен пользователей
             manager.UserValidator = new UserValidator(manager);
             {

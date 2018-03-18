@@ -1,4 +1,5 @@
-﻿using HwProj.Models.Contexts;
+﻿using System.Data.Entity;
+using HwProj.Models.Contexts;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -14,7 +15,7 @@ namespace HwProj.Models.ManagerModels
 		public static ApplicationManager Create(IdentityFactoryOptions<ApplicationManager> options,
 			IOwinContext context)
 		{
-			ApplicationContext db = context.Get<ApplicationContext>();
+			ApplicationDbContext db = context.Get<ApplicationDbContext>();
 			ApplicationManager manager = new ApplicationManager(new UserStore<User>(db));
 			return manager;
 		}

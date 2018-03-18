@@ -9,8 +9,10 @@ using System.Threading.Tasks;
 using System.Web;
 using HwProj.Models.Enums;
 using HwProj.Models.ManagerModels;
+using HwProj.Models.Roles;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using WebGrease.Css.Extensions;
 
 namespace HwProj.Models
 {
@@ -52,6 +54,17 @@ namespace HwProj.Models
 				Gender = model.Gender
 			};
 		}
+
+		public User(): base() { }
+	    public User(RegisterViewModel model) : base()
+	    {
+		    UserName = model.Email;
+		    Name = model.Name;
+		    Surname = model.Surname;
+		    Email = model.Email;
+		    Gender = model.Gender;
+	    }
+
 	    public static explicit operator EditViewModel(User user)
 	    {
 		    return new EditViewModel()
@@ -59,7 +72,8 @@ namespace HwProj.Models
 				Id = user.Id,
 			    Name = user.Name,
 			    Surname = user.Surname,
-			    Email = user.Email
+			    Email = user.Email,
+				Role = RolesFactory.GetById(user.Roles.First().RoleId).Name
 		    };
 	    }
 		public void EditFrom(EditViewModel model)

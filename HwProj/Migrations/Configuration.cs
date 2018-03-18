@@ -1,24 +1,26 @@
+using HwProj.Models.Enums;
+using HwProj.Models.Roles;
+
 namespace HwProj.Migrations
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
+	using System;
+	using System.Data.Entity;
+	using System.Data.Entity.Migrations;
+	using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<HwProj.Models.Contexts.UserDbContext>
-    {
-        public Configuration()
-        {
-            AutomaticMigrationsEnabled = true;
-            ContextKey = "HwProj.Models.Contexts.UserDbContext";
-        }
+	internal sealed class Configuration : DbMigrationsConfiguration<HwProj.Models.Contexts.ApplicationDbContext>
+	{
+		public Configuration()
+		{
+			AutomaticMigrationsEnabled = true;
+		}
 
-        protected override void Seed(HwProj.Models.Contexts.UserDbContext context)
-        {
-            //  This method will be called after migrating to the latest version.
+		protected override void Seed(HwProj.Models.Contexts.ApplicationDbContext context)
+		{
+			context.Roles.Add(RolesFactory.GetById("1"));
+			context.Roles.Add(RolesFactory.GetById("2"));
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data.
-        }
-    }
+			base.Seed(context);
+		}
+	}
 }

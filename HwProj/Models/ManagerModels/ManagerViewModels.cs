@@ -97,6 +97,9 @@ namespace HwProj.Models.ManagerModels
 		[Display(Name = "Имя")]
 		public string Name { get; set; }
 
+		[Display(Name = "Статус")]
+		public string Role { get; set; }
+
 		/// <summary>
 		/// Фамилия пользователя
 		/// </summary>

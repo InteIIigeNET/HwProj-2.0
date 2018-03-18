@@ -6,9 +6,10 @@ using System.Web;
 
 namespace HwProj.Models.Contexts
 {
+	/*
     public abstract class BaseContext : DbContext
     {
-        public BaseContext() : base("Hw2") { }
+        public BaseContext() : base("DefaultConnection") { }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -19,4 +20,5 @@ namespace HwProj.Models.Contexts
                 .ToTable("CourseMates"));
         }
     }
+	*/
 }

@@ -207,16 +207,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803171559289_DataMigration.cs" />
-    <Compile Include="Migrations\201803171559289_DataMigration.Designer.cs">
-      <DependentUpon>201803171559289_DataMigration.cs</DependentUpon>
+    <Compile Include="Migrations\201803181211495_InitialDatabase.cs" />
+    <Compile Include="Migrations\201803181211495_InitialDatabase.Designer.cs">
+      <DependentUpon>201803181211495_InitialDatabase.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Contexts\UserDbContext.cs" />
+    <Compile Include="Models\Contexts\ApplicationDbContext.cs" />
     <Compile Include="Models\ManagerModels\ApplicationManager.cs" />
     <Compile Include="Models\Award.cs" />
-    <Compile Include="Models\Contexts\ApplicationContext.cs" />
-    <Compile Include="Models\Contexts\AuthContext.cs" />
     <Compile Include="Models\Contexts\BaseContext.cs" />
     <Compile Include="Models\Contexts\EduContext.cs" />
     <Compile Include="Models\Enums\StandartEnums.cs" />
@@ -229,6 +227,9 @@
     <Compile Include="Models\Note.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\ManagerModels\AccountViewModels.cs" />
+    <Compile Include="Models\Roles\ApplicationRole.cs" />
+    <Compile Include="Models\Roles\ApplicationRoleManager.cs" />
+    <Compile Include="Models\Roles\RoleModels.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\Task.cs" />
     <Compile Include="Models\Teacher.cs" />
@@ -298,7 +299,6 @@
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
     <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Manage\Index1.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\Manage\Delete.cshtml" />
   </ItemGroup>
@@ -320,8 +320,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803171559289_DataMigration.resx">
-      <DependentUpon>201803171559289_DataMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803181211495_InitialDatabase.resx">
+      <DependentUpon>201803181211495_InitialDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

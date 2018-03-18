@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using HwProj.Models;
+using HwProj.Models.Enums;
 using HwProj.Models.ManagerModels;
 
 namespace HwProj.Controllers
@@ -118,12 +119,12 @@ namespace HwProj.Controllers
         {
             if (ModelState.IsValid)
             {
-	            var user = (User) model;
+	            var user = new User(model);
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+	                await UserManager.AddToRoleAsync(user.Id, RoleType.Студент.ToString());
+					await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     // Дополнительные сведения о включении подтверждения учетной записи и сброса пароля см. на странице https://go.microsoft.com/fwlink/?LinkID=320771.
                     // Отправка сообщения электронной почты с этой ссылкой
                      string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
