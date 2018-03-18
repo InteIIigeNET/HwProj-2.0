@@ -148,8 +148,15 @@ namespace HwProj.Controllers
             {
                 return View("Error");
             }
-            var result = await UserManager.ConfirmEmailAsync(userId, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+	        try
+	        {
+		        var result = await UserManager.ConfirmEmailAsync(userId, code);
+		        return View(result.Succeeded ? "ConfirmEmail" : "Error");
+	        }
+	        catch
+	        {
+				return View("Error");
+			}
         }
 
 		// GET: /Account/ForgotPassword
