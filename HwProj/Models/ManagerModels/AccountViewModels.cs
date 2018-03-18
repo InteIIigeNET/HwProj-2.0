@@ -13,6 +13,7 @@ namespace HwProj.Models.ManagerModels
 		/// Имя пользователя
 		/// </summary>
 		[Required]
+		[StringLength(20, ErrorMessage = "Значение {0} должно содержать не менее {2} символов.", MinimumLength = 2)]
 		[Display(Name = "Имя")]
 		public string Name { get; set; }
 
@@ -20,6 +21,7 @@ namespace HwProj.Models.ManagerModels
 		/// Фамилия пользователя
 		/// </summary>
 		[Required]
+		[StringLength(20, ErrorMessage = "Значение {0} должно содержать не менее {2} символов.", MinimumLength = 2)]
 		[Display(Name = "Фамилия")]
 		public string Surname { get; set; }
 
@@ -110,6 +112,7 @@ namespace HwProj.Models.ManagerModels
 
 		[Required]
 		[DataType(DataType.Password)]
+		[StringLength(100, ErrorMessage = "Значение {0} должно содержать не менее {2} символов.", MinimumLength = 6)]
 		[Display(Name = "Пароль")]
 		public string Password { get; set; }
 
@@ -132,7 +135,7 @@ namespace HwProj.Models.ManagerModels
 
 		[DataType(DataType.Password)]
 		[Display(Name = "Подтверждение пароля")]
-		[Compare("Password", ErrorMessage = "Пароль и его подтверждение не совпадают.")]
+		[Compare("NewPassword", ErrorMessage = "Пароль и его подтверждение не совпадают.")]
 		public string ConfirmPassword { get; set; }
 
 		public string Code { get; set; }

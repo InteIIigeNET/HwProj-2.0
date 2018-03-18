@@ -207,9 +207,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803181211495_InitialDatabase.cs" />
-    <Compile Include="Migrations\201803181211495_InitialDatabase.Designer.cs">
-      <DependentUpon>201803181211495_InitialDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\201803181310362_DataMigrations.cs" />
+    <Compile Include="Migrations\201803181310362_DataMigrations.Designer.cs">
+      <DependentUpon>201803181310362_DataMigrations.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Contexts\ApplicationDbContext.cs" />
@@ -302,6 +302,8 @@
     <Content Include="Views\Manage\Index.cshtml" />
     <Content Include="Views\Manage\Delete.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -321,8 +323,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803181211495_InitialDatabase.resx">
-      <DependentUpon>201803181211495_InitialDatabase.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803181310362_DataMigrations.resx">
+      <DependentUpon>201803181310362_DataMigrations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

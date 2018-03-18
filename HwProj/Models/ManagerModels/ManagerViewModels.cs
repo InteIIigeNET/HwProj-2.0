@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using HwProj.Models.Roles;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
@@ -94,6 +95,7 @@ namespace HwProj.Models.ManagerModels
 		/// Имя пользователя
 		/// </summary>
 		[Required]
+		[StringLength(20, ErrorMessage = "Значение {0} должно содержать не менее {2} символов.", MinimumLength = 2)]
 		[Display(Name = "Имя")]
 		public string Name { get; set; }
 
@@ -104,6 +106,7 @@ namespace HwProj.Models.ManagerModels
 		/// Фамилия пользователя
 		/// </summary>
 		[Required]
+		[StringLength(20, ErrorMessage = "Значение {0} должно содержать не менее {2} символов.", MinimumLength = 2)]
 		[Display(Name = "Фамилия")]
 		public string Surname { get; set; }
 
@@ -117,22 +120,22 @@ namespace HwProj.Models.ManagerModels
 
 		[Required]
 		[DataType(DataType.Password)]
-		[Display(Name = "Старый пароль")]
+		[Display(Name = "Пароль")]
 		[StringLength(100, ErrorMessage = "Значение {0} должно содержать не менее {2} символов.", MinimumLength = 6)]
-		public string OldPassword { get; set; }
+		public string Password { get; set; }
 		public string Id { get; set; }
 
 		[StringLength(100, ErrorMessage = "Значение {0} должно содержать не менее {2} символов.", MinimumLength = 6)]
 		[DataType(DataType.Password)]
 		[Display(Name = "Новый пароль")]
-		public string Password { get; set; }
+		public string NewPassword { get; set; }
 
 		/// <summary>
 		/// Повтор пароля
 		/// </summary>
 		[DataType(DataType.Password)]
 		[Display(Name = "Подтверждение пароля")]
-		[Compare("Password", ErrorMessage = "Пароль и его подтверждение не совпадают.")]
+		[Compare("NewPassword", ErrorMessage = "Пароль и его подтверждение не совпадают.")]
 		public string ConfirmPassword { get; set; }
 	}
 }
