@@ -9,4 +9,9 @@ namespace HwProj.Models.Enums
 	{
 		Male, Female
 	}
+
+	public enum RoleType
+	{
+		Преподаватель, Студент
+	}
 }

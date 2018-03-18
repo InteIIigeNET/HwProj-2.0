@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Вы девствительно собираетесь удалить свою страницу?";
+}
+
+<hgroup class="title">
+    <h2>@ViewBag.Title</h2>
+</hgroup>
+@Html.AntiForgeryToken()
+<div>
+    <hr/>
+    @Html.ActionLink("Да, действительно!", "ConfirmRemove", new { @class = "control-label col-md-2" })
+    <hr/>
+    @Html.ActionLink("Нет, это какая-то ошибка!", "Back", new { @class = "control-label col-md-4"})
+</div>
+	

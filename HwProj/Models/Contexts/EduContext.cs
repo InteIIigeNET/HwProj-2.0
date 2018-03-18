@@ -6,8 +6,10 @@ using System.Web;
 
 namespace HwProj.Models.Contexts
 {
-    public class EduContext : DbContext
+	/*
+    public class EduContext : BaseContext
     {
+		
         /// <summary>
         /// Пользователи (студенты и преподаватели)
         /// </summary>
@@ -23,17 +25,7 @@ namespace HwProj.Models.Contexts
         /// <summary>
         /// База домашних заданий студентов
         /// </summary>
-        public DbSet<Homework> Homeworks { get; set; }
-
-        public EduContext() : base() { }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Course>().HasMany(c => c.Users)
-                .WithMany(u => u.Courses)
-                .Map(t => t.MapLeftKey("CourseId")
-                .MapRightKey("UserId")
-                .ToTable("CourseMates"));
-        }
+        public DbSet<Homework> Homeworks { get; set; }       
     }
+	*/
 }

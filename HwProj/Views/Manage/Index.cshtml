@@ -1,0 +1,80 @@
+﻿@using System.Security.Principal
+@using HwProj.Models.ManagerModels
+@model HwProj.Models.ManagerModels.EditViewModel
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Index", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.HiddenFor(user => user.Id)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(user => user.Name, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(user => user.Name, new { @class = "form-control" })
+                @Html.ValidationMessageFor(user => user.Name)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(user => user.Surname, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(user => user.Surname, new { @class = "form-control" })
+                @Html.ValidationMessageFor(user => user.Surname)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(user => user.Email, "E-Mail", new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(user => user.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(user => user.Email)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(user => user.Password, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.PasswordFor(user => user.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(user => user.Password)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(user => user.ConfirmPassword, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.PasswordFor(user => user.ConfirmPassword, new { @class = "form-control" })
+                @Html.ValidationMessageFor(user => user.ConfirmPassword)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(user => user.OldPassword, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.PasswordFor(user => user.OldPassword, new { @class = "form-control" })
+                @Html.ValidationMessageFor(user => user.OldPassword)
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Сохранить" class="btn btn-default" />
+            </div>
+        </div>
+    <p>
+        @Html.Label("Unhappy?")
+        @Html.ActionLink("Удалить мой аккаунт", "Delete")
+    </p>
+    <p>
+        @Html.Label(@Model.Role)
+        @Html.ActionLink("@Подтвердить статус преподавалетя", "")
+    </p>
+        }
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

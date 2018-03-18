@@ -1,10 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
 using HwProj.Models.Enums;
+using HwProj.Models.ManagerModels;
+using HwProj.Models.Roles;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using WebGrease.Css.Extensions;
 
 namespace HwProj.Models
 {
@@ -12,31 +20,77 @@ namespace HwProj.Models
 	/// Модель пользователя сервиса
 	/// </summary>
     [Table("Users")]
-    public class User
-	{
+    public class User : IdentityUser
+    {
+        #region Properties
+		public Gender Gender { get; set; }
+	    /// <summary>
+	    /// Имя пользователя
+	    /// </summary>
+	    [Required]
+	    [Display(Name = "Имя")]
+	    public string Name { get; set; }
+
+	    /// <summary>
+	    /// Фамилия пользователя
+	    /// </summary>
+	    [Required]
+	    [Display(Name = "Фамилия")]
+	    public string Surname { get; set; }
 		/// <summary>
-		/// Уникальный идентификатор
+		/// Коллекция курсов пользователя
 		/// </summary>
-		public Guid     Id       { get; set; }
-		/// <summary>
-		/// Имя пользователя
-		/// </summary>
-		public string   Name     { get; set; }
-		/// <summary>
-		/// Фамилия пользователя
-		/// </summary>
-		public string   Surname  { get; set; }
-        /// <summary>
-        /// Почта пользователя
-        /// </summary>
-        public string Email { get; set; }
-		/// <summary>
-		/// Пол пользователя
-		/// </summary>
-		public Gender   Gender   { get; set; }
-        /// <summary>
-        /// Коллекция курсов пользователя
-        /// </summary>
-        public ICollection<Course> Courses { get; set; } = new List<Course>();       
+		public ICollection<Course> Courses { get; set; } = new List<Course>();
+		#endregion
+
+	    public static implicit operator User(RegisterViewModel model)
+	    {
+			return new User
+			{
+				UserName = model.Email,
+				Name = model.Name,
+				Surname = model.Surname,
+				Email = model.Email,
+				Gender = model.Gender
+			};
+		}
+
+		public User(): base() { }
+	    public User(RegisterViewModel model) : base()
+	    {
+		    UserName = model.Email;
+		    Name = model.Name;
+		    Surname = model.Surname;
+		    Email = model.Email;
+		    Gender = model.Gender;
+	    }
+
+	    public static explicit operator EditViewModel(User user)
+	    {
+		    return new EditViewModel()
+		    {
+				Id = user.Id,
+			    Name = user.Name,
+			    Surname = user.Surname,
+			    Email = user.Email,
+				Role = RolesFactory.GetById(user.Roles.First().RoleId).Name
+		    };
+	    }
+		public void EditFrom(EditViewModel model)
+		{
+			UserName = model.Email;
+			Name = model.Name;
+			Surname = model.Surname;
+			Email = model.Email;
+		}
+
+
+		public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
+        {
+            // Обратите внимание, что authenticationType должен совпадать с типом, определенным в CookieAuthenticationOptions.AuthenticationType
+            var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+            // Здесь добавьте утверждения пользователя
+            return userIdentity;
+        }
     }
 }
