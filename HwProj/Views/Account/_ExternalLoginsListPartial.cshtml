@@ -1,7 +1,6 @@
 ﻿@model HwProj.Models.ManagerModels.ExternalLoginListViewModel
 @using Microsoft.Owin.Security
 
-<h4>Используйте для входа другую службу.</h4>
 <hr />
 @{
     var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
@@ -16,13 +15,22 @@
     else {
         using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl })) {
             @Html.AntiForgeryToken()
-            <div id="socialLoginList">
-                <p>
-                    @foreach (AuthenticationDescription p in loginProviders) {
-                        <button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Войти с помощью учетной записи @p.Caption">@p.AuthenticationType</button>
+            <div>
+                <p>Или войдите через социальные сети:</p>
+                <div class="btn-group" id="social-login-list">
+                    @foreach (AuthenticationDescription p in loginProviders)
+                    {
+                        <button class="btn btn-light"
+                                type="button"
+                                id="@p.AuthenticationType"
+                                name="provider"
+                                value="@p.AuthenticationType"
+                                title="Войти с помощью учетной записи @p.Caption">
+                            @p.AuthenticationType
+                        </button>
                     }
-                </p>
-            </div>
+                </div>
+            </div>            
         }
     }
 }
