@@ -10,5 +10,6 @@ namespace HwProj.Models.Repositories
 		bool Add(T item);
 		bool Delete(T item);
 		T Get(Func<T, bool> predicate);
-	}
+        bool Contains(Func<T, bool> predicate);
+    }
 }
