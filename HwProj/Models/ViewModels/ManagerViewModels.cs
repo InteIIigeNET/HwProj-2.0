@@ -7,7 +7,7 @@ using HwProj.Models.Roles;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-namespace HwProj.Models.ManagerModels
+namespace HwProj.Models.ViewModels
 {
 
 	public class IndexViewModel

@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using HwProj.Models.Enums;
 
-namespace HwProj.Models.ManagerModels
+namespace HwProj.Models.ViewModels
 {
 	/// <summary>
 	/// Модель регистрации пользователя

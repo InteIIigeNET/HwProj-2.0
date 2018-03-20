@@ -8,7 +8,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using HwProj.Models.Enums;
-using HwProj.Models.ManagerModels;
+using HwProj.Models.ViewModels;
 using HwProj.Models.Roles;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
