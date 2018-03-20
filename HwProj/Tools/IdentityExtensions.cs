@@ -16,8 +16,7 @@ namespace HwProj.Tools
 			{
 				throw new ArgumentNullException("identity");
 			}
-			var ci = identity as ClaimsIdentity;
-			if (ci != null)
+			if (identity is ClaimsIdentity ci)
 			{
 				var id = ci.FindFirst(ClaimTypes.NameIdentifier);
 				if (id != null)
@@ -33,9 +32,8 @@ namespace HwProj.Tools
 			{
 				throw new ArgumentNullException("identity");
 			}
-			var ci = identity as ClaimsIdentity;
 			string role = "";
-			if (ci != null)
+			if (identity is ClaimsIdentity ci)
 			{
 				var id = ci.FindFirst(ClaimsIdentity.DefaultRoleClaimType);
 				if (id != null)
@@ -49,9 +47,8 @@ namespace HwProj.Tools
 			{
 				throw new ArgumentNullException("identity");
 			}
-			var ci = identity as ClaimsIdentity;
 			string surname = "";
-			if (ci != null)
+			if (identity is ClaimsIdentity ci)
 			{
 				var id = ci.FindFirst(ClaimTypes.Surname);
 				if (id != null)

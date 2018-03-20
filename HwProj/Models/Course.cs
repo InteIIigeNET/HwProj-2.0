@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using HwProj.Controllers;
-using HwProj.Models.ManagerModels;
+using HwProj.Models.ViewModels;
 
 namespace HwProj.Models
 {

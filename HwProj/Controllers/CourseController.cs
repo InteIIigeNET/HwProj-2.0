@@ -7,7 +7,7 @@ using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using HwProj.Models.Enums;
-using HwProj.Models.ManagerModels;
+using HwProj.Models.ViewModels;
 using HwProj.Models.Repositories;
 using HwProj.Tools;
 using Microsoft.AspNet.Identity;

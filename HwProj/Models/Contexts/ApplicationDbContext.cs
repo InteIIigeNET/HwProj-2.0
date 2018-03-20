@@ -29,6 +29,8 @@ namespace HwProj.Models.Contexts
                 .Map(t => t.MapLeftKey("CourseId")
                 .MapRightKey("UserId")
                 .ToTable("CourseMates"));
+
+			base.OnModelCreating(modelBuilder);
         }
 
         /// <summary>
