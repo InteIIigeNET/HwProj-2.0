@@ -14,22 +14,28 @@ namespace HwProj.Models.Repositories
 
         public bool Add(Course item)
         {
-            throw new NotImplementedException();
+	        if (Contains(c => c.Id == item.Id)) return false;
+		    Context.Courses.Add(item);
+	        Context.SaveChanges();
+	        return true;
         }
 
         public bool Contains(Func<Course, bool> predicate)
         {
-            throw new NotImplementedException();
+	        return Context.Courses.FirstOrDefault(predicate) != null;
         }
 
         public bool Delete(Course item)
         {
-            throw new NotImplementedException();
-        }
-
+			if (Contains(c => c.Id == item.Id)) return false;
+	        Context.Courses.Remove(item);
+	        Context.SaveChanges();
+	        return true;
+		}
+	
         public Course Get(Func<Course, bool> predicate)
         {
-            throw new NotImplementedException();
+	        return Context.Courses.FirstOrDefault(predicate);
         }
     }
 }
