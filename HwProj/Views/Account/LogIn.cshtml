@@ -12,7 +12,7 @@
             new {@class = "jumbotron", @id = "login-form", role = "form"}))
         {
             @Html.AntiForgeryToken()
-            <h3 class="text-center">@ViewBag.Title</h3>
+            <h4 class="text-center">@ViewBag.Title</h4>
             <hr/>
             @Html.ValidationSummary(true, "", new {@class = "text-danger"})
             <div class="form-group">

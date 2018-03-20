@@ -15,3 +15,7 @@
 .dl-horizontal dt {
     white-space: normal;
 }
+
+#main-body {
+    background-color: #cccdd1;
+} 
