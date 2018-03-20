@@ -27,11 +27,6 @@ namespace HwProj.Models.Repositories
             throw new NotImplementedException();
         }
 
-        public void Dispose()
-        {
-            throw new NotImplementedException();
-        }
-
         public Course Get(Func<Course, bool> predicate)
         {
             throw new NotImplementedException();

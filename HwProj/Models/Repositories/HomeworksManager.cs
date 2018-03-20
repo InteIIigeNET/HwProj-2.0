@@ -12,27 +12,28 @@ namespace HwProj.Models.Repositories
 
         public bool Add(Homework item)
         {
-            throw new NotImplementedException();
+            if (Contains(h => h.Id == item.Id)) return false;
+            Context.Homeworks.Add(item);
+            Context.SaveChanges();
+            return true;
         }
 
         public bool Contains(Func<Homework, bool> predicate)
         {
-            throw new NotImplementedException();
+            return Get(predicate) != null;
         }
 
         public bool Delete(Homework item)
         {
-            throw new NotImplementedException();
-        }
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
+            if (!Contains(h => h.Id == item.Id)) return false;
+            Context.Homeworks.Remove(item);
+            Context.SaveChanges();
+            return true;            
         }
 
         public Homework Get(Func<Homework, bool> predicate)
         {
-            throw new NotImplementedException();
+            return Context.Homeworks.FirstOrDefault(predicate);
         }
     }
 }
