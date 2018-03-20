@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HwProj", "HwProj\HwProj.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HwProj.Tests", "HwProj.Tests\HwProj.Tests.csproj", "{635CD50D-4064-42A2-ABBA-2E635BE575E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityService", "IdentityService\IdentityService.csproj", "{11D815B8-BE72-4E57-B6C0-1139ACAD2132}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{635CD50D-4064-42A2-ABBA-2E635BE575E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{635CD50D-4064-42A2-ABBA-2E635BE575E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{635CD50D-4064-42A2-ABBA-2E635BE575E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{11D815B8-BE72-4E57-B6C0-1139ACAD2132}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{11D815B8-BE72-4E57-B6C0-1139ACAD2132}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{11D815B8-BE72-4E57-B6C0-1139ACAD2132}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{11D815B8-BE72-4E57-B6C0-1139ACAD2132}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
