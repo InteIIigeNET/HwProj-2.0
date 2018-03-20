@@ -17,18 +17,28 @@
             <!--@Html.AntiForgeryToken()-->
             <div>
                 <p>Или войдите через социальные сети:</p>
-                <div class="btn-group" id="social-login-list">
+                <div class="text-center" id="social-login-list">
                     @foreach (AuthenticationDescription p in loginProviders)
                     {
-                        <button class="btn btn-light"
+                        var provider = String.Empty;
+                        switch (p.AuthenticationType)
+                        {
+                            case "Vkontakte":
+                                provider = "vk";
+                                break;
+                            case "Google":
+                                provider = "google";
+                                break;
+                         }
+                         <button class="btn btn-dark"
                                 type="button"
                                 id="@p.AuthenticationType"
                                 name="provider"
                                 value="@p.AuthenticationType"
                                 title="Войти с помощью учетной записи @p.Caption">
-                            @p.AuthenticationType
+                             <i class="fab fa-@provider fa-lg" data-fa-mask="fas fa-square"></i>
                         </button>
-                    }
+                     }
                 </div>
             </div>            
         }
