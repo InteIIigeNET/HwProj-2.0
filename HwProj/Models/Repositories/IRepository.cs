@@ -5,7 +5,7 @@ using System.Web;
 
 namespace HwProj.Models.Repositories
 {
-	internal interface IRepository<T>
+	public interface IRepository<T>
     {
 		bool Add(T item);
 		bool Delete(T item);
