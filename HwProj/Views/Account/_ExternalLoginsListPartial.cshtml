@@ -1,7 +1,6 @@
-﻿@model HwProj.Models.ManagerModels.ExternalLoginListViewModel
+﻿@model HwProj.Models.ViewModels.ExternalLoginListViewModel
 @using Microsoft.Owin.Security
 
-<h4>Используйте для входа другую службу.</h4>
 <hr />
 @{
     var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
@@ -15,14 +14,33 @@
     }
     else {
         using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl })) {
-            @Html.AntiForgeryToken()
-            <div id="socialLoginList">
-                <p>
-                    @foreach (AuthenticationDescription p in loginProviders) {
-                        <button type="submit" class="btn btn-default" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" title="Войти с помощью учетной записи @p.Caption">@p.AuthenticationType</button>
-                    }
-                </p>
-            </div>
+            <!--@Html.AntiForgeryToken()-->
+            <div>
+                <p>Или войдите через социальные сети:</p>
+                <div class="text-center" id="social-login-list">
+                    @foreach (AuthenticationDescription p in loginProviders)
+                    {
+                        var provider = String.Empty;
+                        switch (p.AuthenticationType)
+                        {
+                            case "Vkontakte":
+                                provider = "vk";
+                                break;
+                            case "Google":
+                                provider = "google";
+                                break;
+                         }
+                         <button class="btn btn-dark"
+                                type="button"
+                                id="@p.AuthenticationType"
+                                name="provider"
+                                value="@p.AuthenticationType"
+                                title="Войти с помощью учетной записи @p.Caption">
+                             <i class="fab fa-@provider fa-lg" data-fa-mask="fas fa-square"></i>
+                        </button>
+                     }
+                </div>
+            </div>            
         }
     }
 }

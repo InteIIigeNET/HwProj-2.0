@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using HwProj.Controllers;
+using HwProj.Models.ViewModels;
 
 namespace HwProj.Models
 {
@@ -18,7 +20,7 @@ namespace HwProj.Models
 		/// <summary>
 		/// Уникальный идентификатор курса
 		/// </summary>
-		public int    Id  { get; set; }
+		public Guid Id  { get; set; }
 		/// <summary>
 		/// Название курса
 		/// </summary>
@@ -27,10 +29,14 @@ namespace HwProj.Models
 		/// Идентификатор группы, для которой предназначен курс
 		/// </summary>
 		public string GroupName  { get; set; }
-        /// <summary>
-        /// Завершен ли курс?
-        /// </summary>
-        public bool IsComplete { get; set; }
+		/// <summary>
+		/// Преподаватель
+		/// </summary>
+		public string MentorName { get; set; }
+		/// <summary>
+		/// Завершен ли курс?
+		/// </summary>
+		public bool IsComplete { get; set; }
         /// <summary>
         /// Коллекция пользователей этого курса
         /// </summary>
@@ -39,5 +45,21 @@ namespace HwProj.Models
         /// Таски этого курса
         /// </summary>
         public ICollection<Task> Tasks { get; set; }
+
+		public static implicit operator Course(CreateCourseViewModel model)
+		{
+			return new Course()
+			{
+				GroupName = model.GroupName,
+				Name = model.Name
+			};
+		}
+
+		public static bool EqualDescription(Course c1, Course c2)
+		{
+			return (c1.GroupName == c2.GroupName) &&
+			       (c1.Name == c2.Name) &&
+			       (c1.MentorName == c2.MentorName);
+		}
     }
 }
