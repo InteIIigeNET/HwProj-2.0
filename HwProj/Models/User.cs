@@ -89,8 +89,10 @@ namespace HwProj.Models
         {
             // Обратите внимание, что authenticationType должен совпадать с типом, определенным в CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
-            // Здесь добавьте утверждения пользователя
-            return userIdentity;
+	        userIdentity.AddClaim(new Claim(ClaimTypes.Surname, this.Surname));
+	        userIdentity.AddClaim(new Claim(ClaimTypes.Role, this.Roles.First().RoleId.GetName()));
+			// Здесь добавьте утверждения пользователя
+			return userIdentity;
         }
     }
 }

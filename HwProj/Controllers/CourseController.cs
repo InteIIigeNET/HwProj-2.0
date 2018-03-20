@@ -3,25 +3,41 @@ using HwProj.Models.Contexts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
+using HwProj.Models.Enums;
+using HwProj.Models.ManagerModels;
 using HwProj.Models.Repositories;
+using HwProj.Tools;
+using Microsoft.AspNet.Identity;
 
 namespace HwProj.Controllers
 {
 	[Authorize]
     public class CourseController : Controller
     {
-	    private MainEduRepository EduRepository = new MainEduRepository();
-        public ActionResult Create()
+	    private MainEduRepository EduRepository = MainEduRepository.Instance;
+
+	    [Authorize(Roles = "Преподаватель")]
+		public ActionResult Create()
         {            
             return View();
         }
 
-        [HttpPost]
-        public ActionResult Create(Course course)
+	    [Authorize(Roles = "Преподаватель")]
+		[HttpPost]
+        public ActionResult Create(CreateCourseViewModel courseView)
         {
-            return View(course);
+	        if (!ModelState.IsValid)
+	        {
+		        return View();
+	        }
+	        var cource = (Course) courseView;
+	        cource.MentorName = User.Identity.Name + " " + User.Identity.GetUserSurname();
+	        EduRepository.CourseManager.Add(cource);
+
+			return View();
         }
     }
 }

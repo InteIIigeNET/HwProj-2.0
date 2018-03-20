@@ -14,13 +14,16 @@ namespace HwProj.Models.Repositories
 
         public bool Add(Course item)
         {
-	        if (Contains(c => c.Id == item.Id)) return false;
+	        item.IsComplete = false;
+	        item.Id = new Guid();
+			if (Contains(c => c.Id == item.Id)) return false;
+
 		    Context.Courses.Add(item);
 	        Context.SaveChanges();
 	        return true;
         }
 
-        public bool Contains(Func<Course, bool> predicate)
+		public bool Contains(Func<Course, bool> predicate)
         {
 	        return Context.Courses.FirstOrDefault(predicate) != null;
         }
