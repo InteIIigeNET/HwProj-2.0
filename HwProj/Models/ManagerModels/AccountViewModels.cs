@@ -133,9 +133,10 @@ namespace HwProj.Models.ManagerModels
 		[Display(Name = "Пароль")]
 		public string Password { get; set; }
 
+		[Required]
 		[DataType(DataType.Password)]
 		[Display(Name = "Подтверждение пароля")]
-		[Compare("NewPassword", ErrorMessage = "Пароль и его подтверждение не совпадают.")]
+		[Compare("Password", ErrorMessage = "Пароль и его подтверждение не совпадают.")]
 		public string ConfirmPassword { get; set; }
 
 		public string Code { get; set; }
