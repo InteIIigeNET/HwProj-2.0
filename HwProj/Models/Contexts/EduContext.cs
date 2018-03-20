@@ -6,14 +6,10 @@ using System.Web;
 
 namespace HwProj.Models.Contexts
 {
-	/*
+	
     public class EduContext : BaseContext
     {
 		
-        /// <summary>
-        /// Пользователи (студенты и преподаватели)
-        /// </summary>
-        public DbSet<User> Users { get; set; }
         /// <summary>
         /// Все курсы
         /// </summary>
@@ -27,5 +23,5 @@ namespace HwProj.Models.Contexts
         /// </summary>
         public DbSet<Homework> Homeworks { get; set; }       
     }
-	*/
+
 }

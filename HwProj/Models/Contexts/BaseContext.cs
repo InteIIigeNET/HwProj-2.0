@@ -6,7 +6,7 @@ using System.Web;
 
 namespace HwProj.Models.Contexts
 {
-	/*
+	
     public abstract class BaseContext : DbContext
     {
         public BaseContext() : base("DefaultConnection") { }
@@ -20,5 +20,5 @@ namespace HwProj.Models.Contexts
                 .ToTable("CourseMates"));
         }
     }
-	*/
+	
 }
