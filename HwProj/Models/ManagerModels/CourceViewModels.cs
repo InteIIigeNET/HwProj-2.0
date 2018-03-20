@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace HwProj.Models.ManagerModels
+namespace HwProj.Models.ViewModels
 {
 	public class CreateCourseViewModel
 	{
