@@ -21,6 +21,28 @@ namespace HwProj.Models.Contexts
         {
             return new ApplicationDbContext();
         }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Course>().HasMany(c => c.Users)
+                .WithMany(u => u.Courses)
+                .Map(t => t.MapLeftKey("CourseId")
+                .MapRightKey("UserId")
+                .ToTable("CourseMates"));
+        }
+
+        /// <summary>
+        /// Все курсы
+        /// </summary>
+        public DbSet<Course> Courses { get; set; }
+        /// <summary>
+        /// База всех заданий
+        /// </summary>
+        public DbSet<Task> Tasks { get; set; }
+        /// <summary>
+        /// База домашних заданий студентов
+        /// </summary>
+        public DbSet<Homework> Homeworks { get; set; }
     }
 
 }
