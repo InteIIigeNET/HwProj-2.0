@@ -12,7 +12,7 @@ namespace HwProj.Controllers
 	[Authorize]
     public class CourseController : Controller
     {
-	    private MainEduRepository EduRepository = new MainEduRepository();
+        private MainEduRepository EduRepository = MainEduRepository.Instance;
         public ActionResult Create()
         {            
             return View();
