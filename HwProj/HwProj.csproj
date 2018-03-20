@@ -204,13 +204,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Migrations\201803181310362_DataMigrations.cs" />
     <Compile Include="Migrations\201803181310362_DataMigrations.Designer.cs">
       <DependentUpon>201803181310362_DataMigrations.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Contexts\ApplicationDbContext.cs" />
-    <Compile Include="Models\ManagerModels\ApplicationManager.cs" />
+    <Compile Include="Models\Courses\CourseRepository.cs" />
     <Compile Include="Models\Award.cs" />
     <Compile Include="Models\Enums\StandartEnums.cs" />
     <Compile Include="Models\Error.cs" />
