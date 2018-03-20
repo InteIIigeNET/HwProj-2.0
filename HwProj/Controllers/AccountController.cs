@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using HwProj.Models;
 using HwProj.Models.Enums;
 using HwProj.Models.ManagerModels;
+using HwProj.Models.Contexts;
 
 namespace HwProj.Controllers
 {
