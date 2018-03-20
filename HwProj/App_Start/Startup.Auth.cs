@@ -10,7 +10,7 @@ using HwProj.Models.Contexts;
 using HwProj.Models.Roles;
 using KatanaContrib.Security.VK;
 using Microsoft.Owin.Security.Google;
-using HwProj.Models.Courses;
+using HwProj.Models.Repositories;
 
 namespace HwProj
 {
