@@ -127,7 +127,7 @@ namespace HwProj.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-	                await UserManager.AddToRoleAsync(user.Id, RoleType.Студент.ToString());
+	                await UserManager.AddToRoleAsync(user.Id, RoleType.Преподаватель.ToString());
 					await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     // Дополнительные сведения о включении подтверждения учетной записи и сброса пароля см. на странице https://go.microsoft.com/fwlink/?LinkID=320771.
                     // Отправка сообщения электронной почты с этой ссылкой

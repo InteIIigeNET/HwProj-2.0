@@ -3,17 +3,18 @@
 @model Course
 
 <table>
-    <a href="@Model.MentorsEmail">@Model.MentorsName</a>
+    <h3>@Model.MentorsName</h3>
+    <a href="@Model.MentorsEmail">@Model.MentorsEmail</a>
     @foreach (var user in Model.Users)
     {
         <tr>
             <td>@user.UserName</td>
             @foreach (var homework in user.Homeworks)
             {
-                if(homework.Task.CourseId == Model.Id)
+                if (homework.Task.CourseId == Model.Id)
                 {
                     <td><a href='@Url.Action("Action для отображения дз", "дз коетроллер")'>
-                        <img src='@Url.Content("~/Content/Images/MyLinkImage.png")' />
+                        <img src='@Url.Content("~/Content/Images/MyLinkImage.png")'/>
                     </a></td>
                 }
             }
