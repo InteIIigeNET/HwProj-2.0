@@ -33,7 +33,7 @@ namespace HwProj.Models
         /// <summary>
         /// Пользователь по этому userId
         /// </summary>
-        public Student Student { get; set; }
+        public User Student { get; set; }
 		/// <summary>
 		/// Зачтена ли данная попытка сдачи выполненного задания
 		/// </summary>

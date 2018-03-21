@@ -33,7 +33,7 @@ namespace HwProj.Models.Repositories
         {
             context = new ApplicationDbContext();
             CourseManager = new CoursesManager(context);
-            HomeworkManager = new HomeworksManager(context);
+            //HomeworkManager = new HomeworksManager(context);
         }
 
         public void Dispose()

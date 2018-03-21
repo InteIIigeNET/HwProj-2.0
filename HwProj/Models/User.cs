@@ -37,10 +37,16 @@ namespace HwProj.Models
 	    [Required]
 	    [Display(Name = "Фамилия")]
 	    public string Surname { get; set; }
+
 		/// <summary>
 		/// Коллекция курсов пользователя
 		/// </summary>
 		public ICollection<Course> Courses { get; set; } = new List<Course>();
+
+        /// <summary>
+        /// Домашка
+        /// </summary>
+        public ICollection<Homework> Homeworks { get; set; }
 		#endregion
 
 	    public static implicit operator User(RegisterViewModel model)
