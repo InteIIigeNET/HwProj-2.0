@@ -54,5 +54,12 @@ namespace HwProj.Models
 				Name = model.Name
 			};
 		}
+
+		public static bool EqualDescription(Course c1, Course c2)
+		{
+			return (c1.GroupName == c2.GroupName) &&
+			       (c1.Name == c2.Name) &&
+			       (c1.MentorName == c2.MentorName);
+		}
     }
 }

@@ -26,18 +26,23 @@ namespace HwProj.Controllers
         }
 
 	    [Authorize(Roles = "Преподаватель")]
-		[HttpPost]
-        public ActionResult Create(CreateCourseViewModel courseView)
-        {
-	        if (!ModelState.IsValid)
-	        {
-		        return View();
-	        }
-	        var cource = (Course) courseView;
-	        cource.MentorName = User.Identity.Name + " " + User.Identity.GetUserSurname();
-	        EduRepository.CourseManager.Add(cource);
-
-			return View();
-        }
+	    [HttpPost]
+	    public ActionResult Create(CreateCourseViewModel courseView)
+	    {
+		    if (!ModelState.IsValid)
+		    {
+			    return View();
+		    }
+		    var cource = (Course) courseView;
+		    cource.MentorName = User.Identity.Name + " " + User.Identity.GetUserSurname();
+			if (EduRepository.CourseManager.Contains(t => Course.EqualDescription(t, cource)))
+			    ModelState.AddModelError("", "Курс с таким описанием уже существует");
+		    else
+		    {
+			    if (EduRepository.CourseManager.Add(cource)) ; //успех
+				else ModelState.AddModelError("", "Ошибка при созданни курса. Повторите попытку.");
+			}
+		    return View();
+	    }
     }
 }
