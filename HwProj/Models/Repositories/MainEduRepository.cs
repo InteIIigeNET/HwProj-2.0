@@ -18,7 +18,9 @@ namespace HwProj.Models.Repositories
     public class MainEduRepository : IDisposable
     {
         public IRepository<Course> CourseManager { get; }
-        public IRepository<Homework> HomeworkManager { get; }
+        //public IRepository<Homework> HomeworkManager { get; }
+        public IRepository<User> UserManager { get; }
+
 
 
         #region Singleton
@@ -33,7 +35,13 @@ namespace HwProj.Models.Repositories
         {
             context = new ApplicationDbContext();
             CourseManager = new CoursesManager(context);
+            UserManager = new UserManager(context);
             //HomeworkManager = new HomeworksManager(context);
+        }
+
+        public void SaveChanges()
+        {
+            context.SaveChanges();
         }
 
         public void Dispose()

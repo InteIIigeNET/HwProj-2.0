@@ -5,13 +5,17 @@
 <table>
     <h3>@Model.MentorsName</h3>
     <a href="@Model.MentorsEmail">@Model.MentorsEmail</a>
+    @if (Model.UserExist(User.Identity.Name))
+    {
+        Html.Partial("SingInCourse");
+    }
     @foreach (var user in Model.Users)
     {
     <tr>
         <td>@user.UserName</td>
         @foreach (var task in Model.Tasks)
         {
-            @foreach (var homework in task.Homeworks)
+            foreach (var homework in task.Homeworks)
             {
             <td>
                 <a href='@Url.Action("Index", "Homework", homework)'>

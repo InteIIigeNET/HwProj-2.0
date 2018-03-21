@@ -3,7 +3,7 @@ namespace HwProj.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class init2 : DbMigration
+    public partial class init : DbMigration
     {
         public override void Up()
         {
