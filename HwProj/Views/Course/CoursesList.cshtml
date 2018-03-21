@@ -1,0 +1,11 @@
+﻿@model IEnumerable<HwProj.Models.Course>
+
+<ul>
+    @foreach (var course in Model)
+    {
+        <li>
+            @Html.ActionLink(@course.Name, "Index", "Course", new { courseId = course.Id }, new { })
+            <p>@course.MentorsName</p>
+        </li>
+    }
+</ul>
