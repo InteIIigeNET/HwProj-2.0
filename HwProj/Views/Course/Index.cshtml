@@ -18,10 +18,9 @@
         </div>
     }
 
-    <a href="@Model.MentorsEmail">@Model.MentorsEmail</a>
-    @if (Model.UserExist(User.Identity.Name))
+    @if (!Model.UserExist(User.Identity.Name))
     {
-        Html.Partial("SingInCourse");
+        Html.Partial("SingInCourse", Model.Id);
     }
     @foreach (var user in Model.Users)
     {
