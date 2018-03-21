@@ -53,7 +53,7 @@ namespace HwProj.Models
 	    {
 			return new User
 			{
-				UserName = model.Name + " " + model.Surname,
+				UserName = model.Email,
                 Name = model.Name,
 				Surname = model.Surname,
 				Email = model.Email,
@@ -64,7 +64,7 @@ namespace HwProj.Models
 		public User(): base() { }
 	    public User(RegisterViewModel model) : base()
 	    {
-            UserName = model.Name + " " + model.Surname;
+            UserName = model.Email;
             Name = model.Name;
             Surname = model.Surname;
             Email = model.Email;
@@ -98,6 +98,7 @@ namespace HwProj.Models
 	        userIdentity.AddClaim(new Claim(ClaimTypes.Surname, this.Surname));
             userIdentity.AddClaim(new Claim(ClaimTypes.Name, this.Name));
             userIdentity.AddClaim(new Claim(ClaimTypes.Email, this.Email));
+            userIdentity.AddClaim(new Claim(ClaimTypes.GivenName, this.Name + " " + this.Surname));
             userIdentity.AddClaim(new Claim(ClaimTypes.Role, this.Roles.First().RoleId.GetName()));
 			// Здесь добавьте утверждения пользователя
 			return userIdentity;

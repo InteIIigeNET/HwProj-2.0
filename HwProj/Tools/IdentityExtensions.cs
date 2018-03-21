@@ -73,6 +73,22 @@ namespace HwProj.Tools
             return name;
         }
 
+        public static string GetUserFullName(this IIdentity identity)
+        {
+            if (identity == null)
+            {
+                throw new ArgumentNullException("identity");
+            }
+            string fullName = "";
+            if (identity is ClaimsIdentity ci)
+            {
+                var id = ci.FindFirst(ClaimTypes.GivenName);
+                if (id != null)
+                    fullName = id.Value;
+            }
+            return fullName;
+        }
+
         public static string GetUserEmail(this IIdentity identity)
         {
             if (identity == null)
