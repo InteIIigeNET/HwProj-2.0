@@ -1,11 +1,22 @@
 ﻿@using HwProj.Models 
+@using HwProj.Tools
 @model Course
 
 <table>
-    <tr>
-        @foreach (var user in Model.Users)
-        {
-            <td>@user.UserName </td>
-        }
-    </td>
+    <a href="@Model.MentorsEmail">@Model.MentorsName</a>
+    @foreach (var user in Model.Users)
+    {
+        <tr>
+            <td>@user.UserName</td>
+            @foreach (var homework in user.Homeworks)
+            {
+                if(homework.Task.CourseId == Model.Id)
+                {
+                    <td><a href='@Url.Action("Action для отображения дз", "дз коетроллер")'>
+                        <img src='@Url.Content("~/Content/Images/MyLinkImage.png")' />
+                    </a></td>
+                }
+            }
+        </tr>
+    }
 </table>

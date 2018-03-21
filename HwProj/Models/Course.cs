@@ -29,10 +29,14 @@ namespace HwProj.Models
 		/// Идентификатор группы, для которой предназначен курс
 		/// </summary>
 		public string GroupName  { get; set; }
+        /// <summary>
+        /// Мыло препода
+        /// </summary>
+        public string MentorsEmail { get; set; }
 		/// <summary>
-		/// Преподаватель
+		/// Имя преподавателя
 		/// </summary>
-		public string MentorName { get; set; }
+		public string MentorsName { get; set; }
 		/// <summary>
 		/// Завершен ли курс?
 		/// </summary>
@@ -61,7 +65,8 @@ namespace HwProj.Models
             {
                 GroupName = model.GroupName,
                 Name = model.Name,
-                MentorName = model.MentorName
+                MentorsName = model.MentorName
+
             };
         }
 
@@ -75,7 +80,7 @@ namespace HwProj.Models
                 return value;
             if ((value = this.Name.CompareTo(other.Name)) != 0)
                 return value;
-            if ((value = this.MentorName.CompareTo(other.MentorName)) != 0)
+            if ((value = this.MentorsName.CompareTo(other.MentorsName)) != 0)
                 return value;
             return 0;
         }
