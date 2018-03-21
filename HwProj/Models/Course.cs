@@ -15,7 +15,7 @@ namespace HwProj.Models
 	/// Модель курса занятий
 	/// </summary>
     [Table("Courses")]
-    public class Course  : IComparable<Course>
+    public class Course  : IComparable
 	{
 		/// <summary>
 		/// Уникальный идентификатор курса
@@ -55,8 +55,20 @@ namespace HwProj.Models
 			};
 		}
 
-        public int CompareTo(Course other)
+        public static implicit operator Course(CourseViewModel model)
         {
+            return new Course()
+            {
+                GroupName = model.GroupName,
+                Name = model.Name,
+                MentorName = model.MentorName
+            };
+        }
+
+        public int CompareTo(object obj)
+        {
+            var other = obj as Course;
+
             if (other == null) return 1;
             int value;
             if ((value = this.GroupName.CompareTo(other.GroupName)) != 0)
