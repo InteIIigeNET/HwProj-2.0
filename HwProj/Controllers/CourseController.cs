@@ -44,5 +44,10 @@ namespace HwProj.Controllers
 			}
 		    return View();
 	    }
+
+	    public ActionResult Index(Course course)
+        {
+
+        }
     }
 }

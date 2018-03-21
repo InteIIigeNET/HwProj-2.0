@@ -209,7 +209,7 @@
       <DependentUpon>201803211112490_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\ViewModels\CourceViewModels.cs" />
+    <Compile Include="Models\ViewModels\CourseViewModels.cs" />
     <Compile Include="Models\Repositories\BaseManager.cs" />
     <Compile Include="Models\Repositories\HomeworksManager.cs" />
     <Compile Include="Models\Repositories\IRepository.cs" />
