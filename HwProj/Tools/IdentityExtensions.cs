@@ -56,5 +56,37 @@ namespace HwProj.Tools
 			}
 			return surname;
 		}
-	}
+
+        public static string GetUserName(this IIdentity identity)
+        {
+            if (identity == null)
+            {
+                throw new ArgumentNullException("identity");
+            }
+            string name = "";
+            if (identity is ClaimsIdentity ci)
+            {
+                var id = ci.FindFirst(ClaimTypes.Name);
+                if (id != null)
+                    name = id.Value;
+            }
+            return name;
+        }
+
+        public static string GetUserEmail(this IIdentity identity)
+        {
+            if (identity == null)
+            {
+                throw new ArgumentNullException("identity");
+            }
+            string email = "";
+            if (identity is ClaimsIdentity ci)
+            {
+                var id = ci.FindFirst(ClaimTypes.Email);
+                if (id != null)
+                    email = id.Value;
+            }
+            return email;
+        }
+    }
 }
