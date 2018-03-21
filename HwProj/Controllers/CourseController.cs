@@ -46,9 +46,9 @@ namespace HwProj.Controllers
 	    }
 
         [AllowAnonymous]
-	    public ActionResult Index(CourseViewModel course)
+	    public ActionResult Index(Guid courseId)
         {
-            return View(EduRepository.CourseManager.Get(c => c.CompareTo(course) == 0));
+            return View(EduRepository.CourseManager.Get(c => c.Id == courseId));
         }
     }
 }
