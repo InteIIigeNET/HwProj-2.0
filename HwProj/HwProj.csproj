@@ -200,6 +200,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HomeworkController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Filters\AnonymousOnlyAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -321,6 +322,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Homework\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
