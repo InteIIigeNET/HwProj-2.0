@@ -33,13 +33,13 @@ namespace HwProj.Controllers
 		    {
 			    return View();
 		    }
-		    var cource = (Course) courseView;
-		    cource.MentorName = User.Identity.Name + " " + User.Identity.GetUserSurname();
-			if (EduRepository.CourseManager.Contains(t => Course.EqualDescription(t, cource)))
+		    var course = (Course) courseView;
+		    course.MentorName = User.Identity.Name + " " + User.Identity.GetUserSurname();
+			if (EduRepository.CourseManager.Contains(t => t.CompareTo(course) == 0))
 			    ModelState.AddModelError("", "Курс с таким описанием уже существует");
 		    else
 		    {
-			    if (EduRepository.CourseManager.Add(cource)) ; //успех
+			    if (EduRepository.CourseManager.Add(course)) ; //успех
 				else ModelState.AddModelError("", "Ошибка при созданни курса. Повторите попытку.");
 			}
 		    return View();
