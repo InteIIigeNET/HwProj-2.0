@@ -3,7 +3,8 @@
 @model Course
 
 <table>
-    <a href="@Model.MentorsEmail">@Model.MentorsName</a>
+    <h3>@Model.MentorsName</h3>
+    <a href="@Model.MentorsEmail">@Model.MentorsEmail</a>
     @foreach (var user in Model.Users)
     {
     <tr>

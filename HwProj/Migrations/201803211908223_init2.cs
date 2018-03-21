@@ -3,7 +3,7 @@ namespace HwProj.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class init : DbMigration
+    public partial class init2 : DbMigration
     {
         public override void Up()
         {
@@ -14,7 +14,8 @@ namespace HwProj.Migrations
                         Id = c.Guid(nullable: false),
                         Name = c.String(),
                         GroupName = c.String(),
-                        MentorName = c.String(),
+                        MentorsEmail = c.String(),
+                        MentorsName = c.String(),
                         IsComplete = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
@@ -24,14 +25,13 @@ namespace HwProj.Migrations
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        CourseId = c.Int(nullable: false),
+                        CourseId = c.Guid(nullable: false),
                         Title = c.String(),
                         Description = c.String(),
-                        Course_Id = c.Guid(),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Courses", t => t.Course_Id)
-                .Index(t => t.Course_Id);
+                .ForeignKey("dbo.Courses", t => t.CourseId, cascadeDelete: true)
+                .Index(t => t.CourseId);
             
             CreateTable(
                 "dbo.StudentsHomework",
@@ -147,7 +147,7 @@ namespace HwProj.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.StudentsHomework", "Student_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Tasks", "Course_Id", "dbo.Courses");
+            DropForeignKey("dbo.Tasks", "CourseId", "dbo.Courses");
             DropIndex("dbo.CourseMates", new[] { "UserId" });
             DropIndex("dbo.CourseMates", new[] { "CourseId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
@@ -158,7 +158,7 @@ namespace HwProj.Migrations
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.StudentsHomework", new[] { "Student_Id" });
             DropIndex("dbo.StudentsHomework", new[] { "TaskId" });
-            DropIndex("dbo.Tasks", new[] { "Course_Id" });
+            DropIndex("dbo.Tasks", new[] { "CourseId" });
             DropTable("dbo.CourseMates");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.AspNetUserRoles");
