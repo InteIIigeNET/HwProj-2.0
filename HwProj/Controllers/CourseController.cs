@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using HwProj.Models.Enums;
@@ -20,14 +21,14 @@ namespace HwProj.Controllers
 	    private MainEduRepository EduRepository = MainEduRepository.Instance;
 
 	    [Authorize(Roles = "Преподаватель")]
-		public ActionResult Create()
+		public async Task<ActionResult> Create()
         {            
             return View();
         }
 
 	    [Authorize(Roles = "Преподаватель")]
 	    [HttpPost]
-	    public ActionResult Create(CreateCourseViewModel courseView)
+	    public async Task<ActionResult> Create(CreateCourseViewModel courseView)
 	    {
 		    if (!ModelState.IsValid)
 		    {
@@ -36,6 +37,7 @@ namespace HwProj.Controllers
 		    var course = (Course) courseView;
             course.MentorsName = User.Identity.GetUserFullName();
             course.MentorsEmail = User.Identity.GetUserEmail();
+
 			if (EduRepository.CourseManager.Contains(t => t.CompareTo(course) == 0))
 			    ModelState.AddModelError("", "Курс с таким описанием уже существует");
 		    else
@@ -47,10 +49,21 @@ namespace HwProj.Controllers
 	    }
 
         [AllowAnonymous]
-	    public ActionResult Index(Guid courseId)
+	    public async Task<ActionResult> Index(Guid courseId)
         {
             return View(EduRepository.CourseManager.Get(c => c.Id == courseId));
         }
+	    [AllowAnonymous]
+	    public ActionResult Index()
+	    {
+		    return RedirectPermanent("/Home/CoursesList");
+	    }
+
+	    [Authorize(Roles = "Преподаватель")]
+	    public async Task<ActionResult> Edit()
+	    {
+		    return null;
+	    }
         
         
         public ActionResult SingInCourse(Guid courseId)

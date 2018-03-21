@@ -14,13 +14,7 @@
             <hr />
             <input class="form-control" placeholder="Поиск названию курса" />
             <ul>
-            @foreach (var course in Model)
-            {
-                <li>
-                    @Html.ActionLink("Course", "Index", course.Id)
-                    <p>@course.MentorsName</p>
-                </li>
-            }
+            @Html.Partial("CousesList", Model)
             </ul>
         </div>
     </div>
