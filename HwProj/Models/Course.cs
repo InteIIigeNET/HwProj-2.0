@@ -15,7 +15,7 @@ namespace HwProj.Models
 	/// Модель курса занятий
 	/// </summary>
     [Table("Courses")]
-    public class Course
+    public class Course  : IComparable<Course>
 	{
 		/// <summary>
 		/// Уникальный идентификатор курса
@@ -55,11 +55,17 @@ namespace HwProj.Models
 			};
 		}
 
-		public static bool EqualDescription(Course c1, Course c2)
-		{
-			return (c1.GroupName == c2.GroupName) &&
-			       (c1.Name == c2.Name) &&
-			       (c1.MentorName == c2.MentorName);
-		}
+        public int CompareTo(Course other)
+        {
+            if (other == null) return 1;
+            int value;
+            if ((value = this.GroupName.CompareTo(other.GroupName)) != 0)
+                return value;
+            if ((value = this.Name.CompareTo(other.Name)) != 0)
+                return value;
+            if ((value = this.MentorName.CompareTo(other.MentorName)) != 0)
+                return value;
+            return 0;
+        }
     }
 }

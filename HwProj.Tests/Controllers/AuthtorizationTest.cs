@@ -2,12 +2,8 @@
 using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using HwProj.Controllers;
 using System.Web.Mvc;
-using HwProj.Models;
-using HwProj.Models.Contexts;
 using System.Linq;
-using HwProj.Models.ManagerModels;
 
 namespace HwProj.Tests.Controllers
 {
