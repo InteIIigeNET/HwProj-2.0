@@ -30,7 +30,7 @@ namespace HwProj.Models.ViewModels
 		/// </summary>
 		[Required]
 		[EmailAddress]
-		[Display(Name = "E-Mail")]
+		[Display(Name = "Электронная почта")]
 		public string Email { get; set; }
 
 		/// <summary>
@@ -62,7 +62,7 @@ namespace HwProj.Models.ViewModels
 	public class ExternalLoginConfirmationViewModel
 	{
 		[Required]
-		[Display(Name = "E-Mail")]
+		[Display(Name = "Электронная почта")]
 		public string Email { get; set; }
 	}
 
@@ -99,14 +99,14 @@ namespace HwProj.Models.ViewModels
 	public class ForgotViewModel
 	{
 		[Required]
-		[Display(Name = "Адрес электронной почты")]
+		[Display(Name = "Электронной почты")]
 		public string Email { get; set; }
 	}
 
 	public class LoginViewModel
 	{
 		[Required]
-		[Display(Name = "E-Mail")]
+		[Display(Name = "Электронная почта")]
 		[EmailAddress]
 		public string Email { get; set; }
 
@@ -124,7 +124,7 @@ namespace HwProj.Models.ViewModels
 	{
 		[Required]
 		[EmailAddress]
-		[Display(Name = "E-Mail")]
+		[Display(Name = "Электронная почта")]
 		public string Email { get; set; }
 
 		[Required]
@@ -146,7 +146,7 @@ namespace HwProj.Models.ViewModels
 	{
 		[Required]
 		[EmailAddress]
-		[Display(Name = "E-Mail")]
+		[Display(Name = "Электронная почта")]
 		public string Email { get; set; }
 	}
 

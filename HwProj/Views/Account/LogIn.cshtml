@@ -15,11 +15,11 @@
             <hr/>
             @Html.ValidationSummary(true, "", new {@class = "text-danger"})
             <div class="form-group">
-                @Html.TextBoxFor(m => m.Email, new {@class = "form-control", placeholder = "Электронная почта"})
+                @Html.TextBoxFor(m => m.Email, new {@class = "form-control", placeholder = Html.DisplayNameFor(m => m.Email)})
                 @Html.ValidationMessageFor(m => m.Email, "", new {@class = "text-danger"})
             </div>
             <div class="form-group">
-                @Html.PasswordFor(m => m.Password, new {@class = "form-control", placeholder = "Пароль"})
+                @Html.PasswordFor(m => m.Password, new {@class = "form-control", placeholder = Html.DisplayNameFor(m => m.Password)})
                 @Html.ValidationMessageFor(m => m.Password, "", new {@class = "text-danger"})
             </div>
             <div class="form-group">
