@@ -21,14 +21,14 @@ namespace HwProj.Controllers
 	    private MainEduRepository EduRepository = MainEduRepository.Instance;
 
 	    [Authorize(Roles = "Преподаватель")]
-		public async Task<ActionResult> Create()
+		public ActionResult Create()
         {            
             return View();
         }
 
 	    [Authorize(Roles = "Преподаватель")]
 	    [HttpPost]
-	    public async Task<ActionResult> Create(CreateCourseViewModel courseView)
+	    public ActionResult Create(CreateCourseViewModel courseView)
 	    {
 		    if (!ModelState.IsValid)
 		    {
@@ -60,7 +60,7 @@ namespace HwProj.Controllers
 	    }
 
 	    [Authorize(Roles = "Преподаватель")]
-	    public async Task<ActionResult> Edit()
+	    public ActionResult Edit()
 	    {
 		    return null;
 	    }
