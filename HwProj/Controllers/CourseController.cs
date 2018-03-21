@@ -34,7 +34,7 @@ namespace HwProj.Controllers
 			    return View();
 		    }
 		    var course = (Course) courseView;
-		    course.MentorName = User.Identity.Name + " " + User.Identity.GetUserSurname();
+            course.MentorName = User.Identity.Name;
 			if (EduRepository.CourseManager.Contains(t => t.CompareTo(course) == 0))
 			    ModelState.AddModelError("", "Курс с таким описанием уже существует");
 		    else

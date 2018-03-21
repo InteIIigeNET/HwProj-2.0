@@ -57,7 +57,7 @@ namespace HwProj.Tools
 			return surname;
 		}
 
-        public static string GetUserName(this IIdentity identity)
+        public static string GetUserFirstName(this IIdentity identity)
         {
             if (identity == null)
             {

@@ -53,8 +53,8 @@ namespace HwProj.Models
 	    {
 			return new User
 			{
-				UserName = model.Email,
-				Name = model.Name,
+				UserName = model.Name + " " + model.Surname,
+                Name = model.Name,
 				Surname = model.Surname,
 				Email = model.Email,
 				Gender = model.Gender
@@ -64,12 +64,12 @@ namespace HwProj.Models
 		public User(): base() { }
 	    public User(RegisterViewModel model) : base()
 	    {
-		    UserName = model.Email;
-		    Name = model.Name;
-		    Surname = model.Surname;
-		    Email = model.Email;
-		    Gender = model.Gender;
-	    }
+            UserName = model.Name + " " + model.Surname;
+            Name = model.Name;
+            Surname = model.Surname;
+            Email = model.Email;
+            Gender = model.Gender;
+        }
 
 	    public static explicit operator EditViewModel(User user)
 	    {
