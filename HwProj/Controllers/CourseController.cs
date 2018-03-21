@@ -49,14 +49,14 @@ namespace HwProj.Controllers
 	    }
 
         [AllowAnonymous]
-	    public async Task<ActionResult> Index(Guid courseId)
+	    public ActionResult Index(Guid courseId)
         {
             return View(EduRepository.CourseManager.Get(c => c.Id == courseId));
         }
 	    [AllowAnonymous]
-	    public ActionResult Index()
+	    public ActionResult All()
 	    {
-		    return RedirectPermanent("/Home/CoursesList");
+		    return View("CousesList",EduRepository.CourseManager.GetAll());
 	    }
 
 	    [Authorize(Roles = "Преподаватель")]
