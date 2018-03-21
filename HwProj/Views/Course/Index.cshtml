@@ -7,17 +7,19 @@
     <a href="@Model.MentorsEmail">@Model.MentorsEmail</a>
     @foreach (var user in Model.Users)
     {
-        <tr>
-            <td>@user.UserName</td>
-            @foreach (var homework in user.Homeworks)
+    <tr>
+        <td>@user.UserName</td>
+        @foreach (var task in Model.Tasks)
+        {
+            @foreach (var homework in task.Homeworks)
             {
-                if (homework.Task.CourseId == Model.Id)
-                {
-                    <td><a href='@Url.Action("Action для отображения дз", "дз коетроллер")'>
-                        <img src='@Url.Content("~/Content/Images/MyLinkImage.png")'/>
-                    </a></td>
-                }
+            <td>
+                <a href='@Url.Action("Index", "Homework", homework)'>
+                    <img src='@Url.Content("~/Content/Images/MyLinkImage.png")' />
+                </a>
+            </td>
             }
-        </tr>
+        }
+    </tr>
     }
 </table>
