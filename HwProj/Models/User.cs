@@ -53,8 +53,8 @@ namespace HwProj.Models
 	    {
 			return new User
 			{
-				UserName = model.Email,
-				Name = model.Name,
+				UserName = model.Name + " " + model.Surname,
+                Name = model.Name,
 				Surname = model.Surname,
 				Email = model.Email,
 				Gender = model.Gender
@@ -64,12 +64,12 @@ namespace HwProj.Models
 		public User(): base() { }
 	    public User(RegisterViewModel model) : base()
 	    {
-		    UserName = model.Email;
-		    Name = model.Name;
-		    Surname = model.Surname;
-		    Email = model.Email;
-		    Gender = model.Gender;
-	    }
+            UserName = model.Name + " " + model.Surname;
+            Name = model.Name;
+            Surname = model.Surname;
+            Email = model.Email;
+            Gender = model.Gender;
+        }
 
 	    public static explicit operator EditViewModel(User user)
 	    {
@@ -96,7 +96,9 @@ namespace HwProj.Models
             // Обратите внимание, что authenticationType должен совпадать с типом, определенным в CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
 	        userIdentity.AddClaim(new Claim(ClaimTypes.Surname, this.Surname));
-	        userIdentity.AddClaim(new Claim(ClaimTypes.Role, this.Roles.First().RoleId.GetName()));
+            userIdentity.AddClaim(new Claim(ClaimTypes.Name, this.Name));
+            userIdentity.AddClaim(new Claim(ClaimTypes.Email, this.Email));
+            userIdentity.AddClaim(new Claim(ClaimTypes.Role, this.Roles.First().RoleId.GetName()));
 			// Здесь добавьте утверждения пользователя
 			return userIdentity;
         }

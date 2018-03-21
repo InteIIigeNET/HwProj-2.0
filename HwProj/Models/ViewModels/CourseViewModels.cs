@@ -68,6 +68,11 @@ namespace HwProj.Models.ViewModels
     public class CourseViewModel
     {
         /// <summary>
+		/// Уникальный идентификатор курса
+		/// </summary>
+        [ScaffoldColumn(false)]
+        public Guid Id { get; set; }
+        /// <summary>
         /// Название курса
         /// </summary>
         [Display(Name = "Название курса")]

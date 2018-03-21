@@ -34,7 +34,7 @@ namespace HwProj.Controllers
 			    return View();
 		    }
 		    var course = (Course) courseView;
-		    course.MentorName = User.Identity.GetUserName() + " " + User.Identity.GetUserSurname();
+            course.MentorName = User.Identity.Name;
 			if (EduRepository.CourseManager.Contains(t => t.CompareTo(course) == 0))
 			    ModelState.AddModelError("", "Курс с таким описанием уже существует");
 		    else
@@ -46,9 +46,9 @@ namespace HwProj.Controllers
 	    }
 
         [AllowAnonymous]
-	    public ActionResult Index(CourseViewModel course)
+	    public ActionResult Index(Guid courseId)
         {
-            return View(EduRepository.CourseManager.Get(c => c.CompareTo(course) == 0));
+            return View(EduRepository.CourseManager.Get(c => c.Id == courseId));
         }
     }
 }
