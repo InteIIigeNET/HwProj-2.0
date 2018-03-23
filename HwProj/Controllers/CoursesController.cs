@@ -71,7 +71,7 @@ namespace HwProj.Controllers
 		    var course = EduRepository.CourseManager.Get(t => t.MentorsEmail == User.Identity.Name);
 			if(course == null) return View("CoursesList");
 
-		    return View("~/Views/Tasks/Create.cshtml");
+		    return View("~/Views/Tasks/Create.cshtml", new TaskCreateViewModel(){CourseId = courseId.Value});
 	    }
 
 		public ActionResult SingInCourse(Guid courseId)

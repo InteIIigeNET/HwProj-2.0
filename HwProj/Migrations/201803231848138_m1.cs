@@ -3,7 +3,7 @@ namespace HwProj.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class init : DbMigration
+    public partial class m1 : DbMigration
     {
         public override void Up()
         {
@@ -24,7 +24,7 @@ namespace HwProj.Migrations
                 "dbo.Tasks",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
+                        Id = c.Guid(nullable: false),
                         CourseId = c.Guid(nullable: false),
                         Title = c.String(),
                         Description = c.String(),
@@ -37,10 +37,12 @@ namespace HwProj.Migrations
                 "dbo.StudentsHomework",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        TaskId = c.Int(nullable: false),
+                        Id = c.Guid(nullable: false),
+                        TaskId = c.Guid(nullable: false),
                         StudentId = c.Guid(nullable: false),
                         IsCompleted = c.Boolean(nullable: false),
+                        Title = c.String(),
+                        Description = c.String(),
                         Student_Id = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)

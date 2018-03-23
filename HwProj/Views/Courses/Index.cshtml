@@ -12,7 +12,7 @@
 @if (User.Identity.Name == Model.MentorsEmail)
 {
     <div class="col-md-offset-2 col-md-10">
-        <button>@Html.ActionLink("Редактировать", "Edit", "Course", routeValues: null, htmlAttributes: new { })</button>
+        <button>@Html.ActionLink("Редактировать", "Edit", "Courses", routeValues: null, htmlAttributes: new { })</button>
     </div>
 }
 
@@ -43,4 +43,5 @@
             }
         </tr>
     }
+    @Html.ActionLink("Добавить задание", "AddTask", new { courseId = Model.Id }, new { })
 </table>

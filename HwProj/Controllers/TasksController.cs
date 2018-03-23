@@ -16,7 +16,7 @@ namespace HwProj.Controllers
 		    {
 			    return View();
 		    }
-
+		    return View();
 	    }
     }
 }
