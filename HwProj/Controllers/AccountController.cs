@@ -249,6 +249,7 @@ namespace HwProj.Controllers
         // POST: /Account/ExternalLogin
         [HttpPost]
         [AllowAnonymous]
+		[AnonymousOnly]
 		[ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
