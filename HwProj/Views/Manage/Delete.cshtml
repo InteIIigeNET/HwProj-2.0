@@ -1,15 +1,22 @@
 ﻿@{
-    ViewBag.Title = "Вы девствительно собираетесь удалить свою страницу?";
+    ViewBag.Title = "Удаление страницы";
 }
 
-<hgroup class="title">
-    <h2>@ViewBag.Title</h2>
-</hgroup>
-@Html.AntiForgeryToken()
-<div>
-    <hr/>
-    @Html.ActionLink("Да, действительно!", "ConfirmRemove", new { @class = "control-label col-md-2" })
-    <hr/>
-    @Html.ActionLink("Нет, это какая-то ошибка!", "Back", new { @class = "control-label col-md-4"})
+<br />
+<div class="row">
+    <div class="offset-lg-4 col-lg-4 offset-md-3 col-md-6 offset-sm-4 col-sm-8 col-12">
+        <div class="jumbotron">
+            @Html.AntiForgeryToken()
+            <h4 class="text-center">@ViewBag.Title</h4>
+            <hr />
+            <p class="text-center lead">
+                Вы действительно хотите удалить страницу? Подумайте. Не совершайте ошибку.
+            </p>
+            <div class="btn-group d-flex">
+                <a class="btn btn-success col-sm-12 col-12" href='@Url.Action("Back")'>Нет, я остаюсь</a>
+                <a class="btn btn-danger col-sm-12 col-12" href='@Url.Action("ConfirmRemove")'>Да, прощайте</a>
+            </div>
+        </div>
+    </div>
 </div>
-	
+

@@ -115,7 +115,7 @@ namespace HwProj.Models.ViewModels
 		/// </summary>
 		[Required]
 		[EmailAddress]
-		[Display(Name = "E-Mail")]
+		[Display(Name = "Электронная почта")]
 		public string Email { get; set; }
 
 		[Required]
