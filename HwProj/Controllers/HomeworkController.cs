@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 namespace HwProj.Controllers
 {
+	[Authorize]
     public class HomeworkController : Controller
     {
         

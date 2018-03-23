@@ -62,9 +62,19 @@ namespace HwProj.Controllers
 	    {
 		    return null;
 	    }
-        
-        
-        public ActionResult SingInCourse(Guid courseId)
+
+	    [Authorize(Roles = "Преподаватель")]
+	    public ActionResult AddTask(Guid? courseId)
+	    {
+		    if (courseId == null) return View("CoursesList");
+
+		    var course = EduRepository.CourseManager.Get(t => t.MentorsEmail == User.Identity.Name);
+			if(course == null) return View("CoursesList");
+
+		    return View("~/Views/Tasks/Create.cshtml");
+	    }
+
+		public ActionResult SingInCourse(Guid courseId)
         {
             var course = EduRepository.CourseManager.Get(c => c.Id == courseId);
             var user = EduRepository.UserManager.Get(u => u.Email == User.Identity.Name);
