@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using HwProj.Models.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HwProj.Models.ViewModels
 {
@@ -148,6 +149,6 @@ namespace HwProj.Models.ViewModels
 		[EmailAddress]
 		[Display(Name = "Электронная почта")]
 		public string Email { get; set; }
-	}
+	}    
 
 }

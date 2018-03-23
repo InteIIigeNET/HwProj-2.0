@@ -24,7 +24,7 @@ namespace HwProj
         public Task SendAsync(IdentityMessage message)
         {
 	        MailMessage mail = new MailMessage();
-	        SmtpClient SmtpServer = new SmtpClient(Settings.Default.MailClient);
+	        SmtpClient smtpServer = new SmtpClient(Settings.Default.MailClient);
 
 			mail.From = new MailAddress(Settings.Default.MailUserName);
 	        mail.To.Add(message.Destination);
@@ -32,14 +32,14 @@ namespace HwProj
 	        mail.Body = message.Body;
 	        mail.IsBodyHtml = true;
 
-			SmtpServer.UseDefaultCredentials = false;
-	        SmtpServer.Port = 587;
-	        SmtpServer.Credentials = new System.Net.NetworkCredential
+			smtpServer.UseDefaultCredentials = false;
+	        smtpServer.Port = 587;
+	        smtpServer.Credentials = new System.Net.NetworkCredential
 				(Settings.Default.MailUserName, Settings.Default.MailPassword);
-	        SmtpServer.EnableSsl = true;
+	        smtpServer.EnableSsl = true;
 			
 			// Подключите здесь службу электронной почты для отправки сообщения электронной почты.
-			return SmtpServer.SendMailAsync(mail);
+			return smtpServer.SendMailAsync(mail);
 		}
     }
 

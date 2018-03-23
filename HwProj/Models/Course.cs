@@ -15,7 +15,7 @@ namespace HwProj.Models
 	/// Модель курса занятий
 	/// </summary>
     [Table("Courses")]
-    public class Course  : IComparable<Course>
+    public class Course  : IComparable
 	{
 		/// <summary>
 		/// Уникальный идентификатор курса
@@ -29,10 +29,14 @@ namespace HwProj.Models
 		/// Идентификатор группы, для которой предназначен курс
 		/// </summary>
 		public string GroupName  { get; set; }
+        /// <summary>
+        /// Мыло препода
+        /// </summary>
+        public string MentorsEmail { get; set; }
 		/// <summary>
-		/// Преподаватель
+		/// Имя преподавателя
 		/// </summary>
-		public string MentorName { get; set; }
+		public string MentorsName { get; set; }
 		/// <summary>
 		/// Завершен ли курс?
 		/// </summary>
@@ -44,7 +48,7 @@ namespace HwProj.Models
         /// <summary>
         /// Таски этого курса
         /// </summary>
-        public ICollection<Task> Tasks { get; set; }
+        public ICollection<Task> Tasks { get; set; } = new List<Task>();
 
 		public static implicit operator Course(CreateCourseViewModel model)
 		{
@@ -55,17 +59,35 @@ namespace HwProj.Models
 			};
 		}
 
-        public int CompareTo(Course other)
+        public static implicit operator Course(CourseViewModel model)
         {
+            return new Course()
+            {
+                GroupName = model.GroupName,
+                Name = model.Name,
+                MentorsName = model.MentorName
+
+            };
+        }
+
+        public int CompareTo(object obj)
+        {
+            var other = obj as Course;
+
             if (other == null) return 1;
             int value;
             if ((value = this.GroupName.CompareTo(other.GroupName)) != 0)
                 return value;
             if ((value = this.Name.CompareTo(other.Name)) != 0)
                 return value;
-            if ((value = this.MentorName.CompareTo(other.MentorName)) != 0)
+            if ((value = this.MentorsName.CompareTo(other.MentorsName)) != 0)
                 return value;
             return 0;
+        }
+
+        public bool UserExist(string email)
+        {
+            return Users.FirstOrDefault(u => u.Email == email) != null;
         }
     }
 }

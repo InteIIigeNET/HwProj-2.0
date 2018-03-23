@@ -90,7 +90,7 @@ namespace HwProj.Controllers
 		}
 
 
-		public async Task<ActionResult> Delete()
+		public ActionResult Delete()
 	    {
 		    return View();
 	    }
@@ -104,7 +104,7 @@ namespace HwProj.Controllers
 			return RedirectToAction("Index", "Home");
 		}
 
-		public async Task<ActionResult> Back()
+		public ActionResult Back()
 	    {
 		    return RedirectToAction("Index", "Manage");
 	    }

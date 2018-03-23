@@ -23,6 +23,11 @@ namespace HwProj.Models.Repositories
 	        return true;
         }
 
+	    public IEnumerable<Course> GetAll()
+	    {
+		    return Context.Courses.ToList();
+	    }
+
 		public bool Contains(Func<Course, bool> predicate)
         {
 	        return Context.Courses.FirstOrDefault(predicate) != null;

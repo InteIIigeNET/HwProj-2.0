@@ -28,12 +28,17 @@ namespace HwProj.Models.Repositories
             if (!Contains(h => h.Id == item.Id)) return false;
             Context.Homeworks.Remove(item);
             Context.SaveChanges();
-            return true;            
+            return true;
         }
 
         public Homework Get(Func<Homework, bool> predicate)
         {
             return Context.Homeworks.FirstOrDefault(predicate);
+        }
+
+        public IEnumerable<Homework> GetAll()
+        {
+            return Context.Homeworks.ToList();
         }
     }
 }

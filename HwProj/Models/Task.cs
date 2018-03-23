@@ -17,11 +17,11 @@ namespace HwProj.Models
 		/// <summary>
 		/// Уникальный идентификатор задания 
 		/// </summary>
-		public int    Id          { get; set; }
+		public Guid    Id          { get; set; }
 		/// <summary>
 		/// Идентификатор курса, для которого предназначено задание
 		/// </summary>
-		public int    CourseId    { get; set; }
+		public Guid CourseId    { get; set; }
         //Все для foreign key
         /// <summary>
         /// Курс по данному courseId

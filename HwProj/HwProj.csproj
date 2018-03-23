@@ -201,19 +201,23 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CourseController.cs" />
+    <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HomeworksController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Filters\AnonymousOnlyAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803211112490_init.cs" />
-    <Compile Include="Migrations\201803211112490_init.Designer.cs">
-      <DependentUpon>201803211112490_init.cs</DependentUpon>
+    <Compile Include="Migrations\201803231848138_m1.cs" />
+    <Compile Include="Migrations\201803231848138_m1.Designer.cs">
+      <DependentUpon>201803231848138_m1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\ViewModels\CourceViewModels.cs" />
+    <Compile Include="Models\Repositories\TasksManager.cs" />
+    <Compile Include="Models\Repositories\UserManager.cs" />
+    <Compile Include="Models\ViewModels\CourseViewModels.cs" />
     <Compile Include="Models\Repositories\BaseManager.cs" />
     <Compile Include="Models\Repositories\HomeworksManager.cs" />
     <Compile Include="Models\Repositories\IRepository.cs" />
@@ -226,6 +230,7 @@
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\Repositories\MainEduRepository.cs" />
+    <Compile Include="Models\ViewModels\HomeworkViewModels.cs" />
     <Compile Include="Models\ViewModels\ManagerViewModels.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Note.cs" />
@@ -234,10 +239,9 @@
     <Compile Include="Models\Roles\ApplicationRole.cs" />
     <Compile Include="Models\Roles\ApplicationRoleManager.cs" />
     <Compile Include="Models\Roles\RoleModels.cs" />
-    <Compile Include="Models\Student.cs" />
     <Compile Include="Models\Task.cs" />
-    <Compile Include="Models\Teacher.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\ViewModels\TaskViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -272,6 +276,7 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <None Include="Properties\CustomProfile.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -319,12 +324,17 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
-    <Content Include="Views\Course\Create.cshtml" />
+    <Content Include="Views\Courses\Create.cshtml" />
     <Content Include="Views\Home\AutorizedHome.cshtml" />
     <Content Include="Views\Home\UnautorizedHome.cshtml" />
+    <Content Include="Views\Courses\Index.cshtml" />
+    <Content Include="Views\Courses\SingInCourse.cshtml" />
+    <Content Include="Views\Courses\CoursesList.cshtml" />
+    <Content Include="Views\Tasks\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Homeworks\" />
     <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
@@ -343,8 +353,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803211112490_init.resx">
-      <DependentUpon>201803211112490_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803231848138_m1.resx">
+      <DependentUpon>201803231848138_m1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

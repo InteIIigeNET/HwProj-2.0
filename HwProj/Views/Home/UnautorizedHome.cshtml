@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<HwProj.Models.Course>
+
+@{
     ViewBag.Title = "HwProj 2.0";
 }
 
@@ -10,8 +12,10 @@
             @*<span class="badge badge-danger">2.0</span>*@
             <h4><s>сайт</s> больше, чем сайт для проверки домашних работ</h4>
             <hr />
-
             <input class="form-control" placeholder="Поиск названию курса" />
+            <ul>
+            @Html.Partial("~/Views/Courses/CoursesList.cshtml", Model)
+            </ul>
         </div>
     </div>
 </div>

@@ -19,6 +19,10 @@ namespace HwProj.Models.Repositories
     {
         public IRepository<Course> CourseManager { get; }
         public IRepository<Homework> HomeworkManager { get; }
+        public IRepository<User> UserManager { get; }
+        public IRepository<Task> TaskManager { get; }
+
+
 
 
         #region Singleton
@@ -33,7 +37,14 @@ namespace HwProj.Models.Repositories
         {
             context = new ApplicationDbContext();
             CourseManager = new CoursesManager(context);
+            UserManager = new UserManager(context);
             HomeworkManager = new HomeworksManager(context);
+            TaskManager = new TasksManager(context);
+        }
+
+        public void SaveChanges()
+        {
+            context.SaveChanges();
         }
 
         public void Dispose()
