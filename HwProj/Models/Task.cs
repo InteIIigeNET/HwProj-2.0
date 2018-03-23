@@ -17,7 +17,7 @@ namespace HwProj.Models
 		/// <summary>
 		/// Уникальный идентификатор задания 
 		/// </summary>
-		public int    Id          { get; set; }
+		public Guid    Id          { get; set; }
 		/// <summary>
 		/// Идентификатор курса, для которого предназначено задание
 		/// </summary>
