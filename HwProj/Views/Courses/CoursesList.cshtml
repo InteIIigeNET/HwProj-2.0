@@ -4,7 +4,7 @@
     @foreach (var course in Model)
     {
         <li>
-            @Html.ActionLink(@course.Name, "Index", "Course", new { courseId = course.Id }, new { })
+            @Html.ActionLink(@course.Name, "Index", "Courses", new { courseId = course.Id }, new { })
             <p>@course.MentorsName</p>
         </li>
     }

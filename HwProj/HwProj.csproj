@@ -198,7 +198,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CourseController.cs" />
+    <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HomeworkController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -206,9 +206,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803212039193_init.cs" />
-    <Compile Include="Migrations\201803212039193_init.Designer.cs">
-      <DependentUpon>201803212039193_init.cs</DependentUpon>
+    <Compile Include="Migrations\201803212207288_init.cs" />
+    <Compile Include="Migrations\201803212207288_init.Designer.cs">
+      <DependentUpon>201803212207288_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Repositories\UserManager.cs" />
@@ -272,6 +272,7 @@
     <None Include="Properties\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
+    <None Include="Properties\PublishProfiles\HwProj20180322123845 - Web Deploy.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -319,12 +320,12 @@
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
-    <Content Include="Views\Course\Create.cshtml" />
+    <Content Include="Views\Courses\Create.cshtml" />
     <Content Include="Views\Home\AutorizedHome.cshtml" />
     <Content Include="Views\Home\UnautorizedHome.cshtml" />
-    <Content Include="Views\Course\Index.cshtml" />
-    <Content Include="Views\Course\SingInCourse.cshtml" />
-    <Content Include="Views\Course\CoursesList.cshtml" />
+    <Content Include="Views\Courses\Index.cshtml" />
+    <Content Include="Views\Courses\SingInCourse.cshtml" />
+    <Content Include="Views\Courses\CoursesList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -347,8 +348,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803212039193_init.resx">
-      <DependentUpon>201803212039193_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803212207288_init.resx">
+      <DependentUpon>201803212207288_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

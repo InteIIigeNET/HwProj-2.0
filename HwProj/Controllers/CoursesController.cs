@@ -16,7 +16,7 @@ using Microsoft.AspNet.Identity;
 namespace HwProj.Controllers
 {
 	[Authorize]
-    public class CourseController : Controller
+    public class CoursesController : Controller
     {
 	    private MainEduRepository EduRepository = MainEduRepository.Instance;
 
@@ -49,15 +49,13 @@ namespace HwProj.Controllers
 	    }
 
         [AllowAnonymous]
-	    public ActionResult Index(Guid courseId)
+	    public ActionResult Index(Guid? courseId)
         {
-            return View(EduRepository.CourseManager.Get(c => c.Id == courseId));
+            if (courseId != null)
+                return View(EduRepository.CourseManager.Get(c => c.Id == courseId));
+            else
+                return View("CoursesList", EduRepository.CourseManager.GetAll());
         }
-	    [AllowAnonymous]
-	    public ActionResult All()
-	    {
-		    return View("CousesList",EduRepository.CourseManager.GetAll());
-	    }
 
 	    [Authorize(Roles = "Преподаватель")]
 	    public ActionResult Edit()
@@ -73,7 +71,7 @@ namespace HwProj.Controllers
             course.Users.Add(user);
             user.Courses.Add(course);
             EduRepository.SaveChanges();
-            return View("Index");
+            return View("Index", course);
         }
     }
 }
