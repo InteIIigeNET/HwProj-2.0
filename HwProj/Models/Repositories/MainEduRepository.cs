@@ -18,8 +18,10 @@ namespace HwProj.Models.Repositories
     public class MainEduRepository : IDisposable
     {
         public IRepository<Course> CourseManager { get; }
-        //public IRepository<Homework> HomeworkManager { get; }
+        public IRepository<Homework> HomeworkManager { get; }
         public IRepository<User> UserManager { get; }
+        public IRepository<Task> TaskManager { get; }
+
 
 
 
@@ -36,7 +38,8 @@ namespace HwProj.Models.Repositories
             context = new ApplicationDbContext();
             CourseManager = new CoursesManager(context);
             UserManager = new UserManager(context);
-            //HomeworkManager = new HomeworksManager(context);
+            HomeworkManager = new HomeworksManager(context);
+            TaskManager = new TasksManager(context);
         }
 
         public void SaveChanges()
