@@ -18,7 +18,10 @@
 
 @if (!Model.UserExist(User.Identity.Name))
 {
-    Html.Partial("SingInCourse", Model.Id);
+    <hr />
+    @Html.ActionLink("Вступить в курс", "SingInCourse", new { courseId = Model.Id }, new { })
+    <hr />
+    //Html.Partial("SingInCourse", Model.Id);
 }
 
 <table>

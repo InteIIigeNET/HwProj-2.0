@@ -48,7 +48,7 @@ namespace HwProj.Models
         /// <summary>
         /// Таски этого курса
         /// </summary>
-        public ICollection<Task> Tasks { get; set; }
+        public ICollection<Task> Tasks { get; set; } = new List<Task>();
 
 		public static implicit operator Course(CreateCourseViewModel model)
 		{
