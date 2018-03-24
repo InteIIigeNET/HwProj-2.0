@@ -32,9 +32,8 @@
             <div class="form-group">
                 @Html.ActionLink("Забыли пароль?", "ForgotPassword")
             </div>
-            <hr />
         }      
-        <section class="form-group" id="social-login-form">
+        <section class="jumbotron" id="social-login-form">
             @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel {ReturnUrl = ViewBag.ReturnUrl})
         </section>
     </div>
