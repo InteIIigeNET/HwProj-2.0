@@ -18,4 +18,11 @@
 
 #main-body {
     background-color: #cccdd1;
-} 
+}
+
+.logo {
+    background-image: url(images/logo_5_mini.png);
+    background-repeat: no-repeat;
+    height: 34px;
+    width: 119px;
+}
