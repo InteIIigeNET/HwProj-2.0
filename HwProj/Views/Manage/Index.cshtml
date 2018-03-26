@@ -94,9 +94,9 @@
             </div>
             <div class="clearfix"></div>
             <p>
-                @if (Model.Role != null || Model.Role == RoleType.Преподаватель.ToString())
+                @if (Model.Role != null && Model.Role != RoleType.Преподаватель.ToString())
                 {
-                @Html.ActionLink("Подтвердить статус преподавателя", "")
+                    @Html.ActionLink("Подтвердить статус преподавателя", "")
                 }
             </p>           
             <p>

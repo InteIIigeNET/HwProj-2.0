@@ -41,8 +41,10 @@ namespace HwProj.Controllers
 			if (EduRepository.CourseManager.Contains(t => t.CompareTo(course) == 0))
 			    ModelState.AddModelError("", "Курс с таким описанием уже существует");
 		    else
-		    {
-			    if (EduRepository.CourseManager.Add(course)) ; //успех
+			{
+				if (EduRepository.CourseManager.Add(course))
+					return RedirectToAction("Index", new { courseId = course.Id});
+
 				else ModelState.AddModelError("", "Ошибка при созданни курса. Повторите попытку.");
 			}
 		    return View();
