@@ -27,12 +27,15 @@ namespace HwProj.Models.Repositories
 			return Context.Tasks.FirstOrDefault(predicate) != null;
 		}
 
-        public bool Delete(Task item)
-        {
-	        throw new NotImplementedException();
+	    public bool Delete(Task item)
+	    {
+			if (Contains(c => c.Id == item.Id)) return false;
+		    Context.Tasks.Remove(item);
+		    Context.SaveChanges();
+		    return true;
 		}
 
-        public Task Get(Func<Task, bool> predicate)
+	    public Task Get(Func<Task, bool> predicate)
         {
             return Context.Tasks.FirstOrDefault(predicate);
         }

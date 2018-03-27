@@ -1,5 +1,6 @@
 ﻿@using HwProj.Models
 @using HwProj.Models.Enums
+@using HwProj.Models.ViewModels
 @using HwProj.Tools
 @model Course
 @helper EmailTextBot(string email, string title)
@@ -47,5 +48,14 @@
 @Html.ActionLink("Добавить задание", "AddTask", new { courseId = Model.Id }, new { })
 @foreach (var task in Model.Tasks.Reverse())
 {
-<p>@task.Title - @task.Description</p>
+<p>
+
+    <B>@task.Title</B>
+    @if (User.Identity.Name == Model.MentorsEmail)
+    {
+        <button>@Html.ActionLink("Редактировать", "Edit", "Tasks", routeValues: new {taskId = task.Id}, htmlAttributes: new {})</button>
+        <button>@Html.ActionLink("Удалить", "Delete", "Tasks", new {taskId = task.Id, courseId = task.CourseId}, htmlAttributes: new {})</button>
+    }
+    @Html.Raw(task.Description.AsMarkdown())
+</p>
 }
