@@ -14,18 +14,23 @@ namespace HwProj.Models.Repositories
 
         public bool Add(Task item)
         {
-            throw new NotImplementedException();
-        }
+	        item.Id = Guid.NewGuid();
+	        if (Contains(c => c.Id == item.Id)) return false;
+
+	        Context.Tasks.Add(item);
+	        Context.SaveChanges();
+	        return true;
+		}
 
         public bool Contains(Func<Task, bool> predicate)
         {
-            throw new NotImplementedException();
-        }
+			return Context.Tasks.FirstOrDefault(predicate) != null;
+		}
 
         public bool Delete(Task item)
         {
-            throw new NotImplementedException();
-        }
+	        throw new NotImplementedException();
+		}
 
         public Task Get(Func<Task, bool> predicate)
         {

@@ -60,7 +60,7 @@ namespace HwProj.Controllers
 		}
 
 		[HttpPost]
-		[ValidateAntiForgeryToken]
+		[ValidateAntiForgeryToken]   
 		public async Task<ActionResult> Index(EditViewModel model)
 	    {
 		    if (!ModelState.IsValid)

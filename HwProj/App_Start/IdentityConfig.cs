@@ -37,9 +37,15 @@ namespace HwProj
 	        smtpServer.Credentials = new System.Net.NetworkCredential
 				(Settings.Default.MailUserName, Settings.Default.MailPassword);
 	        smtpServer.EnableSsl = true;
-			
-			// Подключите здесь службу электронной почты для отправки сообщения электронной почты.
-			return smtpServer.SendMailAsync(mail);
+
+	        try
+	        {
+		        return smtpServer.SendMailAsync(mail);
+	        }
+	        catch
+	        {
+		        return Task.CompletedTask;
+	        }
 		}
     }
 

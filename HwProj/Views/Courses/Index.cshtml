@@ -16,7 +16,7 @@
     </div>
 }
 
-@if (!Model.UserExist(User.Identity.Name))
+@if (!Model.UserExist(User.Identity.Name) && User.Identity.Name != Model.MentorsEmail)
 {
     <hr />
     @Html.ActionLink("Вступить в курс", "SingInCourse", new { courseId = Model.Id }, new { })
@@ -43,5 +43,9 @@
             }
         </tr>
     }
-    @Html.ActionLink("Добавить задание", "AddTask", new { courseId = Model.Id }, new { })
 </table>
+@Html.ActionLink("Добавить задание", "AddTask", new { courseId = Model.Id }, new { })
+@foreach (var task in Model.Tasks.Reverse())
+{
+<p>@task.Title - @task.Description</p>
+}
