@@ -44,14 +44,13 @@ namespace HwProj.Controllers
 	    }
 
 	    [System.Web.Http.Authorize(Roles = "Преподаватель")]
-		public ActionResult Delete(Guid? taskId, Guid? courseId)
+		public ActionResult Delete(long? taskId, long? courseId)
 	    {
-		    if (taskId == null || !Db.TaskManager.Delete(removingTask))
+		    if (taskId == null || !Db.TaskManager.Delete(taskId.Value))
 		    {
 			    ModelState.AddModelError("", "Не удалось удалить задание");
-			    return RedirectToAction("Index", "Courses");
 			}
-		    return RedirectToAction("Index", "Courses", new { removingTask.CourseId });
+		    return RedirectToAction("Index", "Courses", new { courseId });
 	    }
 	}
 }

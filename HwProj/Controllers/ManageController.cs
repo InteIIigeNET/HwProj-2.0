@@ -95,7 +95,7 @@ namespace HwProj.Controllers
 		    return View();
 	    }
 
-		[HttpDelete]
+		//[HttpDelete]
 		public async Task<ActionResult> ConfirmRemove()
 	    {
 		    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());

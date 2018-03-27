@@ -33,8 +33,16 @@ namespace HwProj.Models.Repositories
 		    Context.SaveChanges();
 		    return true;
 		}
+	    public bool Delete(long id)
+	    {
+		    var task = Get(t => t.Id == id);
+		    if (task == null) return false;
+		    Context.Tasks.Remove(task);
+		    Context.SaveChanges();
+		    return true;
+	    }
 
-	    public Task Get(Func<Task, bool> predicate)
+		public Task Get(Func<Task, bool> predicate)
         {
             return Context.Tasks.FirstOrDefault(predicate);
         }
