@@ -80,9 +80,8 @@ namespace HwProj.Controllers
         {
             var course = EduRepository.CourseManager.Get(c => c.Id == courseId);
             var user = EduRepository.UserManager.Get(u => u.Email == User.Identity.Name);
-            course.Users.Add(user);
-            user.Courses.Add(course);
-            EduRepository.SaveChanges();
+            if(!EduRepository.AddCourseMate(course, user))
+                ModelState.AddModelError("", "Ошибка при обновлении базы данных");
             return View("Index", course);
         }
     }

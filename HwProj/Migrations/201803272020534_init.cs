@@ -3,7 +3,7 @@ namespace HwProj.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class m1 : DbMigration
+    public partial class init : DbMigration
     {
         public override void Up()
         {
@@ -39,17 +39,16 @@ namespace HwProj.Migrations
                     {
                         Id = c.Guid(nullable: false),
                         TaskId = c.Guid(nullable: false),
-                        StudentId = c.Guid(nullable: false),
+                        StudentId = c.String(maxLength: 128),
                         IsCompleted = c.Boolean(nullable: false),
                         Title = c.String(),
                         Description = c.String(),
-                        Student_Id = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.AspNetUsers", t => t.Student_Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.StudentId)
                 .ForeignKey("dbo.Tasks", t => t.TaskId, cascadeDelete: true)
                 .Index(t => t.TaskId)
-                .Index(t => t.Student_Id);
+                .Index(t => t.StudentId);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -147,7 +146,7 @@ namespace HwProj.Migrations
             DropForeignKey("dbo.StudentsHomework", "TaskId", "dbo.Tasks");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.StudentsHomework", "Student_Id", "dbo.AspNetUsers");
+            DropForeignKey("dbo.StudentsHomework", "StudentId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Tasks", "CourseId", "dbo.Courses");
             DropIndex("dbo.CourseMates", new[] { "UserId" });
@@ -158,7 +157,7 @@ namespace HwProj.Migrations
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
-            DropIndex("dbo.StudentsHomework", new[] { "Student_Id" });
+            DropIndex("dbo.StudentsHomework", new[] { "StudentId" });
             DropIndex("dbo.StudentsHomework", new[] { "TaskId" });
             DropIndex("dbo.Tasks", new[] { "CourseId" });
             DropTable("dbo.CourseMates");

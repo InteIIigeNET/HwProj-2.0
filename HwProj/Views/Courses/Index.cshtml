@@ -16,6 +16,8 @@
     </div>
 }
 
+@Html.ValidationSummary("", new { @class = "text-danger" })
+
 @if (!Model.UserExist(User.Identity.Name))
 {
     <hr />

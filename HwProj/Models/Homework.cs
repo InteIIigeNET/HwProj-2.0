@@ -29,7 +29,7 @@ namespace HwProj.Models
 		/// <summary>
 		/// Идентификатор студента выполнившего задание
 		/// </summary>
-		public Guid StudentId   { get; set; }
+		public string StudentId   { get; set; }
         // Все для foreign key
         /// <summary>
         /// Пользователь по этому userId
