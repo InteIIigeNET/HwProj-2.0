@@ -43,7 +43,7 @@ namespace HwProj.Models.Repositories
             TaskManager = new TasksManager(context);
         }
 
-        public bool AddCourseMate(Guid courseId, string userEmail)
+        public bool AddCourseMate(long courseId, string userEmail)
         {
             Course course;
             User user;

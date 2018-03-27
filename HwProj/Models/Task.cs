@@ -15,14 +15,15 @@ namespace HwProj.Models
     [Table("Tasks")]
     public class Task
 	{
-		/// <summary>
-		/// Уникальный идентификатор задания 
-		/// </summary>
-		public Guid    Id          { get; set; }
+        /// <summary>
+        /// Уникальный идентификатор задания 
+        /// </summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long    Id          { get; set; }
 		/// <summary>
 		/// Идентификатор курса, для которого предназначено задание
 		/// </summary>
-		public Guid CourseId    { get; set; }
+		public long CourseId    { get; set; }
         //Все для foreign key
         /// <summary>
         /// Курс по данному courseId
@@ -39,7 +40,7 @@ namespace HwProj.Models
         /// <summary>
         /// Дз, в которых есть этот таск
         /// </summary>
-        public ICollection<Homework> Homeworks { get; set; }
+        public ICollection<Homework> Homeworks { get; set; } = new List<Homework>();
 		public Task(TaskCreateViewModel model) : base()
 		{
 			CourseId = model.CourseId;

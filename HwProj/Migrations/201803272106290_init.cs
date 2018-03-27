@@ -11,7 +11,7 @@ namespace HwProj.Migrations
                 "dbo.Courses",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        Id = c.Long(nullable: false, identity: true),
                         Name = c.String(),
                         GroupName = c.String(),
                         MentorsEmail = c.String(),
@@ -24,8 +24,8 @@ namespace HwProj.Migrations
                 "dbo.Tasks",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
-                        CourseId = c.Guid(nullable: false),
+                        Id = c.Long(nullable: false, identity: true),
+                        CourseId = c.Long(nullable: false),
                         Title = c.String(),
                         Description = c.String(),
                     })
@@ -37,8 +37,8 @@ namespace HwProj.Migrations
                 "dbo.StudentsHomework",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
-                        TaskId = c.Guid(nullable: false),
+                        Id = c.Long(nullable: false, identity: true),
+                        TaskId = c.Long(nullable: false),
                         StudentId = c.String(maxLength: 128),
                         IsCompleted = c.Boolean(nullable: false),
                         Title = c.String(),
@@ -127,7 +127,7 @@ namespace HwProj.Migrations
                 "dbo.CourseMates",
                 c => new
                     {
-                        CourseId = c.Guid(nullable: false),
+                        CourseId = c.Long(nullable: false),
                         UserId = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => new { t.CourseId, t.UserId })

@@ -13,7 +13,7 @@ namespace HwProj.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201803272020534_init"; }
+            get { return "201803272106290_init"; }
         }
         
         string IMigrationMetadata.Source

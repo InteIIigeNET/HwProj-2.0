@@ -14,7 +14,7 @@ namespace HwProj.Models.ViewModels
 		/// <summary>
 		/// Номер курса
 		/// </summary>
-		public Guid CourseId { get; set; }
+		public long CourseId { get; set; }
 		/// <summary>
 		/// Курс по данному courseId
 		/// </summary>
