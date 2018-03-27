@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using HwProj.Models.Contexts;
@@ -43,7 +44,9 @@ namespace HwProj.Models.Repositories
 	
         public Course Get(Func<Course, bool> predicate)
         {
-	        return Context.Courses.FirstOrDefault(predicate);
+	        return Context.Courses.Include(c => c.Tasks)
+								  .Include(c => c.Users)
+								  .FirstOrDefault(predicate);
         }
     }
 }

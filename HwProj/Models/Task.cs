@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using HwProj.Models.ViewModels;
 
 namespace HwProj.Models
 {
@@ -39,5 +40,12 @@ namespace HwProj.Models
         /// Дз, в которых есть этот таск
         /// </summary>
         public ICollection<Homework> Homeworks { get; set; }
-    }
+		public Task(TaskCreateViewModel model) : base()
+		{
+			CourseId = model.CourseId;
+			Description = model.Description;
+			Title = model.Title;
+		}
+		public Task() : base() { }
+	}
 }

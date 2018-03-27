@@ -4,25 +4,24 @@
 @model Course
 @helper EmailTextBot(string email, string title)
     {
-        <a href="mailto:@email?subject=@title">@email</a>
+<a href="mailto:@email?subject=@title">@email</a>
 }
 <h3>@Model.MentorsName</h3>
 @EmailTextBot(Model.MentorsEmail, "Письмо от надоедливого студента")
 
 @if (User.Identity.Name == Model.MentorsEmail)
 {
-    <div class="col-md-offset-2 col-md-10">
-        <button>@Html.ActionLink("Редактировать", "Edit", "Courses", routeValues: null, htmlAttributes: new { })</button>
-    </div>
+<div class="col-md-offset-2 col-md-10">
+    <button>@Html.ActionLink("Редактировать", "Edit", "Courses", routeValues: null, htmlAttributes: new { })</button>
+</div>
 }
 
 @Html.ValidationSummary("", new { @class = "text-danger" })
-
-@if (!Model.UserExist(User.Identity.Name))
+@if (!Model.UserExist(User.Identity.Name) && User.Identity.Name != Model.MentorsEmail)
 {
-    <hr />
+<hr />
     @Html.ActionLink("Вступить в курс", "SingInCourse", new { courseId = Model.Id }, new { })
-    <hr />
+<hr />
     //Html.Partial("SingInCourse", Model.Id);
 }
 
@@ -30,20 +29,24 @@
 
     @foreach (var user in Model.Users)
     {
-        <tr>
-            <td>@user.UserName</td>
-            @foreach (var task in Model.Tasks)
-            {
-                foreach (var homework in task.Homeworks)
-                {
-                    <td>
-                        <a href='@Url.Action("Index", "Homework", homework)'>
-                            <img src='@Url.Content("~/Content/Images/MyLinkImage.png")' />
-                        </a>
-                    </td>
-                }
-            }
-        </tr>
+    <tr>
+        <td>@user.UserName</td>
+        @foreach (var task in Model.Tasks)
+        {
+        foreach (var homework in task.Homeworks)
+        {
+        <td>
+            <a href='@Url.Action("Index", "Homework", homework)'>
+                <img src='@Url.Content("~/Content/Images/MyLinkImage.png")' />
+            </a>
+        </td>
+        }
+        }
+    </tr>
     }
-    @Html.ActionLink("Добавить задание", "AddTask", new { courseId = Model.Id }, new { })
 </table>
+@Html.ActionLink("Добавить задание", "AddTask", new { courseId = Model.Id }, new { })
+@foreach (var task in Model.Tasks.Reverse())
+{
+<p>@task.Title - @task.Description</p>
+}
