@@ -13,13 +13,21 @@ namespace HwProj.Tools
 			AutoHyperlink = true,
 			AutoNewLines = true,
 			LinkEmails = true,
-			QuoteSingleLine = true,
-			StrictBoldItalic = true
+			QuoteSingleLine = true
+			//StrictBoldItalic = true	
 		});
 
 		public static string AsMarkdown(this string text)
 		{
-			return engine.Transform(text);
+			try
+			{
+				return engine.Transform(text).Replace("<code>", "<code style = \"color: brown; background-color: ivory;\">");
+			}
+			catch (Exception)
+			{
+				//TODO: logging
+				return text;
+			}
 		}
 	}
 }

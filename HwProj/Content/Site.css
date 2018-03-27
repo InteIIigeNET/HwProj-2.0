@@ -2,6 +2,10 @@
     padding-top: 50px;
     padding-bottom: 20px;
 }
+code {
+    color: brown;
+    background-color: ivory;
+}
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
@@ -18,11 +22,4 @@
 
 #main-body {
     background-color: #cccdd1;
-}
-
-.logo {
-    background-image: url(Images/logo_5_mini.png);
-    background-repeat: no-repeat;
-    height: 34px;
-    width: 119px;
 }

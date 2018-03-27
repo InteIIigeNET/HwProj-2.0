@@ -16,7 +16,6 @@
     <button>@Html.ActionLink("Редактировать", "Edit", "Courses", routeValues: null, htmlAttributes: new { })</button>
 </div>
 }
-
 @Html.ValidationSummary("", new { @class = "text-danger" })
 @if (!Model.UserExist(User.Identity.Name) && User.Identity.Name != Model.MentorsEmail)
 {
@@ -30,23 +29,26 @@
 
     @foreach (var user in Model.Users)
     {
-    <tr>
-        <td>@user.UserName</td>
-        @foreach (var task in Model.Tasks)
-        {
-        foreach (var homework in task.Homeworks)
-        {
-        <td>
-            <a href='@Url.Action("Index", "Homework", homework)'>
-                <img src='@Url.Content("~/Content/Images/MyLinkImage.png")' />
-            </a>
-        </td>
-        }
-        }
-    </tr>
+        <tr>
+            <td>@user.UserName</td>
+            @foreach (var task in Model.Tasks)
+            {
+                foreach (var homework in task.Homeworks)
+                {
+                    <td>
+                        <a href='@Url.Action("Index", "Homework", homework)'>
+                            <img src='@Url.Content("~/Content/Images/MyLinkImage.png")' />
+                        </a>
+                    </td>
+                }
+            }
+        </tr>
     }
 </table>
-@Html.ActionLink("Добавить задание", "AddTask", new { courseId = Model.Id }, new { })
+@if (User.Identity.Name == Model.MentorsEmail)
+{
+    @Html.ActionLink("Добавить задание", "AddTask", new {courseId = Model.Id}, new {})
+}
 @foreach (var task in Model.Tasks.Reverse())
 {
 <p>
