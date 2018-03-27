@@ -17,10 +17,11 @@ namespace HwProj.Models
     [Table("Courses")]
     public class Course  : IComparable
 	{
-		/// <summary>
-		/// Уникальный идентификатор курса
-		/// </summary>
-		public Guid Id  { get; set; }
+        /// <summary>
+        /// Уникальный идентификатор курса
+        /// </summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long Id  { get; set; }
 		/// <summary>
 		/// Название курса
 		/// </summary>

@@ -19,6 +19,6 @@ namespace HwProj.Models.ViewModels
 		/// Идентификатор домашнего задания, которому соотвествует 
 		/// этот экземпляр выполненного задания 
 		/// </summary>        
-		public Guid TaskId { get; set; }
+		public long TaskId { get; set; }
     }
 }

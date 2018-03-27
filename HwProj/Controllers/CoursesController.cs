@@ -51,7 +51,7 @@ namespace HwProj.Controllers
 	    }
 
         [AllowAnonymous]
-	    public ActionResult Index(Guid? courseId)
+	    public ActionResult Index(long? courseId)
         {
             if (courseId != null)
                 return View(EduRepository.CourseManager.Get(c => c.Id == courseId));
@@ -66,7 +66,7 @@ namespace HwProj.Controllers
 	    }
 
 	    [Authorize(Roles = "Преподаватель")]
-	    public ActionResult AddTask(Guid? courseId)
+	    public ActionResult AddTask(long? courseId)
 	    {
 		    if (courseId == null) return View("CoursesList");
 
@@ -81,13 +81,13 @@ namespace HwProj.Controllers
 				});
 	    }
 
-		public ActionResult SingInCourse(Guid courseId)
+        [Authorize]
+		public ActionResult SingInCourse(long courseId)
         {
             var course = EduRepository.CourseManager.Get(c => c.Id == courseId);
             var user = EduRepository.UserManager.Get(u => u.Email == User.Identity.Name);
-            course.Users.Add(user);
-            user.Courses.Add(course);
-            EduRepository.SaveChanges();
+            if(!EduRepository.AddCourseMate(course, user))
+                ModelState.AddModelError("", "Ошибка при обновлении базы данных");
             return View("Index", course);
         }
     }

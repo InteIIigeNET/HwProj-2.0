@@ -16,7 +16,6 @@ namespace HwProj.Models.Repositories
         public bool Add(Course item)
         {
 	        item.IsComplete = false;
-	        item.Id = Guid.NewGuid();
 			if (Contains(c => c.Id == item.Id)) return false;
 
 		    Context.Courses.Add(item);

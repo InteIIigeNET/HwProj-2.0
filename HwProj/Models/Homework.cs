@@ -15,12 +15,13 @@ namespace HwProj.Models
     [Table("StudentsHomework")]
 	public class Homework
 	{
-        public Guid Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long Id { get; set; }
 		/// <summary>
 		/// Идентификатор домашнего задания, которому соотвествует 
 		/// этот экземпляр выполненного задания 
 		/// </summary>        
-		public Guid  TaskId      { get; set; }
+		public long  TaskId      { get; set; }
         // Все для foreign key
         /// <summary>
         /// Таск по этому taskId
@@ -29,7 +30,7 @@ namespace HwProj.Models
 		/// <summary>
 		/// Идентификатор студента выполнившего задание
 		/// </summary>
-		public Guid StudentId   { get; set; }
+		public string StudentId   { get; set; }
         // Все для foreign key
         /// <summary>
         /// Пользователь по этому userId
@@ -50,7 +51,6 @@ namespace HwProj.Models
 
         public Homework(HomeworkCreateViewModel model)
         {
-            Id = Guid.NewGuid();
             IsCompleted = false;
             Title = model.Title;
             Description = model.Description;

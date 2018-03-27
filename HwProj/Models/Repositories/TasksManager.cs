@@ -14,7 +14,6 @@ namespace HwProj.Models.Repositories
 
         public bool Add(Task item)
         {
-	        item.Id = Guid.NewGuid();
 	        if (Contains(c => c.Id == item.Id)) return false;
 
 	        Context.Tasks.Add(item);
