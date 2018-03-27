@@ -1,56 +1,40 @@
-﻿@using HwProj.Models.ManagerModels
+﻿@using HwProj.Models.ViewModels
 @model LoginViewModel
 @{
     ViewBag.Title = "Выполнить вход";
 }
-
-<h2>@ViewBag.Title.</h2>
+<br />
 <div class="row">
-    <div class="col-md-8">
-        <section id="loginForm">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-            {
-                @Html.AntiForgeryToken()
-                <h4>Используйте локальную учетную запись для входа.</h4>
-                <hr />
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Выполнить вход" class="btn btn-default" />
-                    </div>
-                </div>
-                <p>
-                    @Html.ActionLink("Регистрация нового пользователя", "Register")
-                </p>
-                <p>
-                    @Html.ActionLink("Забыли пароль?", "ForgotPassword")
-                </p>
-            }
-        </section>
-    </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+    <div class="offset-lg-4 col-lg-4 offset-md-3 col-md-6 offset-sm-4 col-sm-8 col-12">
+        @using (Html.BeginForm("Login","Account",new {ReturnUrl = ViewBag.ReturnUrl},
+            FormMethod.Post,
+            new {@class = "jumbotron", @id = "login-form", role = "form"}))
+        {
+            @Html.AntiForgeryToken()
+            <h4 class="text-center">@ViewBag.Title</h4>
+            <hr/>
+            @Html.ValidationSummary(true, "", new {@class = "text-danger"})
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.Email, new {@class = "form-control", placeholder = Html.DisplayNameFor(m => m.Email)})
+                @Html.ValidationMessageFor(m => m.Email, "", new {@class = "text-danger"})
+            </div>
+            <div class="form-group">
+                @Html.PasswordFor(m => m.Password, new {@class = "form-control", placeholder = Html.DisplayNameFor(m => m.Password)})
+                @Html.ValidationMessageFor(m => m.Password, "", new {@class = "text-danger"})
+            </div>
+            <div class="form-group">
+                @Html.CheckBoxFor(m => m.RememberMe)
+                @Html.LabelFor(m => m.RememberMe)
+            </div>
+            <div class="form-group">
+                <button class="btn btn-block btn-primary" type="submit">Войти</button>
+            </div>
+            <div class="form-group">
+                @Html.ActionLink("Забыли пароль?", "ForgotPassword")
+            </div>
+        }      
+        <section class="jumbotron" id="social-login-form">
+            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel {ReturnUrl = ViewBag.ReturnUrl})
         </section>
     </div>
 </div>

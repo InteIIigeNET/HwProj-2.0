@@ -5,12 +5,14 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using HwProj.Filters;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using HwProj.Models;
 using HwProj.Models.Enums;
-using HwProj.Models.ManagerModels;
+using HwProj.Models.ViewModels;
+using HwProj.Models.Contexts;
 
 namespace HwProj.Controllers
 {
@@ -52,6 +54,7 @@ namespace HwProj.Controllers
         }
 
         // GET: /Account/Login
+		[AnonymousOnly]
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -89,23 +92,24 @@ namespace HwProj.Controllers
             }
         }
 
-        ////
-        //// GET: /Account/VerifyCode
-        //[AllowAnonymous]
-        //public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
-        //{
-        //    // Требовать предварительный вход пользователя с помощью имени пользователя и пароля или внешнего имени входа
-        //    if (!await SignInManager.HasBeenVerifiedAsync())
-        //    {
-        //        return View("Error");
-        //    }
-        //    return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
-        //}
+		////
+		//// GET: /Account/VerifyCode
+		//[AllowAnonymous]
+		//public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
+		//{
+		//    // Требовать предварительный вход пользователя с помощью имени пользователя и пароля или внешнего имени входа
+		//    if (!await SignInManager.HasBeenVerifiedAsync())
+		//    {
+		//        return View("Error");
+		//    }
+		//    return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
+		//}
 
-        //
-        // GET: /Account/Register
-        [AllowAnonymous]
-        public ActionResult Register()
+		//
+		// GET: /Account/Register
+		[AllowAnonymous]
+		[AnonymousOnly]
+		public ActionResult Register()
         {
             return View();
         }
@@ -123,13 +127,13 @@ namespace HwProj.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-	                await UserManager.AddToRoleAsync(user.Id, RoleType.Студент.ToString());
+	                await UserManager.AddToRoleAsync(user.Id, RoleType.Преподаватель.ToString());
 					await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     // Дополнительные сведения о включении подтверждения учетной записи и сброса пароля см. на странице https://go.microsoft.com/fwlink/?LinkID=320771.
                     // Отправка сообщения электронной почты с этой ссылкой
                      string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                      var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                     await UserManager.SendEmailAsync(user.Id, "Подтверждение учетной записи HwProj", "Подтвердите вашу учетную запись, щелкнув <a href=\"" + callbackUrl + "\">здесь</a>");
+                     await UserManager.SendEmailAsync(user.Id, "Подтверждение учетной записи HwProj", "Подтвердите вашу учетную запись, перейдя по <a href=\"" + callbackUrl + "\">ссылке</a>");
 
                     return RedirectToAction("Index", "Home");
                 }
@@ -142,7 +146,7 @@ namespace HwProj.Controllers
 
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
-        public async Task<ActionResult> ConfirmEmail(string userId, string code)
+		public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
             if (userId == null || code == null)
             {
@@ -161,6 +165,7 @@ namespace HwProj.Controllers
 
 		// GET: /Account/ForgotPassword
 		[AllowAnonymous]
+		[AnonymousOnly]
 		public ActionResult ForgotPassword()
 		{
 			return View();
@@ -203,7 +208,8 @@ namespace HwProj.Controllers
         //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
-        public ActionResult ResetPassword(string code)
+        [AnonymousOnly]
+		public ActionResult ResetPassword(string code)
         {
             return code == null ? View("Error") : View();
         }
@@ -243,6 +249,7 @@ namespace HwProj.Controllers
         // POST: /Account/ExternalLogin
         [HttpPost]
         [AllowAnonymous]
+		[AnonymousOnly]
 		[ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
@@ -285,7 +292,8 @@ namespace HwProj.Controllers
 
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
-        public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
+        [AnonymousOnly]
+		public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
             if (loginInfo == null)

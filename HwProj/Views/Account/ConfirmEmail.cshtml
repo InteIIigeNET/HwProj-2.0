@@ -2,9 +2,15 @@
     ViewBag.Title = "Подтверждение почты";
 }
 
-<h2>@ViewBag.Title.</h2>
-<div>
-    <p>
-        Добро пожаловать в HwProj. @Html.ActionLink("Щелкните здесь для входа", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
-    </p>
+<div class="row">
+    <div class="offset-lg-2 col-lg-10 offset-md-2 col-md-10 col-sm-12 col-12">
+        <div class="text-center">
+            <h4>@ViewBag.Title</h4>
+            <hr />
+            <p>
+                Добро пожаловать в HwProj!
+                @Html.ActionLink("Щелкните здесь для входа", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+            </p>
+        </div>
+    </div>
 </div>

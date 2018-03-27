@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HwProj.Models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -14,12 +15,13 @@ namespace HwProj.Models
     [Table("StudentsHomework")]
 	public class Homework
 	{
-        public int Id { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public long Id { get; set; }
 		/// <summary>
 		/// Идентификатор домашнего задания, которому соотвествует 
 		/// этот экземпляр выполненного задания 
 		/// </summary>        
-		public int  TaskId      { get; set; }
+		public long  TaskId      { get; set; }
         // Все для foreign key
         /// <summary>
         /// Таск по этому taskId
@@ -28,15 +30,31 @@ namespace HwProj.Models
 		/// <summary>
 		/// Идентификатор студента выполнившего задание
 		/// </summary>
-		public Guid StudentId   { get; set; }
+		public string StudentId   { get; set; }
         // Все для foreign key
         /// <summary>
         /// Пользователь по этому userId
         /// </summary>
-        public Student Student { get; set; }
+        public User Student { get; set; }
 		/// <summary>
 		/// Зачтена ли данная попытка сдачи выполненного задания
 		/// </summary>
 		public bool IsCompleted { get; set;  }
-	}
+        /// <summary>
+		/// Название дз
+		/// </summary>
+		public string Title { get; set; }
+        /// <summary>
+        /// Описание дз 
+        /// </summary>
+        public string Description { get; set; }
+
+        public Homework(HomeworkCreateViewModel model)
+        {
+            IsCompleted = false;
+            Title = model.Title;
+            Description = model.Description;
+            TaskId = model.TaskId;
+        }
+    }
 }

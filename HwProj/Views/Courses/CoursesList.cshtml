@@ -1,0 +1,20 @@
+﻿@using HwProj.Models.Enums
+@using HwProj.Tools
+@model IEnumerable<HwProj.Models.Course>
+
+
+@if (User.Identity.GetUserRole() == RoleType.Преподаватель.ToString())
+{
+    <div class="col-md-offset-2 col-md-10">
+        <button>@Html.ActionLink("Создать курс", "Create", "Courses", routeValues: null, htmlAttributes: new { })</button>
+    </div>
+}
+<ul>
+    @foreach (var course in Model)
+    {
+        <li>
+            @Html.ActionLink(@course.Name, "Index", "Courses", new { courseId = course.Id }, new { })
+            <p>@course.MentorsName</p>
+        </li>
+    }
+</ul>

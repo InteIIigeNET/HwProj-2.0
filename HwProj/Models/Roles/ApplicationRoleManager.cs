@@ -38,5 +38,17 @@ namespace HwProj.Models.Roles
 					return new ApplicationRole() { Id = "2", Name = RoleType.Студент.ToString() };
 			}
 		}
+
+		public static string GetName(this string roleId)
+		{
+			switch (roleId)
+			{
+				case "1":
+					return RoleType.Преподаватель.ToString();
+				case "2":
+				default:
+					return RoleType.Студент.ToString();
+			}
+		}
 	}
 }

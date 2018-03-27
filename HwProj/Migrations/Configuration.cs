@@ -1,4 +1,3 @@
-using HwProj.Models.Enums;
 using HwProj.Models.Roles;
 
 namespace HwProj.Migrations

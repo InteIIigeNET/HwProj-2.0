@@ -7,7 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using HwProj.Models;
-using HwProj.Models.ManagerModels;
+using HwProj.Models.ViewModels;
 
 namespace HwProj.Controllers
 {
@@ -60,7 +60,7 @@ namespace HwProj.Controllers
 		}
 
 		[HttpPost]
-		[ValidateAntiForgeryToken]
+		[ValidateAntiForgeryToken]   
 		public async Task<ActionResult> Index(EditViewModel model)
 	    {
 		    if (!ModelState.IsValid)
@@ -90,12 +90,12 @@ namespace HwProj.Controllers
 		}
 
 
-		public async Task<ActionResult> Delete()
+		public ActionResult Delete()
 	    {
 		    return View();
 	    }
 
-		[HttpDelete]
+		//[HttpDelete]
 		public async Task<ActionResult> ConfirmRemove()
 	    {
 		    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
@@ -104,7 +104,7 @@ namespace HwProj.Controllers
 			return RedirectToAction("Index", "Home");
 		}
 
-		public async Task<ActionResult> Back()
+		public ActionResult Back()
 	    {
 		    return RedirectToAction("Index", "Manage");
 	    }
