@@ -57,6 +57,7 @@ namespace HwProj.Models.Repositories
 
         public bool AddCourseMate(Course course, User user)
         {
+            if (course.Users.Contains(user) || user.Courses.Contains(course)) return false;
             try
             {
                 course.Users.Add(user);

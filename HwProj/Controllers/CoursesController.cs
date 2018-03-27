@@ -81,6 +81,7 @@ namespace HwProj.Controllers
 				});
 	    }
 
+        [Authorize]
 		public ActionResult SingInCourse(long courseId)
         {
             var course = EduRepository.CourseManager.Get(c => c.Id == courseId);
