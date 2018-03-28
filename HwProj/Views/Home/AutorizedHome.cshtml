@@ -11,16 +11,18 @@
 
             <ul class="nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Непрочитанные</a>
                     @if (Model.Notifications.Count == 0)
                     {
+                        <a class="nav-link" href="#">Непрочитанные</a>
                         <p>Нет уведомлений</p>
                     }
                     else
                     {
-                        foreach (var notifi in Model.Notifications)
+                        var notReadNotifi = Model.NoReadNotifications;
+                        <a class="nav-link" href="#">Непрочитанные (@notReadNotifi.Count())</a>
+                        foreach (var notifi in notReadNotifi)
                         {
-                        <p> @notifi.Text </p>
+                            <p> @notifi.Text <b>@notifi.SendingTime.Value.ToLongDateString()</b></p>
                         }
                     }
                 </li>
