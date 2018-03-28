@@ -1,4 +1,5 @@
-﻿@{
+﻿@model HwProj.Models.User
+@{
     ViewBag.Title = "Новости";
 }
 
@@ -7,10 +8,21 @@
     <div class="offset-lg-2 col-lg-8 offset-md-2 col-md-8 offset-sm-1 col-sm-10 col-12">
         <div class="jumbotron text-center">
             <h3 class="display-4">Hello.</h3>
-            
+
             <ul class="nav">
                 <li class="nav-item">
                     <a class="nav-link" href="#">Непрочитанные</a>
+                    @if (Model.Notifications.Count == 0)
+                    {
+                        <p>Нет уведомлений</p>
+                    }
+                    else
+                    {
+                        foreach (var notifi in Model.Notifications)
+                        {
+                        <p> @notifi.Text </p>
+                        }
+                    }
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Показать все</a>

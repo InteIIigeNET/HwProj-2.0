@@ -37,10 +37,14 @@ namespace HwProj.Models.Contexts
         /// Все курсы
         /// </summary>
         public DbSet<Course> Courses { get; set; }
-        /// <summary>
-        /// База всех заданий
-        /// </summary>
-        public DbSet<Task> Tasks { get; set; }
+	    /// <summary>
+	    /// Все уведомления
+	    /// </summary>
+	    public DbSet<Notification> Notifications{ get; set; }
+		/// <summary>
+		/// База всех заданий
+		/// </summary>
+		public DbSet<Task> Tasks { get; set; }
         /// <summary>
         /// База домашних заданий студентов
         /// </summary>

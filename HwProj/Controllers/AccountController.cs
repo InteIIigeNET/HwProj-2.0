@@ -62,7 +62,6 @@ namespace HwProj.Controllers
             return View();
         }
 
-        //
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
@@ -74,8 +73,6 @@ namespace HwProj.Controllers
                 return View(model);
             }
 
-            // Сбои при входе не приводят к блокированию учетной записи
-            // Чтобы ошибки при вводе пароля инициировали блокирование учетной записи, замените на shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
@@ -92,20 +89,6 @@ namespace HwProj.Controllers
             }
         }
 
-		////
-		//// GET: /Account/VerifyCode
-		//[AllowAnonymous]
-		//public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
-		//{
-		//    // Требовать предварительный вход пользователя с помощью имени пользователя и пароля или внешнего имени входа
-		//    if (!await SignInManager.HasBeenVerifiedAsync())
-		//    {
-		//        return View("Error");
-		//    }
-		//    return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl, RememberMe = rememberMe });
-		//}
-
-		//
 		// GET: /Account/Register
 		[AllowAnonymous]
 		[AnonymousOnly]
@@ -114,7 +97,6 @@ namespace HwProj.Controllers
             return View();
         }
 
-        //
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
@@ -129,8 +111,8 @@ namespace HwProj.Controllers
                 {
 	                await UserManager.AddToRoleAsync(user.Id, RoleType.Преподаватель.ToString());
 					await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    // Дополнительные сведения о включении подтверждения учетной записи и сброса пароля см. на странице https://go.microsoft.com/fwlink/?LinkID=320771.
-                    // Отправка сообщения электронной почты с этой ссылкой
+
+                    // Отправка сообщения электронной почты для подтверждения
                      string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                      var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                      await UserManager.SendEmailAsync(user.Id, "Подтверждение учетной записи HwProj", "Подтвердите вашу учетную запись, перейдя по <a href=\"" + callbackUrl + "\">ссылке</a>");
@@ -186,8 +168,6 @@ namespace HwProj.Controllers
                     return View("ForgotPasswordConfirmation");
                 }
 
-                // Дополнительные сведения о включении подтверждения учетной записи и сброса пароля см. на странице https://go.microsoft.com/fwlink/?LinkID=320771.
-                // Отправка сообщения электронной почты с этой ссылкой
                  string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
                  var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
                  await UserManager.SendEmailAsync(user.Id, "Сброс пароля", "Сбросьте ваш пароль, щелкнув <a href=\"" + callbackUrl + "\">здесь</a>");
@@ -205,7 +185,6 @@ namespace HwProj.Controllers
             return View();
         }
 
-        //
         // GET: /Account/ResetPassword
         [AllowAnonymous]
         [AnonymousOnly]
@@ -257,39 +236,6 @@ namespace HwProj.Controllers
             return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
         }
 
-        // GET: /Account/SendCode
-        [AllowAnonymous]
-        public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
-        {
-            var userId = await SignInManager.GetVerifiedUserIdAsync();
-            if (userId == null)
-            {
-                return View("Error");
-            }
-            var userFactors = await UserManager.GetValidTwoFactorProvidersAsync(userId);
-            var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
-            return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
-        }
-
-        // POST: /Account/SendCode
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> SendCode(SendCodeViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
-
-            // Создание и отправка маркера
-            if (!await SignInManager.SendTwoFactorCodeAsync(model.SelectedProvider))
-            {
-                return View("Error");
-            }
-            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
-        }
-
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
         [AnonymousOnly]
@@ -310,7 +256,7 @@ namespace HwProj.Controllers
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
+                    //return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
                 case SignInStatus.Failure:
                 default:
                     // Если у пользователя нет учетной записи, то ему предлагается создать ее
@@ -320,7 +266,6 @@ namespace HwProj.Controllers
             }
         }
 
-        //
         // POST: /Account/ExternalLoginConfirmation
         [HttpPost]
         [AllowAnonymous]
@@ -363,7 +308,6 @@ namespace HwProj.Controllers
             return View(model);
         }
 
-        //
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -373,7 +317,6 @@ namespace HwProj.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        //
         // GET: /Account/ExternalLoginFailure
         [AllowAnonymous]
         public ActionResult ExternalLoginFailure()

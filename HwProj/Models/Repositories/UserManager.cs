@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using HwProj.Models.Contexts;
@@ -34,7 +35,7 @@ namespace HwProj.Models.Repositories
 
         public IEnumerable<User> GetAll()
         {
-            throw new NotImplementedException();
+	        return Context.Users.Include(c => c.Notifications).ToList();
         }
     }
 }

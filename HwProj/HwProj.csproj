@@ -213,11 +213,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803272220439_one.cs" />
-    <Compile Include="Migrations\201803272220439_one.Designer.cs">
-      <DependentUpon>201803272220439_one.cs</DependentUpon>
+    <Compile Include="Migrations\201803281856133_mig.cs" />
+    <Compile Include="Migrations\201803281856133_mig.Designer.cs">
+      <DependentUpon>201803281856133_mig.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Repositories\NotificationsManager.cs" />
     <Compile Include="Models\Repositories\TasksManager.cs" />
     <Compile Include="Models\Repositories\UserManager.cs" />
     <Compile Include="Models\ViewModels\CourseViewModels.cs" />
@@ -251,6 +252,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Services\NotificationsService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Tools\IdentityExtensions.cs" />
     <Compile Include="Tools\MarkdownInterpreter.cs" />
@@ -356,8 +358,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803272220439_one.resx">
-      <DependentUpon>201803272220439_one.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803281856133_mig.resx">
+      <DependentUpon>201803281856133_mig.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

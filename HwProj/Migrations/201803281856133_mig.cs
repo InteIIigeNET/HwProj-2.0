@@ -3,7 +3,7 @@ namespace HwProj.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class one : DbMigration
+    public partial class mig : DbMigration
     {
         public override void Up()
         {
@@ -99,6 +99,20 @@ namespace HwProj.Migrations
                 .Index(t => t.UserId);
             
             CreateTable(
+                "dbo.Notifications",
+                c => new
+                    {
+                        Id = c.Long(nullable: false, identity: true),
+                        UserId = c.String(maxLength: 128),
+                        Text = c.String(),
+                        IsRead = c.Boolean(nullable: false),
+                        SendingTime = c.DateTime(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.UserId)
+                .Index(t => t.UserId);
+            
+            CreateTable(
                 "dbo.AspNetUserRoles",
                 c => new
                     {
@@ -145,6 +159,7 @@ namespace HwProj.Migrations
             DropForeignKey("dbo.CourseMates", "CourseId", "dbo.Courses");
             DropForeignKey("dbo.StudentsHomework", "TaskId", "dbo.Tasks");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Notifications", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.StudentsHomework", "StudentId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
@@ -154,6 +169,7 @@ namespace HwProj.Migrations
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
+            DropIndex("dbo.Notifications", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
@@ -163,6 +179,7 @@ namespace HwProj.Migrations
             DropTable("dbo.CourseMates");
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.AspNetUserRoles");
+            DropTable("dbo.Notifications");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");

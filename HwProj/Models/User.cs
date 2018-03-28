@@ -42,11 +42,16 @@ namespace HwProj.Models
 		/// Коллекция курсов пользователя
 		/// </summary>
 		public ICollection<Course> Courses { get; set; } = new List<Course>();
+	    /// <summary>
+	    /// Коллекция уведомлений пользователя
+	    /// </summary>
+	    public ICollection<Notification> Notifications { get; set; } 
+			= new List<Notification>();
 
-        /// <summary>
-        /// Домашка
-        /// </summary>
-        public ICollection<Homework> Homeworks { get; set; }
+		/// <summary>
+		/// Домашка
+		/// </summary>
+		public ICollection<Homework> Homeworks { get; set; }
 		#endregion
 
 	    public static implicit operator User(RegisterViewModel model)
