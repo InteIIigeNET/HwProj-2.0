@@ -218,6 +218,7 @@
       <DependentUpon>201803281856133_mig.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Repositories\IReadOnlyRepository.cs" />
     <Compile Include="Models\Repositories\NotificationsManager.cs" />
     <Compile Include="Models\Repositories\TasksManager.cs" />
     <Compile Include="Models\Repositories\UserManager.cs" />

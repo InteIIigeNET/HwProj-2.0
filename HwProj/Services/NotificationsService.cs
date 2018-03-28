@@ -14,7 +14,7 @@ namespace HwProj.Services
 		public static void SendNotifications(Func<User, bool> usersPredicate, 
 											 Func<User, string> buildNotificationFor)
 		{
-			var users = Db.UserManager.GetAll().Where(usersPredicate);
+			var users = Db.UserManager.GetAll(usersPredicate);
 			foreach (var user in users)
 			{
 				var notification = new Notification()

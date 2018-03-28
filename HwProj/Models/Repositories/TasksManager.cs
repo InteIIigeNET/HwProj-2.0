@@ -20,8 +20,12 @@ namespace HwProj.Models.Repositories
 	        Context.SaveChanges();
 	        return true;
 		}
+	    public IEnumerable<Task> GetAll(Func<Task, bool> predicate)
+	    {
+		    throw new NotImplementedException();
+	    }
 
-        public bool Contains(Func<Task, bool> predicate)
+	    public bool Contains(Func<Task, bool> predicate)
         {
 			return Context.Tasks.FirstOrDefault(predicate) != null;
 		}

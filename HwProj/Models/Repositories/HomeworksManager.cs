@@ -18,7 +18,12 @@ namespace HwProj.Models.Repositories
             return true;
         }
 
-        public bool Contains(Func<Homework, bool> predicate)
+	    public IEnumerable<Homework> GetAll(Func<Homework, bool> predicate)
+	    {
+		    throw new NotImplementedException();
+	    }
+
+	    public bool Contains(Func<Homework, bool> predicate)
         {
             return Get(predicate) != null;
         }

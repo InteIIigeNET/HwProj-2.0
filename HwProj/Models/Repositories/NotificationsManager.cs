@@ -35,6 +35,11 @@ namespace HwProj.Models.Repositories
 			throw new NotImplementedException();
 		}
 
+		public IEnumerable<Notification> GetAll(Func<Notification, bool> predicate)
+		{
+			throw new NotImplementedException();
+		}
+
 		public bool Contains(Func<Notification, bool> predicate)
 		{
 			return Context.Notifications.FirstOrDefault(predicate) != null;

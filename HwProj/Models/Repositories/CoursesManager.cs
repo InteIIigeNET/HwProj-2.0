@@ -28,7 +28,12 @@ namespace HwProj.Models.Repositories
 		    return Context.Courses.ToList();
 	    }
 
-		public bool Contains(Func<Course, bool> predicate)
+	    public IEnumerable<Course> GetAll(Func<Course, bool> predicate)
+	    {
+		    return Context.Courses.Where(predicate);
+	    }
+
+	    public bool Contains(Func<Course, bool> predicate)
         {
 	        return Context.Courses.FirstOrDefault(predicate) != null;
         }
