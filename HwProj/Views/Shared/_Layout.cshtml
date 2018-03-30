@@ -8,20 +8,23 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body class="body_background-color_gray">
+<body class="body body_position_relative body_background-color_gray">
     <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
         <div class="container">
-            <a class="header__logo_size_small" href='@Url.Action("Index", "Home")'></a>
+            <a class="header header__logo_size_small" href='@Url.Action("Index", "Home")'></a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsible-navbar">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="collapsible-navbar">
-                 @Html.Partial("_LoginPartial")
+            <div class="collapse navbar-collapse">
+                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </nav>
+    <div class="particles-js particles-js_position_absolute" id="particles-js">
+        <canvas class="particles-js-canvas-el"></canvas>
+    </div>
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -32,6 +35,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/scripts")
     @RenderSection("scripts", required: false)
 </body>
 </html>
