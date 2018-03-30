@@ -6,7 +6,7 @@
 <br />
 <div class="row">
     <div class="offset-lg-4 col-lg-4 offset-md-3 col-md-6 offset-sm-4 col-sm-8 col-12">
-        @using (Html.BeginForm("Login","Account",new {ReturnUrl = ViewBag.ReturnUrl},
+        @using (Html.BeginForm("Login", "Account", new {ReturnUrl = ViewBag.ReturnUrl},
             FormMethod.Post,
             new {@class = "jumbotron pt-5", @id = "login-form", role = "form"}))
         {
@@ -32,9 +32,10 @@
             <div class="form-group">
                 @Html.ActionLink("Забыли пароль?", "ForgotPassword")
             </div>
-        }      
+            <hr/>
+        }
         <section class="social-login-form social-login-form_margin-top_negative jumbotron pt-4 pb-4" id="social-login-form">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel {ReturnUrl = ViewBag.ReturnUrl})
+            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
         </section>
     </div>
 </div>
