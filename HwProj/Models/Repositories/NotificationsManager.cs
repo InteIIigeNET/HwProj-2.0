@@ -38,7 +38,7 @@ namespace HwProj.Models.Repositories
 		public IEnumerable<Notification> GetAll(Func<Notification, bool> predicate)
 		{
 			throw new NotImplementedException();
-		}
+		} 
 
 		public bool Contains(Func<Notification, bool> predicate)
 		{
