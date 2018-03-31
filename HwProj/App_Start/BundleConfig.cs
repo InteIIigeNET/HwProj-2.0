@@ -16,8 +16,7 @@ namespace HwProj
 
             bundles.Add(new ScriptBundle("~/bundles/scripts").Include(               
                 "~/Scripts/particles.js",
-                "~/Scripts/script.js"
-                ));
+                "~/Scripts/script.js"));
 
 			// Используйте версию Modernizr для разработчиков, чтобы учиться работать. Когда вы будете готовы перейти к работе,
 			// готово к выпуску, используйте средство сборки по адресу https://modernizr.com, чтобы выбрать только необходимые тесты.
@@ -26,12 +25,15 @@ namespace HwProj
 
 			bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
 					  "~/Scripts/bootstrap.js",
-					  "~/Scripts/respond.js"));
+					  "~/Scripts/respond.js",
+                      "~/Scripts/mdb.js",
+                      "~/Scripts/popper.min.js"));
 
 			bundles.Add(new StyleBundle("~/Content/css").Include(
 					  "~/Content/bootstrap.css",
 					  "~/Content/site.css",
-                      "~/Content/fontawesome-all.css"));
+                      "~/Content/fontawesome-all.css",
+                      "~/Content/mdb.css"));
 		}
 	}
 }
