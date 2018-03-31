@@ -8,7 +8,7 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body class="body body_position_relative body_background-color_gray">
+<body>
     <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
         <div class="container">
             <a class="header header__logo_size_small" href='@Url.Action("Index", "Home")'></a>
@@ -17,7 +17,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse">
+            <div class="collapse navbar-collapse" id="collapsible-navbar">
                 @Html.Partial("_LoginPartial")
             </div>
         </div>

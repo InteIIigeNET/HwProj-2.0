@@ -20,14 +20,6 @@ code {
     white-space: normal;
 }
 
-.body.body_background-color_gray {
-    background-color: #cccdd1;
-}
-
-.body.body_position_relative {
-    position: relative;
-}
-
 .header.header__logo_size_small {
     background-image: url(Images/logo_5_mini.png);
     background-repeat: no-repeat;

@@ -6,16 +6,23 @@
 
 <br />
 <div class="row">
-    <div class="offset-lg-2 col-lg-8 offset-md-2 col-md-8 offset-sm-1 col-sm-10 col-12">
-        <div class="jumbotron text-center">
+    <div class="offset-lg-2 col-lg-8 offset-md-2 col-md-8 offset-sm-1 col-sm-10 offset-1 col-10">
+        <div class="jumbotron grey lighten-5">
             <h3 class="display-4">HwProj</h3>
-            @*<span class="badge badge-danger">2.0</span>*@
             <h4><s>сайт</s> больше, чем сайт для проверки домашних работ</h4>
-            <hr />
             <input class="form-control" placeholder="Поиск названию курса" />
-            <ul>
-            @Html.Partial("~/Views/Courses/CoursesList.cshtml", Model)
-            </ul>
+            <hr />
         </div>
     </div>
+    @Html.Partial("~/Views/Courses/CoursesList.cshtml", Model)
+
 </div>
+
+@*<div class="row">
+        <div class="offset-lg-2 col-lg-8 offset-md-2 col-md-8 offset-sm-1 col-sm-10 col-12">
+            
+           
+        </div>
+    </div>*@
+
+
