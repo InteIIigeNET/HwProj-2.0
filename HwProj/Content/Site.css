@@ -37,3 +37,10 @@ code {
     height: 100%;
 }
 
+.body.body_background-color_gray {
+    background-color: #cccdd1;
+}
+
+.body.body_position_relative {
+    position: relative;
+}
