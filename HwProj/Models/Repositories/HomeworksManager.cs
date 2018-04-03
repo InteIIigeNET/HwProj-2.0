@@ -20,8 +20,8 @@ namespace HwProj.Models.Repositories
 
 	    public IEnumerable<Homework> GetAll(Func<Homework, bool> predicate)
 	    {
-		    throw new NotImplementedException();
-	    }
+			return Context.Homeworks.Where(predicate).ToList();
+		}
 
 	    public bool Contains(Func<Homework, bool> predicate)
         {
