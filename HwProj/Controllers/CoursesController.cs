@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using HwProj.Models.Enums;
 using HwProj.Models.ViewModels;
 using HwProj.Models.Repositories;
+using HwProj.Services;
 using HwProj.Tools;
 using Microsoft.AspNet.Identity;
 
@@ -82,13 +83,18 @@ namespace HwProj.Controllers
 	    }
 
         [Authorize]
-		public ActionResult SingInCourse(long courseId)
+		public async Task<ActionResult> SingInCourse(long courseId)
         {
             var course = EduRepository.CourseManager.Get(c => c.Id == courseId);
             var user = EduRepository.UserManager.Get(u => u.Email == User.Identity.Name);
 
-            if(!EduRepository.AddCourseMate(course, user))
-                ModelState.AddModelError("", "Ошибка при обновлении базы данных");
+	        if (!EduRepository.AddCourseMate(course, user))
+		        ModelState.AddModelError("", "Ошибка при обновлении базы данных");
+	        else
+	        {
+		        await NotificationsService.SendNotifications(u => u.Email == course.MentorsEmail,
+													  u => $"Пользователь {u.Email} вступил в курс {course.Name}");
+	        }
 
             return View("Index", course);
         }

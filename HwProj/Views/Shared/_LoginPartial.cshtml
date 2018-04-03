@@ -3,7 +3,7 @@
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "ml-auto" }))
     {
-    @Html.AntiForgeryToken()
+  
         <ul class="navbar-nav">
             <li class="nav-item">
                 @Html.ActionLink("Курсы", "Index", "Courses", routeValues: null, htmlAttributes: new { title = "Courses", @class = "nav-link"})
@@ -11,6 +11,7 @@
             <li class="nav-item">
                 @Html.ActionLink("Профиль", "Index", "Manage", routeValues: null, htmlAttributes: new {title = "Manage", @class = "nav-link"})
             </li>
+              @Html.AntiForgeryToken()
             <li class="nav-item">
                 <a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Выйти</a>
             </li>

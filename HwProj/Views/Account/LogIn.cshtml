@@ -6,9 +6,9 @@
 <br />
 <div class="row">
     <div class="offset-lg-4 col-lg-4 offset-md-3 col-md-6 offset-sm-4 col-sm-8 col-12">
-        @using (Html.BeginForm("Login","Account",new {ReturnUrl = ViewBag.ReturnUrl},
+        @using (Html.BeginForm("Login", "Account", new {ReturnUrl = ViewBag.ReturnUrl},
             FormMethod.Post,
-            new {@class = "jumbotron", @id = "login-form", role = "form"}))
+            new {@class = "jumbotron grey lighten-5 pt-5", @id = "login-form", role = "form"}))
         {
             @Html.AntiForgeryToken()
             <h4 class="text-center">@ViewBag.Title</h4>
@@ -32,9 +32,9 @@
             <div class="form-group">
                 @Html.ActionLink("Забыли пароль?", "ForgotPassword")
             </div>
-        }      
-        <section class="jumbotron" id="social-login-form">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel {ReturnUrl = ViewBag.ReturnUrl})
+        }
+        <section class="social-login-form social-login-form_margin-top_negative jumbotron grey lighten-5 pt-4 pb-4" id="social-login-form">
+            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
         </section>
     </div>
 </div>

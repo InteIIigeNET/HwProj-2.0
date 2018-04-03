@@ -19,17 +19,9 @@
                 <div class="text-center" id="social-login-list">
                     @foreach (AuthenticationDescription p in loginProviders)
                     {
-                        var provider = String.Empty;
-                        switch (p.AuthenticationType)
-                        {
-                            case "Vkontakte":
-                                provider = "vk";
-                                break;
-                            case "Google":
-                                provider = "google";
-                                break;
-                         }
-                         <button class="btn btn-dark"
+                        string provider = (p.AuthenticationType == "Vkontakte") ? "vk" : p.AuthenticationType.ToLower();
+                        
+                        <button class="btn btn-dark"
                                 type="submit"
                                 id="@p.AuthenticationType"
                                 name="provider"

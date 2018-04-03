@@ -22,12 +22,10 @@ namespace HwProj.Models.Repositories
         public HomeworksManager HomeworkManager { get; }
         public UserManager UserManager { get; }
         public TasksManager TaskManager { get; }
+	    public NotificationsManager NotificationsManager { get; }
 
-
-
-
-        #region Singleton
-        private static readonly Lazy<MainEduRepository> lazy =
+		#region Singleton
+		private static readonly Lazy<MainEduRepository> lazy =
         new Lazy<MainEduRepository>(() => new MainEduRepository());
 
         public static MainEduRepository Instance { get { return lazy.Value; } }
@@ -41,6 +39,7 @@ namespace HwProj.Models.Repositories
             UserManager = new UserManager(context);
             HomeworkManager = new HomeworksManager(context);
             TaskManager = new TasksManager(context);
+			NotificationsManager = new NotificationsManager(context);
         }
 
         public bool AddCourseMate(long courseId, string userEmail)
