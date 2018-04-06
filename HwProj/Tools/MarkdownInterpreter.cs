@@ -21,7 +21,7 @@ namespace HwProj.Tools
 		{
 			try
 			{
-				return engine.Transform(text).Replace("<code>", "<code style = \"color: brown; background-color: ivory;\">");
+				return engine.Transform(text); //.Replace("<code>", "<code style = \"color: brown; background-color: ivory;\">");
 			}
 			catch (Exception)
 			{

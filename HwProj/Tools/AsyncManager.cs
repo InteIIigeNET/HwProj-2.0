@@ -6,13 +6,13 @@ using System.Web;
 
 namespace HwProj.Tools
 {
-	public static class AsyncManager
+	public class AsyncManager : IAsyncManager
 	{
-		public static Task Run(Action action)
+		public Task Run(Action action)
 		{
 			return Task.Run(action);
 		}
-		public static Task<U> Run<U>(Func<U> func)
+		public Task<U> Run<U>(Func<U> func)
 		{
 			return Task.Run(func);
 		}
