@@ -22,8 +22,7 @@ namespace HwProj.Validators
 			IdentityResult result = await base.ValidateAsync(user);
 			if (user.Name.Any(t => !Char.IsLetter(t)) || user.Surname.Any(t => !Char.IsLetter(t)))
 			{
-				var errors = result.Errors.ToList();
-				errors.Add("Имя и фамилия должны содержать только буквенные значения.");
+				var errors = result.Errors.Concat(new [] { "Имя и фамилия должны содержать только буквенные значения." });
 				result = new IdentityResult(errors);
 			}
 			return result;
