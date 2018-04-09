@@ -39,13 +39,17 @@ namespace HwProj.Models
 		/// </summary>
 		public string MentorsName { get; set; }
 		/// <summary>
+		/// Указывает способ вступления в курс
+		/// </summary>
+		public bool IsOpen { get; set; }
+		/// <summary>
 		/// Завершен ли курс?
 		/// </summary>
 		public bool IsComplete { get; set; }
         /// <summary>
         /// Коллекция пользователей этого курса
         /// </summary>
-        public ICollection<User> Users { get; set; } = new List<User>();
+        public ICollection<CourseMate> Users { get; set; } = new List<CourseMate>();
         /// <summary>
         /// Таски этого курса
         /// </summary>
@@ -56,7 +60,8 @@ namespace HwProj.Models
 			return new Course()
 			{
 				GroupName = model.GroupName,
-				Name = model.Name
+				Name = model.Name,
+				IsOpen = model.IsOpen
 			};
 		}
 
@@ -66,8 +71,8 @@ namespace HwProj.Models
             {
                 GroupName = model.GroupName,
                 Name = model.Name,
-                MentorsName = model.MentorName
-
+                MentorsName = model.MentorName,
+				IsOpen = model.IsOpen
             };
         }
 
@@ -88,7 +93,7 @@ namespace HwProj.Models
 
         public bool UserExist(string email)
         {
-            return Users.FirstOrDefault(u => u.Email == email) != null;
+            return Users.FirstOrDefault(u => u.User.Email == email) != null;
         }
     }
 }

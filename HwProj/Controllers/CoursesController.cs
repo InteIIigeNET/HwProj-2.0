@@ -17,85 +17,85 @@ using Microsoft.AspNet.Identity;
 namespace HwProj.Controllers
 {
 	[Authorize]
-    public class CoursesController : Controller
-    {
-	    private MainEduRepository EduRepository = MainEduRepository.Instance;
+	public class CoursesController : Controller
+	{
+		private MainEduRepository EduRepository = MainEduRepository.Instance;
 
-	    [Authorize(Roles = "Преподаватель")]
+		[Authorize(Roles = "Преподаватель")]
 		public ActionResult Create()
-        {            
-            return View();
-        }
+		{
+			return View();
+		}
 
-	    [Authorize(Roles = "Преподаватель")]
-	    [HttpPost]
-	    public ActionResult Create(CreateCourseViewModel courseView)
-	    {
-		    if (!ModelState.IsValid)
-		    {
-			    return View();
-		    }
-		    var course = (Course) courseView;
-            course.MentorsName = User.Identity.GetUserFullName();
-            course.MentorsEmail = User.Identity.GetUserEmail();
+		[Authorize(Roles = "Преподаватель")]
+		[HttpPost]
+		public ActionResult Create(CreateCourseViewModel courseView)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View();
+			}
+			var course = (Course)courseView;
+			course.MentorsName = User.Identity.GetUserFullName();
+			course.MentorsEmail = User.Identity.GetUserEmail();
 
 			if (EduRepository.CourseManager.Contains(t => t.CompareTo(course) == 0))
-			    ModelState.AddModelError("", "Курс с таким описанием уже существует");
-		    else
+				ModelState.AddModelError("", "Курс с таким описанием уже существует");
+			else
 			{
 				if (EduRepository.CourseManager.Add(course))
-					return RedirectToAction("Index", new { courseId = course.Id});
+					return RedirectToAction("Index", new { courseId = course.Id });
 
 				else ModelState.AddModelError("", "Ошибка при созданни курса. Повторите попытку.");
 			}
-		    return View();
-	    }
+			return View();
+		}
 
-        [AllowAnonymous]
-	    public ActionResult Index(long? courseId)
-        {
-            if (courseId != null)
-                return View(EduRepository.CourseManager.Get(c => c.Id == courseId));
-            else
-                return View("CoursesList", EduRepository.CourseManager.GetAll());
-        }
+		[AllowAnonymous]
+		public ActionResult Index(long? courseId)
+		{
+			if (courseId != null)
+				return View(EduRepository.CourseManager.Get(c => c.Id == courseId));
+			else
+				return View("CoursesList", EduRepository.CourseManager.GetAll());
+		}
 
-	    [Authorize(Roles = "Преподаватель")]
-	    public ActionResult Edit()
-	    {
-		    return null;
-	    }
+		[Authorize(Roles = "Преподаватель")]
+		public ActionResult Edit()
+		{
+			return null;
+		}
 
-	    [Authorize(Roles = "Преподаватель")]
-	    public ActionResult AddTask(long? courseId)
-	    {
-		    if (courseId == null) return View("CoursesList");
+		[Authorize(Roles = "Преподаватель")]
+		public ActionResult AddTask(long? courseId)
+		{
+			if (courseId == null) return View("CoursesList");
 
-		    var course = EduRepository.CourseManager.Get(t => t.MentorsEmail == User.Identity.Name);
-			if(course == null) return View("CoursesList");
+			var course = EduRepository.CourseManager.Get(t => t.MentorsEmail == User.Identity.Name);
+			if (course == null) return View("CoursesList");
 
-		    return View("~/Views/Tasks/Create.cshtml", 
+			return View("~/Views/Tasks/Create.cshtml",
 				new TaskCreateViewModel()
 				{
 					CourseId = courseId.Value,
 					Course = course
 				});
-	    }
+		}
 
-        [Authorize]
+		[Authorize]
 		public async Task<ActionResult> SingInCourse(long courseId)
-        {
-            var course = EduRepository.CourseManager.Get(c => c.Id == courseId);
-            var user = EduRepository.UserManager.Get(u => u.Email == User.Identity.Name);
+		{
+			var course = EduRepository.CourseManager.Get(c => c.Id == courseId);
+			var user = EduRepository.UserManager.Get(u => u.Email == User.Identity.Name);
 
-	        if (!EduRepository.AddCourseMate(course, user))
+			if (!EduRepository.CourseMateManager.Add((course, user)))
 		        ModelState.AddModelError("", "Ошибка при обновлении базы данных");
 	        else
 	        {
-		        await NotificationsService.SendNotifications(u => u.Email == course.MentorsEmail,
-													  u => $"Пользователь {u.Email} вступил в курс {course.Name}");
+				await NotificationsService.SendNotifications(u => u.Email == course.MentorsEmail,
+										   u => $"Пользователь {u.Email} вступил в курс {course.Name}" +
+											      (course.IsOpen? "" : new Button("Принять|Отклонить")));
 	        }
-
             return View("Index", course);
         }
     }

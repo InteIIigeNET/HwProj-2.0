@@ -8,7 +8,7 @@ namespace HwProj.Tools
 {
 	public static class MarkdownInterpreter
 	{
-		static Markdown engine = new Markdown(new MarkdownOptions
+		static readonly Markdown Engine = new Markdown(new MarkdownOptions
 		{
 			AutoHyperlink = true,
 			AutoNewLines = true,
@@ -21,7 +21,7 @@ namespace HwProj.Tools
 		{
 			try
 			{
-				return engine.Transform(text); //.Replace("<code>", "<code style = \"color: brown; background-color: ivory;\">");
+				return Engine.Transform(text); //.Replace("<code>", "<code style = \"color: brown; background-color: ivory;\">");
 			}
 			catch (Exception)
 			{

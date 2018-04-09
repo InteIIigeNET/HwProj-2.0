@@ -8,13 +8,23 @@
             <li class="nav-item">
                 @Html.ActionLink("Курсы", "Index", "Courses", routeValues: null, htmlAttributes: new { title = "Courses", @class = "nav-link"})
             </li>
-            <li class="nav-item">
-                @Html.ActionLink("Профиль", "Index", "Manage", routeValues: null, htmlAttributes: new {title = "Manage", @class = "nav-link"})
+             <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbar-dropdown-menu-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Профиль</a>
+                <ul class="dropdown-menu dropdown-danger" aria-labelledby="navbar-dropdown-menu-link">
+                    <li><a class="dropdown-item" href="#">Просмотр</a></li>
+                    <li>
+                        @Html.ActionLink("Редактировать", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "dropdown-item" })
+                    </li>
+                    <li class="dropdown-divider"></li>
+                    @Html.AntiForgeryToken()
+                    <li><a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">Выйти</a></li>
+                </ul>
             </li>
-              @Html.AntiForgeryToken()
-            <li class="nav-item">
-                <a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Выйти</a>
-            </li>
+             <li class="nav-item" style="margin-top: 10px">
+                 @*<a href=@Url.Action("Index", "Home")>*@
+                     <i class="fas fa-bell fa-lg" style="color: white"></i>
+                 @*</a>*@
+             </li>
         </ul>
     }
 }

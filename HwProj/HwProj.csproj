@@ -111,6 +111,9 @@
     <Reference Include="System.Net.Http.Formatting, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.4\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -213,19 +216,20 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201803281856133_mig.cs" />
-    <Compile Include="Migrations\201803281856133_mig.Designer.cs">
-      <DependentUpon>201803281856133_mig.cs</DependentUpon>
+    <Compile Include="Migrations\201804092025443_lol1.cs" />
+    <Compile Include="Migrations\201804092025443_lol1.Designer.cs">
+      <DependentUpon>201804092025443_lol1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Models\Repositories\IReadOnlyRepository.cs" />
+    <Compile Include="Models\CourseMates.cs" />
+    <Compile Include="Models\Repositories\CourseMateManager.cs" />
+    <Compile Include="Models\Repositories\IRepository.cs" />
     <Compile Include="Models\Repositories\NotificationsManager.cs" />
     <Compile Include="Models\Repositories\TasksManager.cs" />
     <Compile Include="Models\Repositories\UserManager.cs" />
     <Compile Include="Models\ViewModels\CourseViewModels.cs" />
     <Compile Include="Models\Repositories\BaseManager.cs" />
     <Compile Include="Models\Repositories\HomeworksManager.cs" />
-    <Compile Include="Models\Repositories\IRepository.cs" />
     <Compile Include="Models\Contexts\ApplicationDbContext.cs" />
     <Compile Include="Models\Repositories\CoursesManager.cs" />
     <Compile Include="Models\Award.cs" />
@@ -258,6 +262,7 @@
     <Compile Include="Tools\IAsyncManager.cs" />
     <Compile Include="Tools\IdentityExtensions.cs" />
     <Compile Include="Tools\MarkdownInterpreter.cs" />
+    <Compile Include="Tools\Widget.cs" />
     <Compile Include="Validators\UserValidator.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -361,8 +366,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803281856133_mig.resx">
-      <DependentUpon>201803281856133_mig.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201804092025443_lol1.resx">
+      <DependentUpon>201804092025443_lol1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
