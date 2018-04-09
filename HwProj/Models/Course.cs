@@ -39,6 +39,10 @@ namespace HwProj.Models
 		/// </summary>
 		public string MentorsName { get; set; }
 		/// <summary>
+		/// Указывает способ вступления в курс
+		/// </summary>
+		public bool IsOpen { get; set; }
+		/// <summary>
 		/// Завершен ли курс?
 		/// </summary>
 		public bool IsComplete { get; set; }
@@ -56,7 +60,8 @@ namespace HwProj.Models
 			return new Course()
 			{
 				GroupName = model.GroupName,
-				Name = model.Name
+				Name = model.Name,
+				IsOpen = model.IsOpen
 			};
 		}
 
@@ -66,8 +71,8 @@ namespace HwProj.Models
             {
                 GroupName = model.GroupName,
                 Name = model.Name,
-                MentorsName = model.MentorName
-
+                MentorsName = model.MentorName,
+				IsOpen = model.IsOpen
             };
         }
 

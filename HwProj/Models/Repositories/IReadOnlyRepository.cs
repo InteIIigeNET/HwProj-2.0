@@ -12,4 +12,11 @@ namespace HwProj.Models.Repositories
 		IEnumerable<T> GetAll(Func<T, bool> predicate);
 		bool Contains(Func<T, bool> predicate);
 	}
+	public interface IShellRepository<T, U>
+	{
+		U Get(Func<T, bool> predicate);
+		IEnumerable<U> GetAll();
+		IEnumerable<U> GetAll(Func<T, bool> predicate);
+		bool Contains(Func<T, bool> predicate);
+	}
 }

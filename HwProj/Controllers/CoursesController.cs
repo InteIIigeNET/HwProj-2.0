@@ -95,7 +95,6 @@ namespace HwProj.Controllers
 		        await NotificationsService.SendNotifications(u => u.Email == course.MentorsEmail,
 													  u => $"Пользователь {u.Email} вступил в курс {course.Name}");
 	        }
-
             return View("Index", course);
         }
     }

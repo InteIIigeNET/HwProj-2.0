@@ -64,7 +64,7 @@ namespace HwProj.Models.Repositories
                 SaveChanges();
                 return true;
             }
-            catch (DbUpdateException)
+            catch 
             {
                 return false;
             }            
