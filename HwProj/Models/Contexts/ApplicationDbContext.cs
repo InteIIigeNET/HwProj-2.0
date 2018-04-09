@@ -22,16 +22,17 @@ namespace HwProj.Models.Contexts
             return new ApplicationDbContext();
         }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Course>().HasMany(c => c.Users)
-                .WithMany(u => u.Courses)
-                .Map(t => t.MapLeftKey("CourseId")
-                .MapRightKey("UserId")
-                .ToTable("CourseMates"));
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    //modelBuilder.Entity<Course>().HasMany(c => c.Users)
+        //    //    .WithMany(u => u.Courses)
+        //    //    .Map(t => t.MapLeftKey("CourseId")
+        //    //    .MapRightKey("UserId")
+        //    //    .ToTable("CourseMates"));
 
-			base.OnModelCreating(modelBuilder);
-        }
+
+        //    base.OnModelCreating(modelBuilder);
+        //}
 
         /// <summary>
         /// Все курсы
@@ -49,6 +50,10 @@ namespace HwProj.Models.Contexts
         /// База домашних заданий студентов
         /// </summary>
         public DbSet<Homework> Homeworks { get; set; }
+        /// <summary>
+        /// Сопоставление курсов и юзеров
+        /// </summary>
+        public DbSet<CourseMate> CourseMates { get; set; }
     }
 
 }

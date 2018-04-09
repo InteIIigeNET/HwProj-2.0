@@ -1,0 +1,101 @@
+﻿@using HwProj.Models.ViewModels
+@using HwProj.Models.Enums
+@model EditViewModel
+
+@{
+    ViewBag.Title = "Редактирование профиля";
+}
+
+@using (Html.BeginForm("Index", "Manage",
+FormMethod.Post,
+new { @class = "jumbotron", id = "manage-form", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4 class="text-center">@ViewBag.Title</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.HiddenFor(user => user.Id)
+    </div>
+    <div class="form-group">
+        @Html.HiddenFor(user => user.Role)
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-3 col-md-4 col-sm-12 col-12">
+            @Html.LabelFor(user => user.Name)
+        </div>
+        <div class="col-lg-9 col-md-8 col-sm-12 col-12">
+            @Html.TextBoxFor(user => user.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(user => user.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-3 col-md-4 col-sm-12 col-12">
+            @Html.LabelFor(user => user.Surname)
+        </div>
+        <div class="col-lg-9 col-md-8 col-sm-12 col-12">
+            @Html.TextBoxFor(user => user.Surname, new { @class = "form-control" })
+            @Html.ValidationMessageFor(user => user.Surname, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-3 col-md-4 col-sm-12 col-12">
+            @Html.LabelFor(user => user.Email)
+        </div>
+        <div class="col-lg-9 col-md-8 col-sm-12 col-12">
+            @Html.TextBoxFor(user => user.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(user => user.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-3 col-md-4 col-sm-12 col-12">
+            @Html.LabelFor(user => user.Password)
+        </div>
+        <div class="col-lg-9 col-md-8 col-sm-12 col-12">
+            @Html.PasswordFor(user => user.Password, new { @class = "form-control" })
+            @Html.ValidationMessageFor(user => user.Password, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-3 col-md-4 col-sm-12 col-12">
+            @Html.LabelFor(user => user.NewPassword)
+        </div>
+        <div class="col-lg-9 col-md-8 col-sm-12 col-12">
+            @Html.PasswordFor(user => user.NewPassword, new { @class = "form-control" })
+            @Html.ValidationMessageFor(user => user.NewPassword, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-3 col-md-4 col-sm-12 col-12">
+            @Html.LabelFor(user => user.ConfirmPassword)
+        </div>
+        <div class="col-lg-9 col-md-8 col-sm-12 col-12">
+            @Html.PasswordFor(user => user.ConfirmPassword, new { @class = "form-control" })
+            @Html.ValidationMessageFor(user => user.ConfirmPassword, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-lg-3 col-md-4 col-sm-3 col-3">
+            <span>Роль</span>
+        </div>
+        <div class="col-lg-9 col-md-8 col-sm-9 col-9">
+            @Html.Label(@Model.Role, new { @class = "font-italic" })
+        </div>
+    </div>
+    <div class="form-group row float-xl-right float-lg-right float-md-right">
+        <div class="col-sm-12 col-12">
+            <input class="btn btn-block btn-primary" type="submit" value="Сохранить изменения" />
+        </div>
+    </div>
+    <div class="clearfix"></div>
+    <p>
+        @if (Model.Role != null && Model.Role != RoleType.Преподаватель.ToString())
+        {
+            @Html.ActionLink("Подтвердить статус преподавателя", "")
+        }
+    </p>
+    <p>
+        @Html.Label("Unhappy?")
+        @Html.ActionLink("Удалить мой аккаунт", "Delete")
+    </p>
+}

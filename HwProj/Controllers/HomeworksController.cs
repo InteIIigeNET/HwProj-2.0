@@ -33,7 +33,7 @@ namespace HwProj.Controllers
                 ModelState.AddModelError("", "Нужно заполнить все поля");
                 return View(model);
             }
-            EduRepository.HomeworkManager.Add(new Homework(model) { Task = EduRepository.TaskManager.Get(t => t.Id == model.TaskId)});
+            EduRepository.HomeworkManager.Add(new Homework(model) { Task = EduRepository.TaskManager.Get(t => t.Id == model.TaskId) });
             ModelState.AddModelError("", "Дз успешно добавлено");
             return View();
         }
