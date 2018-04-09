@@ -38,10 +38,10 @@ namespace HwProj.Models
 	    [Display(Name = "Фамилия")]
 	    public string Surname { get; set; }
 
-		/// <summary>
-		/// Коллекция курсов пользователя
-		/// </summary>
-		public ICollection<Course> Courses { get; set; } = new List<Course>();
+		///// <summary>
+		///// Коллекция курсов пользователя
+		///// </summary>
+		//public ICollection<Course> Courses { get; set; } = new List<Course>();
 	    /// <summary>
 	    /// Коллекция уведомлений пользователя
 	    /// </summary>
