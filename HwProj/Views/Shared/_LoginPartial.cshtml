@@ -16,7 +16,7 @@
                         @Html.ActionLink("Редактировать", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "dropdown-item" })
                     </li>
                     <li class="dropdown-divider"></li>
-                    @*@Html.AntiForgeryToken()*@
+                    @Html.AntiForgeryToken()
                     <li><a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">Выйти</a></li>
                 </ul>
             </li>

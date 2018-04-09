@@ -46,10 +46,10 @@ namespace HwProj.Models
 		/// Завершен ли курс?
 		/// </summary>
 		public bool IsComplete { get; set; }
-        ///// <summary>
-        ///// Коллекция пользователей этого курса
-        ///// </summary>
-        //public ICollection<User> Users { get; set; } = new List<User>();
+        /// <summary>
+        /// Коллекция пользователей этого курса
+        /// </summary>
+        public ICollection<CourseMate> Users { get; set; } = new List<CourseMate>();
         /// <summary>
         /// Таски этого курса
         /// </summary>
@@ -91,9 +91,9 @@ namespace HwProj.Models
             return 0;
         }
 
-        //public bool UserExist(string email)
-        //{
-        //    //return Users.FirstOrDefault(u => u.Email == email) != null;
-        //}
+        public bool UserExist(string email)
+        {
+            return Users.FirstOrDefault(u => u.User.Email == email) != null;
+        }
     }
 }

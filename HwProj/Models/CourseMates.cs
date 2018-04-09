@@ -12,7 +12,7 @@ namespace HwProj.Models
     {
         public long Id { get; set; }
 
-        public long UserId { get; set; }
+        public string UserId { get; set; }
 
         public User User { get; set; }
 
@@ -24,5 +24,14 @@ namespace HwProj.Models
         /// Для открытых курсов всегда true
         /// </summary>
         public bool IsAccepted { get; set; }
+
+		public CourseMate() { }
+	    public CourseMate(Course course, User user)
+	    {
+		    Course = course;
+		    User = user;
+		    CourseId = Course.Id;
+		    UserId = User.Id;
+	    }
     }
 }

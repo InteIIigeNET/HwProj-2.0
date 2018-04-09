@@ -2,21 +2,21 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using HwProj.Models.Contexts;
 
 namespace HwProj.Models.Repositories
 {
 	public class CourseMateManager : BaseManager,
-									 IShellRepository<(Course course, User user), CourseMate>
+								     IBinaryRepository<(Course course, User user), CourseMate>
 
 	{
-		public bool Contains(Func<(Course course, User user), bool> predicate)
+		public CourseMateManager(ApplicationDbContext context) : base(context)
 		{
-			throw new NotImplementedException();
 		}
 
-		public CourseMate Get(Func<(Course course, User user), bool> predicate)
+		public CourseMate Get(Func<CourseMate, bool> predicate)
 		{
-			throw new NotImplementedException();
+			return Context.CourseMates.FirstOrDefault(predicate);
 		}
 
 		public IEnumerable<CourseMate> GetAll()
@@ -24,7 +24,33 @@ namespace HwProj.Models.Repositories
 			throw new NotImplementedException();
 		}
 
-		public IEnumerable<CourseMate> GetAll(Func<(Course course, User user), bool> predicate)
+		public IEnumerable<CourseMate> GetAll(Func<CourseMate, bool> predicate)
+		{
+			throw new NotImplementedException();
+		}
+
+		public bool Contains(Func<CourseMate, bool> predicate)
+		{
+			return Get(predicate) != null;
+		}
+
+		public bool Add((Course course, User user) item)
+		{
+			var courseMate = new CourseMate(item.course, item.user)
+			{
+				IsAccepted = item.course.IsOpen
+			};
+
+			if (Contains(cm => cm.UserId == item.user.Id &&
+							   cm.CourseId == item.course.Id))
+				return false;
+			Context.CourseMates.Add(courseMate);
+			Context.SaveChanges();
+			return true;
+
+		}
+
+		public bool Delete((Course course, User user) item)
 		{
 			throw new NotImplementedException();
 		}

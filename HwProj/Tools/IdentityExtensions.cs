@@ -16,12 +16,10 @@ namespace HwProj.Tools
 			{
 				throw new ArgumentNullException(nameof(identity));
 			}
-			if (identity is ClaimsIdentity ci)
-			{
-				T result = Getter(ci);
-				return result;
-			}
-			throw new ArgumentException("Not claims identity");
+			if (!(identity is ClaimsIdentity ci))
+				throw new ArgumentException("Not claims identity");
+			var result = Getter(ci);
+			return result;
 		}
 		public static T GetUserId<T>(this IIdentity identity) where T : IConvertible
 		{
