@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using HwProj.Controllers;
 using HwProj.Models.ViewModels;
+using static System.String;
 
 namespace HwProj.Models
 {
@@ -55,26 +56,13 @@ namespace HwProj.Models
         /// </summary>
         public ICollection<Task> Tasks { get; set; } = new List<Task>();
 
-		public static implicit operator Course(CreateCourseViewModel model)
+		public Course() { }
+		public Course(CreateCourseViewModel model)
 		{
-			return new Course()
-			{
-				GroupName = model.GroupName,
-				Name = model.Name,
-				IsOpen = model.IsOpen
-			};
+			GroupName = model.GroupName;
+			Name = model.Name;
+			IsOpen = model.IsOpen;
 		}
-
-        public static implicit operator Course(CourseViewModel model)
-        {
-            return new Course()
-            {
-                GroupName = model.GroupName,
-                Name = model.Name,
-                MentorsName = model.MentorName,
-				IsOpen = model.IsOpen
-            };
-        }
 
         public int CompareTo(object obj)
         {
@@ -82,11 +70,11 @@ namespace HwProj.Models
 
             if (other == null) return 1;
             int value;
-            if ((value = this.GroupName.CompareTo(other.GroupName)) != 0)
+            if ((value = Compare(GroupName, other.GroupName, StringComparison.Ordinal)) != 0)
                 return value;
-            if ((value = this.Name.CompareTo(other.Name)) != 0)
+            if ((value = Compare(Name, other.Name, StringComparison.Ordinal)) != 0)
                 return value;
-            if ((value = this.MentorsName.CompareTo(other.MentorsName)) != 0)
+            if ((value = Compare(MentorsName, other.MentorsName, StringComparison.Ordinal)) != 0)
                 return value;
             return 0;
         }
