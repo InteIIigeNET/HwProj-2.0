@@ -1,1 +1,37 @@
-﻿
+﻿@model HwProj.Models.ViewModels.ExternalLoginListViewModel
+@using Microsoft.Owin.Security
+
+@{
+    var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
+    if (!loginProviders.Any()) {
+        <div>
+            <p>
+                Внешние службы проверки подлинности не настроены. Подробности о настройке входа через внешние службы для этого приложения ASP.NET
+                см. в <a href="https://go.microsoft.com/fwlink/?LinkId=403804">этой статье</a>.
+            </p>
+        </div>
+    }
+    else {
+        using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl })) {
+            @Html.AntiForgeryToken()
+            <div>
+                <p>Привяжите аккаунт из социальные сети:</p>
+                <div class="text-center" id="social-login-list">
+                    @foreach (AuthenticationDescription p in loginProviders)
+                    {
+                        string provider = (p.AuthenticationType == "Vkontakte") ? "vk" : p.AuthenticationType.ToLower();
+                        
+                        <button class="btn btn-dark"
+                                type="submit"
+                                id="@p.AuthenticationType"
+                                name="provider"
+                                value="@p.AuthenticationType"
+                                title="Привязать аккаунт из @p.Caption">
+                            <i class="fab fa-@provider fa-lg" data-fa-mask="fas fa-square"></i>
+                        </button>
+                    }
+                </div>
+            </div>            
+        }
+    }
+}
