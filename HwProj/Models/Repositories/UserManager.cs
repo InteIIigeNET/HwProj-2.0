@@ -12,7 +12,6 @@ namespace HwProj.Models.Repositories
         public UserManager(ApplicationDbContext context) : base(context)
         {
         }
-
 	    public IEnumerable<User> GetAll(Func<User, bool> predicate)
 	    {
 			return Context.Users.Include(u => u.Notifications).Where(predicate).ToList();
