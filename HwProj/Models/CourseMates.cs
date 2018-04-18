@@ -10,6 +10,7 @@ namespace HwProj.Models
     [Table("CourseMates")]
     public class CourseMate
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
         public string UserId { get; set; }
