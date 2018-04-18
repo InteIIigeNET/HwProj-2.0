@@ -37,6 +37,10 @@ namespace HwProj.Models
 	    [Required]
 	    [Display(Name = "Фамилия")]
 	    public string Surname { get; set; }
+        /// <summary>
+        /// Все из названия ясно?
+        /// </summary>
+        public string GitHubToken { get; set; }
 
 		///// <summary>
 		///// Коллекция курсов пользователя
