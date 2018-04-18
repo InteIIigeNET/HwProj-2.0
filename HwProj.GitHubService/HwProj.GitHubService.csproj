@@ -125,5 +125,11 @@
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HwProj.Models\HwProj.Models.csproj">
+      <Project>{51e07460-9bb9-4c14-9e2a-8c3e6a167825}</Project>
+      <Name>HwProj.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
