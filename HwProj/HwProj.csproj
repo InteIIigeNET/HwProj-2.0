@@ -344,6 +344,11 @@
     <Content Include="Views\Tasks\Create.cshtml" />
     <Content Include="Views\Homeworks\Index.cshtml" />
     <Content Include="Views\Homeworks\Create.cshtml" />
+    <Content Include="Views\Manage\_EditProfileSocialPartial.cshtml" />
+    <Content Include="Views\Manage\_EditProfilePasswordPartial.cshtml" />
+    <Content Include="Views\Manage\_EditProfileMenuPartial.cshtml" />
+    <Content Include="Views\Manage\_EditProfileInfoPartial.cshtml" />
+    <Content Include="Views\Manage\_EditProfileEmailPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
