@@ -24,6 +24,12 @@ namespace HwProj.Models.ViewModels
         [Required]
         [Display(Name = "Номер группы")]
         public string GroupName { get; set; }
+		/// <summary>
+		/// Указывает способ вступления в курс
+		/// </summary>
+		[Required]
+		[Display(Name = "Доступ по заявкам")]
+		public bool IsOpen { get; set; }
 	}
 
     /// <summary>
@@ -83,11 +89,16 @@ namespace HwProj.Models.ViewModels
         /// </summary>
         [Display(Name = "Номер группы")]
         public string GroupName { get; set; }
+	    /// <summary>
+	    /// Указывает способ вступления в курс
+	    /// </summary>
+	    [Display(Name = "Доступ по заявкам")]
+	    public bool IsOpen { get; set; }
 
-        /// <summary>
+		/// <summary>
 		/// Преподаватель
 		/// </summary>
-        [Display(Name = "Преподаватель")]
+		[Display(Name = "Преподаватель")]
         public string MentorName { get; set; }
     }
 }

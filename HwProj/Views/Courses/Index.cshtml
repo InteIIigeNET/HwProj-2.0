@@ -30,7 +30,7 @@
     @foreach (var user in Model.Users)
     {
         <tr>
-            <td>@user.UserName</td>
+            <td>@user.User.UserName</td>
             @foreach (var task in Model.Tasks)
             {
                 foreach (var homework in task.Homeworks)

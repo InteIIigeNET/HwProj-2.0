@@ -17,7 +17,9 @@ namespace HwProj.Models.Repositories
         {
             item.IsComplete = false;
             if (Contains(c => c.Id == item.Id)) return false;
-
+			/**/
+	        item.IsOpen = false;
+			/**/
             Context.Courses.Add(item);
             Context.SaveChanges();
             return true;
@@ -48,7 +50,7 @@ namespace HwProj.Models.Repositories
 
         public Course Get(Func<Course, bool> predicate)
         {
-            return Context.Courses.Include(c => c.Tasks)
+            return Context.Courses.Include(c => c.Tasks).Include(c => c.Users)
              .FirstOrDefault(predicate);
         }
     }

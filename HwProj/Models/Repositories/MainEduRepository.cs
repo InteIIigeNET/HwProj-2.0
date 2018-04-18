@@ -23,9 +23,10 @@ namespace HwProj.Models.Repositories
         public UserManager UserManager { get; }
         public TasksManager TaskManager { get; }
         public NotificationsManager NotificationsManager { get; }
+	    public CourseMateManager CourseMateManager { get; }
 
-        #region Singleton
-        private static readonly Lazy<MainEduRepository> lazy =
+		#region Singleton
+		private static readonly Lazy<MainEduRepository> lazy =
         new Lazy<MainEduRepository>(() => new MainEduRepository());
 
         public static MainEduRepository Instance { get { return lazy.Value; } }
@@ -40,36 +41,8 @@ namespace HwProj.Models.Repositories
             HomeworkManager = new HomeworksManager(context);
             TaskManager = new TasksManager(context);
             NotificationsManager = new NotificationsManager(context);
-        }
-
-        public bool AddCourseMate(long courseId, string userEmail)
-        {
-            Course course;
-            User user;
-            if ((course = CourseManager.Get(c => c.Id == courseId)) != null
-                && (user = UserManager.Get(u => u.Email == userEmail)) != null)
-            {
-                return AddCourseMate(course, user);
-            }
-            else return false;
-        }
-
-        public bool AddCourseMate(Course course, User user)
-        {
-            //if (course.Users.Contains(user) || user.Courses.Contains(course)) return false;
-            //try
-            //{
-            //    course.Users.Add(user);
-            //    user.Courses.Add(course);
-            //    SaveChanges();
-            //    return true;
-            //}
-            //catch (DbUpdateException)
-            //{
-            //    return false;
-            //}
-            throw new NotImplementedException();
-        }
+	        CourseMateManager = new CourseMateManager(context);
+		}
 
         public void SaveChanges()
         {

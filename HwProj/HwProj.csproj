@@ -21,9 +21,12 @@
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort>44347</IISExpressSSLPort>
-    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
-    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
-    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
+    <IISExpressAnonymousAuthentication>
+    </IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>
+    </IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>
+    </IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -107,6 +110,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.4\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net461\System.ValueTuple.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -200,6 +206,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AccountController.ChallengeResult.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -210,20 +217,20 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201804091928289_init.cs" />
-    <Compile Include="Migrations\201804091928289_init.Designer.cs">
-      <DependentUpon>201804091928289_init.cs</DependentUpon>
+    <Compile Include="Migrations\201804092025443_lol1.cs" />
+    <Compile Include="Migrations\201804092025443_lol1.Designer.cs">
+      <DependentUpon>201804092025443_lol1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CourseMates.cs" />
-    <Compile Include="Models\Repositories\IReadOnlyRepository.cs" />
+    <Compile Include="Models\Repositories\CourseMateManager.cs" />
+    <Compile Include="Models\Repositories\IRepository.cs" />
     <Compile Include="Models\Repositories\NotificationsManager.cs" />
     <Compile Include="Models\Repositories\TasksManager.cs" />
     <Compile Include="Models\Repositories\UserManager.cs" />
     <Compile Include="Models\ViewModels\CourseViewModels.cs" />
     <Compile Include="Models\Repositories\BaseManager.cs" />
     <Compile Include="Models\Repositories\HomeworksManager.cs" />
-    <Compile Include="Models\Repositories\IRepository.cs" />
     <Compile Include="Models\Contexts\ApplicationDbContext.cs" />
     <Compile Include="Models\Repositories\CoursesManager.cs" />
     <Compile Include="Models\Award.cs" />
@@ -231,12 +238,9 @@
     <Compile Include="Models\Error.cs" />
     <Compile Include="Models\Homework.cs" />
     <Compile Include="Models\Course.cs" />
-    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\Repositories\MainEduRepository.cs" />
     <Compile Include="Models\ViewModels\HomeworkViewModels.cs" />
     <Compile Include="Models\ViewModels\ManagerViewModels.cs" />
-    <Compile Include="Models\Message.cs" />
-    <Compile Include="Models\Note.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\Roles\ApplicationRole.cs" />
@@ -256,6 +260,7 @@
     <Compile Include="Tools\IAsyncManager.cs" />
     <Compile Include="Tools\IdentityExtensions.cs" />
     <Compile Include="Tools\MarkdownInterpreter.cs" />
+    <Compile Include="Tools\Widget.cs" />
     <Compile Include="Validators\UserValidator.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -359,8 +364,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201804091928289_init.resx">
-      <DependentUpon>201804091928289_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201804092025443_lol1.resx">
+      <DependentUpon>201804092025443_lol1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

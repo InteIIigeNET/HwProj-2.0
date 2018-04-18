@@ -18,7 +18,7 @@ namespace HwProj.Controllers
 {
 	[RequireHttps]
 	[Authorize]
-    public class AccountController : Controller
+    public partial class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -32,25 +32,13 @@ namespace HwProj.Controllers
         }
         public ApplicationSignInManager SignInManager
         {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set 
-            { 
-                _signInManager = value; 
-            }
+            get => _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+	        private set => _signInManager = value;
         }
         public ApplicationUserManager UserManager
         {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
+            get => _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+	        private set => _userManager = value;
         }
 
         // GET: /Account/Login
@@ -134,15 +122,9 @@ namespace HwProj.Controllers
             {
                 return View("Error");
             }
-	        try
-	        {
-		        var result = await UserManager.ConfirmEmailAsync(userId, code);
-		        return View(result.Succeeded ? "ConfirmEmail" : "Error");
-	        }
-	        catch
-	        {
-				return View("Error");
-			}
+		    var result = await UserManager.ConfirmEmailAsync(userId, code);
+			return result == null ? View("Error") 
+								  : View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
 		// GET: /Account/ForgotPassword
@@ -348,15 +330,9 @@ namespace HwProj.Controllers
         // Используется для защиты от XSRF-атак при добавлении внешних имен входа
         private const string XsrfKey = "XsrfId";
 
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
+        private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
 
-        private void AddErrors(IdentityResult result)
+	    private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
             {
@@ -371,35 +347,6 @@ namespace HwProj.Controllers
                 return Redirect(returnUrl);
             }
             return RedirectToAction("Index", "Home");
-        }
-
-        internal class ChallengeResult : HttpUnauthorizedResult
-        {
-            public ChallengeResult(string provider, string redirectUri)
-                : this(provider, redirectUri, null)
-            {
-            }
-
-            public ChallengeResult(string provider, string redirectUri, string userId)
-            {
-                LoginProvider = provider;
-                RedirectUri = redirectUri;
-                UserId = userId;
-            }
-
-            public string LoginProvider { get; set; }
-            public string RedirectUri { get; set; }
-            public string UserId { get; set; }
-
-            public override void ExecuteResult(ControllerContext context)
-            {
-                var properties = new AuthenticationProperties { RedirectUri = RedirectUri };
-                if (UserId != null)
-                {
-                    properties.Dictionary[XsrfKey] = UserId;
-                }
-                context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
-            }
         }
         #endregion
     }
