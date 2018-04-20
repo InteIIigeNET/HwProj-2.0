@@ -83,5 +83,15 @@ namespace HwProj.Tools
 					return id?.Value;
 				});
         }
-    }
+
+		public static string GetGitHubToken(this IIdentity identity)
+		{
+			return GetClaim(identity,
+				ci =>
+				{
+					var id = ci.FindFirst(c => c.Type.Equals("GitHubAccessToken"));
+					return id?.Value;
+				});
+		}
+	}
 }

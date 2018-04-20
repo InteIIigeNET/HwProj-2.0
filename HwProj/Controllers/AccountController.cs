@@ -7,12 +7,17 @@ using System.Web;
 using System.Web.Mvc;
 using HwProj.Filters;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using HwProj.Models;
 using HwProj.Models.Enums;
 using HwProj.Models.ViewModels;
 using HwProj.Models.Contexts;
+using HwProj.Tools;
+using IdentityModel;
+using IdentityServer4;
+using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace HwProj.Controllers
 {
@@ -228,13 +233,12 @@ namespace HwProj.Controllers
             {
                 return RedirectToAction("Login");
             }
-
             // Выполнение входа пользователя посредством данного внешнего поставщика входа, если у пользователя уже есть имя входа
-            var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
-            switch (result)
+	        var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+			switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+					return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -262,23 +266,30 @@ namespace HwProj.Controllers
             if (ModelState.IsValid)
             {
                 // Получение сведений о пользователе от внешнего поставщика входа
-                var info = await AuthenticationManager.GetExternalLoginInfoAsync();
-                if (info == null)
+	            var info = await AuthenticationManager.GetExternalLoginInfoAsync();
+
+				if (info == null)
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new User { UserName = model.Email, Email = model.Email };
+	            var user = new User(model);
 	            try
 	            {
 		            var result = await UserManager.CreateAsync(user);
-
 		            if (result.Succeeded)
 		            {
-			            result = await UserManager.AddLoginAsync(user.Id, info.Login);
+						result = await UserManager.AddToRoleAsync(user.Id, RoleType.Преподаватель.ToString());
 			            if (result.Succeeded)
 			            {
-				            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-				            return RedirectToLocal(returnUrl);
+				            var claim = await GetGitHubToken();
+							await claim.IfNotNull(async c => await UserManager.AddClaimAsync(user.Id, c));
+
+							result = await UserManager.AddLoginAsync(user.Id, info.Login);
+				            if (result.Succeeded)
+				            {
+					            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+					            return RedirectToLocal(returnUrl);
+				            }
 			            }
 		            }
 		            AddErrors(result);
@@ -339,6 +350,13 @@ namespace HwProj.Controllers
                 ModelState.AddModelError("", error);
             }
         }
+
+	    private async Task<Claim> GetGitHubToken()
+	    {
+			var claimsIdentity = await AuthenticationManager.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
+		    var gitHubAccessTokenClaim = claimsIdentity.Claims.FirstOrDefault(c => c.Type.Equals("GitHubAccessToken"));
+		    return gitHubAccessTokenClaim;
+	    }
 
         private ActionResult RedirectToLocal(string returnUrl)
         {
