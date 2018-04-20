@@ -217,9 +217,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201804181746584_init.cs" />
-    <Compile Include="Migrations\201804181746584_init.Designer.cs">
-      <DependentUpon>201804181746584_init.cs</DependentUpon>
+    <Compile Include="Migrations\201804201802038_iniy.cs" />
+    <Compile Include="Migrations\201804201802038_iniy.Designer.cs">
+      <DependentUpon>201804201802038_iniy.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CourseMates.cs" />
@@ -305,6 +305,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -345,13 +347,11 @@
     <Content Include="Views\Homeworks\Index.cshtml" />
     <Content Include="Views\Homeworks\Create.cshtml" />
     <Content Include="Views\Manage\_EditProfileSocialPartial.cshtml" />
-    <Content Include="Views\Manage\_EditProfilePasswordPartial.cshtml" />
     <Content Include="Views\Manage\_EditProfileMenuPartial.cshtml" />
     <Content Include="Views\Manage\_EditProfileInfoPartial.cshtml" />
     <Content Include="Views\Manage\_EditProfileEmailPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
@@ -370,8 +370,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201804092025443_lol1.resx">
-      <DependentUpon>201804092025443_lol1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201804201802038_iniy.resx">
+      <DependentUpon>201804201802038_iniy.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

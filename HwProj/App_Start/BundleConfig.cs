@@ -36,6 +36,8 @@ namespace HwProj
                       "~/Content/fontawesome-all.css",
                       "~/Content/mdb.css",
                       "~/Content/mdb.min.css"));
-		}
+            bundles.Add(new ScriptBundle("~/bundles/unobtrusive").Include(
+                 "~/Scripts/jquery.unobtrusive*"));
+        }
 	}
 }
