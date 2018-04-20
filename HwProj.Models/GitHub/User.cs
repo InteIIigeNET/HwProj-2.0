@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HwProj.Models.GitHub
 {
-    class User
+    public class User
     {
         public string Login { get; set; }
 

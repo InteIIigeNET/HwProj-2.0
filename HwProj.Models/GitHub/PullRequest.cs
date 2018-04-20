@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HwProj.Models.GitHub
 {
-    class PullRequest
+    public class PullRequest
     {
         public User Owner { get; set; }
 

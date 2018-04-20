@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HwProj.Models.GitHub
 {
-    class Comment
+    public class Comment
     {
         public User Owner { get; set; }
 
