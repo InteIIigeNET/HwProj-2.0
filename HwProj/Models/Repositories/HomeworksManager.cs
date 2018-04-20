@@ -13,6 +13,17 @@ namespace HwProj.Models.Repositories
         public bool Add(Homework item)
         {
             if (Contains(h => h.Id == item.Id)) return false;
+	        var oldAttempts = GetAll(h => h.TaskId == item.TaskId);
+
+	        if (oldAttempts == null)
+	        {
+		        item.Attempt = 1;
+	        }
+	        else
+	        {
+		        int lastAttemptValue = oldAttempts.Max(h => h.Attempt);
+		        item.Attempt = lastAttemptValue + 1;
+	        }
             Context.Homeworks.Add(item);
             Context.SaveChanges();
             return true;

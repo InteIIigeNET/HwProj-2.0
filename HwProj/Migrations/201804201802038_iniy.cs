@@ -3,7 +3,7 @@ namespace HwProj.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class lol1 : DbMigration
+    public partial class iniy : DbMigration
     {
         public override void Up()
         {
@@ -57,8 +57,9 @@ namespace HwProj.Migrations
                         TaskId = c.Long(nullable: false),
                         StudentId = c.String(maxLength: 128),
                         IsCompleted = c.Boolean(nullable: false),
-                        Title = c.String(),
-                        Description = c.String(),
+                        Comment = c.String(),
+                        GitHub = c.String(),
+                        Attempt = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.StudentId)
@@ -74,6 +75,7 @@ namespace HwProj.Migrations
                         Gender = c.Int(nullable: false),
                         Name = c.String(nullable: false),
                         Surname = c.String(nullable: false),
+                        GitHubToken = c.String(),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),

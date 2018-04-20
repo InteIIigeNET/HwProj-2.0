@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HwProj", "HwProj\HwProj.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HwProj.Tests", "HwProj.Tests\HwProj.Tests.csproj", "{635CD50D-4064-42A2-ABBA-2E635BE575E1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HwProj.GitHubService", "HwProj.GitHubService\HwProj.GitHubService.csproj", "{D2030229-C169-4F37-AB72-286DE4737F61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HwProj.Models", "HwProj.Models\HwProj.Models.csproj", "{51E07460-9BB9-4C14-9E2A-8C3E6A167825}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{635CD50D-4064-42A2-ABBA-2E635BE575E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{635CD50D-4064-42A2-ABBA-2E635BE575E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{635CD50D-4064-42A2-ABBA-2E635BE575E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2030229-C169-4F37-AB72-286DE4737F61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2030229-C169-4F37-AB72-286DE4737F61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2030229-C169-4F37-AB72-286DE4737F61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2030229-C169-4F37-AB72-286DE4737F61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51E07460-9BB9-4C14-9E2A-8C3E6A167825}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51E07460-9BB9-4C14-9E2A-8C3E6A167825}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51E07460-9BB9-4C14-9E2A-8C3E6A167825}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51E07460-9BB9-4C14-9E2A-8C3E6A167825}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

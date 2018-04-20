@@ -19,7 +19,7 @@ namespace HwProj.Controllers
 	[Authorize]
 	public class CoursesController : Controller
 	{
-		private MainEduRepository EduRepository = MainEduRepository.Instance;
+		private readonly MainEduRepository _eduRepository = MainEduRepository.Instance;
 
 		[Authorize(Roles = "Преподаватель")]
 		public ActionResult Create()
@@ -35,15 +35,17 @@ namespace HwProj.Controllers
 			{
 				return View();
 			}
-			var course = (Course)courseView;
-			course.MentorsName = User.Identity.GetUserFullName();
-			course.MentorsEmail = User.Identity.GetUserEmail();
+			var course = new Course(courseView)
+			{
+				MentorsName = User.Identity.GetUserFullName(),
+				MentorsEmail = User.Identity.GetUserEmail()
+			};
 
-			if (EduRepository.CourseManager.Contains(t => t.CompareTo(course) == 0))
+			if (_eduRepository.CourseManager.Contains(t => t.CompareTo(course) == 0))
 				ModelState.AddModelError("", "Курс с таким описанием уже существует");
 			else
 			{
-				if (EduRepository.CourseManager.Add(course))
+				if (_eduRepository.CourseManager.Add(course))
 					return RedirectToAction("Index", new { courseId = course.Id });
 
 				else ModelState.AddModelError("", "Ошибка при созданни курса. Повторите попытку.");
@@ -54,10 +56,9 @@ namespace HwProj.Controllers
 		[AllowAnonymous]
 		public ActionResult Index(long? courseId)
 		{
-			if (courseId != null)
-				return View(EduRepository.CourseManager.Get(c => c.Id == courseId));
-			else
-				return View("CoursesList", EduRepository.CourseManager.GetAll());
+			return courseId != null ?
+				  View(_eduRepository.CourseManager.Get(c => c.Id == courseId)) 
+				: View("CoursesList", _eduRepository.CourseManager.GetAll());
 		}
 
 		[Authorize(Roles = "Преподаватель")]
@@ -71,9 +72,8 @@ namespace HwProj.Controllers
 		{
 			if (courseId == null) return View("CoursesList");
 
-			var course = EduRepository.CourseManager.Get(t => t.MentorsEmail == User.Identity.Name);
+			var course = _eduRepository.CourseManager.Get(t => t.MentorsEmail == User.Identity.Name);
 			if (course == null) return View("CoursesList");
-
 			return View("~/Views/Tasks/Create.cshtml",
 				new TaskCreateViewModel()
 				{
@@ -85,10 +85,10 @@ namespace HwProj.Controllers
 		[Authorize]
 		public async Task<ActionResult> SingInCourse(long courseId)
 		{
-			var course = EduRepository.CourseManager.Get(c => c.Id == courseId);
-			var user = EduRepository.UserManager.Get(u => u.Email == User.Identity.Name);
+			var course = _eduRepository.CourseManager.Get(c => c.Id == courseId);
+			var user = _eduRepository.UserManager.Get(u => u.Email == User.Identity.Name);
 
-			if (!EduRepository.CourseMateManager.Add((course, user)))
+			if (!_eduRepository.CourseMateManager.Add((course, user)))
 		        ModelState.AddModelError("", "Ошибка при обновлении базы данных");
 	        else
 	        {

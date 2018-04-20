@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -23,20 +24,23 @@ namespace HwProj
     {
         public Task SendAsync(IdentityMessage message)
         {
-	        MailMessage mail = new MailMessage();
-	        SmtpClient smtpServer = new SmtpClient(Settings.Default.MailClient);
-
-			mail.From = new MailAddress(Settings.Default.MailUserName);
+	        SmtpClient smtpServer = new SmtpClient(Settings.Default.MailClient)
+	        {
+		        UseDefaultCredentials = false,
+		        Port = 587,
+		        Credentials = new NetworkCredential
+										(Settings.Default.MailUserName,
+										 Settings.Default.MailPassword),
+		        EnableSsl = true
+	        };
+	        MailMessage mail = new MailMessage
+	        {
+		        From = new MailAddress(Settings.Default.MailUserName),
+		        Subject = message.Subject,
+				Body = message.Body,
+		        IsBodyHtml = true
+			};
 	        mail.To.Add(message.Destination);
-	        mail.Subject = message.Subject;
-	        mail.Body = message.Body;
-	        mail.IsBodyHtml = true;
-
-			smtpServer.UseDefaultCredentials = false;
-	        smtpServer.Port = 587;
-	        smtpServer.Credentials = new System.Net.NetworkCredential
-				(Settings.Default.MailUserName, Settings.Default.MailPassword);
-	        smtpServer.EnableSsl = true;
 
 	        try
 	        {
@@ -62,8 +66,6 @@ namespace HwProj
             var manager = new ApplicationUserManager(new UserStore<User>(context.Get<ApplicationDbContext>()));
             // Настройка логики проверки имен пользователей
             manager.UserValidator = new UserValidator(manager);
-            {
-            };
 
             // Настройка логики проверки паролей
             manager.PasswordValidator = new PasswordValidator

@@ -63,13 +63,25 @@ namespace HwProj.Models.ViewModels
 	public class ExternalLoginConfirmationViewModel
 	{
 		[Required]
+		[EmailAddress]
 		[Display(Name = "Электронная почта")]
 		public string Email { get; set; }
+
+		[Required]
+		[Display(Name = "Имя")]
+		[StringLength(20, ErrorMessage = "Значение {0} должно содержать не менее {2} символов.", MinimumLength = 2)]
+		public string Name { get; set; }
+		[Required]
+		[StringLength(20, ErrorMessage = "Значение {0} должно содержать не менее {2} символов.", MinimumLength = 2)]
+		[Display(Name = "Фамилия")]
+		public string Surname { get; set; }
 	}
 
 	public class ExternalLoginListViewModel
 	{
 		public string ReturnUrl { get; set; }
+
+        public IEnumerable<string> LoginProviders { get; set; }
 	}
 
 	public class SendCodeViewModel

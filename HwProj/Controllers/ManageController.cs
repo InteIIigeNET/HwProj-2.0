@@ -4,10 +4,12 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using HwProj.Models;
 using HwProj.Models.ViewModels;
+using Microsoft.AspNet.Identity.Owin;
+using HwProj.Filters;
+using static HwProj.Controllers.AccountController;
 
 namespace HwProj.Controllers
 {
@@ -16,6 +18,7 @@ namespace HwProj.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+
 
         public ManageController()
         {
@@ -29,26 +32,14 @@ namespace HwProj.Controllers
 
         public ApplicationSignInManager SignInManager
         {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set 
-            { 
-                _signInManager = value; 
-            }
+            get => _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+	        private set => _signInManager = value;
         }
 
         public ApplicationUserManager UserManager
         {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
+            get => _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+	        private set => _userManager = value;
         }
 
 		//
@@ -82,10 +73,7 @@ namespace HwProj.Controllers
 				    AddErrors(result);
 			    }
 		    }
-		    else
-		    {
-			    ModelState.AddModelError("", "Введён неверный пароль");
-		    }
+		    else ModelState.AddModelError("", "Введён неверный пароль");
 		    return View(model);
 		}
 
@@ -109,85 +97,107 @@ namespace HwProj.Controllers
 		    return RedirectToAction("Index", "Manage");
 	    }
 
-		////
-		//// GET: /Manage/SetPassword
-		//public ActionResult SetPassword()
-		//{
-		//    return View();
-		//}
+        public ActionResult _EditProfileInfoPartial(EditViewModel model)
+        {
+            return PartialView(model);
+        }
 
-		////
-		//// POST: /Manage/SetPassword
-		//[HttpPost]
-		//[ValidateAntiForgeryToken]
-		//public async Task<ActionResult> SetPassword(SetPasswordViewModel model)
-		//{
-		//    if (ModelState.IsValid)
-		//    {
-		//        var result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
-		//        if (result.Succeeded)
-		//        {
-		//            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-		//            if (user != null)
-		//            {
-		//                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-		//            }
-		//            return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
-		//        }
-		//        AddErrors(result);
-		//    }
+        public async Task<ActionResult> _EditProfileSocialPartial()
+        {
+            var user = await UserManager.FindByEmailAsync(User.Identity.Name);
 
-		//    // Это сообщение означает наличие ошибки; повторное отображение формы
-		//    return View(model);
-		//}
+            var allAuthProvider = from p in HttpContext.GetOwinContext().Authentication.GetExternalAuthenticationTypes()
+                                  select p.AuthenticationType;
 
-		////
-		//// GET: /Manage/ManageLogins
-		//public async Task<ActionResult> ManageLogins(ManageMessageId? message)
-		//{
-		//    ViewBag.StatusMessage =
-		//        message == ManageMessageId.RemoveLoginSuccess ? "Внешнее имя входа удалено."
-		//        : message == ManageMessageId.Error ? "Произошла ошибка."
-		//        : "";
-		//    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-		//    if (user == null)
-		//    {
-		//        return View("Error");
-		//    }
-		//    var userLogins = await UserManager.GetLoginsAsync(User.Identity.GetUserId());
-		//    var otherLogins = AuthenticationManager.GetExternalAuthenticationTypes().Where(auth => userLogins.All(ul => auth.AuthenticationType != ul.LoginProvider)).ToList();
-		//    ViewBag.ShowRemoveButton = user.PasswordHash != null || userLogins.Count > 1;
-		//    return View(new ManageLoginsViewModel
-		//    {
-		//        CurrentLogins = userLogins,
-		//        OtherLogins = otherLogins
-		//    });
-		//}
 
-		////
-		//// POST: /Manage/LinkLogin
-		//[HttpPost]
-		//[ValidateAntiForgeryToken]
-		//public ActionResult LinkLogin(string provider)
-		//{
-		//    // Запрос перенаправления к внешнему поставщику входа для связывания имени входа текущего пользователя
-		//    return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId());
-		//}
+            return PartialView(new ExternalLoginListViewModel
+            {
+                ReturnUrl = Request.Url.AbsoluteUri,
+                LoginProviders = allAuthProvider.Except(
+                    from p in user.Logins
+                    select p.LoginProvider)
+            });
+        }
 
-		////
-		//// GET: /Manage/LinkLoginCallback
-		//public async Task<ActionResult> LinkLoginCallback()
-		//{
-		//    var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
-		//    if (loginInfo == null)
-		//    {
-		//        return RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
-		//    }
-		//    var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
-		//    return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
-		//}
+        ////
+        //// GET: /Manage/SetPassword
+        //public ActionResult SetPassword()
+        //{
+        //    return View();
+        //}
 
-		protected override void Dispose(bool disposing)
+        ////
+        //// POST: /Manage/SetPassword
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> SetPassword(SetPasswordViewModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
+        //        if (result.Succeeded)
+        //        {
+        //            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+        //            if (user != null)
+        //            {
+        //                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+        //            }
+        //            return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
+        //        }
+        //        AddErrors(result);
+        //    }
+
+        //    // Это сообщение означает наличие ошибки; повторное отображение формы
+        //    return View(model);
+        //}
+
+        ////
+        //// GET: /Manage/ManageLogins
+        //public async Task<ActionResult> ManageLogins(ManageMessageId? message)
+        //{
+        //    ViewBag.StatusMessage =
+        //        message == ManageMessageId.RemoveLoginSuccess ? "Внешнее имя входа удалено."
+        //        : message == ManageMessageId.Error ? "Произошла ошибка."
+        //        : "";
+        //    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+        //    if (user == null)
+        //    {
+        //        return View("Error");
+        //    }
+        //    var userLogins = await UserManager.GetLoginsAsync(User.Identity.GetUserId());
+        //    var otherLogins = AuthenticationManager.GetExternalAuthenticationTypes().Where(auth => userLogins.All(ul => auth.AuthenticationType != ul.LoginProvider)).ToList();
+        //    ViewBag.ShowRemoveButton = user.PasswordHash != null || userLogins.Count > 1;
+        //    return View(new ManageLoginsViewModel
+        //    {
+        //        CurrentLogins = userLogins,
+        //        OtherLogins = otherLogins
+        //    });
+        //}
+
+        ////
+        //// POST: /Manage/LinkLogin
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult LinkLogin(string provider)
+        //{
+        //    // Запрос перенаправления к внешнему поставщику входа для связывания имени входа текущего пользователя
+        //    return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId());
+        //}
+
+        ////
+        //// GET: /Manage/LinkLoginCallback
+        //public async Task<ActionResult> LinkLoginCallback()
+        //{
+        //    var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
+        //    if (loginInfo == null)
+        //    {
+        //        return RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
+        //    }
+        //    var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
+        //    return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
+        //}
+
+        protected override void Dispose(bool disposing)
         {
             if (disposing && _userManager != null)
             {

@@ -7,13 +7,13 @@ namespace HwProj.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class lol1 : IMigrationMetadata
+    public sealed partial class _base : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(lol1));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(_base));
         
         string IMigrationMetadata.Id
         {
-            get { return "201804092025443_lol1"; }
+            get { return "201804192331108_base"; }
         }
         
         string IMigrationMetadata.Source

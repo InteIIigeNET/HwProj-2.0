@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -11,6 +12,7 @@ using HwProj.Models.Contexts;
 using HwProj.Models.Roles;
 using KatanaContrib.Security.VK;
 using Microsoft.Owin.Security.Google;
+using Owin.Security.Providers.GitHub;
 using HwProj.Models.Repositories;
 
 namespace HwProj
@@ -71,6 +73,17 @@ namespace HwProj
 			    ClientSecret = "vMR0V7d9VgQ1T8ORQ_yoPJk2"
 			});
 	        app.UseVkontakteAuthentication("6413355", "uo12VNcp8qK5Wc7cpXXW", "email");
+            app.UseGitHubAuthentication(new GitHubAuthenticationOptions(){
+				ClientId = "05f28aee6fc34fa4be32",
+				ClientSecret = "15e227ae3fcd20a08dc3a533735a9b477e6e4cce",
+			Provider = new GitHubAuthenticationProvider()
+			{
+				OnAuthenticated = context =>
+				{
+					context.Identity.AddClaim(new Claim("GitHubAccessToken", context.AccessToken));
+					return System.Threading.Tasks.Task.CompletedTask;
+				}
+			}});
         }
 	}
 }

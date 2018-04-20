@@ -59,6 +59,10 @@
         <button>@Html.ActionLink("Редактировать", "Edit", "Tasks", routeValues: new {taskId = task.Id}, htmlAttributes: new {})</button>
         <button>@Html.ActionLink("Удалить", "Delete", "Tasks", new {taskId = task.Id, courseId = task.CourseId}, htmlAttributes: new {})</button>
     }
+    else
+    {
+        <button>@Html.ActionLink("Добавить решение", "Create", "Homeworks", new {taskId = task.Id, description = task.Description}, htmlAttributes: new {})</button>
+    }
     @Html.Raw(task.Description.AsMarkdown())
 </p>
 }

@@ -40,21 +40,25 @@ namespace HwProj.Models
 		/// Зачтена ли данная попытка сдачи выполненного задания
 		/// </summary>
 		public bool IsCompleted { get; set;  }
-        /// <summary>
-		/// Название дз
+		/// <summary>
+		/// Комментарий к решению
 		/// </summary>
-		public string Title { get; set; }
-        /// <summary>
-        /// Описание дз 
-        /// </summary>
-        public string Description { get; set; }
+		public string Comment { get; set; }
+		/// <summary>
+		/// Ссылка на код на GitHub
+		/// </summary>
+		public string GitHub { get; set; }
+		public int Attempt { get; set; }
 
-        public Homework(HomeworkCreateViewModel model)
+		public Homework(HomeworkCreateViewModel model, Task task, User student)
         {
             IsCompleted = false;
-            Title = model.Title;
-            Description = model.Description;
-            TaskId = model.TaskId;
+	        Comment = model.Comment;
+	        GitHub = model.GitHub;
+	        Task = task;
+	        TaskId = task.Id;
+	        Student = student;
+	        StudentId = student.Id;
         }
     }
 }

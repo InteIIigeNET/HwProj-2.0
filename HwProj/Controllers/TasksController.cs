@@ -13,7 +13,7 @@ namespace HwProj.Controllers
     [System.Web.Mvc.Authorize]
     public class TasksController : Controller
     {
-        MainEduRepository Db = MainEduRepository.Instance;
+	    readonly MainEduRepository _db = MainEduRepository.Instance;
 
         [System.Web.Mvc.HttpPost]
         [System.Web.Mvc.Authorize(Roles = "Преподаватель")]
@@ -24,8 +24,7 @@ namespace HwProj.Controllers
                 return View();
             }
             var newTask = new Task(model);
-
-            if (Db.TaskManager.Add(newTask))
+            if (_db.TaskManager.Add(newTask))
             {
                 return RedirectToAction("Index", "Courses", new { courseId = model.CourseId });
             }
@@ -46,7 +45,7 @@ namespace HwProj.Controllers
         [System.Web.Http.Authorize(Roles = "Преподаватель")]
         public ActionResult Delete(long? taskId, long? courseId)
         {
-            if (taskId == null || !Db.TaskManager.Delete(taskId.Value))
+            if (taskId == null || !_db.TaskManager.Delete(taskId.Value))
             {
                 ModelState.AddModelError("", "Не удалось удалить задание");
             }

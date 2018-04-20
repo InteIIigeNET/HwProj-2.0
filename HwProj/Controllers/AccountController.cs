@@ -7,18 +7,21 @@ using System.Web;
 using System.Web.Mvc;
 using HwProj.Filters;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using HwProj.Models;
 using HwProj.Models.Enums;
 using HwProj.Models.ViewModels;
 using HwProj.Models.Contexts;
+using HwProj.Tools;
+using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace HwProj.Controllers
 {
 	[RequireHttps]
 	[Authorize]
-    public class AccountController : Controller
+    public partial class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
@@ -32,25 +35,13 @@ namespace HwProj.Controllers
         }
         public ApplicationSignInManager SignInManager
         {
-            get
-            {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set 
-            { 
-                _signInManager = value; 
-            }
+            get => _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+	        private set => _signInManager = value;
         }
         public ApplicationUserManager UserManager
         {
-            get
-            {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
+            get => _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+	        private set => _userManager = value;
         }
 
         // GET: /Account/Login
@@ -134,15 +125,9 @@ namespace HwProj.Controllers
             {
                 return View("Error");
             }
-	        try
-	        {
-		        var result = await UserManager.ConfirmEmailAsync(userId, code);
-		        return View(result.Succeeded ? "ConfirmEmail" : "Error");
-	        }
-	        catch
-	        {
-				return View("Error");
-			}
+		    var result = await UserManager.ConfirmEmailAsync(userId, code);
+			return result == null ? View("Error") 
+								  : View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
 		// GET: /Account/ForgotPassword
@@ -228,7 +213,6 @@ namespace HwProj.Controllers
         // POST: /Account/ExternalLogin
         [HttpPost]
         [AllowAnonymous]
-		[AnonymousOnly]
 		[ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
@@ -238,7 +222,6 @@ namespace HwProj.Controllers
 
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
-        [AnonymousOnly]
 		public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
@@ -246,13 +229,12 @@ namespace HwProj.Controllers
             {
                 return RedirectToAction("Login");
             }
-
             // Выполнение входа пользователя посредством данного внешнего поставщика входа, если у пользователя уже есть имя входа
-            var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
-            switch (result)
+	        var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+			switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+					return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -262,8 +244,9 @@ namespace HwProj.Controllers
                     // Если у пользователя нет учетной записи, то ему предлагается создать ее
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
-            }
+			        return View("ExternalLoginConfirmation",
+				            new ExternalLoginConfirmationViewModel { Email = loginInfo.Email});
+			}
         }
 
         // POST: /Account/ExternalLoginConfirmation
@@ -272,30 +255,34 @@ namespace HwProj.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Manage");
-            }
-
             if (ModelState.IsValid)
             {
                 // Получение сведений о пользователе от внешнего поставщика входа
-                var info = await AuthenticationManager.GetExternalLoginInfoAsync();
-                if (info == null)
-                {
-                    return View("ExternalLoginFailure");
-                }
-                var user = new User { UserName = model.Email, Email = model.Email };
+	            var info = await AuthenticationManager.GetExternalLoginInfoAsync();
+				if (info == null) return View("ExternalLoginFailure");
 	            try
 	            {
-		            var result = await UserManager.CreateAsync(user);
-
+		            User user = await UserManager.FindByEmailAsync(model.Email);
+					var result = IdentityResult.Success;
+		            if (user == null)
+		            {
+			            user = new User(model);
+			            await UserManager.CreateAsync(user);
+			            result = await UserManager.AddToRoleAsync(user.Id, RoleType.Преподаватель.ToString());
+					}
 		            if (result.Succeeded)
 		            {
+			            if (info.Login.LoginProvider == "GitHub")
+			            {
+				            var claim = await GetGitHubToken();
+				            await claim.IfNotNull(async c => await UserManager.AddClaimAsync(user.Id, c));
+			            }
+
 			            result = await UserManager.AddLoginAsync(user.Id, info.Login);
 			            if (result.Succeeded)
 			            {
-				            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+				            if(!User.Identity.IsAuthenticated)
+								await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 				            return RedirectToLocal(returnUrl);
 			            }
 		            }
@@ -348,21 +335,22 @@ namespace HwProj.Controllers
         // Используется для защиты от XSRF-атак при добавлении внешних имен входа
         private const string XsrfKey = "XsrfId";
 
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
+        private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
 
-        private void AddErrors(IdentityResult result)
+	    private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
             {
                 ModelState.AddModelError("", error);
             }
         }
+
+	    private async Task<Claim> GetGitHubToken()
+	    {
+			var claimsIdentity = await AuthenticationManager.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
+		    var gitHubAccessTokenClaim = claimsIdentity.Claims.FirstOrDefault(c => c.Type.Equals("GitHubAccessToken"));
+		    return gitHubAccessTokenClaim;
+	    }
 
         private ActionResult RedirectToLocal(string returnUrl)
         {
@@ -371,35 +359,6 @@ namespace HwProj.Controllers
                 return Redirect(returnUrl);
             }
             return RedirectToAction("Index", "Home");
-        }
-
-        internal class ChallengeResult : HttpUnauthorizedResult
-        {
-            public ChallengeResult(string provider, string redirectUri)
-                : this(provider, redirectUri, null)
-            {
-            }
-
-            public ChallengeResult(string provider, string redirectUri, string userId)
-            {
-                LoginProvider = provider;
-                RedirectUri = redirectUri;
-                UserId = userId;
-            }
-
-            public string LoginProvider { get; set; }
-            public string RedirectUri { get; set; }
-            public string UserId { get; set; }
-
-            public override void ExecuteResult(ControllerContext context)
-            {
-                var properties = new AuthenticationProperties { RedirectUri = RedirectUri };
-                if (UserId != null)
-                {
-                    properties.Dictionary[XsrfKey] = UserId;
-                }
-                context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
-            }
         }
         #endregion
     }
