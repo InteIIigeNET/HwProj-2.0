@@ -23,8 +23,8 @@
         </div>
     </nav>
     @*<div class="particles-js particles-js_position_absolute" id="particles-js">
-        <canvas class="particles-js-canvas-el"></canvas>
-    </div>*@
+            <canvas class="particles-js-canvas-el"></canvas>
+        </div>*@
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -36,6 +36,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/scripts")
+    @Scripts.Render("~/bundles/unobtrusive")
     @RenderSection("scripts", required: false)
 </body>
 </html>

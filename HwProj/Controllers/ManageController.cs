@@ -17,6 +17,7 @@ namespace HwProj.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
+
         public ManageController()
         {
         }
@@ -93,6 +94,16 @@ namespace HwProj.Controllers
 	    {
 		    return RedirectToAction("Index", "Manage");
 	    }
+
+        public ActionResult _EditProfileInfoPartial(EditViewModel model)
+        {
+            return PartialView(model);
+        }
+
+        public ActionResult _EditProfileSocialPartial()
+        {
+            return PartialView(new ExternalLoginListViewModel { ReturnUrl = Request.Url.AbsoluteUri });
+        }
 
 		////
 		//// GET: /Manage/SetPassword
