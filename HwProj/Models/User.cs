@@ -82,7 +82,15 @@ namespace HwProj.Models
             Gender = model.Gender;
         }
 
-	    public static explicit operator EditViewModel(User user)
+		public User(ExternalLoginConfirmationViewModel model)
+		{
+			UserName = model.Email;
+			Email = model.Email;
+			Name = model.Name;
+			Surname = model.Surname;
+		}
+
+		public static explicit operator EditViewModel(User user)
 	    {
 		    return new EditViewModel()
 		    {
@@ -108,7 +116,8 @@ namespace HwProj.Models
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
 	        userIdentity.AddClaim(new Claim(ClaimTypes.Surname, this.Surname));
             userIdentity.AddClaim(new Claim(ClaimTypes.Name, this.Name));
-            userIdentity.AddClaim(new Claim(ClaimTypes.Email, this.Email));
+	        userIdentity.AddClaim(new Claim("GitHubAccessToken", this.Claims.First(t => t.ClaimType.Equals("GitHubAccessToken")).ClaimValue));
+			userIdentity.AddClaim(new Claim(ClaimTypes.Email, this.Email));
             userIdentity.AddClaim(new Claim(ClaimTypes.GivenName, this.Name + " " + this.Surname));
             userIdentity.AddClaim(new Claim(ClaimTypes.Role, this.Roles.First().RoleId.GetName()));
 			// Здесь добавьте утверждения пользователя

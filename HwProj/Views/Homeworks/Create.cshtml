@@ -16,11 +16,11 @@
             @Html.DisplayTextFor(h => h.Description)
             @Html.ValidationSummary("", new { @class = "text-danger" })
             <div class="form-group">
-                @Html.TextBoxFor(m => m.GitHub, new { @class = "form-control", placeholder = "Ссылка на код на GitHub" })
+                @Html.TextBoxFor(m => m.GitHub, new { @class = "form-control", placeholder = @Html.DisplayTextFor(t => t.GitHub) })
                 @Html.ValidationMessageFor(m => m.GitHub, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                @Html.TextBoxFor(m => m.Comment, new { @class = "form-control", placeholder = "Комментарий" })
+                @Html.TextBoxFor(m => m.Comment, new { @class = "form-control", placeholder = @Html.DisplayTextFor(t => t.GitHub) })
             </div>
             <div class="form-group">
                 <button class="btn btn-block btn-primary" type="submit">Отправить</button>
