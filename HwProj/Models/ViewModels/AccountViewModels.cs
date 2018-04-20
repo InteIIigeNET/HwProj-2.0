@@ -80,6 +80,8 @@ namespace HwProj.Models.ViewModels
 	public class ExternalLoginListViewModel
 	{
 		public string ReturnUrl { get; set; }
+
+        public IEnumerable<string> LoginProviders { get; set; }
 	}
 
 	public class SendCodeViewModel
