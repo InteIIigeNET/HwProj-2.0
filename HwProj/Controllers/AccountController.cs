@@ -15,6 +15,7 @@ using HwProj.Models.Contexts;
 using HwProj.Tools;
 using IdentityModel;
 using IdentityServer4;
+using IdentityServer4.Extensions;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -259,20 +260,11 @@ namespace HwProj.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
         {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Index", "Manage");
-            }
-
             if (ModelState.IsValid)
             {
                 // Получение сведений о пользователе от внешнего поставщика входа
 	            var info = await AuthenticationManager.GetExternalLoginInfoAsync();
-
-				if (info == null)
-                {
-                    return View("ExternalLoginFailure");
-                }
+				if (info == null) return View("ExternalLoginFailure");
 	            try
 	            {
 		            User user = await UserManager.FindByEmailAsync(info.Email);
@@ -294,7 +286,8 @@ namespace HwProj.Controllers
 			            result = await UserManager.AddLoginAsync(user.Id, info.Login);
 			            if (result.Succeeded)
 			            {
-				            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+				            if(!User.IsAuthenticated())
+								await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 				            return RedirectToLocal(returnUrl);
 			            }
 		            }
