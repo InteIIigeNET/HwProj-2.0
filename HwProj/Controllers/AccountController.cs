@@ -264,7 +264,7 @@ namespace HwProj.Controllers
 				if (info == null) return View("ExternalLoginFailure");
 	            try
 	            {
-		            User user = await UserManager.FindByEmailAsync(info.Email);
+		            User user = await UserManager.FindByEmailAsync(model.Email);
 					var result = IdentityResult.Success;
 		            if (user == null)
 		            {
@@ -283,7 +283,7 @@ namespace HwProj.Controllers
 			            result = await UserManager.AddLoginAsync(user.Id, info.Login);
 			            if (result.Succeeded)
 			            {
-				            if(!User.IsAuthenticated())
+				            if(!User.Identity.IsAuthenticated)
 								await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 				            return RedirectToLocal(returnUrl);
 			            }
