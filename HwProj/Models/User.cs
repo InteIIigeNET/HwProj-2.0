@@ -10,6 +10,7 @@ using System.Web;
 using HwProj.Models.Enums;
 using HwProj.Models.ViewModels;
 using HwProj.Models.Roles;
+using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using WebGrease.Css.Extensions;
@@ -116,7 +117,10 @@ namespace HwProj.Models
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
 	        userIdentity.AddClaim(new Claim(ClaimTypes.Surname, this.Surname));
             userIdentity.AddClaim(new Claim(ClaimTypes.Name, this.Name));
-	        userIdentity.AddClaim(new Claim("GitHubAccessToken", this.Claims.First(t => t.ClaimType.Equals("GitHubAccessToken")).ClaimValue));
+
+			var gitToken = this.Claims.FirstOrDefault(t => t.ClaimType.Equals("GitHubAccessToken"));
+	        gitToken.IfNotNull(t => userIdentity.AddClaim(new Claim("GitHubAccessToken", t.ClaimValue)));
+
 			userIdentity.AddClaim(new Claim(ClaimTypes.Email, this.Email));
             userIdentity.AddClaim(new Claim(ClaimTypes.GivenName, this.Name + " " + this.Surname));
             userIdentity.AddClaim(new Claim(ClaimTypes.Role, this.Roles.First().RoleId.GetName()));

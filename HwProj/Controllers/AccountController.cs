@@ -246,8 +246,9 @@ namespace HwProj.Controllers
                     // Если у пользователя нет учетной записи, то ему предлагается создать ее
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
-            }
+			        return View("ExternalLoginConfirmation",
+				            new ExternalLoginConfirmationViewModel { Email = loginInfo.Email});
+			}
         }
 
         // POST: /Account/ExternalLoginConfirmation
@@ -270,24 +271,29 @@ namespace HwProj.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-	            var user = new User(model);
 	            try
 	            {
-		            var result = await UserManager.CreateAsync(user);
+		            User user = await UserManager.FindByEmailAsync(info.Email);
+					var result = IdentityResult.Success;
+		            if (user == null)
+		            {
+			            user = new User(model);
+			            await UserManager.CreateAsync(user);
+			            result = await UserManager.AddToRoleAsync(user.Id, RoleType.Преподаватель.ToString());
+					}
 		            if (result.Succeeded)
 		            {
-						result = await UserManager.AddToRoleAsync(user.Id, RoleType.Преподаватель.ToString());
-			            if (result.Succeeded)
+			            if (info.Login.LoginProvider == "GitHub")
 			            {
 				            var claim = await GetGitHubToken();
-							await claim.IfNotNull(async c => await UserManager.AddClaimAsync(user.Id, c));
+				            await claim.IfNotNull(async c => await UserManager.AddClaimAsync(user.Id, c));
+			            }
 
-							result = await UserManager.AddLoginAsync(user.Id, info.Login);
-				            if (result.Succeeded)
-				            {
-					            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-					            return RedirectToLocal(returnUrl);
-				            }
+			            result = await UserManager.AddLoginAsync(user.Id, info.Login);
+			            if (result.Succeeded)
+			            {
+				            await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+				            return RedirectToLocal(returnUrl);
 			            }
 		            }
 		            AddErrors(result);
