@@ -100,9 +100,21 @@ namespace HwProj.Controllers
             return PartialView(model);
         }
 
-        public ActionResult _EditProfileSocialPartial()
+        public async Task<ActionResult> _EditProfileSocialPartial()
         {
-            return PartialView(new ExternalLoginListViewModel { ReturnUrl = Request.Url.AbsoluteUri });
+            var user = await UserManager.FindByEmailAsync(User.Identity.Name);
+
+            var allAuthProvider = from p in HttpContext.GetOwinContext().Authentication.GetExternalAuthenticationTypes()
+                                  select p.AuthenticationType;
+
+
+            return PartialView(new ExternalLoginListViewModel
+            {
+                ReturnUrl = Request.Url.AbsoluteUri,
+                LoginProviders = allAuthProvider.Except(
+                    from p in user.Logins
+                    select p.LoginProvider)
+            });
         }
 
 		////

@@ -13,8 +13,6 @@ using HwProj.Models.Enums;
 using HwProj.Models.ViewModels;
 using HwProj.Models.Contexts;
 using HwProj.Tools;
-using IdentityModel;
-using IdentityServer4;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
