@@ -262,7 +262,7 @@ namespace HwProj.Controllers
 				if (info == null) return View("ExternalLoginFailure");
 	            try
 	            {
-		            User user = await UserManager.FindByEmailAsync(info.Email);
+		            User user = await UserManager.FindByEmailAsync(model.Email);
 					var result = IdentityResult.Success;
 		            if (user == null)
 		            {
