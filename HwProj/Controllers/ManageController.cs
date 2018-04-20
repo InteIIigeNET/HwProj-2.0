@@ -119,18 +119,6 @@ namespace HwProj.Controllers
             });
         }
 
-
-        // POST: /Account/ExternalLogin
-        [HttpPost]
-        [AllowAnonymous]
-        [AnonymousOnly]
-        [ValidateAntiForgeryToken]
-        public ActionResult ExternalLogin(string provider, string returnUrl)
-        {
-            // Запрос перенаправления к внешнему поставщику входа
-            return new ChallengeResult(provider, Url.Action("ExternalLoginCallback", "Account", new { ReturnUrl = returnUrl }));
-        }
-
         ////
         //// GET: /Manage/SetPassword
         //public ActionResult SetPassword()

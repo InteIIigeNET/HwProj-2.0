@@ -1,12 +1,10 @@
 ﻿@model HwProj.Models.ViewModels.ExternalLoginListViewModel
-@using Microsoft.Owin.Security
 
 @{    
     using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }))
     {
          @Html.AntiForgeryToken()
-          <div>
-            
+          <div>            
            <p>Привяжите аккаунт из социальные сети:</p>
             
                <div class="text-center" id="social-login-list">
