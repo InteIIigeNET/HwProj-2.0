@@ -9,7 +9,7 @@ using HwProj.Models.GitHub;
 
 namespace HwProj.GitHubService
 {
-    public class Repository
+    public class Repository : IDisposable
     {
         private GitHubClient client;
         private Octokit.User user;
@@ -69,5 +69,9 @@ namespace HwProj.GitHubService
             };
         }
 
+        public void Dispose()
+        {
+            GC.SuppressFinalize(this);
+        }
     }
 }
