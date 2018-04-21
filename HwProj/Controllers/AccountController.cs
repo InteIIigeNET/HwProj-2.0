@@ -213,7 +213,6 @@ namespace HwProj.Controllers
         // POST: /Account/ExternalLogin
         [HttpPost]
         [AllowAnonymous]
-		[AnonymousOnly]
 		[ValidateAntiForgeryToken]
         public ActionResult ExternalLogin(string provider, string returnUrl)
         {
@@ -223,7 +222,6 @@ namespace HwProj.Controllers
 
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
-        [AnonymousOnly]
 		public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
         {
             var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
