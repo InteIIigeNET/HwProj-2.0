@@ -15,7 +15,7 @@ namespace HwProj.Controllers
     {
 	    readonly MainEduRepository _db = MainEduRepository.Instance;
 
-        [System.Web.Mvc.HttpPost]
+        [System.Web.Http.HttpPost]
         [System.Web.Mvc.Authorize(Roles = "Преподаватель")]
         public ActionResult Create(TaskCreateViewModel model)
         {

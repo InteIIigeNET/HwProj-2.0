@@ -6,9 +6,7 @@
     {
                         @Html.AntiForgeryToken()
                         <div>
-            
-                            <p>Привяжите аккаунт из социальные сети:</p>
-            
+                            <p>Привяжите аккаунт из социальных сетей:</p>
                             <div class="text-center" id="social-login-list">
                     @foreach (var p in Model.LoginProviders)
                     {

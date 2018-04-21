@@ -45,7 +45,7 @@ namespace HwProj.Controllers
 		public ActionResult Index()
 		{
 			var user = UserManager.FindById(User.Identity.GetUserId());
-			return View((EditViewModel)user);
+			return View(new EditViewModel(user));
 		}
 
 		[HttpPost]

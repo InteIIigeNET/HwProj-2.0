@@ -21,7 +21,7 @@ namespace HwProj.Models
 	/// Модель пользователя сервиса
 	/// </summary>
     [Table("Users")]
-    public class User : IdentityUser
+    public sealed class User : IdentityUser
     {
         #region Properties
 		public Gender Gender { get; set; }
@@ -38,15 +38,6 @@ namespace HwProj.Models
 	    [Required]
 	    [Display(Name = "Фамилия")]
 	    public string Surname { get; set; }
-        /// <summary>
-        /// Все из названия ясно?
-        /// </summary>
-        public string GitHubToken { get; set; }
-
-		///// <summary>
-		///// Коллекция курсов пользователя
-		///// </summary>
-		//public ICollection<Course> Courses { get; set; } = new List<Course>();
 	    /// <summary>
 	    /// Коллекция уведомлений пользователя
 	    /// </summary>
@@ -61,20 +52,8 @@ namespace HwProj.Models
 		public ICollection<Homework> Homeworks { get; set; }
 		#endregion
 
-	    public static implicit operator User(RegisterViewModel model)
-	    {
-			return new User
-			{
-				UserName = model.Email,
-                Name = model.Name,
-				Surname = model.Surname,
-				Email = model.Email,
-				Gender = model.Gender
-			};
-		}
-
-		public User(): base() { }
-	    public User(RegisterViewModel model) : base()
+		public User() { }
+	    public User(RegisterViewModel model) 
 	    {
             UserName = model.Email;
             Name = model.Name;
@@ -91,17 +70,6 @@ namespace HwProj.Models
 			Surname = model.Surname;
 		}
 
-		public static explicit operator EditViewModel(User user)
-	    {
-		    return new EditViewModel()
-		    {
-				Id = user.Id,
-			    Name = user.Name,
-			    Surname = user.Surname,
-			    Email = user.Email,
-				Role = RolesFactory.GetById(user.Roles.FirstOrDefault().RoleId).Name
-		    };
-	    }
 		public void EditFrom(EditViewModel model)
 		{
 			UserName = model.Email;
