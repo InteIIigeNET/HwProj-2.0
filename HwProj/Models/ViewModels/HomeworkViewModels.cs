@@ -16,7 +16,6 @@ namespace HwProj.Models.ViewModels
 	    [Display(Name = "Ссылка на код на GitHub")]
 		public string GitHub { get; set; }
 		public int Attempt { get; set; }
-		[Display(Name = "Ссылка на код на GitHub")]
 		public long TaskId { get; set; }
     }
 }

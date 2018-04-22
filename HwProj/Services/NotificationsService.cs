@@ -34,5 +34,25 @@ namespace HwProj.Services
                 }
             });
         }
-    }
+
+	    public static System.Threading.Tasks.Task SendNotifications(IEnumerable<User> users,
+		    Func<User, string> buildNotificationFor)
+	    {
+		    return AsyncManager.Run(() =>
+		    {
+			    foreach (var user in users)
+			    {
+				    var notification = new Notification()
+				    {
+					    IsRead = false,
+					    SendingTime = DateTime.Today,
+					    Text = buildNotificationFor(user),
+					    User = user,
+					    UserId = user.Id
+				    };
+				    Db.NotificationsManager.Add(notification);
+			    }
+		    });
+	    }
+	}
 }

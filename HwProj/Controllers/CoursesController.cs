@@ -38,7 +38,7 @@ namespace HwProj.Controllers
 			var course = new Course(courseView)
 			{
 				MentorsName = User.Identity.GetUserFullName(),
-				MentorsEmail = User.Identity.GetUserEmail()
+				MentorsEmail = User.Identity.GetUserEmail(),
 			};
 
 			if (_eduRepository.CourseManager.Contains(t => t.CompareTo(course) == 0))

@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
-using HwProj.Models;
 using HwProj.Models.Repositories;
 using HwProj.Models.ViewModels;
+using HwProj.Services;
+using Task = HwProj.Models.Task;
 
 namespace HwProj.Controllers
 {
@@ -17,7 +19,7 @@ namespace HwProj.Controllers
 
         [System.Web.Http.HttpPost]
         [System.Web.Mvc.Authorize(Roles = "Преподаватель")]
-        public ActionResult Create(TaskCreateViewModel model)
+        public async Task<ActionResult> Create(TaskCreateViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -26,6 +28,9 @@ namespace HwProj.Controllers
             var newTask = new Task(model);
             if (_db.TaskManager.Add(newTask))
             {
+	            await NotificationsService.SendNotifications(newTask.Course.Users.Select(m => m.User),
+		            u => $"В курсе {newTask.Course.Name} добавлено задание {newTask.Title}");
+
                 return RedirectToAction("Index", "Courses", new { courseId = model.CourseId });
             }
             ModelState.AddModelError("", "Не удалось добавить задание");
@@ -33,12 +38,12 @@ namespace HwProj.Controllers
         }
 
         [System.Web.Mvc.Authorize(Roles = "Преподаватель")]
-        public void Edit(Guid taskId)
+        public ActionResult Edit(long taskId)
         {
-            if (!ModelState.IsValid)
-            {
-                //return View();
-            }
+	        if (!ModelState.IsValid)
+	        {
+		        return PartialView(model);
+	        }
 
         }
 

@@ -22,13 +22,13 @@ namespace HwProj.Models.ViewModels
         /// Идентификатор группы, для которой предназначен курс
         /// </summary>
         [Required]
-        [Display(Name = "Номер группы")]
+        [Display(Name = "Название группы")]
         public string GroupName { get; set; }
 		/// <summary>
 		/// Указывает способ вступления в курс
 		/// </summary>
 		[Required]
-		[Display(Name = "Доступ по заявкам")]
+		[Display(Name = "Курс открыт для всех?")]
 		public bool IsOpen { get; set; }
 	}
 

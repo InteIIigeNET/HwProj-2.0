@@ -24,4 +24,20 @@ namespace HwProj.Models.ViewModels
 		/// </summary>
 		public string Description { get; set; }
 	}
+
+	public class TaskEditViewModel
+	{
+		/// <summary>
+		/// Название задания
+		/// </summary>
+		public string Title { get; set; }
+		/// <summary>
+		/// Номер задания
+		/// </summary>
+		public long TaskId { get; set; }
+		/// <summary>
+		/// Описание задания 
+		/// </summary>
+		public string Description { get; set; }
+	}
 }
