@@ -20,8 +20,8 @@ namespace HwProj.Controllers
         {
             var token = User.Identity.GetGitHubToken();
             github = new Repository(token);
-
-            return PartialView(github);
+            ViewBag.Repos = github.GetRepositories();            
+            return PartialView();
         }
 
         MainEduRepository Db = MainEduRepository.Instance;
@@ -29,9 +29,15 @@ namespace HwProj.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult> PullRequest(PullRequestCreateViewModel pullRequestModel)
+        public async Task<ActionResult> Index(PullRequestCreateViewModel pullRequestModel)
         {
             return PartialView(await github.CreatePullRequest(pullRequestModel.Title, pullRequestModel.BranchRef, pullRequestModel.RepositoryName));
+        }
+
+        public ActionResult FillBranch(string repositoryName)
+        {
+            var branches = github.GetBranches(repositoryName);
+            return Json(branches, JsonRequestBehavior.AllowGet);
         }
     }
 }

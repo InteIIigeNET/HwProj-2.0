@@ -582,9 +582,10 @@
     <Content Include="Views\Manage\_EditProfileInfoPartial.cshtml" />
     <Content Include="Views\Manage\_EditProfileEmailPartial.cshtml" />
     <Content Include="Views\Tasks\Edit.cshtml" />
+    <Content Include="Views\GitHub\Index.cshtml" />
+    <Content Include="Views\GitHub\PullRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\GitHub\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
