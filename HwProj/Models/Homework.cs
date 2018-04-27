@@ -56,7 +56,11 @@ namespace HwProj.Models
 		/// Номер попытки
 		/// </summary>
 		public int Attempt { get; set; }
-
+		/// <summary>
+		/// Комментарий от преподавателя
+		/// </summary>
+		public string ReviewComment { get; set; }
+		public Homework() { }
 		public Homework(HomeworkCreateViewModel model, Task task, User student)
         {
             IsCompleted = false;

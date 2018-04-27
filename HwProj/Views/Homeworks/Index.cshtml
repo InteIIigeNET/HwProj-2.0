@@ -1,1 +1,30 @@
-﻿
+﻿@using HwProj.Models.ViewModels
+@using Microsoft.AspNet.Identity
+@model HwProj.Models.Homework
+
+<br />
+<div class="row">
+    @if (Model.StudentId == User.Identity.GetUserId())
+    {
+        @Model.Task.Title <br />
+        @Model.Task.Description <br />
+        @Model.IsCompleted <br />
+        @Model.ReviewComment <br />
+        @Model.GitHub <br />
+    }
+    else if (User.Identity.GetUserName() == Model.Task.Course.MentorsEmail)
+    {
+        @Model.Task.Title <br />
+        @Model.Task.Description <br />
+        @Model.IsCompleted <br />
+        @Model.ReviewComment <br />
+        @Model.GitHub <br />
+        <br />
+        @Html.Partial("Review", new HomeworkAcceptViewModel() { HomeworkId = @Model.Id })
+    }
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
