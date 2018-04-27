@@ -22,7 +22,10 @@ namespace HwProj.Models.Repositories
 
 		public bool Delete(Notification item)
 		{
-			throw new NotImplementedException();
+			if (Contains(c => c.Id == item.Id)) return false;
+			Context.Notifications.Remove(item);
+			Context.SaveChanges();
+			return true;
 		}
 
 		public Notification Get(Func<Notification, bool> predicate)

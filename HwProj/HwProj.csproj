@@ -21,12 +21,9 @@
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort>44347</IISExpressSSLPort>
-    <IISExpressAnonymousAuthentication>
-    </IISExpressAnonymousAuthentication>
-    <IISExpressWindowsAuthentication>
-    </IISExpressWindowsAuthentication>
-    <IISExpressUseClassicPipelineMode>
-    </IISExpressUseClassicPipelineMode>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -439,17 +436,19 @@
     <Compile Include="Controllers\AccountController.ChallengeResult.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
+    <Compile Include="Controllers\GitHubController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HomeworksController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Filters\AnonymousOnlyAttribute.cs" />
+    <Compile Include="Filters\GitHubAccessAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201804271810020_lol.cs" />
-    <Compile Include="Migrations\201804271810020_lol.Designer.cs">
-      <DependentUpon>201804271810020_lol.cs</DependentUpon>
+    <Compile Include="Migrations\201804272027145_init.cs" />
+    <Compile Include="Migrations\201804272027145_init.Designer.cs">
+      <DependentUpon>201804272027145_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CourseMates.cs" />
@@ -469,6 +468,7 @@
     <Compile Include="Models\Homework.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Repositories\MainEduRepository.cs" />
+    <Compile Include="Models\ViewModels\GitHubViewModels.cs" />
     <Compile Include="Models\ViewModels\HomeworkViewModels.cs" />
     <Compile Include="Models\ViewModels\ManagerViewModels.cs" />
     <Compile Include="Models\Notification.cs" />
@@ -583,6 +583,8 @@
     <Content Include="Views\Manage\_EditProfileInfoPartial.cshtml" />
     <Content Include="Views\Manage\_EditProfileEmailPartial.cshtml" />
     <Content Include="Views\Tasks\Edit.cshtml" />
+    <Content Include="Views\GitHub\Index.cshtml" />
+    <Content Include="Views\GitHub\PullRequest.cshtml" />
     <Content Include="Views\Homeworks\Review.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -604,8 +606,18 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201804271810020_lol.resx">
-      <DependentUpon>201804271810020_lol.cs</DependentUpon>
+    <ProjectReference Include="..\HwProj.GitHubService\HwProj.GitHubService.csproj">
+      <Project>{d2030229-c169-4f37-ab72-286de4737f61}</Project>
+      <Name>HwProj.GitHubService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HwProj.Models\HwProj.Models.csproj">
+      <Project>{51E07460-9BB9-4C14-9E2A-8C3E6A167825}</Project>
+      <Name>HwProj.Models</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201804272027145_init.resx">
+      <DependentUpon>201804272027145_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
