@@ -484,6 +484,7 @@
     <Compile Include="Services\NotificationsService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Tools\AsyncManager.cs" />
+    <Compile Include="Tools\CourseBoard.cs" />
     <Compile Include="Tools\IAsyncManager.cs" />
     <Compile Include="Tools\IdentityExtensions.cs" />
     <Compile Include="Tools\MarkdownInterpreter.cs" />

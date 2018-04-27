@@ -47,7 +47,7 @@ namespace HwProj.Controllers
             else throw new Exception();
         }
 
-        [System.Web.Http.Authorize(Roles = "Преподаватель")]
+	    [System.Web.Http.Authorize(Roles = "Преподаватель")]
         public ActionResult Delete(long? taskId, long? courseId)
         {
             if (taskId == null || !_db.TaskManager.Delete(taskId.Value))

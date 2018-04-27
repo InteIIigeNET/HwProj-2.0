@@ -49,6 +49,17 @@ namespace HwProj.Models.Repositories
 			return true;
 
 		}
+		public bool Accept((Course course, User user) item)
+		{
+			var courseMate = Get(cm => cm.UserId == item.user.Id &&
+			                           cm.CourseId == item.course.Id);
+			if(courseMate == null)
+				return false;
+			courseMate.IsAccepted = true;
+			Context.SaveChanges();
+			return true;
+
+		}
 
 		public bool Delete((Course course, User user) item)
 		{

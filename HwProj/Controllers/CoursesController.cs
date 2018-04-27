@@ -98,5 +98,22 @@ namespace HwProj.Controllers
 	        }
             return View("Index", course);
         }
-    }
+
+		[Authorize(Roles = "Преподаватель")]
+		public ActionResult AcceptUser(long courseId, string userId)
+		{
+			var course = _eduRepository.CourseManager.Get(c => c.Id == courseId);
+			if (course.MentorsEmail != User.Identity.GetUserId())
+			{
+				/* Если это не ментор */
+				return View("Index", course);
+			}
+
+			var user = _eduRepository.UserManager.Get(u => u.Id == userId);
+
+			if (!_eduRepository.CourseMateManager.Accept((course, user)))
+				ModelState.AddModelError("", "Ошибка при обновлении базы данных");
+			return View("Index", course);
+		}
+	}
 }
