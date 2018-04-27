@@ -40,11 +40,11 @@ namespace HwProj.Controllers
         [System.Web.Mvc.Authorize(Roles = "Преподаватель")]
         public ActionResult Edit(long taskId)
         {
-	        if (!ModelState.IsValid)
-	        {
-		        return PartialView(model);
-	        }
-
+            if (!ModelState.IsValid)
+            {
+                return PartialView();
+            }
+            else throw new Exception();
         }
 
         [System.Web.Http.Authorize(Roles = "Преподаватель")]
