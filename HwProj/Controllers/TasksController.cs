@@ -37,15 +37,15 @@ namespace HwProj.Controllers
             return View();
         }
 
-	    [System.Web.Mvc.Authorize(Roles = "Преподаватель")]
-	    public ActionResult Edit(long taskId)
-	    {
-		    if (!ModelState.IsValid)
-		    {
-			    return PartialView(model);
-		    }
-
-	    }
+        [System.Web.Mvc.Authorize(Roles = "Преподаватель")]
+        public ActionResult Edit(long taskId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return PartialView();
+            }
+            else throw new Exception();
+        }
 
 	    [System.Web.Http.Authorize(Roles = "Преподаватель")]
         public ActionResult Delete(long? taskId, long? courseId)
