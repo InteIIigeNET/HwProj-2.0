@@ -16,27 +16,29 @@ namespace HwProj.Controllers
     public class GitHubController : Controller
     {
         // GET: GitHub
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             var token = User.Identity.GetGitHubToken();
             github = new Repository(token);
-            ViewBag.Repos = github.GetRepositories();            
+            ViewBag.Repos = await github.GetRepositories();            
             return PartialView();
         }
 
         MainEduRepository Db = MainEduRepository.Instance;
-        Repository github;
+        volatile Repository github;
 
         [Authorize]
         [HttpPost]
         public async Task<ActionResult> Index(PullRequestCreateViewModel pullRequestModel)
         {
-            return PartialView(await github.CreatePullRequest(pullRequestModel.Title, pullRequestModel.BranchRef, pullRequestModel.RepositoryName));
+            return PartialView("PullRequest", await github.CreatePullRequest(pullRequestModel.Title, pullRequestModel.BranchRef, pullRequestModel.RepositoryName));
         }
 
-        public ActionResult FillBranch(string repositoryName)
+        public async Task<ActionResult> FillBranch(string repository)
         {
-            var branches = github.GetBranches(repositoryName);
+            var token = User.Identity.GetGitHubToken();
+            github = new Repository(token);
+            var branches = await github.GetBranches(repository);
             return Json(branches, JsonRequestBehavior.AllowGet);
         }
     }

@@ -8,9 +8,9 @@ namespace HwProj.Tools
 {
 	public static class CourseBoard
 	{
-		public GetAwards(Course course)
-		{
+		//public GetAwards(Course course)
+		//{
 			
-		}
+		//}
 	}
 }
