@@ -23,12 +23,6 @@
     </div>
 }
 
-@{string GetUri(string branchName)
-    {
-        return branchName;
-    }
-}
-
 @section Scripts {
     <script>
         function FillBranch() {
@@ -45,8 +39,7 @@
                             $('<option></option>').val(branch));
                     });
                 }
-            }
-    });
-  }
+            });
+    }
     </script>
 }
