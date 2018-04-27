@@ -491,6 +491,7 @@
     <Compile Include="Tools\IAsyncManager.cs" />
     <Compile Include="Tools\IdentityExtensions.cs" />
     <Compile Include="Tools\MarkdownInterpreter.cs" />
+    <Compile Include="Tools\UrlGenerator.cs" />
     <Compile Include="Tools\Widget.cs" />
     <Compile Include="Validators\UserValidator.cs" />
   </ItemGroup>
@@ -584,6 +585,7 @@
     <Content Include="Views\Tasks\Edit.cshtml" />
     <Content Include="Views\GitHub\Index.cshtml" />
     <Content Include="Views\GitHub\PullRequest.cshtml" />
+    <Content Include="Views\Homeworks\Review.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Test\" />

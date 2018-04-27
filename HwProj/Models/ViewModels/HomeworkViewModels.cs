@@ -18,4 +18,15 @@ namespace HwProj.Models.ViewModels
 		public int Attempt { get; set; }
 		public long TaskId { get; set; }
     }
+
+	public class HomeworkAcceptViewModel
+	{
+		[Display(Name = "Комментарий")]
+		public string ReviewComment { get; set; }
+		[Required]
+		[Display(Name = "Задача принята")]
+		public bool IsAccepted { get; set; }
+		public long HomeworkId { get; set; }
+	}
+
 }

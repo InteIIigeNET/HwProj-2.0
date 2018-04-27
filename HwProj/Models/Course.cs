@@ -77,7 +77,8 @@ namespace HwProj.Models
             if ((value = Compare(MentorsName, other.MentorsName, StringComparison.Ordinal)) != 0)
                 return value;
             return 0;
-        }
+
+		}
 
         public bool UserExist(string email)
         {

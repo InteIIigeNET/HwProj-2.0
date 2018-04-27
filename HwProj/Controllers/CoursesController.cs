@@ -1,13 +1,6 @@
 ﻿using HwProj.Models;
-using HwProj.Models.Contexts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
-using HwProj.Models.Enums;
 using HwProj.Models.ViewModels;
 using HwProj.Models.Repositories;
 using HwProj.Services;
@@ -48,7 +41,7 @@ namespace HwProj.Controllers
 				if (_eduRepository.CourseManager.Add(course))
 					return RedirectToAction("Index", new { courseId = course.Id });
 
-				else ModelState.AddModelError("", "Ошибка при созданни курса. Повторите попытку.");
+				else ModelState.AddModelError("", "Ошибка при созданни курса. Повторите попытку позже.");
 			}
 			return View();
 		}
@@ -56,7 +49,7 @@ namespace HwProj.Controllers
 		[AllowAnonymous]
 		public ActionResult Index(long? courseId)
 		{
-			return courseId != null ?
+			return courseId.HasValue ?
 				  View(_eduRepository.CourseManager.Get(c => c.Id == courseId)) 
 				: View("CoursesList", _eduRepository.CourseManager.GetAll());
 		}
@@ -94,7 +87,10 @@ namespace HwProj.Controllers
 	        {
 				await NotificationsService.SendNotifications(u => u.Email == course.MentorsEmail,
 										   u => $"Пользователь {u.Email} вступил в курс {course.Name}" +
-											      (course.IsOpen? "" : new Button("Принять|Отклонить")));
+											      (course.IsOpen? "" : new Button(Request.RequestContext, "Принять", "AcceptUser", "Courses", 
+																	   new { courseId = courseId, userId = user.Id}) +
+																       new Button(Request.RequestContext, "Отклонить", "RejectUser", "Courses",
+												                       new { courseId = courseId, userId = user.Id })));
 	        }
             return View("Index", course);
         }
@@ -103,10 +99,10 @@ namespace HwProj.Controllers
 		public ActionResult AcceptUser(long courseId, string userId)
 		{
 			var course = _eduRepository.CourseManager.Get(c => c.Id == courseId);
-			if (course.MentorsEmail != User.Identity.GetUserId())
+			if (course.MentorsEmail != User.Identity.Name)
 			{
 				/* Если это не ментор */
-				return View("Index", course);
+				return RedirectToAction("Index", "Home");
 			}
 
 			var user = _eduRepository.UserManager.Get(u => u.Id == userId);
@@ -114,6 +110,31 @@ namespace HwProj.Controllers
 			if (!_eduRepository.CourseMateManager.Accept((course, user)))
 				ModelState.AddModelError("", "Ошибка при обновлении базы данных");
 			return View("Index", course);
+		}
+
+		[Authorize(Roles = "Преподаватель")]
+		public async Task<ActionResult> RejectUser(long courseId, string userId)
+		{
+			var course = _eduRepository.CourseManager.Get(c => c.Id == courseId);
+
+			if (course.MentorsEmail != User.Identity.Name)
+			{
+				/* Если это не ментор */
+				return RedirectToAction("Index", "Home");
+			}
+			var user = _eduRepository.UserManager.Get(u => u.Id == userId);
+
+			if (!_eduRepository.CourseMateManager.Delete((course, user)))
+			{
+				ModelState.AddModelError("", "Ошибка при обновлении базы данных");
+			}
+			else
+			{
+				await NotificationsService.SendNotifications(new[] {user},
+					u => $"Ваша заявка на курс <b>{course.Name}</b> была отклонена преподавателем");
+			}
+
+			return RedirectToAction("Index", "Home");
 		}
 	}
 }

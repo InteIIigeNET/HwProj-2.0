@@ -3,7 +3,7 @@ namespace HwProj.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class iniy : DbMigration
+    public partial class lol : DbMigration
     {
         public override void Up()
         {
@@ -59,7 +59,9 @@ namespace HwProj.Migrations
                         IsCompleted = c.Boolean(nullable: false),
                         Comment = c.String(),
                         GitHub = c.String(),
+                        Date = c.DateTime(),
                         Attempt = c.Int(nullable: false),
+                        ReviewComment = c.String(),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.StudentId)
@@ -75,7 +77,6 @@ namespace HwProj.Migrations
                         Gender = c.Int(nullable: false),
                         Name = c.String(nullable: false),
                         Surname = c.String(nullable: false),
-                        GitHubToken = c.String(),
                         Email = c.String(maxLength: 256),
                         EmailConfirmed = c.Boolean(nullable: false),
                         PasswordHash = c.String(),

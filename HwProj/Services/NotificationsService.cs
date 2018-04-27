@@ -14,32 +14,18 @@ namespace HwProj.Services
         private static readonly MainEduRepository Db = MainEduRepository.Instance;
         private static readonly IAsyncManager AsyncManager = new AsyncManager();
 
-        public static System.Threading.Tasks.Task SendNotifications(Func<User, bool> usersPredicate,
+        public static Task<IEnumerable<long>> SendNotifications(Func<User, bool> usersPredicate,
             Func<User, string> buildNotificationFor)
         {
-            return AsyncManager.Run(() =>
-            {
-                var users = Db.UserManager.GetAll(usersPredicate);
-                foreach (var user in users)
-                {
-                    var notification = new Notification()
-                    {
-                        IsRead = false,
-                        SendingTime = DateTime.Today,
-                        Text = buildNotificationFor(user),
-                        User = user,
-                        UserId = user.Id
-                    };
-                    Db.NotificationsManager.Add(notification);
-                }
-            });
+            return SendNotifications(Db.UserManager.GetAll(usersPredicate), buildNotificationFor);
         }
 
-	    public static System.Threading.Tasks.Task SendNotifications(IEnumerable<User> users,
+	    public static Task<IEnumerable<long>> SendNotifications(IEnumerable<User> users,
 		    Func<User, string> buildNotificationFor)
 	    {
 		    return AsyncManager.Run(() =>
 		    {
+			    List<long> ids = new List<long>(users.Count());
 			    foreach (var user in users)
 			    {
 				    var notification = new Notification()
@@ -51,7 +37,9 @@ namespace HwProj.Services
 					    UserId = user.Id
 				    };
 				    Db.NotificationsManager.Add(notification);
+					ids.Add(notification.Id);
 			    }
+			    return ids.AsEnumerable();
 		    });
 	    }
 	}
