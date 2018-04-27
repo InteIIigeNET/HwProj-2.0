@@ -17,7 +17,7 @@
     </div>
 }
 @Html.ValidationSummary("", new { @class = "text-danger" })
-@if (!Model.UserExist(User.Identity.Name) && User.Identity.Name != Model.MentorsEmail)
+@if (User.Identity.Name != Model.MentorsEmail && !Model.UserExist(User.Identity.Name))
 {
     <hr />
     @Html.ActionLink("Вступить в курс", "SingInCourse", new { courseId = Model.Id }, new { })

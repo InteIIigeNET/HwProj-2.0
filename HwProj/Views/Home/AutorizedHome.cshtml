@@ -23,7 +23,8 @@
                         <a class="nav-link" href="#">Непрочитанные (@notReadNotifi.Count())</a>
                         foreach (var notifi in notReadNotifi)
                         {
-                        <p> @Html.Raw(@notifi.Text)<b>@notifi.SendingTime.Value.ToLongDateString()</b></p>
+                            <p> @Html.Raw(@notifi.Text)<br/>
+                            <b>@notifi.SendingTime.Value.ToLongDateString()</b></p>
                         }
                     }
                 </li>

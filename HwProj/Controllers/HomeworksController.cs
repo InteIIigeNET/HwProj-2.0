@@ -24,17 +24,16 @@ namespace HwProj.Controllers
 			    var homework = EduRepository.HomeworkManager.Get(h => h.Id == homeworkId.Value);
 			    return View(homework);
 		    }
-		    return View();
-	    }
+			return RedirectToAction("Index", "Home");
+		}
 
 		[Authorize]
 	    public ActionResult Create(long? taskId, string description)
 	    {
 		    if (!taskId.HasValue)
 		    {
-			    throw new Exception();
-			    //перенаправить
-		    }
+				return RedirectToAction("Index", "Home");
+			}
 		    return View(new HomeworkCreateViewModel() {TaskId = taskId.Value, Description = description});
 	    }
 
@@ -57,7 +56,7 @@ namespace HwProj.Controllers
 			    else
 			    {
 				    await NotificationsService.SendNotifications(u => u.Email == task.Course.MentorsEmail,
-					    u => $"Пользователь {User.Identity.Name} отправил решение к задаче <a>{task.Title}</>");
+					    u => $"Пользователь <b>{User.Identity.Name}</b> отправил решение к задаче <a>{task.Title}</>");
 			    }
 		    }
 		    return View();
@@ -74,20 +73,20 @@ namespace HwProj.Controllers
 		    var homework = EduRepository.HomeworkManager.Get(h => h.Id == model.HomeworkId);
 			if (homework.Task.Course.MentorsEmail != User.Identity.Name)
 		    {
-				/* Если не тот ментор */
-			    return View();
-		    }
+				// Не показываем, что аккаунт не ментора 
+			    return RedirectToAction("Index", "Home");
+			}
 		    if (!EduRepository.HomeworkManager.AddReview(model))
-			    ModelState.AddModelError("", "Ошибка");
+			    ModelState.AddModelError("", "Ошибка при добавлении комментария");
 		    else
 		    {
 			    await NotificationsService.SendNotifications(u => u.Id == homework.StudentId,
-				    u => $"Задача {homework.Task.Title} проверена (" + (model.IsAccepted
+				    u => $"Задача <b>{homework.Task.Title}</b> проверена <i>(" + (model.IsAccepted
 					         ? "зачтена"
-					         : $"есть замечания: \"{model.ReviewComment.Substring(0, Math.Min(model.ReviewComment.Length, 15))}...\"") + ")");
+					         : $"есть замечания: \"{model.ReviewComment.Substring(0, Math.Min(model.ReviewComment.Length, 15))}...\"") + ")</i>");
 		    }
-		    return View(); //пофиксить
-	    }
+		    return RedirectToAction("Index", "Courses", homework.Task.Course.Id);
+		}
 
 	}
 }
