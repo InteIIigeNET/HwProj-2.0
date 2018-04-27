@@ -10,6 +10,10 @@ using HwProj.Models.ViewModels;
 using Microsoft.AspNet.Identity.Owin;
 using HwProj.Filters;
 using static HwProj.Controllers.AccountController;
+using System.Security.Claims;
+using HwProj.Tools;
+using Microsoft.Ajax.Utilities;
+using HwProj.GitHubService;
 
 namespace HwProj.Controllers
 {
@@ -97,6 +101,8 @@ namespace HwProj.Controllers
 		    return RedirectToAction("Index", "Manage");
 	    }
 
+        #region PartialViewAction
+
         public ActionResult _EditProfileInfoPartial(EditViewModel model)
         {
             return PartialView(model);
@@ -117,85 +123,10 @@ namespace HwProj.Controllers
                     from p in user.Logins
                     select p.LoginProvider)
             });
-        }
+        } 
+        #endregion
 
-        ////
-        //// GET: /Manage/SetPassword
-        //public ActionResult SetPassword()
-        //{
-        //    return View();
-        //}
 
-        ////
-        //// POST: /Manage/SetPassword
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> SetPassword(SetPasswordViewModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var result = await UserManager.AddPasswordAsync(User.Identity.GetUserId(), model.NewPassword);
-        //        if (result.Succeeded)
-        //        {
-        //            var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-        //            if (user != null)
-        //            {
-        //                await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-        //            }
-        //            return RedirectToAction("Index", new { Message = ManageMessageId.SetPasswordSuccess });
-        //        }
-        //        AddErrors(result);
-        //    }
-
-        //    // Это сообщение означает наличие ошибки; повторное отображение формы
-        //    return View(model);
-        //}
-
-        ////
-        //// GET: /Manage/ManageLogins
-        //public async Task<ActionResult> ManageLogins(ManageMessageId? message)
-        //{
-        //    ViewBag.StatusMessage =
-        //        message == ManageMessageId.RemoveLoginSuccess ? "Внешнее имя входа удалено."
-        //        : message == ManageMessageId.Error ? "Произошла ошибка."
-        //        : "";
-        //    var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-        //    if (user == null)
-        //    {
-        //        return View("Error");
-        //    }
-        //    var userLogins = await UserManager.GetLoginsAsync(User.Identity.GetUserId());
-        //    var otherLogins = AuthenticationManager.GetExternalAuthenticationTypes().Where(auth => userLogins.All(ul => auth.AuthenticationType != ul.LoginProvider)).ToList();
-        //    ViewBag.ShowRemoveButton = user.PasswordHash != null || userLogins.Count > 1;
-        //    return View(new ManageLoginsViewModel
-        //    {
-        //        CurrentLogins = userLogins,
-        //        OtherLogins = otherLogins
-        //    });
-        //}
-
-        ////
-        //// POST: /Manage/LinkLogin
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult LinkLogin(string provider)
-        //{
-        //    // Запрос перенаправления к внешнему поставщику входа для связывания имени входа текущего пользователя
-        //    return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId());
-        //}
-
-        ////
-        //// GET: /Manage/LinkLoginCallback
-        //public async Task<ActionResult> LinkLoginCallback()
-        //{
-        //    var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
-        //    if (loginInfo == null)
-        //    {
-        //        return RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
-        //    }
-        //    var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
-        //    return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
-        //}
 
         protected override void Dispose(bool disposing)
         {
@@ -208,7 +139,8 @@ namespace HwProj.Controllers
             base.Dispose(disposing);
         }
 
-#region Вспомогательные приложения
+        #region Вспомогательные приложения
+
         // Используется для защиты от XSRF-атак при добавлении внешних имен входа
         private const string XsrfKey = "XsrfId";
 

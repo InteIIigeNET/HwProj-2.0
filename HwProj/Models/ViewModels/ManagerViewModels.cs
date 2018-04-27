@@ -9,7 +9,6 @@ using Microsoft.Owin.Security;
 
 namespace HwProj.Models.ViewModels
 {
-
 	public class IndexViewModel
 	{
 		public bool HasPassword { get; set; }

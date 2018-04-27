@@ -436,11 +436,13 @@
     <Compile Include="Controllers\AccountController.ChallengeResult.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
+    <Compile Include="Controllers\GitHubController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HomeworksController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Filters\AnonymousOnlyAttribute.cs" />
+    <Compile Include="Filters\GitHubAccessAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -466,6 +468,7 @@
     <Compile Include="Models\Homework.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Repositories\MainEduRepository.cs" />
+    <Compile Include="Models\ViewModels\GitHubViewModels.cs" />
     <Compile Include="Models\ViewModels\HomeworkViewModels.cs" />
     <Compile Include="Models\ViewModels\ManagerViewModels.cs" />
     <Compile Include="Models\Notification.cs" />
@@ -581,6 +584,7 @@
     <Content Include="Views\Tasks\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Views\GitHub\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>
@@ -602,6 +606,16 @@
     <EmbeddedResource Include="Migrations\201804271551042_init.resx">
       <DependentUpon>201804271551042_init.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HwProj.GitHubService\HwProj.GitHubService.csproj">
+      <Project>{d2030229-c169-4f37-ab72-286de4737f61}</Project>
+      <Name>HwProj.GitHubService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HwProj.Models\HwProj.Models.csproj">
+      <Project>{51E07460-9BB9-4C14-9E2A-8C3E6A167825}</Project>
+      <Name>HwProj.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

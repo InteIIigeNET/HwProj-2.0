@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GitHub\Branch.cs" />
     <Compile Include="GitHub\Comment.cs" />
     <Compile Include="GitHub\Commit.cs" />
     <Compile Include="GitHub\PullRequest.cs" />
