@@ -13,7 +13,8 @@ namespace HwProj.Models.Repositories
         public bool Add(Homework item)
         {
             if (Contains(h => h.Id == item.Id)) return false;
-	        var oldAttempts = GetAll(h => h.TaskId == item.TaskId);
+	        var oldAttempts = GetAll(h => h.TaskId == item.TaskId 
+								  && h.StudentId == item.StudentId);
 
 	        if (oldAttempts == null)
 	        {
@@ -24,6 +25,7 @@ namespace HwProj.Models.Repositories
 		        int lastAttemptValue = oldAttempts.Max(h => h.Attempt);
 		        item.Attempt = lastAttemptValue + 1;
 	        }
+	        item.Date = DateTime.Now;
             Context.Homeworks.Add(item);
             Context.SaveChanges();
             return true;
