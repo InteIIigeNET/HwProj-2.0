@@ -5,23 +5,23 @@
 @model Course
 @helper EmailTextBot(string email, string title)
     {
-<a href="mailto:@email?subject=@title">@email</a>
+        <a href="mailto:@email?subject=@title">@email</a>
 }
 <h3>@Model.MentorsName</h3>
 @EmailTextBot(Model.MentorsEmail, "Письмо от надоедливого студента")
 
 @if (User.Identity.Name == Model.MentorsEmail)
 {
-<div class="col-md-offset-2 col-md-10">
-    <button>@Html.ActionLink("Редактировать", "Edit", "Courses", routeValues: null, htmlAttributes: new { })</button>
-</div>
+    <div class="col-md-offset-2 col-md-10">
+        <button>@Html.ActionLink("Редактировать", "Edit", "Courses", routeValues: null, htmlAttributes: new { })</button>
+    </div>
 }
 @Html.ValidationSummary("", new { @class = "text-danger" })
-@if (!Model.UserExist(User.Identity.Name) && User.Identity.Name != Model.MentorsEmail)
+@if (User.Identity.Name != Model.MentorsEmail && !Model.UserExist(User.Identity.Name))
 {
-<hr />
+    <hr />
     @Html.ActionLink("Вступить в курс", "SingInCourse", new { courseId = Model.Id }, new { })
-<hr />
+    <hr />
     //Html.Partial("SingInCourse", Model.Id);
 }
 
@@ -47,7 +47,7 @@
 </table>
 @if (User.Identity.Name == Model.MentorsEmail)
 {
-    @Html.ActionLink("Добавить задание", "AddTask", new {courseId = Model.Id}, new {})
+    @Html.ActionLink("Добавить задание", "AddTask", new { courseId = Model.Id }, new { })
 }
 @foreach (var task in Model.Tasks.Reverse())
 {
@@ -56,13 +56,17 @@
     <B>@task.Title</B>
     @if (User.Identity.Name == Model.MentorsEmail)
     {
-        <button>@Html.ActionLink("Редактировать", "Edit", "Tasks", routeValues: new {taskId = task.Id}, htmlAttributes: new {})</button>
-        <button>@Html.ActionLink("Удалить", "Delete", "Tasks", new {taskId = task.Id, courseId = task.CourseId}, htmlAttributes: new {})</button>
+        @Ajax.ActionLink("Редактировать", "Edit", task.Id, new AjaxOptions { UpdateTargetId = "profile_partial" })
+        <button>@Html.ActionLink("Редактировать", "Edit", "Tasks", routeValues: new { taskId = task.Id }, htmlAttributes: new { })</button>
+        <button>@Html.ActionLink("Удалить", "Delete", "Tasks", new { taskId = task.Id, courseId = task.CourseId }, htmlAttributes: new { })</button>
     }
     else
     {
-        <button>@Html.ActionLink("Добавить решение", "Create", "Homeworks", new {taskId = task.Id, description = task.Description}, htmlAttributes: new {})</button>
+        <button>@Html.ActionLink("Добавить решение", "Create", "Homeworks", new { taskId = task.Id, description = task.Description }, htmlAttributes: new { })</button>
     }
     @Html.Raw(task.Description.AsMarkdown())
 </p>
 }
+
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery-3.3.1.min.js")" type="text/javascript"></script>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using HwProj.Models.Contexts;
@@ -16,7 +17,7 @@ namespace HwProj.Models.Repositories
 
 		public CourseMate Get(Func<CourseMate, bool> predicate)
 		{
-			return Context.CourseMates.FirstOrDefault(predicate);
+			return Context.CourseMates.Include(m => m.User).FirstOrDefault(predicate);
 		}
 
 		public IEnumerable<CourseMate> GetAll()
@@ -47,12 +48,28 @@ namespace HwProj.Models.Repositories
 			Context.CourseMates.Add(courseMate);
 			Context.SaveChanges();
 			return true;
+		}
+		public bool Accept((Course course, User user) item)
+		{
+			var courseMate = Get(cm => cm.UserId == item.user.Id &&
+			                           cm.CourseId == item.course.Id);
+			if(courseMate == null)
+				return false;
+			courseMate.IsAccepted = true;
+			Context.SaveChanges();
+			return true;
 
 		}
 
 		public bool Delete((Course course, User user) item)
 		{
-			throw new NotImplementedException();
+			var courseMate = Get(cm => cm.UserId == item.user.Id &&
+			                           cm.CourseId == item.course.Id);
+			if (courseMate == null)
+				return false;
+			Context.CourseMates.Remove(courseMate);
+			Context.SaveChanges();
+			return true;
 		}
 	}
 }

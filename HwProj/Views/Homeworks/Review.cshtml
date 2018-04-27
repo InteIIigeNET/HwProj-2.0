@@ -1,0 +1,35 @@
+﻿@model HwProj.Models.ViewModels.HomeworkAcceptViewModel
+@{
+    ViewBag.Title = "Отправка рецензии";
+}
+<br />
+<div class="row">
+    <div >
+        @using (Html.BeginForm("AcceptHomework",
+            "Homeworks",
+            FormMethod.Post,
+            new { @class = "jumbotron", @id = "register-form", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <h3 class="text-center">@ViewBag.Title</h3>
+            <hr />
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.ReviewComment, new { @class = "form-control", placeholder = @Html.DisplayNameFor(m => m.ReviewComment) })
+                @Html.ValidationMessageFor(m => m.ReviewComment, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.CheckBoxFor(model => model.IsAccepted, new { @checked = false, placeholder = @Html.DisplayNameFor(m => m.IsAccepted) })
+            </div>
+            <div class="form-group">
+                @Html.HiddenFor(m => m.HomeworkId)
+            </div>
+            <div class="form-group">
+                <button class="btn btn-block btn-primary" type="submit">Отправить</button>
+            </div>
+        }
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

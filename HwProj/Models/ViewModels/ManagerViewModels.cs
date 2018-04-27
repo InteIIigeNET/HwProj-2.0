@@ -137,5 +137,14 @@ namespace HwProj.Models.ViewModels
 		[Display(Name = "Подтверждение пароля")]
 		[Compare("NewPassword", ErrorMessage = "Пароль и его подтверждение не совпадают.")]
 		public string ConfirmPassword { get; set; }
+
+		public EditViewModel(User user)
+		{
+			Id = user.Id;
+			Name = user.Name;
+			Surname = user.Surname;
+			Email = user.Email;
+			Role = RolesFactory.GetById(user.Roles.FirstOrDefault()?.RoleId)?.Name;
+		}
 	}
 }

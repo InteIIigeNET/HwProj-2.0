@@ -48,8 +48,19 @@ namespace HwProj.Models
 		/// Ссылка на код на GitHub
 		/// </summary>
 		public string GitHub { get; set; }
+		/// <summary>
+		/// Дата отправки
+		/// </summary>
+		public DateTime? Date { get; set; }
+		/// <summary>
+		/// Номер попытки
+		/// </summary>
 		public int Attempt { get; set; }
-
+		/// <summary>
+		/// Комментарий от преподавателя
+		/// </summary>
+		public string ReviewComment { get; set; }
+		public Homework() { }
 		public Homework(HomeworkCreateViewModel model, Task task, User student)
         {
             IsCompleted = false;

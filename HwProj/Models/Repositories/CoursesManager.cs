@@ -17,9 +17,7 @@ namespace HwProj.Models.Repositories
         {
             item.IsComplete = false;
             if (Contains(c => c.Id == item.Id)) return false;
-			/**/
-	        item.IsOpen = false;
-			/**/
+
             Context.Courses.Add(item);
             Context.SaveChanges();
             return true;

@@ -1,8 +1,11 @@
 ﻿using HwProj.Models.Contexts;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Web;
+using HwProj.Models.ViewModels;
 
 namespace HwProj.Models.Repositories
 {
@@ -13,17 +16,21 @@ namespace HwProj.Models.Repositories
         public bool Add(Homework item)
         {
             if (Contains(h => h.Id == item.Id)) return false;
-	        var oldAttempts = GetAll(h => h.TaskId == item.TaskId);
+	        var oldAttempts = GetAll(h => h.TaskId == item.TaskId 
+								  && h.StudentId == item.StudentId);
 
-	        if (oldAttempts == null)
+	        if (oldAttempts == null || !oldAttempts.Any())
 	        {
 		        item.Attempt = 1;
 	        }
 	        else
 	        {
-		        int lastAttemptValue = oldAttempts.Max(h => h.Attempt);
-		        item.Attempt = lastAttemptValue + 1;
+		        var lastAttempt = oldAttempts.FirstOrDefault(h => h.Attempt == oldAttempts.Max(t => t.Attempt));
+		        item.Attempt = lastAttempt.Attempt + 1;
+		        /* Удаляем старую домашку */
+		        Delete(lastAttempt);
 	        }
+	        item.Date = DateTime.Now;
             Context.Homeworks.Add(item);
             Context.SaveChanges();
             return true;
@@ -38,8 +45,18 @@ namespace HwProj.Models.Repositories
         {
             return Get(predicate) != null;
         }
+	    public bool AddReview(HomeworkAcceptViewModel model)
+	    {
+		    var homework = Get(h => h.Id == model.HomeworkId);
+		    if (homework == null) return false;
 
-        public bool Delete(Homework item)
+		    homework.IsCompleted = model.IsAccepted;
+		    homework.ReviewComment = model.ReviewComment;
+		    Context.SaveChanges();
+		    return true;
+		}
+
+		public bool Delete(Homework item)
         {
             if (!Contains(h => h.Id == item.Id)) return false;
             Context.Homeworks.Remove(item);
@@ -49,7 +66,7 @@ namespace HwProj.Models.Repositories
 
         public Homework Get(Func<Homework, bool> predicate)
         {
-            return Context.Homeworks.FirstOrDefault(predicate);
+            return Context.Homeworks.Include(h => h.Task).Include(h => h.Task.Course).FirstOrDefault(predicate);
         }
 
         public IEnumerable<Homework> GetAll()

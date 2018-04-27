@@ -16,20 +16,24 @@ namespace HwProj.Controllers
     {
         private MainEduRepository EduRepository = MainEduRepository.Instance;
 
-        [Authorize]
-        public ActionResult Index(Homework homework)
-        {
-            return View(homework);
-        }
+	    [Authorize]
+	    public ActionResult Index(long? homeworkId)
+	    {
+		    if (homeworkId.HasValue)
+		    {
+			    var homework = EduRepository.HomeworkManager.Get(h => h.Id == homeworkId.Value);
+			    return View(homework);
+		    }
+			return RedirectToAction("Index", "Home");
+		}
 
 		[Authorize]
 	    public ActionResult Create(long? taskId, string description)
 	    {
 		    if (!taskId.HasValue)
 		    {
-			    throw new Exception();
-			    //перенаправить
-		    }
+				return RedirectToAction("Index", "Home");
+			}
 		    return View(new HomeworkCreateViewModel() {TaskId = taskId.Value, Description = description});
 	    }
 
@@ -52,10 +56,37 @@ namespace HwProj.Controllers
 			    else
 			    {
 				    await NotificationsService.SendNotifications(u => u.Email == task.Course.MentorsEmail,
-					    u => $"Пользователь {User.Identity.Name} отправил решение к задаче {task.Title}");
+					    u => $"Пользователь <b>{User.Identity.Name}</b> отправил решение к задаче <a>{task.Title}</>");
 			    }
 		    }
 		    return View();
         }
-    }
+
+	    [Authorize(Roles = "Преподаватель")]
+		[HttpPost]
+		public async Task<ActionResult> AcceptHomework(HomeworkAcceptViewModel model)
+	    {
+		    if (!ModelState.IsValid)
+		    {
+			    ModelState.AddModelError("", "Нужно заполнить все поля");
+		    }
+		    var homework = EduRepository.HomeworkManager.Get(h => h.Id == model.HomeworkId);
+			if (homework.Task.Course.MentorsEmail != User.Identity.Name)
+		    {
+				// Не показываем, что аккаунт не ментора 
+			    return RedirectToAction("Index", "Home");
+			}
+		    if (!EduRepository.HomeworkManager.AddReview(model))
+			    ModelState.AddModelError("", "Ошибка при добавлении комментария");
+		    else
+		    {
+			    await NotificationsService.SendNotifications(u => u.Id == homework.StudentId,
+				    u => $"Задача <b>{homework.Task.Title}</b> проверена <i>(" + (model.IsAccepted
+					         ? "зачтена"
+					         : $"есть замечания: \"{model.ReviewComment.Substring(0, Math.Min(model.ReviewComment.Length, 15))}...\"") + ")</i>");
+		    }
+		    return RedirectToAction("Index", "Courses", homework.Task.Course.Id);
+		}
+
+	}
 }
