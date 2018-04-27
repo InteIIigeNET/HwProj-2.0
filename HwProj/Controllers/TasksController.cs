@@ -37,17 +37,17 @@ namespace HwProj.Controllers
             return View();
         }
 
-        [System.Web.Mvc.Authorize(Roles = "Преподаватель")]
-        public ActionResult Edit(long taskId)
-        {
-	        if (!ModelState.IsValid)
-	        {
-		        return PartialView(model);
-	        }
+	    [System.Web.Mvc.Authorize(Roles = "Преподаватель")]
+	    public ActionResult Edit(long taskId)
+	    {
+		    if (!ModelState.IsValid)
+		    {
+			    return PartialView(model);
+		    }
 
-        }
+	    }
 
-        [System.Web.Http.Authorize(Roles = "Преподаватель")]
+	    [System.Web.Http.Authorize(Roles = "Преподаватель")]
         public ActionResult Delete(long? taskId, long? courseId)
         {
             if (taskId == null || !_db.TaskManager.Delete(taskId.Value))
