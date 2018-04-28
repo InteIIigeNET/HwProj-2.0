@@ -17,5 +17,7 @@ namespace HwProj.Models
 		public string Text { get; set; }
 		public bool IsRead { get; set; }
 		public DateTime? SendingTime { get; set; }
+
+		public const string ContextId = "contextNotifyId";
 	}
 }

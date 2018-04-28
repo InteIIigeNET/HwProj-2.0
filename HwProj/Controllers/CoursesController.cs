@@ -86,17 +86,17 @@ namespace HwProj.Controllers
 	        else
 	        {
 				await NotificationsService.SendNotifications(u => u.Email == course.MentorsEmail,
-										   u => $"Пользователь {u.Email} вступил в курс {course.Name}" +
-											      (course.IsOpen? "" : new Button(Request.RequestContext, "Принять", "AcceptUser", "Courses", 
-																	   new { courseId = courseId, userId = user.Id}) +
-																       new Button(Request.RequestContext, "Отклонить", "RejectUser", "Courses",
-												                       new { courseId = courseId, userId = user.Id })));
+					  u => $"Пользователь {u.Email} вступил в курс {course.Name}" +
+					  (course.IsOpen? "" : new Button(Request.RequestContext, "Принять", "AcceptUser", "Courses", 
+										   new { courseId = courseId, userId = user.Id, notifyId = Notification.ContextId}) +
+										   new Button(Request.RequestContext, "Отклонить", "RejectUser", "Courses",
+										   new { courseId = courseId, userId = user.Id, notifyId = Notification.ContextId})));
 	        }
             return View("Index", course);
         }
 
 		[Authorize(Roles = "Преподаватель")]
-		public ActionResult AcceptUser(long courseId, string userId)
+		public async Task<ActionResult> AcceptUser(long courseId, string userId, long? notifyId)
 		{
 			var course = _eduRepository.CourseManager.Get(c => c.Id == courseId);
 			if (course.MentorsEmail != User.Identity.Name)
@@ -109,11 +109,17 @@ namespace HwProj.Controllers
 
 			if (!_eduRepository.CourseMateManager.Accept((course, user)))
 				ModelState.AddModelError("", "Ошибка при обновлении базы данных");
+			else
+			{
+				await NotificationsService.SendNotifications(new[] { user },
+					u => $"Ваша заявка на курс <b>{course.Name}</b> была принята преподавателем");
+				if (notifyId.HasValue) _eduRepository.NotificationsManager.Delete(notifyId.Value);
+			}
 			return View("Index", course);
 		}
 
 		[Authorize(Roles = "Преподаватель")]
-		public async Task<ActionResult> RejectUser(long courseId, string userId)
+		public async Task<ActionResult> RejectUser(long courseId, string userId, long? notifyId)
 		{
 			var course = _eduRepository.CourseManager.Get(c => c.Id == courseId);
 
@@ -132,8 +138,8 @@ namespace HwProj.Controllers
 			{
 				await NotificationsService.SendNotifications(new[] {user},
 					u => $"Ваша заявка на курс <b>{course.Name}</b> была отклонена преподавателем");
+				if (notifyId.HasValue) _eduRepository.NotificationsManager.Delete(notifyId.Value);
 			}
-
 			return RedirectToAction("Index", "Home");
 		}
 	}

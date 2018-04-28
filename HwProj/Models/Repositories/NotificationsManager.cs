@@ -14,8 +14,9 @@ namespace HwProj.Models.Repositories
 		public bool Add(Notification item)
 		{
 			if (Contains(n => n.Id == item.Id)) return false;
-
 			Context.Notifications.Add(item);
+			Context.SaveChanges();
+			item.Text = item.Text.Replace(Notification.ContextId, item.Id.ToString());
 			Context.SaveChanges();
 			return true;
 		}
@@ -27,10 +28,18 @@ namespace HwProj.Models.Repositories
 			Context.SaveChanges();
 			return true;
 		}
+		public bool Delete(long id)
+		{
+			var item = Get(n => n.Id == id);
+			if (item == null) return false;
+			Context.Notifications.Remove(item);
+			Context.SaveChanges();
+			return true;
+		}
 
 		public Notification Get(Func<Notification, bool> predicate)
 		{
-			throw new NotImplementedException();
+			return Context.Notifications.FirstOrDefault(predicate);
 		}
 
 		public IEnumerable<Notification> GetAll()
@@ -45,7 +54,7 @@ namespace HwProj.Models.Repositories
 
 		public bool Contains(Func<Notification, bool> predicate)
 		{
-			return Context.Notifications.FirstOrDefault(predicate) != null;
+			return Get(predicate) != null;
 		}
 	}
 }
