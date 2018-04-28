@@ -50,8 +50,7 @@ namespace HwProj.Controllers
 		// GET: /Manage/Index
 		public ActionResult Index()
 		{
-			var user = UserManager.FindById(User.Identity.GetUserId());
-			return View(new EditViewModel(user));
+            return View();
 		}
 
 		[HttpPost]
@@ -102,10 +101,11 @@ namespace HwProj.Controllers
 	    }
 
         #region PartialViewAction
-
-        public ActionResult _EditProfileInfoPartial(EditViewModel model)
+        
+        public ActionResult _EditProfileInfoPartial()
         {
-            return PartialView(model);
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            return PartialView(new EditViewModel(user));           
         }
 
         public async Task<ActionResult> _EditProfileSocialPartial()
