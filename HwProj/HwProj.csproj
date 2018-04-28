@@ -21,9 +21,12 @@
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort>44347</IISExpressSSLPort>
-    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
-    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
-    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
+    <IISExpressAnonymousAuthentication>
+    </IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>
+    </IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>
+    </IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -582,10 +585,11 @@
     <Content Include="Views\Manage\_EditProfileMenuPartial.cshtml" />
     <Content Include="Views\Manage\_EditProfileInfoPartial.cshtml" />
     <Content Include="Views\Manage\_EditProfileEmailPartial.cshtml" />
-    <Content Include="Views\Tasks\Edit.cshtml" />
+    <Content Include="Views\Tasks\_EditPartial.cshtml" />
     <Content Include="Views\GitHub\Index.cshtml" />
     <Content Include="Views\GitHub\PullRequest.cshtml" />
     <Content Include="Views\Homeworks\Review.cshtml" />
+    <Content Include="Views\Tasks\TaskPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Test\" />

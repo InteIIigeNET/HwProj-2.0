@@ -27,23 +27,6 @@
 
 <table>
 
-    @foreach (var user in Model.Users)
-    {
-        <tr>
-            <td>@user.User.UserName</td>
-            @foreach (var task in Model.Tasks)
-            {
-                foreach (var homework in task.Homeworks)
-                {
-                    <td>
-                        <a href='@Url.Action("Index", "Homework", homework)'>
-                            <img src='@Url.Content("~/Content/Images/MyLinkImage.png")' />
-                        </a>
-                    </td>
-                }
-            }
-        </tr>
-    }
 </table>
 @if (User.Identity.Name == Model.MentorsEmail)
 {
@@ -51,21 +34,21 @@
 }
 @foreach (var task in Model.Tasks.Reverse())
 {
-<p>
-
-    <B>@task.Title</B>
-    @if (User.Identity.Name == Model.MentorsEmail)
+    if (User.Identity.Name == Model.MentorsEmail)
     {
-        @Ajax.ActionLink("Редактировать", "Edit", task.Id, new AjaxOptions { UpdateTargetId = "profile_partial" })
-        <button>@Html.ActionLink("Редактировать", "Edit", "Tasks", routeValues: new { taskId = task.Id }, htmlAttributes: new { })</button>
+    <button>@Ajax.ActionLink("Редактировать", "_EditPartial", "Tasks",
+           new TaskEditViewModel(){Description = task.Description, Title = task.Title, TaskId = task.Id}, 
+           new AjaxOptions { UpdateTargetId = "task_partial_" + @task.Id })
+    </button>
         <button>@Html.ActionLink("Удалить", "Delete", "Tasks", new { taskId = task.Id, courseId = task.CourseId }, htmlAttributes: new { })</button>
     }
     else
     {
         <button>@Html.ActionLink("Добавить решение", "Create", "Homeworks", new { taskId = task.Id, description = task.Description }, htmlAttributes: new { })</button>
     }
-    @Html.Raw(task.Description.AsMarkdown())
-</p>
+    <div id="task_partial_@task.Id">
+    @Html.Partial("~/Views/Tasks/TaskPartial.cshtml", new TaskViewModel(task))
+    </div>
 }
 
 <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>
