@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using HwProj.Models.Contexts;
+using HwProj.Models.ViewModels;
 
 namespace HwProj.Models.Repositories
 {
-    public class TasksManager : BaseManager, IRepository<Task>
+    public class TasksManager : BaseManager, IRepository<Task>, IControlWithRights<TaskEditViewModel>
     {
         public TasksManager(ApplicationDbContext context) : base(context)
         {
@@ -55,5 +56,24 @@ namespace HwProj.Models.Repositories
         {
             throw new NotImplementedException();
         }
+
+	    public bool Delete(string userRights, long objId)
+	    {
+		    var task = Get(t => t.Id == objId);
+		    if (task == null) return false;
+
+		    if (task.Course.MentorId == userRights)
+		    {
+			    Context.Tasks.Remove(task);
+			    Context.SaveChanges();
+			    return true;
+		    }
+		    return false;
+	    }
+
+	    public bool Update(string userRights, TaskEditViewModel updateObj)
+	    {
+		    throw new NotImplementedException();
+	    }
     }
 }

@@ -30,8 +30,8 @@ namespace HwProj.Controllers
 			}
 			var course = new Course(courseView)
 			{
-				MentorsName = User.Identity.GetUserFullName(),
-				MentorsEmail = User.Identity.GetUserEmail(),
+				MentorId = User.Identity.GetUserId(),
+				Mentor = _eduRepository.UserManager.Get(u => u.Id == User.Identity.GetUserEmail()),
 			};
 
 			if (_eduRepository.CourseManager.Contains(t => t.CompareTo(course) == 0))
@@ -65,7 +65,7 @@ namespace HwProj.Controllers
 		{
 			if (courseId == null) return View("CoursesList");
 
-			var course = _eduRepository.CourseManager.Get(t => t.MentorsEmail == User.Identity.Name);
+			var course = _eduRepository.CourseManager.Get(t => t.MentorId == User.Identity.GetUserId());
 			if (course == null) return View("CoursesList");
 			return View("~/Views/Tasks/Create.cshtml",
 				new TaskCreateViewModel()
@@ -85,7 +85,7 @@ namespace HwProj.Controllers
 		        ModelState.AddModelError("", "Ошибка при обновлении базы данных");
 	        else
 	        {
-				await NotificationsService.SendNotifications(u => u.Email == course.MentorsEmail,
+				await NotificationsService.SendNotifications(new [] {course.Mentor},
 					  u => $"Пользователь {u.Email} вступил в курс {course.Name}" +
 					  (course.IsOpen? "" : new Button(Request.RequestContext, "Принять", "AcceptUser", "Courses", 
 										   new { courseId = courseId, userId = user.Id, notifyId = Notification.ContextId}) +
@@ -99,7 +99,7 @@ namespace HwProj.Controllers
 		public async Task<ActionResult> AcceptUser(long courseId, string userId, long? notifyId)
 		{
 			var course = _eduRepository.CourseManager.Get(c => c.Id == courseId);
-			if (course.MentorsEmail != User.Identity.Name)
+			if (course.MentorId != User.Identity.GetUserId())
 			{
 				/* Если это не ментор */
 				return RedirectToAction("Index", "Home");
@@ -123,7 +123,7 @@ namespace HwProj.Controllers
 		{
 			var course = _eduRepository.CourseManager.Get(c => c.Id == courseId);
 
-			if (course.MentorsEmail != User.Identity.Name)
+			if (course.MentorId != User.Identity.GetUserId())
 			{
 				/* Если это не ментор */
 				return RedirectToAction("Index", "Home");

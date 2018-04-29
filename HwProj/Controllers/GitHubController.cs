@@ -15,30 +15,29 @@ namespace HwProj.Controllers
     [GitHubAccess]
     public class GitHubController : Controller
     {
-        // GET: GitHub
-        public async Task<ActionResult> Index()
+	    MainEduRepository _db = MainEduRepository.Instance;
+	    volatile Repository _github;
+		// GET: GitHub
+		public async Task<ActionResult> Index()
         {
             var token = User.Identity.GetGitHubToken();
-            github = new Repository(token);
-            ViewBag.Repos = await github.GetRepositories();            
+            _github = new Repository(token);
+            ViewBag.Repos = await _github.GetRepositories();            
             return PartialView();
         }
-
-        MainEduRepository Db = MainEduRepository.Instance;
-        volatile Repository github;
 
         [Authorize]
         [HttpPost]
         public async Task<ActionResult> Index(PullRequestCreateViewModel pullRequestModel)
         {
-            return PartialView("PullRequest", await github.CreatePullRequest(pullRequestModel.Title, pullRequestModel.BranchRef, pullRequestModel.RepositoryName));
+            return PartialView("PullRequest", await _github.CreatePullRequest(pullRequestModel.Title, pullRequestModel.BranchRef, pullRequestModel.RepositoryName));
         }
 
         public async Task<ActionResult> FillBranch(string repository)
         {
             var token = User.Identity.GetGitHubToken();
-            github = new Repository(token);
-            var branches = await github.GetBranches(repository);
+            _github = new Repository(token);
+            var branches = await _github.GetBranches(repository);
             return Json(branches, JsonRequestBehavior.AllowGet);
         }
     }
