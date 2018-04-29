@@ -26,7 +26,7 @@ namespace HwProj.Controllers
                 return View();
             }
             var newTask = new Task(model);
-            if (_db.TaskManager.Add(newTask))
+            if (_db.TaskManager.Add(User.Identity.GetUserId(), newTask))
             {
 	            await NotificationsService.SendNotifications(newTask.Course.Users.Select(m => m.User),
 		            u => $"В курсе {newTask.Course.Name} добавлено задание {newTask.Title}");
@@ -50,13 +50,11 @@ namespace HwProj.Controllers
 			{
 				return PartialView("_EditPartial", model);
 			}
-			var task = _db.TaskManager.Get(t => t.Id == model.TaskId);
-			if (task == null || task.Course.MentorId != User.Identity.GetUserId())
+			if (!_db.TaskManager.Update(User.Identity.GetUserId(), new Task(model)))
 			{
-				//Не показываем, что нет доступа
+				ModelState.AddModelError("", "Ошибка при редактировании задания"); 
 				return PartialView("_EditPartial", model);
 			}
-			/* обновить таск */
 			return PartialView("TaskPartial", new TaskViewModel(model));
 		}
 
