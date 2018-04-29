@@ -1,12 +1,8 @@
 ﻿@using HwProj.Models.ViewModels
-@model EditViewModel
 
 <div id="edit-profile-menu">
     <ul>
-        <li>@Ajax.ActionLink("Профиль", "_EditProfileInfoPartial", Model, new AjaxOptions { UpdateTargetId = "profile_partial" })</li>
+        <li>@Ajax.ActionLink("Профиль", "_EditProfileInfoPartial", new AjaxOptions { UpdateTargetId = "profile_partial" })</li>
         <li>@Ajax.ActionLink("Соцсети", "_EditProfileSocialPartial", new AjaxOptions { UpdateTargetId = "profile_partial" })</li>
     </ul>
 </div>
-
-<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/jquery-3.3.1.min.js")" type="text/javascript"></script>

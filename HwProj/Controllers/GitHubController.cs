@@ -12,32 +12,43 @@ using System.Threading.Tasks;
 
 namespace HwProj.Controllers
 {
+    public static class GitHubCreator
+    {
+        private static Repository instance;
+
+        public static Repository GetInstance()
+        {
+            if (instance == null)
+            {
+                var token = HttpContext.Current.User.Identity.GetGitHubToken();
+                instance = new Repository(token);
+            }
+            return instance;
+        }
+    }
+
     [GitHubAccess]
     public class GitHubController : Controller
     {
-	    MainEduRepository _db = MainEduRepository.Instance;
-	    volatile Repository _github;
-		// GET: GitHub
-		public async Task<ActionResult> Index()
+        // GET: GitHub 
+        public async Task<ActionResult> Index()
         {
-            var token = User.Identity.GetGitHubToken();
-            _github = new Repository(token);
-            ViewBag.Repos = await _github.GetRepositories();            
+            ViewBag.Repos = await GitHubCreator.GetInstance().GetRepositories();
             return PartialView();
         }
+
+        MainEduRepository Db = MainEduRepository.Instance;
 
         [Authorize]
         [HttpPost]
         public async Task<ActionResult> Index(PullRequestCreateViewModel pullRequestModel)
         {
-            return PartialView("PullRequest", await _github.CreatePullRequest(pullRequestModel.Title, pullRequestModel.BranchRef, pullRequestModel.RepositoryName));
+            return PartialView("PullRequest", await GitHubCreator.GetInstance().CreatePullRequest(pullRequestModel.Title, pullRequestModel.BranchRef, pullRequestModel.RepositoryName));
         }
 
         public async Task<ActionResult> FillBranch(string repository)
         {
-            var token = User.Identity.GetGitHubToken();
-            _github = new Repository(token);
-            var branches = await _github.GetBranches(repository);
+            var branches = await GitHubCreator.GetInstance().GetBranches(repository);
             return Json(branches, JsonRequestBehavior.AllowGet);
         }
     }
