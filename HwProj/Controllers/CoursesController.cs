@@ -1,4 +1,5 @@
-﻿using HwProj.Models;
+﻿using System;
+using HwProj.Models;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using HwProj.Models.ViewModels;
@@ -52,6 +53,16 @@ namespace HwProj.Controllers
 			return courseId.HasValue ?
 				  View(_eduRepository.CourseManager.Get(c => c.Id == courseId)) 
 				: View("CoursesList", _eduRepository.CourseManager.GetAll());
+		}
+
+		[AllowAnonymous]
+		public ActionResult Find(string pattern)
+		{
+			return PartialView("CoursesList", String.IsNullOrEmpty(pattern) ? 
+				_eduRepository.CourseManager.GetAll() : 
+				_eduRepository.CourseManager.GetAll(c => c.Name.Contains(pattern) 
+				|| c.Mentor.Email.Contains(pattern) || c.Mentor.UserName.Contains(pattern)));
+			/* неоптимально */
 		}
 
 		[Authorize(Roles = "Преподаватель")]
