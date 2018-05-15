@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using HwProj.Models.Contexts;
@@ -15,12 +16,12 @@ namespace HwProj.Models.Repositories
 
 	    public IEnumerable<Task> GetAll(Func<Task, bool> predicate)
 	    {
-		    throw new NotImplementedException();
-	    }
+		    return Context.Tasks.Include(t => t.Course).Include(t => t.Homeworks).AsEnumerable();
+		}
 
 	    public bool Contains(Func<Task, bool> predicate)
         {
-			return Context.Tasks.FirstOrDefault(predicate) != null;
+			return Get(predicate) != null;
 		}
 
 	    public bool Delete(Task item)
@@ -32,12 +33,12 @@ namespace HwProj.Models.Repositories
 		}
 		public Task Get(Func<Task, bool> predicate)
         {
-            return Context.Tasks.FirstOrDefault(predicate);
-        }
+            return Context.Tasks.Include(t => t.Course).Include(t => t.Homeworks).FirstOrDefault(predicate);
+		}
 
         public IEnumerable<Task> GetAll()
         {
-            throw new NotImplementedException();
+	        return Context.Tasks.Include(t => t.Course).Include(t => t.Homeworks).AsEnumerable();
         }
 
 	    public bool Add(string userRights, Task item)

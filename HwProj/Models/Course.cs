@@ -10,8 +10,6 @@ using static System.String;
 
 namespace HwProj.Models
 {
-	//TODO: добавить, закончен ли курс
-
 	/// <summary>
 	/// Модель курса занятий
 	/// </summary>
@@ -31,7 +29,6 @@ namespace HwProj.Models
 		/// Идентификатор группы, для которой предназначен курс
 		/// </summary>
 		public string GroupName  { get; set; }
-		[ForeignKey("User")]
 		public string MentorId { get; set; }
 		public User Mentor { get; set; }
 		/// <summary>

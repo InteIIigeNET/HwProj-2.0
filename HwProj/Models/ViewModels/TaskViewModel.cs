@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -10,6 +11,7 @@ namespace HwProj.Models.ViewModels
 		/// <summary>
 		/// Название задания
 		/// </summary>
+		[Required]
 		public string Title { get; set; }
 		/// <summary>
 		/// Номер курса
@@ -22,6 +24,7 @@ namespace HwProj.Models.ViewModels
 		/// <summary>
 		/// Описание задания 
 		/// </summary>
+		[Required]
 		public string Description { get; set; }
 	}
 
@@ -30,6 +33,7 @@ namespace HwProj.Models.ViewModels
 		/// <summary>
 		/// Название задания
 		/// </summary>
+		[Required]
 		public string Title { get; set; }
 		/// <summary>
 		/// Номер задания
@@ -38,6 +42,7 @@ namespace HwProj.Models.ViewModels
 		/// <summary>
 		/// Описание задания 
 		/// </summary>
+		[Required]
 		public string Description { get; set; }
 	}
 	public class TaskViewModel

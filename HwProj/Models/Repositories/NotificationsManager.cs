@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using HwProj.Models.Contexts;
@@ -16,6 +17,7 @@ namespace HwProj.Models.Repositories
 			if (Contains(n => n.Id == item.Id)) return false;
 			Context.Notifications.Add(item);
 			Context.SaveChanges();
+			/* Замыкание id */
 			item.Text = item.Text.Replace(Notification.ContextId, item.Id.ToString());
 			Context.SaveChanges();
 			return true;
@@ -44,12 +46,12 @@ namespace HwProj.Models.Repositories
 
 		public IEnumerable<Notification> GetAll()
 		{
-			throw new NotImplementedException();
+			return Context.Notifications.Include(n => n.User).AsEnumerable();
 		}
 
 		public IEnumerable<Notification> GetAll(Func<Notification, bool> predicate)
 		{
-			throw new NotImplementedException();
+			return Context.Notifications.Include(n => n.User).Where(predicate).AsEnumerable();
 		} 
 
 		public bool Contains(Func<Notification, bool> predicate)

@@ -12,7 +12,7 @@ namespace HwProj.Services
     public static class NotificationsService
     {
         private static readonly MainEduRepository Db = MainEduRepository.Instance;
-        private static readonly IAsyncManager AsyncManager = new AsyncManager();
+        private static readonly IAsyncManager     AsyncManager = new AsyncManager();
 
         public static Task<IEnumerable<long>> SendNotifications(Func<User, bool> usersPredicate,
             Func<User, string> buildNotificationFor)

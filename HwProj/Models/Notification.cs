@@ -11,7 +11,6 @@ namespace HwProj.Models
 	{
 		[DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public long Id { get; set; }
-		[ForeignKey("User")]
 		public string UserId { get; set; }
 		public User User { get; set; }
 		public string Text { get; set; }
