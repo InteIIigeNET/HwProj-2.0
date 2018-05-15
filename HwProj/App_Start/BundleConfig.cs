@@ -26,16 +26,12 @@ namespace HwProj
 			bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
 					  //"~/Scripts/bootstrap.js",
 					  "~/Scripts/respond.js",
-                      "~/Scripts/mdb.js",
-                      "~/Scripts/mdb.min.js", 
                       "~/Scripts/popper.min.js"));
 
-			bundles.Add(new StyleBundle("~/Content/css").Include(
-					  //"~/Content/bootstrap.css",
-					  "~/Content/site.css",
-                      "~/Content/fontawesome-all.css",
-                      "~/Content/mdb.css",
-                      "~/Content/mdb.min.css"));
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                      "~/Content/bootstrap.css",
+                      "~/Content/site.css",
+                      "~/Content/fontawesome-all.css"));
             bundles.Add(new ScriptBundle("~/bundles/unobtrusive").Include(
                  "~/Scripts/jquery.unobtrusive*"));
         }
