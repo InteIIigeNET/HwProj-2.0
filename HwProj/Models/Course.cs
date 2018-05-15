@@ -30,6 +30,7 @@ namespace HwProj.Models
 		/// </summary>
 		public string GroupName  { get; set; }
 		public string MentorId { get; set; }
+		[ForeignKey("MentorId")]
 		public User Mentor { get; set; }
 		/// <summary>
 		/// Указывает способ вступления в курс

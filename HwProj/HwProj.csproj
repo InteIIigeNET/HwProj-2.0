@@ -449,6 +449,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805151654091_first.cs" />
+    <Compile Include="Migrations\201805151654091_first.Designer.cs">
+      <DependentUpon>201805151654091_first.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CourseMates.cs" />
     <Compile Include="Models\Repositories\CourseMateManager.cs" />
@@ -614,6 +618,11 @@
       <Project>{51E07460-9BB9-4C14-9E2A-8C3E6A167825}</Project>
       <Name>HwProj.Models</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201805151654091_first.resx">
+      <DependentUpon>201805151654091_first.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
