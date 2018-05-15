@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace HwProj.Models.GitHub
 {
-    public class Comment
+    public class Review
     {
+        public IEnumerable<ReviewComment> ReviewComments { get; set; }
+
+        public string Body { get; set; }
     }
 }

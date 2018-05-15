@@ -37,8 +37,6 @@ namespace HwProj.Controllers
             return PartialView();
         }
 
-        MainEduRepository Db = MainEduRepository.Instance;
-
         [Authorize]
         [HttpPost]
         public async Task<ActionResult> Index(PullRequestCreateViewModel pullRequestModel)
@@ -50,6 +48,13 @@ namespace HwProj.Controllers
         {
             var branches = await GitHubCreator.GetInstance().GetBranches(repository);
             return Json(branches, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> SendComment(string content)
+        {
+            var github = GitHubCreator.GetInstance();
+            github.
         }
     }
 }

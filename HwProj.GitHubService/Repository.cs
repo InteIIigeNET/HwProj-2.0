@@ -39,30 +39,22 @@ namespace HwProj.GitHubService
         {
             var owner = user.Login;
             var pullRequest = await client?.PullRequest.Create(owner, repName, new NewPullRequest(title, "master", branchRef));
-            var comments = await client?.PullRequest.ReviewComment.GetAll(owner, repName, pullRequest.Number);
             var commits = await client?.PullRequest.Commits(owner, repName, pullRequest.Number);
-
             return new Models.GitHub.PullRequest
             {
+                DiffUrl = pullRequest.DiffUrl,
+                RepositoryName = repName,
+                Number = pullRequest.Number,
                 Owner = new Models.GitHub.User
                 {
                     Login = owner,
                     Url = user.Url
                 },
                 CreatedAt = pullRequest.CreatedAt.DateTime,
-                Comments = from c in comments
-                           select new Models.GitHub.Comment
-                           {
-                               Content = c.Body,
-                               Owner = new Models.GitHub.User
-                               {
-                                   Login = c.User.Login,
-                                   Url = c.User.Url
-                               }
-                           },
                 Commits = from c in commits
                           select new Models.GitHub.Commit
                           {
+                              Sha = c.Commit.Sha,
                               Owner = new Models.GitHub.User
                               {
                                   Login = c.Commit.User.Login,
@@ -73,6 +65,11 @@ namespace HwProj.GitHubService
                               Url = c.Commit.Url
                           }
             };
+        }
+
+        public async Task<ReviewComment> CreateReviewComment(string content, Models.GitHub.PullRequest pullRequest)
+        {
+            throw new NotImplementedException();
         }
 
         public void Dispose()

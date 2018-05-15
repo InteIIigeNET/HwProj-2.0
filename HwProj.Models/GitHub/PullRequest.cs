@@ -10,10 +10,18 @@ namespace HwProj.Models.GitHub
     {
         public User Owner { get; set; }
 
-        public IEnumerable<Comment> Comments { get; set; }
+        public IEnumerable<Review> Reviews { get; set; }
 
         public IEnumerable<Commit> Commits { get; set; }
 
         public DateTime CreatedAt { get; set; }
+
+        public string RepositoryName { get; set; }
+
+        public int Number { get; set; }
+
+        public IEnumerable<string> Files { get; set; }
+
+        public string DiffUrl { get; set; }
     }
 }
