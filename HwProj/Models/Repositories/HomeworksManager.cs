@@ -66,12 +66,16 @@ namespace HwProj.Models.Repositories
 
         public Homework Get(Func<Homework, bool> predicate)
         {
-            return Context.Homeworks.Include(h => h.Task).Include(h => h.Task.Course).FirstOrDefault(predicate);
+            return Context.Homeworks.Include(h => h.Student)
+									.Include(h => h.Task)
+									.Include(h => h.Task.Course).FirstOrDefault(predicate);
         }
 
         public IEnumerable<Homework> GetAll()
         {
-            return Context.Homeworks.Include(h => h.Task).Include(h => h.Task.Course).AsEnumerable();
+            return Context.Homeworks.Include(h => h.Student)
+									.Include(h => h.Task)
+									.Include(h => h.Task.Course).AsEnumerable();
         }
     }
 }

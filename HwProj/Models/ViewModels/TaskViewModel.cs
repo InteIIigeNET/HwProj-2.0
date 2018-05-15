@@ -40,10 +40,22 @@ namespace HwProj.Models.ViewModels
 		/// </summary>
 		public long TaskId { get; set; }
 		/// <summary>
+		/// номер курса
+		/// </summary>
+		public long CourseId { get; set; }
+		/// <summary>
 		/// Описание задания 
 		/// </summary>
 		[Required]
 		public string Description { get; set; }
+		public TaskEditViewModel() { }
+		public TaskEditViewModel(TaskViewModel model)
+		{
+			Title = model.Title;
+			Description = model.Description;
+			TaskId = model.TaskId;
+			CourseId = model.CourseId;
+		}
 	}
 	public class TaskViewModel
 	{
@@ -52,9 +64,17 @@ namespace HwProj.Models.ViewModels
 		/// </summary>
 		public string Title { get; set; }
 		/// <summary>
+		/// Просматривает ли таск преподаватель (для возможности редактирования, удаления)
+		/// </summary>
+		public string MentorEmail { get; set; }
+		/// <summary>
 		/// Номер задания
 		/// </summary>
 		public long TaskId { get; set; }
+		/// <summary>
+		/// номер курса
+		/// </summary>
+		public long CourseId { get; set; }
 		/// <summary>
 		/// Описание задания 
 		/// </summary>
@@ -67,12 +87,15 @@ namespace HwProj.Models.ViewModels
 			Title = task.Title;
 			Description = task.Description;
 			TaskId = task.Id;
+			CourseId = task.Course.Id;
+			MentorEmail = task.Course.Mentor.Email;
 		}
 		public TaskViewModel(TaskEditViewModel model)
 		{
 			Title = model.Title;
 			Description = model.Description;
 			TaskId = model.TaskId;
+			CourseId = model.CourseId;
 		}
 	}
 }

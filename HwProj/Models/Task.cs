@@ -53,6 +53,7 @@ namespace HwProj.Models
 		{
 			Description = model.Description;
 			Title = model.Title;
+			Id = model.TaskId;
 		}
 	}
 }

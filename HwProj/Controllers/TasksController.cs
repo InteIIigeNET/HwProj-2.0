@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using HwProj.Models.Repositories;
 using HwProj.Models.ViewModels;
 using HwProj.Services;
+using HwProj.Tools;
 using Microsoft.AspNet.Identity;
 using Task = HwProj.Models.Task;
 
@@ -55,7 +56,7 @@ namespace HwProj.Controllers
 				ModelState.AddModelError("", "Ошибка при редактировании задания"); 
 				return PartialView("_EditPartial", model);
 			}
-			return PartialView("TaskPartial", new TaskViewModel(model));
+			return PartialView("TaskPartial", new TaskViewModel(model) { MentorEmail = User.Identity.GetUserEmail()});
 		}
 
 	    [Authorize(Roles = "Преподаватель")]

@@ -34,18 +34,6 @@
 }
 @foreach (var task in Model.Tasks.Reverse())
 {
-    if (User.Identity.Name == Model.Mentor.Email)
-    {
-    <button>@Ajax.ActionLink("Редактировать", "_EditPartial", "Tasks",
-           new TaskEditViewModel(){Description = task.Description, Title = task.Title, TaskId = task.Id}, 
-           new AjaxOptions { UpdateTargetId = "task_partial_" + @task.Id })
-    </button>
-        <button>@Html.ActionLink("Удалить", "Delete", "Tasks", new { taskId = task.Id, courseId = task.CourseId }, htmlAttributes: new { })</button>
-    }
-    else
-    {
-        <button>@Html.ActionLink("Добавить решение", "Create", "Homeworks", new { taskId = task.Id, description = task.Description }, htmlAttributes: new { })</button>
-    }
     <div id="task_partial_@task.Id">
     @Html.Partial("~/Views/Tasks/TaskPartial.cshtml", new TaskViewModel(task))
     </div>
