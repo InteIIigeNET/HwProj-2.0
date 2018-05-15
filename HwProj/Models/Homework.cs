@@ -1,6 +1,7 @@
 ﻿using HwProj.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -35,6 +36,7 @@ namespace HwProj.Models
         /// <summary>
         /// Пользователь по этому userId
         /// </summary>
+        [ForeignKey("StudentId")]
         public User Student { get; set; }
 		/// <summary>
 		/// Зачтена ли данная попытка сдачи выполненного задания

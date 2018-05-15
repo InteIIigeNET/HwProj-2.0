@@ -38,7 +38,7 @@ namespace HwProj.Models.Repositories
 
 	    public IEnumerable<Homework> GetAll(Func<Homework, bool> predicate)
 	    {
-			return Context.Homeworks.Where(predicate).ToList();
+			return Context.Homeworks.Where(predicate).AsEnumerable();
 		}
 
 	    public bool Contains(Func<Homework, bool> predicate)
@@ -66,12 +66,16 @@ namespace HwProj.Models.Repositories
 
         public Homework Get(Func<Homework, bool> predicate)
         {
-            return Context.Homeworks.Include(h => h.Task).Include(h => h.Task.Course).FirstOrDefault(predicate);
+            return Context.Homeworks.Include(h => h.Student)
+									.Include(h => h.Task)
+									.Include(h => h.Task.Course).FirstOrDefault(predicate);
         }
 
         public IEnumerable<Homework> GetAll()
         {
-            return Context.Homeworks.ToList();
+            return Context.Homeworks.Include(h => h.Student)
+									.Include(h => h.Task)
+									.Include(h => h.Task.Course).AsEnumerable();
         }
     }
 }

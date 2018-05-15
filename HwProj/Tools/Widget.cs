@@ -26,11 +26,15 @@ namespace HwProj.Tools
 	{
 		public Button(RequestContext context, string text, string actionName, string controllerName, object routeValues)
 		{
-			Text = $"<button><a href = \"{UrlGenerator.GetUrl(context, actionName, controllerName, routeValues)}\">{text}</a></button> ";
+			Text = $"<button><a href = \"" +
+			       $"{UrlGenerator.GetRouteUrl(context, actionName, controllerName, routeValues)}" +
+			       $"\">{text}</a></button> ";
 		}
 		public Button(RequestContext context, string text, string actionName, string controllerName)
 		{
-			Text = $"<button><a href = \"{UrlGenerator.GetUrl(context, actionName, controllerName)}\">{text}</a></button> ";
+			Text = $"<button><a href = \"" +
+			       $"{UrlGenerator.GetRouteUrl(context, actionName, controllerName)}" +
+			       $"\">{text}</a></button> ";
 		}
 	}
 

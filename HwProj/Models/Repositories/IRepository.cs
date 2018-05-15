@@ -18,10 +18,15 @@ namespace HwProj.Models.Repositories
 		bool Add(T item);
 		bool Delete(T item);
 	}
-
 	public interface IBinaryRepository<T, U> : IReadOnlyRepository<U>
 	{
 		bool Add(T item);
 		bool Delete(T item);
+	}
+	public interface IControlWithRights<T> : IReadOnlyRepository<T>
+	{
+		bool Add(string userRights, T item);
+		bool Delete(string userRights, long objId);
+		bool Update(string userRights, T updateObj);
 	}
 }

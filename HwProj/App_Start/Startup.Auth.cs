@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Security.Claims;
-using System.Threading;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -10,10 +8,8 @@ using Owin;
 using HwProj.Models;
 using HwProj.Models.Contexts;
 using HwProj.Models.Roles;
-using KatanaContrib.Security.VK;
 using Microsoft.Owin.Security.Google;
 using Owin.Security.Providers.GitHub;
-using HwProj.Models.Repositories;
 
 namespace HwProj
 {

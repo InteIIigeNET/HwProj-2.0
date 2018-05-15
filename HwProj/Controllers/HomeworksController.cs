@@ -8,20 +8,21 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using HwProj.Services;
+using Microsoft.AspNet.Identity;
 
 namespace HwProj.Controllers
 {
 	[Authorize]
     public class HomeworksController : Controller
     {
-        private MainEduRepository EduRepository = MainEduRepository.Instance;
+        private MainEduRepository _eduRepository = MainEduRepository.Instance;
 
 	    [Authorize]
 	    public ActionResult Index(long? homeworkId)
 	    {
 		    if (homeworkId.HasValue)
 		    {
-			    var homework = EduRepository.HomeworkManager.Get(h => h.Id == homeworkId.Value);
+			    var homework = _eduRepository.HomeworkManager.Get(h => h.Id == homeworkId.Value);
 			    return View(homework);
 		    }
 			return RedirectToAction("Index", "Home");
@@ -48,14 +49,14 @@ namespace HwProj.Controllers
 		    }
 		    else
 		    {
-			    var task = EduRepository.TaskManager.Get(t => t.Id == model.TaskId);
-			    var student = EduRepository.UserManager.Get(u => u.Email == User.Identity.Name);
+			    var task = _eduRepository.TaskManager.Get(t => t.Id == model.TaskId);
+			    var student = _eduRepository.UserManager.Get(u => u.Email == User.Identity.Name);
 
-			    if (!EduRepository.HomeworkManager.Add(new Homework(model, task, student)))
+			    if (!_eduRepository.HomeworkManager.Add(new Homework(model, task, student)))
 				    ModelState.AddModelError("", "Ошибка");
 			    else
 			    {
-				    await NotificationsService.SendNotifications(u => u.Email == task.Course.MentorsEmail,
+				    await NotificationsService.SendNotifications(new [] {task.Course.Mentor},
 					    u => $"Пользователь <b>{User.Identity.Name}</b> отправил решение к задаче <a>{task.Title}</>");
 			    }
 		    }
@@ -70,13 +71,13 @@ namespace HwProj.Controllers
 		    {
 			    ModelState.AddModelError("", "Нужно заполнить все поля");
 		    }
-		    var homework = EduRepository.HomeworkManager.Get(h => h.Id == model.HomeworkId);
-			if (homework.Task.Course.MentorsEmail != User.Identity.Name)
+		    var homework = _eduRepository.HomeworkManager.Get(h => h.Id == model.HomeworkId);
+			if (homework.Task.Course.MentorId != User.Identity.GetUserId())
 		    {
 				// Не показываем, что аккаунт не ментора 
 			    return RedirectToAction("Index", "Home");
 			}
-		    if (!EduRepository.HomeworkManager.AddReview(model))
+		    if (!_eduRepository.HomeworkManager.AddReview(model))
 			    ModelState.AddModelError("", "Ошибка при добавлении комментария");
 		    else
 		    {

@@ -264,7 +264,7 @@ namespace HwProj.Controllers
 			            user = new User(model);
 			            await UserManager.CreateAsync(user);
 			            result = await UserManager.AddToRoleAsync(user.Id, RoleType.Преподаватель.ToString());
-					}
+		            }
 		            if (result.Succeeded)
 		            {
 			            if (info.Login.LoginProvider == "GitHub")

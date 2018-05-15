@@ -25,17 +25,17 @@ namespace HwProj.Models.Repositories
 
         public IEnumerable<Course> GetAll()
         {
-            return Context.Courses.ToList();
+            return Context.Courses.Include(c => c.Mentor).AsEnumerable();
         }
 
         public IEnumerable<Course> GetAll(Func<Course, bool> predicate)
         {
-            return Context.Courses.Where(predicate);
+            return Context.Courses.Include(c => c.Mentor).Where(predicate);
         }
 
         public bool Contains(Func<Course, bool> predicate)
         {
-            return Context.Courses.FirstOrDefault(predicate) != null;
+            return Context.Courses.Include(c => c.Mentor).FirstOrDefault(predicate) != null;
         }
 
         public bool Delete(Course item)
@@ -48,7 +48,7 @@ namespace HwProj.Models.Repositories
 
         public Course Get(Func<Course, bool> predicate)
         {
-            return Context.Courses.Include(c => c.Tasks).Include(c => c.Users)
+            return Context.Courses.Include(c => c.Mentor).Include(c => c.Tasks).Include(c => c.Users)
              .FirstOrDefault(predicate);
         }
     }

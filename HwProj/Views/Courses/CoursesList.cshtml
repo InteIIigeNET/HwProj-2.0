@@ -16,25 +16,26 @@
                 <br />
             }
             <div class="row">
+                <div id="results">
                 @foreach (var course in Model)
                 {
-                <div class="offset-lg-0 col-lg-4 offset-md-0 col-md-6 offset-sm-0 col-sm-6 col-12 pb-lg-4 pb-md-4">
-                    <div class="card">
-                        <div class="view overlay">
-                            <img src="~/Content/Images/robot_head.png" class="img-fluid">
-                            <a href=@Url.Action("Index", "Courses", new { courseId = course.Id })>
-                                <div class="mask rgba-stylish-light"></div>
-                            </a>
-                        </div>
-                        <div class="card-body">
-                            <p>@course.Name</p>
-                            <hr />
-                            <p class="card-text">@course.MentorsName</p>
+                    <div class="offset-lg-0 col-lg-4 offset-md-0 col-md-6 offset-sm-0 col-sm-6 col-12 pb-lg-4 pb-md-4">
+                        <div class="card">
+                            <div class="view overlay">
+                                <img src="~/Content/Images/robot_head.png" class="img-fluid">
+                                <a href=@Url.Action("Index", "Courses", new {courseId = course.Id})>
+                                    <div class="mask rgba-stylish-light"></div>
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <p>@course.Name</p>
+                                <hr/>
+                                <p class="card-text">@course.Mentor.UserName</p>
+                            </div>
                         </div>
                     </div>
-                </div>
                 }
+                    </div>
             </div>
         </div>
 </div>
-

@@ -48,5 +48,12 @@ namespace HwProj.Models
 			Title = model.Title;
 		}
 		public Task() : base() { }
+
+		public Task(TaskEditViewModel model)
+		{
+			Description = model.Description;
+			Title = model.Title;
+			Id = model.TaskId;
+		}
 	}
 }

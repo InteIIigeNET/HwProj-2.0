@@ -3,7 +3,7 @@ namespace HwProj.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class lol : DbMigration
+    public partial class first : DbMigration
     {
         public override void Up()
         {
@@ -29,45 +29,13 @@ namespace HwProj.Migrations
                         Id = c.Long(nullable: false, identity: true),
                         Name = c.String(),
                         GroupName = c.String(),
-                        MentorsEmail = c.String(),
-                        MentorsName = c.String(),
+                        MentorId = c.String(maxLength: 128),
                         IsOpen = c.Boolean(nullable: false),
                         IsComplete = c.Boolean(nullable: false),
                     })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.Tasks",
-                c => new
-                    {
-                        Id = c.Long(nullable: false, identity: true),
-                        CourseId = c.Long(nullable: false),
-                        Title = c.String(),
-                        Description = c.String(),
-                    })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Courses", t => t.CourseId, cascadeDelete: true)
-                .Index(t => t.CourseId);
-            
-            CreateTable(
-                "dbo.StudentsHomework",
-                c => new
-                    {
-                        Id = c.Long(nullable: false, identity: true),
-                        TaskId = c.Long(nullable: false),
-                        StudentId = c.String(maxLength: 128),
-                        IsCompleted = c.Boolean(nullable: false),
-                        Comment = c.String(),
-                        GitHub = c.String(),
-                        Date = c.DateTime(),
-                        Attempt = c.Int(nullable: false),
-                        ReviewComment = c.String(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.AspNetUsers", t => t.StudentId)
-                .ForeignKey("dbo.Tasks", t => t.TaskId, cascadeDelete: true)
-                .Index(t => t.TaskId)
-                .Index(t => t.StudentId);
+                .ForeignKey("dbo.AspNetUsers", t => t.MentorId)
+                .Index(t => t.MentorId);
             
             CreateTable(
                 "dbo.AspNetUsers",
@@ -104,6 +72,39 @@ namespace HwProj.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
+            
+            CreateTable(
+                "dbo.StudentsHomework",
+                c => new
+                    {
+                        Id = c.Long(nullable: false, identity: true),
+                        TaskId = c.Long(nullable: false),
+                        StudentId = c.String(maxLength: 128),
+                        IsCompleted = c.Boolean(nullable: false),
+                        Comment = c.String(),
+                        GitHub = c.String(),
+                        Date = c.DateTime(),
+                        Attempt = c.Int(nullable: false),
+                        ReviewComment = c.String(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.AspNetUsers", t => t.StudentId)
+                .ForeignKey("dbo.Tasks", t => t.TaskId, cascadeDelete: true)
+                .Index(t => t.TaskId)
+                .Index(t => t.StudentId);
+            
+            CreateTable(
+                "dbo.Tasks",
+                c => new
+                    {
+                        Id = c.Long(nullable: false, identity: true),
+                        CourseId = c.Long(nullable: false),
+                        Title = c.String(),
+                        Description = c.String(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Courses", t => t.CourseId, cascadeDelete: true)
+                .Index(t => t.CourseId);
             
             CreateTable(
                 "dbo.AspNetUserLogins",
@@ -163,33 +164,35 @@ namespace HwProj.Migrations
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
             DropForeignKey("dbo.CourseMates", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.CourseMates", "CourseId", "dbo.Courses");
-            DropForeignKey("dbo.StudentsHomework", "TaskId", "dbo.Tasks");
+            DropForeignKey("dbo.Courses", "MentorId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Notifications", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
+            DropForeignKey("dbo.StudentsHomework", "TaskId", "dbo.Tasks");
+            DropForeignKey("dbo.Tasks", "CourseId", "dbo.Courses");
             DropForeignKey("dbo.StudentsHomework", "StudentId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
-            DropForeignKey("dbo.Tasks", "CourseId", "dbo.Courses");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.Notifications", new[] { "UserId" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
-            DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
-            DropIndex("dbo.AspNetUsers", "UserNameIndex");
+            DropIndex("dbo.Tasks", new[] { "CourseId" });
             DropIndex("dbo.StudentsHomework", new[] { "StudentId" });
             DropIndex("dbo.StudentsHomework", new[] { "TaskId" });
-            DropIndex("dbo.Tasks", new[] { "CourseId" });
+            DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
+            DropIndex("dbo.AspNetUsers", "UserNameIndex");
+            DropIndex("dbo.Courses", new[] { "MentorId" });
             DropIndex("dbo.CourseMates", new[] { "CourseId" });
             DropIndex("dbo.CourseMates", new[] { "UserId" });
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.Notifications");
             DropTable("dbo.AspNetUserLogins");
+            DropTable("dbo.Tasks");
+            DropTable("dbo.StudentsHomework");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
-            DropTable("dbo.StudentsHomework");
-            DropTable("dbo.Tasks");
             DropTable("dbo.Courses");
             DropTable("dbo.CourseMates");
         }

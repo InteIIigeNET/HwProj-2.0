@@ -10,8 +10,6 @@ using static System.String;
 
 namespace HwProj.Models
 {
-	//TODO: добавить, закончен ли курс
-
 	/// <summary>
 	/// Модель курса занятий
 	/// </summary>
@@ -31,14 +29,9 @@ namespace HwProj.Models
 		/// Идентификатор группы, для которой предназначен курс
 		/// </summary>
 		public string GroupName  { get; set; }
-        /// <summary>
-        /// Мыло препода
-        /// </summary>
-        public string MentorsEmail { get; set; }
-		/// <summary>
-		/// Имя преподавателя
-		/// </summary>
-		public string MentorsName { get; set; }
+		public string MentorId { get; set; }
+		[ForeignKey("MentorId")]
+		public User Mentor { get; set; }
 		/// <summary>
 		/// Указывает способ вступления в курс
 		/// </summary>
@@ -74,7 +67,7 @@ namespace HwProj.Models
                 return value;
             if ((value = Compare(Name, other.Name, StringComparison.Ordinal)) != 0)
                 return value;
-            if ((value = Compare(MentorsName, other.MentorsName, StringComparison.Ordinal)) != 0)
+            if ((value = Compare(MentorId, other.MentorId, StringComparison.Ordinal)) != 0)
                 return value;
             return 0;
 
