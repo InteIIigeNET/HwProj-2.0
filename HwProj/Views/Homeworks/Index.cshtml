@@ -5,7 +5,7 @@
 <br />
 <div class="col-lg-8 col-md-8 col-sm-12 col-12">
     @if (Model.StudentId == User.Identity.GetUserId() ||
- User.Identity.GetUserName() == Model.Task.Course.MentorsEmail)
+ User.Identity.GetUserName() == Model.Task.Course.Mentor.Email)
     {
         @Html.LabelFor(m => m.Task.Title) @Html.ValueFor(m => m.Task.Title) <br/>
         @Html.LabelFor(m => m.Task.Description) @Html.ValueFor(m => m.Task.Description) <br />
@@ -13,7 +13,7 @@
         @Html.LabelFor(m => m.ReviewComment) @Html.ValueFor(m => m.ReviewComment) <br />
         @Html.LabelFor(m => m.GitHub) @Html.ValueFor(m => m.GitHub) <br />
         
-        if (User.Identity.GetUserName() == Model.Task.Course.MentorsEmail)
+        if (User.Identity.GetUserName() == Model.Task.Course.Mentor.Email)
         {
             <br />
             @Html.Partial("Review", new HomeworkAcceptViewModel() { HomeworkId = @Model.Id })
