@@ -21,14 +21,22 @@ code {
 }
 
 .header.header__logo_size_small {
-    background-image: url(Images/logo_5_mini_new.png);
+    background-image: url(Images/logo_5_mini.png);
     background-repeat: no-repeat;
     height: 34px;
     width: 119px;
 }
 
-.social-login-form.social-login-form_margin-top_negative {
-    margin-top: -100px;
+@media(min-width: 768px) {
+    .social-login-form.social-login-form_margin-top_negative {
+        margin-top: -150px;
+    }
+}
+
+@media(max-width: 767px) {
+    .social-login-form.social-login-form_margin-top_negative {
+        margin-top: -100px;
+    }
 }
 
 .particles-js.particles-js_position_absolute {
@@ -43,4 +51,12 @@ code {
 
 .body.body_position_relative {
     position: relative;
+}
+
+.right-inner-addon i {
+    position: absolute;
+    right: 5px;
+    top: 10px;
+    pointer-events: none;
+    font-size: 1em;
 }
