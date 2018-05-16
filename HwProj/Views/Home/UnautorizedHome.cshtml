@@ -5,30 +5,18 @@
 }
 
 <br />
-<div class="row">
-    <div>
-        @using (Ajax.BeginForm("Find", "Courses", new AjaxOptions {UpdateTargetId = "results"}))
-        {
-            <div class="offset-lg-2 col-lg-8 offset-md-2 col-md-8 offset-sm-1 col-sm-10 offset-1 col-10 pb-0">
-                <div class="jumbotron grey lighten-5">
-                    <h3 class="display-4">HwProj</h3>
-                    <h4><s>сайт</s> больше, чем сайт для проверки домашних работ</h4>
-                    <input class="form-control" placeholder="Поиск названию курса" name ="pattern"/>
-                    <hr />
-                </div>
+    @using (Ajax.BeginForm("Find", "Courses", new AjaxOptions {UpdateTargetId = "results"}))
+    {
+        <div class="offset-lg-1 col-lg-10 col-md-10 offset-sm-1 col-sm-10 offset-1 col-10">
+            <div class="jumbotron jumbotron_border_gray">
+                <h3 class="display-4">HwProj</h3>
+                <h4><s>сайт</s> больше, чем сайт для проверки домашних работ</h4>
+                <input class="form-control" placeholder="Поиск названию курса" name="pattern" />
+                <hr />
+                <input class="btn btn-primary" type="submit" value="Поиск" />
             </div>
-            <input type="submit" value="Поиск"/>
-        }
-    </div>
-    @Html.Partial("~/Views/Courses/CoursesList.cshtml", Model)
-
-</div>
-
-@*<div class="row">
-        <div class="offset-lg-2 col-lg-8 offset-md-2 col-md-8 offset-sm-1 col-sm-10 col-12">
-            
-           
         </div>
-    </div>*@
-
-
+    }
+<div style="margin-top: -100px">
+    `@Html.Partial("~/Views/Courses/CoursesList.cshtml", Model)
+</div>      
