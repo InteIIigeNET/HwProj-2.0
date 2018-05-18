@@ -66,7 +66,7 @@ namespace HwProj.GitHubService
 
         private IEnumerable<DiffFile> ParseDiffByFiles()
         {
-            var matches = Parse($@"(?<=diff --git a\/)([\w|\W]*?)(?= b\/) b\/\1\n[\w|\W]*?(\@\@[\w|\W]*?)(?=diff --git a\/)|(?<=diff --git a\/)([\w|\W]*?)(?= b\/) b\/\3\n[\w|\W]*?(\@\@[\w|\W]*)(?=$)");
+            var matches = Parse($@"(?<=diff --git a\/)([\w|\W]*?)(?= b\/) b\/\1\n[\w|\W]*?(\@\@[\w|\W]*?)\n(?=diff --git a\/|$)");
             for (int i = 0; i < matches.Count; i++)
             {
                 var m = matches[i];
