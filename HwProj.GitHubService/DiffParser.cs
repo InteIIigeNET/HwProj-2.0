@@ -4,12 +4,18 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace HwProj.GitHubService
 {
     public class DiffParser
     {
+        #region Special for Dinara
+        private const string ADDITION_CSS_CLASS = "";
+        private const string DELETION_CSS_CLASS = "";
+        private const string NORMAL_CSS_CLASS = ""; 
+        #endregion
 
         public string Html { get; set; }
 
@@ -18,7 +24,7 @@ namespace HwProj.GitHubService
             get
             {
                 if (diffText == null)
-                    diffText = Parse($@"<pre [/w|/W]+?>([/w|/W]*?)</pre>");
+                    diffText = Parse($@"<pre [/w|/W]+?>([/w|/W]*?)</pre>")[0].Value;
                 return diffText;
             }
         }
@@ -65,14 +71,19 @@ namespace HwProj.GitHubService
 
         private IEnumerable<string> ParseDiffByFiles()
         {
-            throw new NotImplementedException();
+            var matches = Parse($@"(?<=diff --git a\/)([\w|\W]*?)(?= b\/) b\/\1\n[\w|\W]*?(\@\@[\w|\W]*?)(?=diff --git a\/)|(?<=diff --git a\/)([\w|\W]*?)(?= b\/) b\/\3\n[\w|\W]*?(\@\@[\w|\W]*)(?=$)");
+            for (int i = 0; i < matches.Count - 1 ; i++)
+            {
+                var m = matches[i];
+                var fileName = m.Groups[1].Value;
+                var diffText = m.Groups[2].Value;
+            }
         }
 
-        private string Parse(string pattern)
+        private MatchCollection Parse(string pattern)
         {
-            throw new NotImplementedException();
-        }
-
-        
+            var regex = new Regex(pattern);
+            return regex.Matches(Html);
+        } 
     }
 }

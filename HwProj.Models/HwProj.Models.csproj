@@ -42,6 +42,8 @@
   <ItemGroup>
     <Compile Include="GitHub\Branch.cs" />
     <Compile Include="GitHub\Comment.cs" />
+    <Compile Include="GitHub\DiffFile.cs" />
+    <Compile Include="GitHub\DiffLine.cs" />
     <Compile Include="GitHub\Review.cs" />
     <Compile Include="GitHub\ReviewComment.cs" />
     <Compile Include="GitHub\Commit.cs" />
