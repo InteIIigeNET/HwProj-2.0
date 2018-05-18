@@ -1,23 +1,16 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
-using HwProj.Models;
 using HwProj.Models.ViewModels;
 using Microsoft.AspNet.Identity.Owin;
-using HwProj.Filters;
-using static HwProj.Controllers.AccountController;
-using System.Security.Claims;
 using HwProj.Tools;
-using Microsoft.Ajax.Utilities;
-using HwProj.GitHubService;
 
 namespace HwProj.Controllers
 {
-    [Authorize]
+	[Authorize]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -71,10 +64,7 @@ namespace HwProj.Controllers
 			    {
 				    ViewBag.Title = "Данные успешно обновлены";
 			    }
-			    else
-			    {
-				    AddErrors(result);
-			    }
+			    else AddErrors(result);
 		    }
 		    else ModelState.AddModelError("", "Введён неверный пароль");
 		    return View(model);
@@ -144,15 +134,9 @@ namespace HwProj.Controllers
         // Используется для защиты от XSRF-атак при добавлении внешних имен входа
         private const string XsrfKey = "XsrfId";
 
-        private IAuthenticationManager AuthenticationManager
-        {
-            get
-            {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
+        private IAuthenticationManager AuthenticationManager => HttpContext.GetOwinContext().Authentication;
 
-        private void AddErrors(IdentityResult result)
+	    private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
             {
@@ -163,21 +147,13 @@ namespace HwProj.Controllers
         private bool HasPassword()
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
-            if (user != null)
-            {
-                return user.PasswordHash != null;
-            }
-            return false;
+	        return user?.PasswordHash != null;
         }
 
         private bool HasPhoneNumber()
         {
             var user = UserManager.FindById(User.Identity.GetUserId());
-            if (user != null)
-            {
-                return user.PhoneNumber != null;
-            }
-            return false;
+	        return user?.PhoneNumber != null;
         }
 
 #endregion

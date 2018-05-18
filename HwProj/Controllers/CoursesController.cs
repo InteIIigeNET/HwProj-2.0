@@ -96,7 +96,6 @@ namespace HwProj.Controllers
 		        ModelState.AddModelError("", "Ошибка при обновлении базы данных");
 	        else
 	        {
-				/* Надо подумать, как тут через UserManager генерировать токены */
 				await NotificationsService.SendNotifications(new [] {course.Mentor},
 					  u => $"Пользователь {u.Email} вступил в курс {course.Name}" +
 					  (course.IsOpen? "" : new Button(Request.RequestContext, "Принять", "AcceptUser", "Courses", 
@@ -136,7 +135,7 @@ namespace HwProj.Controllers
 
 			if (course.MentorId != User.Identity.GetUserId())
 			{
-				/* Если это не ментор */
+				/* Если это не ментор, то не показываем */
 				return RedirectToAction("Index", "Home");
 			}
 			var user = _eduRepository.UserManager.Get(u => u.Id == userId);
