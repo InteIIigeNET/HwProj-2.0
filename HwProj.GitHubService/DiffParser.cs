@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HwProj.Models.GitHub;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,12 +12,6 @@ namespace HwProj.GitHubService
 {
     public class DiffParser
     {
-        #region Special for Dinara
-        private const string ADDITION_CSS_CLASS = "";
-        private const string DELETION_CSS_CLASS = "";
-        private const string NORMAL_CSS_CLASS = ""; 
-        #endregion
-
         public string Html { get; set; }
 
         public string DiffText
@@ -69,14 +64,15 @@ namespace HwProj.GitHubService
 
         }
 
-        private IEnumerable<string> ParseDiffByFiles()
+        private IEnumerable<DiffFile> ParseDiffByFiles()
         {
             var matches = Parse($@"(?<=diff --git a\/)([\w|\W]*?)(?= b\/) b\/\1\n[\w|\W]*?(\@\@[\w|\W]*?)(?=diff --git a\/)|(?<=diff --git a\/)([\w|\W]*?)(?= b\/) b\/\3\n[\w|\W]*?(\@\@[\w|\W]*)(?=$)");
-            for (int i = 0; i < matches.Count - 1 ; i++)
+            for (int i = 0; i < matches.Count; i++)
             {
                 var m = matches[i];
                 var fileName = m.Groups[1].Value;
                 var diffText = m.Groups[2].Value;
+
             }
         }
 
