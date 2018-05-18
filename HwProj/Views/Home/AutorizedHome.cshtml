@@ -6,35 +6,51 @@
 
 <br />
 <div class="row">
-    <div class="offset-lg-2 col-lg-8 offset-md-2 col-md-8 offset-sm-1 col-sm-10 col-12">
-        <div class="jumbotron text-center">
-            <h3 class="display-4">Hello.</h3>
-
-            <ul class="nav">
+    <div class="offset-lg-1 col-lg-10 offset-md-1 col-md-10 col-sm-12 col-12">
+        <div class="jumbotron jumbotron_border_gray text-center ">
+            <h3 class="display-4">@ViewBag.Title</h3>
+            <hr />
+            <ul class="nav nav-pills nav-justified" id="notification-tabs" role="tablist">
                 <li class="nav-item">
+                    <a class="nav-link active" id="unread-tab" href="#unread" data-toggle="tab" role="tab" aria-controls="unread" aria-selected="true">
+                        Непрочитанные
+                        @if (Model.Notifications.Count != 0)
+                        {
+                            var unreadCount = " (" + Model.NoReadNotifications.Count().ToString() + ")";
+                            @Html.Raw(unreadCount)
+                        }
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="all-tab" href="#all" data-toggle="tab" aria-controls="all" aria-selected="false">Показать все</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="important-tab" href="#important" data-toggle="tab" aria-controls="important" aria-selected="false">Важное</a>
+                </li>
+            </ul>
+            <hr />
+            <div class="tab-content" id="notification-tabs-content">
+                <div class="tab-pane fade show active" id="unread" role="tabpanel" aria-labelledby="unread-tab">
                     @if (Model.Notifications.Count == 0)
                     {
-                        <a class="nav-link" href="#">Непрочитанные</a>
                         <p>Нет уведомлений</p>
                     }
                     else
                     {
                         var notReadNotifi = Model.NoReadNotifications;
-                        <a class="nav-link" href="#">Непрочитанные (@notReadNotifi.Count())</a>
                         foreach (var notifi in notReadNotifi)
                         {
-                            <p> @Html.Raw(@notifi.Text)<br/>
-                            <b>@notifi.SendingTime.Value.ToLongDateString()</b></p>
+                            <div class="alert alert-info alert-dismissible">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                @Html.Raw(@notifi.Text)<br />
+                                <b>@notifi.SendingTime.Value.ToLongDateString()</b>
+                            </div>
                         }
                     }
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Показать все</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Важное</a>
-                </li>
-            </ul>
+                </div>
+                <div class="tab-pane fade" id="all" role="tabpanel" aria-labelledby="all-tab">Все уведомления..</div>
+                <div class="tab-pane fade" id="important" role="tabpanel" aria-labelledby="important-tab">Очень важные уведомления, которые никто не читает</div>
+            </div>
         </div>
     </div>
 </div>
