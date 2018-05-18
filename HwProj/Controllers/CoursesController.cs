@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Text.RegularExpressions;
 using HwProj.Models;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -63,6 +65,18 @@ namespace HwProj.Controllers
 				_eduRepository.CourseManager.GetAll(c => c.Name.Contains(pattern) 
 				|| c.Mentor.Email.Contains(pattern) || c.Mentor.UserName.Contains(pattern)));
 			/* неоптимально */
+		}
+
+		[AllowAnonymous]
+		public JsonResult GetSearchResult(string search)
+		{
+			var data = String.IsNullOrEmpty(search) ?
+				_eduRepository.CourseManager.GetAll().Select(c => new CourseSearchViewModel(c)).ToList() :
+				_eduRepository.CourseManager.GetAll(c => c.Name.Contains(search)
+				                                      || c.Mentor.Email.Contains(search) 
+													  || c.Mentor.UserName.Contains(search))
+										    .Select(c => new CourseSearchViewModel(c)).ToList();
+			return new JsonResult {Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet};
 		}
 
 		[Authorize(Roles = "Преподаватель")]

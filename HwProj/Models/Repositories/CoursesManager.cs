@@ -25,17 +25,23 @@ namespace HwProj.Models.Repositories
 
         public IEnumerable<Course> GetAll()
         {
-            return Context.Courses.Include(c => c.Mentor).AsEnumerable();
+            return Context.Courses.Include(c => c.Mentor)
+								  .Include(c => c.Tasks)
+								  .Include(c => c.Users).AsEnumerable();
         }
 
         public IEnumerable<Course> GetAll(Func<Course, bool> predicate)
         {
-            return Context.Courses.Include(c => c.Mentor).Where(predicate);
+            return Context.Courses.Include(c => c.Mentor)
+								  .Include(c => c.Tasks)
+								  .Include(c => c.Users).Where(predicate);
         }
 
         public bool Contains(Func<Course, bool> predicate)
         {
-            return Context.Courses.Include(c => c.Mentor).FirstOrDefault(predicate) != null;
+            return Context.Courses.Include(c => c.Mentor)
+								  .Include(c => c.Tasks)
+								  .Include(c => c.Users).FirstOrDefault(predicate) != null;
         }
 
         public bool Delete(Course item)

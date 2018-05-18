@@ -101,4 +101,16 @@ namespace HwProj.Models.ViewModels
 		[Display(Name = "Преподаватель")]
         public string MentorName { get; set; }
     }
+
+	public class CourseSearchViewModel
+	{
+		public string CourseName { get; set; }
+		public string Description { get; set; }
+
+		public CourseSearchViewModel(Course model)
+		{
+			CourseName = model.Name;
+			Description = CourseName + " :: " + model.Mentor.UserName;
+		}
+	}
 }
