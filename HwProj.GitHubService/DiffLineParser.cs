@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace HwProj.GitHubService
 {
-    internal static class DiffLineParser
+    public static class DiffLineParser
     {
         #region Special for Dinara
-        private const string ADDITION_CSS_CLASS = "";
-        private const string DELETION_CSS_CLASS = "";
-        private const string NORMAL_CSS_CLASS = "";
+        public const string ADDITION_CSS_CLASS = "ADD";
+        public const string DELETION_CSS_CLASS = "DEL";
+        public const string NORMAL_CSS_CLASS = "NORM";
         #endregion
 
         private class ParsedDiff
@@ -26,11 +26,11 @@ namespace HwProj.GitHubService
 
         public static IEnumerable<DiffLine> GetDiffLines(string diffText)
         {
-            var parsedDiffs = Parse(diffText);
+            var parsedDiffs = Parse(diffText + '\n');
             var diffLines = new List<DiffLine>();
             foreach (var parsedDiff in parsedDiffs)
             {
-                var lines = parsedDiff.Diff.Split('\n');
+                var lines = parsedDiff.Diff.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
                 diffLines.Add(CreateDiffLine(lines[0], parsedDiff.StartNumber - 1));
                 for (int i = 0; i < parsedDiff.Count; i++)
                 {

@@ -53,8 +53,7 @@ namespace HwProj.Controllers
         [HttpPost]
         public async Task<ActionResult> SendComment(string content)
         {
-            var github = GitHubCreator.GetInstance();
-            github.
+            throw new NotImplementedException();
         }
     }
 }

@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HwProj.GitHubService", "HwP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HwProj.Models", "HwProj.Models\HwProj.Models.csproj", "{51E07460-9BB9-4C14-9E2A-8C3E6A167825}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HwProj.GitHubService.Test", "HwProj.GitHubService.Test\HwProj.GitHubService.Test.csproj", "{B997D51E-4437-4A28-8903-12857ABB4510}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{51E07460-9BB9-4C14-9E2A-8C3E6A167825}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51E07460-9BB9-4C14-9E2A-8C3E6A167825}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51E07460-9BB9-4C14-9E2A-8C3E6A167825}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B997D51E-4437-4A28-8903-12857ABB4510}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B997D51E-4437-4A28-8903-12857ABB4510}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B997D51E-4437-4A28-8903-12857ABB4510}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B997D51E-4437-4A28-8903-12857ABB4510}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
