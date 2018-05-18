@@ -23,6 +23,7 @@
             <i class="fas fa-eye-slash" id="toggle-icon"></i>
             @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
         </div>
+        <br />
         <div class="form-group">
             @Html.CheckBoxFor(m => m.RememberMe)
             @Html.LabelFor(m => m.RememberMe)
