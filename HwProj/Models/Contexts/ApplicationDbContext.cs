@@ -7,6 +7,7 @@ using System.Web;
 using HwProj.Models.Enums;
 using HwProj.Models.Roles;
 using Microsoft.AspNet.Identity;
+using System.Reflection.Emit;
 
 namespace HwProj.Models.Contexts
 {
@@ -42,6 +43,7 @@ namespace HwProj.Models.Contexts
         /// Сопоставление курсов и юзеров
         /// </summary>
         public DbSet<CourseMate> CourseMates { get; set; }
+
     }
 
 }

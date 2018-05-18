@@ -54,7 +54,9 @@ namespace HwProj.Models.Repositories
 
         public Course Get(Func<Course, bool> predicate)
         {
-            return Context.Courses.Include(c => c.Mentor).Include(c => c.Tasks).Include(c => c.Users)
+            return Context.Courses.Include(c => c.Mentor)
+								  .Include(c => c.Tasks)
+								  .Include(c => c.Users)
              .FirstOrDefault(predicate);
         }
     }
