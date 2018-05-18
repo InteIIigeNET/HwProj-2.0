@@ -24,7 +24,7 @@ namespace HwProj.GitHubService
             }
         }
 
-        public IEnumerable<string> DiffFiles
+        public IEnumerable<DiffFile> DiffFiles
         {
             get
             {
@@ -35,7 +35,7 @@ namespace HwProj.GitHubService
         }
 
         private string diffText;
-        private IEnumerable<string> diffFiles;
+        private IEnumerable<DiffFile> diffFiles;
 
         public DiffParser(string diffUrl)
         {
@@ -67,13 +67,18 @@ namespace HwProj.GitHubService
         private IEnumerable<DiffFile> ParseDiffByFiles()
         {
             var matches = Parse($@"(?<=diff --git a\/)([\w|\W]*?)(?= b\/) b\/\1\n[\w|\W]*?(\@\@[\w|\W]*?)\n(?=diff --git a\/|$)");
-            for (int i = 0; i < matches.Count; i++)
+            var length = matches.Count;
+            var diffFiles = new DiffFile[length];
+            for (int i = 0; i < length; i++)
             {
-                var m = matches[i];
-                var fileName = m.Groups[1].Value;
-                var diffText = m.Groups[2].Value;
-
+                var groups = matches[i].Groups;
+                diffFiles[i] = new DiffFile
+                {
+                    DiffLines = DiffLineParser.GetDiffLines(groups[2].Value),
+                    Name = groups[1].Value
+                };
             }
+            return diffFiles;
         }
 
         private MatchCollection Parse(string pattern)
