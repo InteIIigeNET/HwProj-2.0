@@ -70,14 +70,6 @@ code {
     position: relative;
 }
 
-.right-inner-addon i {
-    position: absolute;
-    right: 5px;
-    top: 10px;
-    pointer-events: none;
-    font-size: 1em;
-}
-
 .jumbotron.jumbotron_border_gray {
     border: 1px solid #A4A4A4;
 }
