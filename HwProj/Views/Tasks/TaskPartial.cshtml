@@ -2,17 +2,21 @@
 @using HwProj.Tools
 @model HwProj.Models.ViewModels.TaskViewModel
 
+<div>
+    <strong>@Model.Title</strong>
+    @Html.Raw(@Model.Description.AsMarkdown())
+</div>
 @if (User.Identity.Name == Model.MentorEmail)
 {
-<button>@Ajax.ActionLink("Редактировать", "_EditPartial", "Tasks",
-            new TaskEditViewModel(Model), 
-            new AjaxOptions { UpdateTargetId = "task_partial_" + Model.TaskId})
-</button>
-<button>@Html.ActionLink("Удалить", "Delete", "Tasks", new { taskId = Model.TaskId, courseId = Model.CourseId }, htmlAttributes: new { })</button>
+<div>
+    @Ajax.ActionLink("Редактировать", "_EditPartial", "Tasks",
+                 new TaskEditViewModel(Model),
+                 new AjaxOptions { UpdateTargetId = "task_partial_" + Model.TaskId },
+                 new { @class = "btn btn-outline-primary" })
+    @Html.ActionLink("Удалить", "Delete", "Tasks", new { taskId = Model.TaskId, courseId = Model.CourseId }, new { @class = "btn btn-outline-primary" })
+</div>
 }
 else
 {
-<button>@Html.ActionLink("Добавить решение", "Create", "Homeworks", new { taskId = Model.TaskId, description = Model.Description }, htmlAttributes: new { })</button>
+    @Html.ActionLink("Добавить решение", "Create", "Homeworks", new { taskId = Model.TaskId, description = Model.Description }, new { @class = "btn btn-outline-primary" })
 }
-<B>@Model.Title</B>
-@Html.Raw(@Model.Description.AsMarkdown())
