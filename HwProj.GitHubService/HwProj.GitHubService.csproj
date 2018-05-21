@@ -121,7 +121,8 @@
     <Compile Include="DiffLineParser.cs" />
     <Compile Include="DiffParser.cs" />
     <Compile Include="GitHubModelExtentions.cs" />
-    <Compile Include="Repository.cs" />
+    <Compile Include="PullRequestRepository.cs" />
+    <Compile Include="GitHubClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

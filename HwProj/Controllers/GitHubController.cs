@@ -14,14 +14,14 @@ namespace HwProj.Controllers
 {
     public static class GitHubCreator
     {
-        private static Repository instance;
+        private static GitHubClient instance;
 
-        public static Repository GetInstance()
+        public static GitHubClient GetInstance()
         {
             if (instance == null)
             {
                 var token = HttpContext.Current.User.Identity.GetGitHubToken();
-                instance = new Repository(token);
+                instance = new GitHubClient(token);
             }
             return instance;
         }
