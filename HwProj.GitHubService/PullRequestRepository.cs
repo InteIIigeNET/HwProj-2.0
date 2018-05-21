@@ -7,14 +7,12 @@ using System.Threading.Tasks;
 
 namespace HwProj.GitHubService
 {
-    public class PullRequestRepository
+    public class PullRequestRepository : Repository
     {
-        private readonly Octokit.GitHubClient client;
         private readonly string userLogin;
 
-        public PullRequestRepository(Octokit.GitHubClient client)
+        public PullRequestRepository(Octokit.GitHubClient client) : base(client)
         {
-            this.client = client;
             userLogin = client?.User.Current().Result.Login;
         }
 

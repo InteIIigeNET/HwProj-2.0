@@ -31,6 +31,7 @@ namespace HwProj.GitHubService
         public static PullRequest ConvertToGitHubModel(this Octokit.PullRequest pullRequest, IEnumerable<Commit> commits)
         {
             var user = pullRequest.User;
+            var diffParser = new DiffParser(pullRequest.Url);
             return new Models.GitHub.PullRequest
             {
                 Id = pullRequest.Id,
@@ -42,7 +43,8 @@ namespace HwProj.GitHubService
                     Url = user.Url
                 },
                 CreatedAt = pullRequest.CreatedAt.DateTime,
-                Commits = commits
+                Commits = commits,
+                DiffFiles = diffParser.DiffFiles
             };
         }
     }

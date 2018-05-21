@@ -24,6 +24,8 @@ namespace HwProj.Models.GitHub
 
         public string DiffUrl { get; set; }
 
+        public IEnumerable<DiffFile> DiffFiles { get; set; }
+
         public long Id { get; set; }
     }
 }

@@ -35,7 +35,7 @@ namespace HwProj.GitHubService
         public async Task<IEnumerable<string>> GetBranches(string repName)
         {
             return from b in await client?.Repository.Branch.GetAll(user.Login, repName)
-                   select b.Name;                        
+                   select b.Name;
         }
     }
 }
