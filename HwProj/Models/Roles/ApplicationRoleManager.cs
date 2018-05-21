@@ -21,7 +21,7 @@ namespace HwProj.Models.Roles
 			IOwinContext context)
 		{
 			return new ApplicationRoleManager(new
-				RoleStore<ApplicationRole>(context.Get<ApplicationDbContext>()));
+				RoleStore<ApplicationRole>(context.Get<AppDbContext>()));
 		}
 	}
 

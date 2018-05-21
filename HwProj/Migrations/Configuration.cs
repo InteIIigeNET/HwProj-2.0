@@ -7,14 +7,14 @@ namespace HwProj.Migrations
 	using System.Data.Entity.Migrations;
 	using System.Linq;
 
-	internal sealed class Configuration : DbMigrationsConfiguration<HwProj.Models.Contexts.ApplicationDbContext>
+	internal sealed class Configuration : DbMigrationsConfiguration<HwProj.Models.Contexts.AppDbContext>
 	{
 		public Configuration()
 		{
 			AutomaticMigrationsEnabled = true;
 		}
 
-		protected override void Seed(HwProj.Models.Contexts.ApplicationDbContext context)
+		protected override void Seed(HwProj.Models.Contexts.AppDbContext context)
 		{
 			context.Roles.Add(RolesFactory.GetById("1"));
 			context.Roles.Add(RolesFactory.GetById("2"));

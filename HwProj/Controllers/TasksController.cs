@@ -16,7 +16,7 @@ namespace HwProj.Controllers
     [Authorize]
     public class TasksController : Controller
     {
-	    readonly MainEduRepository _db = MainEduRepository.Instance;
+	    readonly MainRepository _db = MainRepository.Instance;
 
         [HttpPost]
         [Authorize(Roles = "Преподаватель")]

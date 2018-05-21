@@ -17,7 +17,7 @@ namespace HwProj.Controllers
     [RequireHttps]
     public class HomeController : Controller
     {
-        MainEduRepository Db = MainEduRepository.Instance;
+        MainRepository Db = MainRepository.Instance;
 
         public ActionResult Index()
         {

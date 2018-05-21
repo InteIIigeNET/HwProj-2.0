@@ -15,14 +15,14 @@ namespace HwProj.Controllers
 	[Authorize]
     public class HomeworksController : Controller
     {
-        private MainEduRepository _eduRepository = MainEduRepository.Instance;
+        private MainRepository _repository = MainRepository.Instance;
 
 	    [Authorize]
 	    public ActionResult Index(long? homeworkId)
 	    {
 		    if (homeworkId.HasValue)
 		    {
-			    var homework = _eduRepository.HomeworkManager.Get(h => h.Id == homeworkId.Value);
+			    var homework = _repository.HomeworkManager.Get(h => h.Id == homeworkId.Value);
 			    return View(homework);
 		    }
 			return RedirectToAction("Index", "Home");
@@ -49,10 +49,10 @@ namespace HwProj.Controllers
 		    }
 		    else
 		    {
-			    var task = _eduRepository.TaskManager.Get(t => t.Id == model.TaskId);
-			    var student = _eduRepository.UserManager.Get(u => u.Email == User.Identity.Name);
+			    var task = _repository.TaskManager.Get(t => t.Id == model.TaskId);
+			    var student = _repository.UserManager.Get(u => u.Email == User.Identity.Name);
 
-			    if (!_eduRepository.HomeworkManager.Add(new Homework(model, task, student)))
+			    if (!_repository.HomeworkManager.Add(new Homework(model, task, student)))
 				    ModelState.AddModelError("", "Ошибка");
 			    else
 			    {
@@ -71,13 +71,13 @@ namespace HwProj.Controllers
 		    {
 			    ModelState.AddModelError("", "Нужно заполнить все поля");
 		    }
-		    var homework = _eduRepository.HomeworkManager.Get(h => h.Id == model.HomeworkId);
+		    var homework = _repository.HomeworkManager.Get(h => h.Id == model.HomeworkId);
 			if (homework.Task.Course.MentorId != User.Identity.GetUserId())
 		    {
 				// Не показываем, что аккаунт не ментора 
 			    return RedirectToAction("Index", "Home");
 			}
-		    if (!_eduRepository.HomeworkManager.AddReview(model))
+		    if (!_repository.HomeworkManager.AddReview(model))
 			    ModelState.AddModelError("", "Ошибка при добавлении комментария");
 		    else
 		    {

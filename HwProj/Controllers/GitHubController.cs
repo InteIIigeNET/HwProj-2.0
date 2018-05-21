@@ -14,30 +14,29 @@ namespace HwProj.Controllers
 {
     public static class GitHubCreator
     {
-        private static Repository instance;
+        private static GitRepository _instance;
 
-        public static Repository GetInstance()
+        public static GitRepository GetInstance()
         {
-            if (instance == null)
+            if (_instance == null)
             {
                 var token = HttpContext.Current.User.Identity.GetGitHubToken();
-                instance = new Repository(token);
+                _instance = new GitRepository(token);
             }
-            return instance;
+            return _instance;
         }
     }
 
     [GitHubAccess]
     public class GitHubController : Controller
     {
-        // GET: GitHub 
-        public async Task<ActionResult> Index()
+	    MainRepository Db = MainRepository.Instance;
+		// GET: GitHub 
+		public async Task<ActionResult> Index()
         {
             ViewBag.Repos = await GitHubCreator.GetInstance().GetRepositories();
             return PartialView();
         }
-
-        MainEduRepository Db = MainEduRepository.Instance;
 
         [Authorize]
         [HttpPost]

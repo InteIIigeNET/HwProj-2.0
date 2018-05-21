@@ -6,13 +6,17 @@ using System.Web;
 
 namespace HwProj.Models.Repositories
 {
-    public class BaseManager
+    internal abstract class BaseManager
     {
-        public BaseManager(ApplicationDbContext context)
+        protected BaseManager()
         {
-            Context = context;
         }
-
-        protected ApplicationDbContext Context { get; }
-    }
+	    protected T Execute<T>(Func<AppDbContext, T> action)
+	    {
+		    using (var context = AppDbContext.Create())
+		    {
+			    return action(context);
+		    }
+	    }
+	}
 }

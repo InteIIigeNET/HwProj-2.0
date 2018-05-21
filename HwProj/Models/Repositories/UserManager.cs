@@ -7,29 +7,38 @@ using HwProj.Models.Contexts;
 
 namespace HwProj.Models.Repositories
 {
-    public class UserManager : BaseManager, IReadOnlyRepository<User>
+    internal class UserManager : BaseManager, IReadOnlyRepository<User>
     {
-        public UserManager(ApplicationDbContext context) : base(context)
-        {
-        }
 	    public IEnumerable<User> GetAll(Func<User, bool> predicate)
 	    {
-			return Context.Users.Include(u => u.Notifications).Where(predicate).AsEnumerable();
-		}
+		    return Execute
+		    (
+			    context => context.Users.Include(u => u.Notifications).Where(predicate).ToList()
+			);
+	    }
 
 	    public bool Contains(Func<User, bool> predicate)
 	    {
-		    return Get(predicate) != null;
+		    return Execute
+		    (
+			    context => Get(predicate) != null
+			);
 	    }
 
         public User Get(Func<User, bool> predicate)
         {
-            return Context.Users.Include(u => u.Notifications).FirstOrDefault(predicate);
+	        return Execute
+	        (
+		        context => context.Users.Include(u => u.Notifications).FirstOrDefault(predicate)
+			);
         }
 
         public IEnumerable<User> GetAll()
         {
-	        return Context.Users.Include(u => u.Notifications).AsEnumerable();
+	        return Execute
+	        (
+		        context => context.Users.Include(u => u.Notifications).ToList()
+			);
         }
     }
 }

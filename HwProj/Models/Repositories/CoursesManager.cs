@@ -2,62 +2,93 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Web;
-using HwProj.Models.Contexts;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin;
 
 namespace HwProj.Models.Repositories
 {
-    public class CoursesManager : BaseManager, IRepository<Course>
+    internal class CoursesManager : BaseManager, IRepository<Course>
     {
-        public CoursesManager(ApplicationDbContext context) : base(context) { }
 
         public bool Add(Course item)
         {
-            item.IsComplete = false;
-            if (Contains(c => c.Id == item.Id)) return false;
+	        return Execute
+	        (
+		        context =>
+		        {
+			        item.IsComplete = false;
+			        if (Contains(c => c.Id == item.Id)) return false;
 
-            Context.Courses.Add(item);
-            Context.SaveChanges();
-            return true;
+			        context.Courses.Add(item);
+			        context.SaveChanges();
+			        return true;
+		        }
+	        );
         }
 
         public IEnumerable<Course> GetAll()
         {
-            return Context.Courses.Include(c => c.Mentor)
-								  .Include(c => c.Tasks)
-								  .Include(c => c.Users).AsEnumerable();
+	        return Execute
+	        (
+		        context =>
+		        {
+			        return context.Courses.Include(c => c.Mentor)
+				        .Include(c => c.Tasks)
+				        .Include(c => c.Users).ToList();
+		        }
+			);
         }
 
         public IEnumerable<Course> GetAll(Func<Course, bool> predicate)
         {
-            return Context.Courses.Include(c => c.Mentor)
-								  .Include(c => c.Tasks)
-								  .Include(c => c.Users).Where(predicate);
+	        return Execute
+	        (
+		        context =>
+		        {
+			        return context.Courses.Include(c => c.Mentor)
+				        .Include(c => c.Tasks)
+				        .Include(c => c.Users).Where(predicate).ToList();
+		        }
+	        );
         }
 
         public bool Contains(Func<Course, bool> predicate)
         {
-            return Context.Courses.Include(c => c.Mentor)
-								  .Include(c => c.Tasks)
-								  .Include(c => c.Users).FirstOrDefault(predicate) != null;
+	        return Execute
+	        (
+		        context =>
+		        {
+			        return context.Courses.Include(c => c.Mentor)
+				               .Include(c => c.Tasks)
+				               .Include(c => c.Users).FirstOrDefault(predicate) != null;
+		        }
+	        );
         }
 
         public bool Delete(Course item)
         {
-            if (Contains(c => c.Id == item.Id)) return false;
-            Context.Courses.Remove(item);
-            Context.SaveChanges();
-            return true;
+	        return Execute
+	        (
+		        context =>
+		        {
+			        if (Contains(c => c.Id == item.Id)) return false;
+			        context.Courses.Remove(item);
+			        context.SaveChanges();
+			        return true;
+		        }
+	        );
         }
 
         public Course Get(Func<Course, bool> predicate)
         {
-            return Context.Courses.Include(c => c.Mentor)
-								  .Include(c => c.Tasks)
-								  .Include(c => c.Users)
-             .FirstOrDefault(predicate);
+	        return Execute
+	        (
+		        context =>
+		        {
+			        return context.Courses.Include(c => c.Mentor)
+				        .Include(c => c.Tasks)
+				        .Include(c => c.Users)
+				        .FirstOrDefault(predicate);
+		        }
+	        );
         }
     }
 }

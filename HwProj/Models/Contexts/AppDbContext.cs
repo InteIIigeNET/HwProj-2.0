@@ -11,16 +11,16 @@ using System.Reflection.Emit;
 
 namespace HwProj.Models.Contexts
 {
-    public class ApplicationDbContext : IdentityDbContext<User>
+     internal class AppDbContext : IdentityDbContext<User>
     {
-        public ApplicationDbContext()
+        public AppDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
 
-        public static ApplicationDbContext Create()
+        public static AppDbContext Create()
         {
-            return new ApplicationDbContext();
+            return new AppDbContext();
         }
 
         /// <summary>

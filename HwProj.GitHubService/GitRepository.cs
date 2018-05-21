@@ -9,12 +9,12 @@ using HwProj.Models.GitHub;
 
 namespace HwProj.GitHubService
 {
-    public class Repository : IDisposable
+    public class GitRepository : IDisposable
     {
         private GitHubClient client;
         private Octokit.User user;
 
-        public Repository(string token)
+        public GitRepository(string token)
         {
             client = new GitHubClient(new ProductHeaderValue("HwProj"))
             {
