@@ -23,5 +23,7 @@ namespace HwProj.Models.GitHub
         public IEnumerable<string> Files { get; set; }
 
         public string DiffUrl { get; set; }
+
+        public long Id { get; set; }
     }
 }

@@ -10,6 +10,6 @@ namespace HwProj.Models.GitHub
     {
         public IEnumerable<ReviewComment> ReviewComments { get; set; }
 
-        public string Body { get; set; }
+        public Comment HeadComment { get; set; }
     }
 }

@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace HwProj.Models.GitHub
 {
-    public class ReviewComment
+    public class ReviewComment : Comment
     {
         public User Owner { get; set; }
-
-        public string Content { get; set; }
 
         public string DiffHunk { get; set; }
     }

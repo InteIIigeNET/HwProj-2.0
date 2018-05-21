@@ -35,36 +35,31 @@ namespace HwProj.GitHubService
                    select b.Name;                        
         }
 
+        #region PullRequest's methods
         public async Task<Models.GitHub.PullRequest> CreatePullRequest(string title, string branchRef, string repName)
         {
             var owner = user.Login;
             var pullRequest = await client?.PullRequest.Create(owner, repName, new NewPullRequest(title, "master", branchRef));
-            var commits = await client?.PullRequest.Commits(owner, repName, pullRequest.Number);
-            return new Models.GitHub.PullRequest
-            {
-                DiffUrl = pullRequest.DiffUrl,
-                RepositoryName = repName,
-                Number = pullRequest.Number,
-                Owner = new Models.GitHub.User
-                {
-                    Login = owner,
-                    Url = user.Url
-                },
-                CreatedAt = pullRequest.CreatedAt.DateTime,
-                Commits = from c in commits
-                          select new Models.GitHub.Commit
-                          {
-                              Sha = c.Commit.Sha,
-                              Owner = new Models.GitHub.User
-                              {
-                                  Login = c.Commit.User.Login,
-                                  Url = c.Commit.User.Url
-                              },
-                              CreatedAt = c.Author.Date.DateTime,
-                              Title = c.Commit.Message,
-                              Url = c.Commit.Url
-                          }
-            };
+            return await CreatePullRequestModel(repName, pullRequest.Number, pullRequest);
+        }
+
+        public async Task<Models.GitHub.PullRequest> GetPullRequest(string repName, int pullRequestNumber)
+        {
+            var pullRequest = await client?.PullRequest.Get(user.Login, repName, pullRequestNumber);
+            return await CreatePullRequestModel(repName, pullRequestNumber, pullRequest);
+        }
+
+        public async Task<Models.GitHub.PullRequest> ClosePullRequest(string repName, int pullRequestNumber)
+        {
+            var pullRequest = await client?.PullRequest.Update(user.Login, repName, pullRequestNumber,
+                new PullRequestUpdate { State = ItemState.Closed });
+            return await CreatePullRequestModel(repName, pullRequestNumber, pullRequest);
+        } 
+        #endregion
+
+        public async Task<Review> CreateReview(string content, Models.GitHub.PullRequest pullRequest)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<ReviewComment> CreateReviewComment(string content, Models.GitHub.PullRequest pullRequest)
@@ -72,9 +67,19 @@ namespace HwProj.GitHubService
             throw new NotImplementedException();
         }
 
+        #region Helpers
+        private async Task<Models.GitHub.PullRequest> CreatePullRequestModel(string repName, int pullRequestNumber, Octokit.PullRequest pullRequest)
+        {
+            var commits = await client?.PullRequest.Commits(user.Login, repName, pullRequestNumber);
+            return pullRequest.ConvertToGitHubModel(commits.ConvertToGitHubModel());
+        }
+        #endregion
+
+        #region Dispose
         public void Dispose()
         {
             GC.SuppressFinalize(this);
-        }
+        } 
+        #endregion
     }
 }
