@@ -49,9 +49,9 @@
             <h4>Задания</h4>
             @foreach (var task in Model.Tasks.Reverse())
             {
-                <p id="task_partial_@task.Id">
+                <div id="task_partial_@task.Id">
                     @Html.Partial("~/Views/Tasks/TaskPartial.cshtml", new TaskViewModel(task))
-                </p>
+                </div>
             }
         </div>
     </div>

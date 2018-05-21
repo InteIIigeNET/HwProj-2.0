@@ -21,7 +21,7 @@ namespace HwProj.Controllers
 
         public ActionResult Index()
         {
-            if (User.Identity.IsAuthenticated)
+			if (User.Identity.IsAuthenticated)
             {
                 var user = Db.UserManager.Get(u => u.Email == User.Identity.Name);
 				return View(user);
