@@ -10,7 +10,7 @@ namespace HwProj.GitHubService.Test
     public class DiffLineParserTest
     {
         [TestMethod]
-        public void ShouldParseNotEmptyDiff()
+        public void ShouldParseNotEmptyDiffModule()
         {
             //arrange
             string diffText = Resources.DiffModule;
@@ -23,6 +23,17 @@ namespace HwProj.GitHubService.Test
             Assert.AreEqual(15, first.Number);
             Assert.AreEqual(DiffLineParser.NORMAL_CSS_CLASS, last.CssClass);
             Assert.AreEqual(129, last.Number);
+        }
+
+        [TestMethod]
+        public void ShouldParseEmptyString()
+        {
+            //arrange
+            string diffText = "";
+            //act
+            var diffLines = DiffLineParser.GetDiffLines(diffText);
+            //assert
+            Assert.AreEqual(diffLines, null);
         }
     }
 }

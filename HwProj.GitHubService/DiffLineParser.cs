@@ -27,6 +27,8 @@ namespace HwProj.GitHubService
         public static IEnumerable<DiffLine> GetDiffLines(string diffText)
         {
             var parsedDiffs = Parse(diffText + '\n');
+            if (parsedDiffs == null)
+                return null;
             var diffLines = new List<DiffLine>();
             foreach (var parsedDiff in parsedDiffs)
             {
@@ -68,6 +70,8 @@ namespace HwProj.GitHubService
         { 
             var matches = regex.Matches(diffText);
             var length = matches.Count;
+            if (length == 0)
+                return null;
             var parsed = new ParsedDiff[length];
             for (int i = 0; i < length; i++)
             {
