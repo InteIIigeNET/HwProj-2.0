@@ -13,11 +13,11 @@ namespace HwProj.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 		public string UserId { get; set; }
-        public User User { get; set; }
+        public virtual User User { get; set; }
 
         public long CourseId { get; set; }
 
-        public Course Course { get; set; }
+        public virtual Course Course { get; set; }
         /// <summary>
         /// Принят ли студент на курс
         /// Для открытых курсов всегда true

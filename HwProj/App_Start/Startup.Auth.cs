@@ -10,7 +10,8 @@ using HwProj.Models.Contexts;
 using HwProj.Models.Roles;
 using Microsoft.Owin.Security.Google;
 using Owin.Security.Providers.GitHub;
-
+//TODO:
+// вынести одинаковые строки в константы
 namespace HwProj
 {
     public partial class Startup

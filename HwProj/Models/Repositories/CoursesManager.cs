@@ -32,7 +32,7 @@ namespace HwProj.Models.Repositories
 		        {
 			        return context.Courses.Include(c => c.Mentor)
 				        .Include(c => c.Tasks)
-				        .Include(c => c.Users).ToList();
+				        .Include(c => c.Users.Select(u => u.User)).ToList();
 		        }
 			);
         }
@@ -45,7 +45,7 @@ namespace HwProj.Models.Repositories
 		        {
 			        return context.Courses.Include(c => c.Mentor)
 				        .Include(c => c.Tasks)
-				        .Include(c => c.Users).Where(predicate).ToList();
+				        .Include(c => c.Users.Select(u => u.User)).Where(predicate).ToList();
 		        }
 	        );
         }
@@ -58,7 +58,8 @@ namespace HwProj.Models.Repositories
 		        {
 			        return context.Courses.Include(c => c.Mentor)
 				               .Include(c => c.Tasks)
-				               .Include(c => c.Users).FirstOrDefault(predicate) != null;
+				               .Include(c => c.Users.Select(u => u.User))
+							   .FirstOrDefault(predicate) != null;
 		        }
 	        );
         }
@@ -85,7 +86,7 @@ namespace HwProj.Models.Repositories
 		        {
 			        return context.Courses.Include(c => c.Mentor)
 				        .Include(c => c.Tasks)
-				        .Include(c => c.Users)
+				        .Include(c => c.Users.Select(u => u.User))
 				        .FirstOrDefault(predicate);
 		        }
 	        );

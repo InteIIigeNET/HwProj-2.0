@@ -31,7 +31,7 @@ namespace HwProj.Models
 		public string GroupName  { get; set; }
 		public string MentorId { get; set; }
 		[ForeignKey("MentorId")]
-		public User Mentor { get; set; }
+		public virtual User Mentor { get; set; }
 		/// <summary>
 		/// Указывает способ вступления в курс
 		/// </summary>
@@ -43,11 +43,11 @@ namespace HwProj.Models
         /// <summary>
         /// Коллекция пользователей этого курса
         /// </summary>
-        public ICollection<CourseMate> Users { get; set; } = new List<CourseMate>();
+        public virtual ICollection<CourseMate> Users { get; set; } = new List<CourseMate>();
         /// <summary>
         /// Таски этого курса
         /// </summary>
-        public ICollection<Task> Tasks { get; set; } = new List<Task>();
+        public virtual ICollection<Task> Tasks { get; set; } = new List<Task>();
 
 		public Course() { }
 		public Course(CreateCourseViewModel model)
@@ -63,11 +63,11 @@ namespace HwProj.Models
 
             if (other == null) return 1;
             int value;
-            if ((value = Compare(GroupName, other.GroupName, StringComparison.Ordinal)) != 0)
+            if ((value = Compare(GroupName, other.GroupName)) != 0)
                 return value;
-            if ((value = Compare(Name, other.Name, StringComparison.Ordinal)) != 0)
+            if ((value = Compare(Name, other.Name)) != 0)
                 return value;
-            if ((value = Compare(MentorId, other.MentorId, StringComparison.Ordinal)) != 0)
+            if ((value = Compare(MentorId, other.MentorId)) != 0)
                 return value;
             return 0;
 
@@ -75,7 +75,7 @@ namespace HwProj.Models
 
         public bool UserExist(string email)
         {
-            return Users.FirstOrDefault(u => u.User.Email == email) != null;
+	        return Users.FirstOrDefault(u => u.User.Email == email) != null;
         }
     }
 }

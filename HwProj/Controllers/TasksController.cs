@@ -34,7 +34,7 @@ namespace HwProj.Controllers
 
                 return RedirectToAction("Index", "Courses", new { courseId = model.CourseId });
             }
-            ModelState.AddModelError("", "Не удалось добавить задание");
+            ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
             return View();
         }
 
@@ -53,7 +53,7 @@ namespace HwProj.Controllers
 			}
 			if (!_db.TaskManager.Update(User.Identity.GetUserId(), new Task(model)))
 			{
-				ModelState.AddModelError("", "Ошибка при редактировании задания"); 
+				ModelState.AddModelError("", @"Ошибка при обновлении базы данных"); 
 				return PartialView("_EditPartial", model);
 			}
 			return PartialView("TaskPartial", new TaskViewModel(model) { MentorEmail = User.Identity.GetUserEmail()});
@@ -64,7 +64,7 @@ namespace HwProj.Controllers
         {
 	        if (!_db.TaskManager.Delete(User.Identity.GetUserId(), taskId))
 	        {
-				ModelState.AddModelError("", "Не удалось удалить задание");
+				ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
 			}
 			return RedirectToAction("Index", "Courses", new { courseId });
         }

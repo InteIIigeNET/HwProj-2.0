@@ -66,7 +66,7 @@ namespace HwProj.Controllers
 			    }
 			    else AddErrors(result);
 		    }
-		    else ModelState.AddModelError("", "Введён неверный пароль");
+		    else ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
 		    return View(model);
 		}
 

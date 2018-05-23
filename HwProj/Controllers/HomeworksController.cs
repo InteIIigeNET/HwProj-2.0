@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using HwProj.Services;
+using HwProj.Tools;
 using Microsoft.AspNet.Identity;
 
 namespace HwProj.Controllers
@@ -43,21 +44,21 @@ namespace HwProj.Controllers
 	    [HttpPost]
 	    public async Task<ActionResult> Create(HomeworkCreateViewModel model)
 	    {
-		    if (!ModelState.IsValid)
-		    {
-			    ModelState.AddModelError("", "Нужно заполнить все поля");
-		    }
+		    if (!ModelState.IsValid) ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
 		    else
 		    {
 			    var task = _repository.TaskManager.Get(t => t.Id == model.TaskId);
 			    var student = _repository.UserManager.Get(u => u.Email == User.Identity.Name);
+			    var homework = new Homework(model, task, student);
 
-			    if (!_repository.HomeworkManager.Add(new Homework(model, task, student)))
-				    ModelState.AddModelError("", "Ошибка");
+				if (!_repository.HomeworkManager.Add(homework))
+				    ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
 			    else
 			    {
 				    await NotificationsService.SendNotifications(new [] {task.Course.Mentor},
-					    u => $"Пользователь <b>{User.Identity.Name}</b> отправил решение к задаче <a>{task.Title}</>");
+					    u => $"Пользователь <b>{User.Identity.Name}</b> отправил решение к задаче " +
+					         $"<a href = \"{UrlGenerator.GetRouteUrl(Request.RequestContext, "Index", "Homeworks", new { homeworkId = homework.Id})}" +
+					         $"\">{task.Title}</>");
 			    }
 		    }
 		    return View();
@@ -69,16 +70,11 @@ namespace HwProj.Controllers
 	    {
 		    if (!ModelState.IsValid)
 		    {
-			    ModelState.AddModelError("", "Нужно заполнить все поля");
+			    ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
 		    }
 		    var homework = _repository.HomeworkManager.Get(h => h.Id == model.HomeworkId);
-			if (homework.Task.Course.MentorId != User.Identity.GetUserId())
-		    {
-				// Не показываем, что аккаунт не ментора 
-			    return RedirectToAction("Index", "Home");
-			}
-		    if (!_repository.HomeworkManager.AddReview(model))
-			    ModelState.AddModelError("", "Ошибка при добавлении комментария");
+		    if (!_repository.HomeworkManager.AddReview(User.Identity.GetUserId(), model))
+			    ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
 		    else
 		    {
 			    await NotificationsService.SendNotifications(u => u.Id == homework.StudentId,

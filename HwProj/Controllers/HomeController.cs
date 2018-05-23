@@ -17,16 +17,16 @@ namespace HwProj.Controllers
     [RequireHttps]
     public class HomeController : Controller
     {
-        MainRepository Db = MainRepository.Instance;
+        MainRepository _db = MainRepository.Instance;
 
         public ActionResult Index()
         {
 			if (User.Identity.IsAuthenticated)
             {
-                var user = Db.UserManager.Get(u => u.Email == User.Identity.Name);
+                var user = _db.UserManager.Get(u => u.Email == User.Identity.Name);
 				return View(user);
             }
-            var courses = Db.CourseManager.GetAll();
+            var courses = _db.CourseManager.GetAll();
             return View(courses);
         }
     }

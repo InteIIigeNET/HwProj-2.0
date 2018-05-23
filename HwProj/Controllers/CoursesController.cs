@@ -39,13 +39,13 @@ namespace HwProj.Controllers
 			};
 
 			if (_repository.CourseManager.Contains(t => t.CompareTo(course) == 0))
-				ModelState.AddModelError("", "Курс с таким описанием уже существует");
+				ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
 			else
 			{
 				if (_repository.CourseManager.Add(course))
 					return RedirectToAction("Index", new { courseId = course.Id });
 
-				else ModelState.AddModelError("", "Ошибка при созданни курса. Повторите попытку позже.");
+				else ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
 			}
 			return View();
 		}
@@ -110,7 +110,7 @@ namespace HwProj.Controllers
 			var user = _repository.UserManager.Get(u => u.Email == User.Identity.Name);
 
 			if (!_repository.CourseMateManager.Add((course, user)))
-		        ModelState.AddModelError("", "Ошибка при обновлении базы данных");
+		        ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
 	        else
 	        {
 				await NotificationsService.SendNotifications(new [] {course.Mentor},
@@ -135,7 +135,7 @@ namespace HwProj.Controllers
 			var user = _repository.UserManager.Get(u => u.Id == userId);
 
 			if (!_repository.CourseMateManager.Accept((course, user)))
-				ModelState.AddModelError("", "Ошибка при обновлении базы данных");
+				ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
 			else
 			{
 				await NotificationsService.SendNotifications(new[] { user },
@@ -159,7 +159,7 @@ namespace HwProj.Controllers
 
 			if (!_repository.CourseMateManager.Delete((course, user)))
 			{
-				ModelState.AddModelError("", "Ошибка при обновлении базы данных");
+				ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
 			}
 			else
 			{

@@ -21,12 +21,21 @@ namespace HwProj.Models.Repositories
 
 		public IEnumerable<CourseMate> GetAll()
 		{
-			throw new NotImplementedException();
+			return Execute
+			(
+				context => context.CourseMates.Include(c => c.User)
+											  .Include(c => c.Course).ToList()
+			);
 		}
 
 		public IEnumerable<CourseMate> GetAll(Func<CourseMate, bool> predicate)
 		{
-			throw new NotImplementedException();
+			return Execute
+			(
+				context => context.CourseMates.Include(c => c.User)
+											  .Include(c => c.Course)
+											  .Where(predicate).ToList()
+			);
 		}
 
 		public bool Contains(Func<CourseMate, bool> predicate)

@@ -15,8 +15,13 @@ namespace HwProj.Models.Repositories
 	    {
 		    using (var context = AppDbContext.Create())
 		    {
-			    //context.Configuration.LazyLoadingEnabled = false;
-				return action(context);
+			    try
+			    {
+					return action(context);
+			    }
+			    finally
+			    {
+			    }
 		    }
 	    }
 	}

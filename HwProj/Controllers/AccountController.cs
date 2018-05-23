@@ -70,7 +70,7 @@ namespace HwProj.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Неудачная попытка входа.");
+                    ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
                     return View(model);
             }
         }

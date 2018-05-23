@@ -21,16 +21,15 @@ namespace HwProj.Models.Repositories
 			        var oldAttempts = GetAll(h => h.TaskId == item.TaskId
 			                                      && h.StudentId == item.StudentId);
 
-			        if (oldAttempts == null || !oldAttempts.Any())
-			        {
-				        item.Attempt = 1;
-			        }
+			        if (oldAttempts == null || !oldAttempts.Any()) item.Attempt = 1;
 			        else
 			        {
-				        var lastAttempt = oldAttempts.FirstOrDefault(h => h.Attempt == oldAttempts.Max(t => t.Attempt));
+				        var lastAttempt = oldAttempts.FirstOrDefault
+										 (h => h.Attempt == oldAttempts.Max(t => t.Attempt));
 				        item.Attempt = lastAttempt.Attempt + 1;
 				        /* Удаляем старую домашку */
-				        Delete(lastAttempt);
+				        context.Homeworks.Remove(lastAttempt);
+				        context.SaveChanges(); //?
 			        }
 			        item.Date = DateTime.Now;
 			        context.Homeworks.Add(item);
@@ -55,14 +54,20 @@ namespace HwProj.Models.Repositories
 			    context => Get(predicate) != null
 			);
 	    }
-	    public bool AddReview(HomeworkAcceptViewModel model)
+		/// <summary>
+		/// Добавляет рецензию от преподавателя, проверяя права
+		/// </summary>
+		/// <param name="rights">id пользователя</param>
+		/// <param name="model">рецензия от преподавателя</param>
+		/// <returns>true, если это тот препод</returns>
+	    public bool AddReview(string rights, HomeworkAcceptViewModel model)
 	    {
 		    return Execute
 		    (
 			    context =>
 			    {
 				    var homework = Get(h => h.Id == model.HomeworkId);
-				    if (homework == null) return false;
+				    if (homework == null || homework.Task.Course.Mentor.Id == rights) return false;
 
 				    homework.IsCompleted = model.IsAccepted;
 				    homework.ReviewComment = model.ReviewComment;
