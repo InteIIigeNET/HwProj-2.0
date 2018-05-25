@@ -11,31 +11,22 @@ namespace HwProj.GitHubService
 {
     public class GitHubClient
     {
-        private Octokit.GitHubClient client;
-
         public PullRequestRepository PullRequest { get; private set; }
 
-        private Octokit.User user;
+        public ReviewRepository ReviewRepository { get; private set; }
+
+        public CommentRepository CommentRepository { get; private set; }
 
         public GitHubClient(string token)
         {
-            client = new Octokit.GitHubClient(new ProductHeaderValue("HwProj"))
+            var client = new Octokit.GitHubClient(new ProductHeaderValue("HwProj"))
             {
                 Credentials = new Credentials(token)
             };
-            PullRequest = new PullRequestRepository(client);
-        }
-
-        public async Task<IEnumerable<string>> GetRepositories()
-        {
-            return from rep in await client?.Repository.GetAllForCurrent()
-                   select rep.Name;
-        }
-
-        public async Task<IEnumerable<string>> GetBranches(string repName)
-        {
-            return from b in await client?.Repository.Branch.GetAll(user.Login, repName)
-                   select b.Name;
-        }
+            var owner = client?.User.Current().Result.Login;
+            PullRequest = new PullRequestRepository(client, owner);
+            ReviewRepository = new ReviewRepository(client, owner);
+            CommentRepository = new CommentRepository(client, owner);
+        }       
     }
 }

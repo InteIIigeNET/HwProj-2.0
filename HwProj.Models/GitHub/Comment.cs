@@ -9,5 +9,7 @@ namespace HwProj.Models.GitHub
     public class Comment
     {
         public string Content { get; set; }
+
+        public User Owner { get; set; }
     }
 }

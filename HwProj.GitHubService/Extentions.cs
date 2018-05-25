@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace HwProj.GitHubService
 {
-    public static class GitHubModelExtentions
+    internal static class Extentions
     {
 
-        public static IEnumerable<Commit> ConvertToGitHubModel(this IReadOnlyList<Octokit.PullRequestCommit> commits)
+        public static IEnumerable<Commit> ToCommits(this IReadOnlyList<Octokit.PullRequestCommit> commits)
         {
             return from c in commits
                    select new Commit
@@ -28,7 +28,7 @@ namespace HwProj.GitHubService
         }
 
 
-        public static PullRequest ConvertToGitHubModel(this Octokit.PullRequest pullRequest, IEnumerable<Commit> commits)
+        public static PullRequest ToPullRequest(this Octokit.PullRequest pullRequest, IEnumerable<Commit> commits)
         {
             var user = pullRequest.User;
             var diffParser = new DiffParser(pullRequest.Url);
@@ -47,5 +47,20 @@ namespace HwProj.GitHubService
                 DiffFiles = diffParser.DiffFiles
             };
         }
+
+        public static ReviewComment ToReviewComment(this Octokit.PullRequestReviewComment comment) => new ReviewComment
+        {
+            Id = comment.Id,
+            ReplyToId = comment.InReplyToId,
+            Content = comment.Body,
+            DiffHunk = comment.DiffHunk,
+            Owner = new User
+            {
+                Login = comment.User.Login,
+                Url = comment.User.Url
+            },
+            Path = comment.Path,
+            Position = (int)comment.Position
+        };
     }
 }

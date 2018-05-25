@@ -8,8 +8,15 @@ namespace HwProj.Models.GitHub
 {
     public class ReviewComment : Comment
     {
-        public User Owner { get; set; }
 
         public string DiffHunk { get; set; }
+
+        public int Position { get; set; }
+
+        public string Path { get; set; }
+
+        public int Id { get; set; }
+
+        public int? ReplyToId { get; set; }
     }
 }

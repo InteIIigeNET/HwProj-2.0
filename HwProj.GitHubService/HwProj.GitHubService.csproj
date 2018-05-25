@@ -118,9 +118,11 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommentRepository.cs" />
     <Compile Include="DiffLineParser.cs" />
     <Compile Include="DiffParser.cs" />
-    <Compile Include="GitHubModelExtentions.cs" />
+    <Compile Include="Extentions.cs" />
+    <Compile Include="GitHubRepositoryStorage.cs" />
     <Compile Include="PullRequestRepository.cs" />
     <Compile Include="GitHubClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
