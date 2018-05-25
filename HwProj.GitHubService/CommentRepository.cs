@@ -10,23 +10,23 @@ namespace HwProj.GitHubService
 {
     public class CommentRepository
     {
-        private readonly Repository repository;
+        private readonly PullRequestData data;
 
-        internal CommentRepository(Repository repository)
+        internal CommentRepository(PullRequestData data)
         {
-            this.repository = repository;
+            this.data = data;
         }
 
-        public async Task<ReviewComment> CreateReviewComment(string body, string commitSHA, string path, int position)
+        public async Task<ReviewComment> CreateReviewCommentAsync(string body, string commitSHA, string path, int position)
         {
-            var comment = await repository.client?.PullRequest.ReviewComment.Create(repository.owner, repository.repName, repository.pullRequestNumber,
+            var comment = await data.client?.PullRequest.ReviewComment.Create(data.owner, data.repName, data.pullRequestNumber,
                 new PullRequestReviewCommentCreate(body, commitSHA, path, position));
             return comment.ToReviewComment();
         }
 
-        public async Task<Comment> CreateReplyComment(string body, int replyTo)
+        public async Task<Comment> CreateReplyCommentAsync(string body, int replyTo)
         {
-            var replyComment = await repository.client?.PullRequest.ReviewComment.CreateReply(repository.owner, repository.repName, repository.pullRequestNumber,
+            var replyComment = await data.client?.PullRequest.ReviewComment.CreateReply(data.owner, data.repName, data.pullRequestNumber,
                 new PullRequestReviewCommentReplyCreate(body, replyTo));
             return replyComment.ToReviewComment();
         }

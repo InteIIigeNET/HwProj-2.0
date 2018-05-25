@@ -9,16 +9,16 @@ namespace HwProj.GitHubService
 {
     public class ReviewRepository
     {
-        private readonly Repository repository;
+        private readonly PullRequestData data;
 
-        internal ReviewRepository(Repository repository)
+        internal ReviewRepository(PullRequestData data)
         {
-            this.repository = repository;
+            this.data = data;
         }
     
-        public async Task<Review> CreateReview(string body, IEnumerable<ReviewComment> comments, ReviewEvent reviewEvent)
+        public async Task<Review> CreateReviewAsync(string body, IEnumerable<ReviewComment> comments, ReviewEvent reviewEvent)
         {
-            var review = await repository.client?.PullRequest.Review.Create(repository.owner, repository.repName, repository.pullRequestNumber, new Octokit.PullRequestReviewCreate
+            var review = await data.client?.PullRequest.Review.Create(data.owner, data.repName, data.pullRequestNumber, new Octokit.PullRequestReviewCreate
             {
                 Body = body,
                 Comments = (from c in comments

@@ -27,12 +27,12 @@ namespace HwProj.Controllers
             return storageInstance;
         }
 
-        public static GitHubClient GetClientInstance(string repName)
+        public static GitHubClient GetClientInstance()
         {
             if (clientInstance == null)
             {
                 var token = HttpContext.Current.User.Identity.GetGitHubToken();
-                clientInstance = new GitHubClient(token, repName);
+                clientInstance = new GitHubClient(token);
             }
             return clientInstance;
         }
@@ -44,7 +44,7 @@ namespace HwProj.Controllers
         // GET: GitHub 
         public async Task<ActionResult> Index()
         {
-            ViewBag.Repos = await GitHubCreator.GetStorageInstance().GetRepositories();
+            ViewBag.Repos = await GitHubCreator.GetStorageInstance().GetRepositoriesAsync();
             return PartialView();
         }
 
@@ -52,13 +52,13 @@ namespace HwProj.Controllers
         [HttpPost]
         public async Task<ActionResult> Index(PullRequestCreateViewModel pullRequestModel)
         {
-            return PartialView("PullRequest", await GitHubCreator.GetClientInstance(null).
-                PullRequest.CreatePullRequest(pullRequestModel.Title, pullRequestModel.RepositoryName, pullRequestModel.BranchRef));
+            return PartialView("PullRequest", (await GitHubCreator.GetClientInstance().
+                GetNewPullRequestManagerAsync(pullRequestModel.Title, pullRequestModel.RepositoryName, pullRequestModel.BranchRef)).PullRequest);
         }
 
         public async Task<ActionResult> FillBranch(string repository)
         {
-            var branches = await GitHubCreator.GetStorageInstance().GetBranches(repository);
+            var branches = await GitHubCreator.GetStorageInstance().GetBranchesAsync(repository);
             return Json(branches, JsonRequestBehavior.AllowGet);
         }
 

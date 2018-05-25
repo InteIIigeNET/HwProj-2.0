@@ -19,13 +19,13 @@ namespace HwProj.GitHubService
             };
         }
 
-        public async Task<IEnumerable<string>> GetRepositories()
+        public async Task<IEnumerable<string>> GetRepositoriesAsync()
         {
             return from rep in await client?.Repository.GetAllForCurrent()
                    select rep.Name;
         }
 
-        public async Task<IEnumerable<string>> GetBranches(string repName)
+        public async Task<IEnumerable<string>> GetBranchesAsync(string repName)
         {
             var user = await client?.User.Current();
             return from b in await client?.Repository.Branch.GetAll(user.Login, repName)

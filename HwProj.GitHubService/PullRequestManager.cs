@@ -10,7 +10,7 @@ namespace HwProj.GitHubService
 {
     public class PullRequestManager
     {
-        private readonly Repository repository;
+        private readonly PullRequestData data;
 
         public Models.GitHub.PullRequest PullRequest { get; private set; }
 
@@ -18,19 +18,19 @@ namespace HwProj.GitHubService
 
         public CommentRepository CommentRepository { get; private set; }
 
-        internal PullRequestManager(Models.GitHub.PullRequest pullRequest, Repository repository)
+        internal PullRequestManager(Models.GitHub.PullRequest pullRequest, PullRequestData data)
         {
             PullRequest = pullRequest;
-            this.repository = repository;
-            ReviewRepository = new ReviewRepository(repository);
-            CommentRepository = new CommentRepository(repository);
+            this.data = data;
+            ReviewRepository = new ReviewRepository(data);
+            CommentRepository = new CommentRepository(data);
         }
 
-        public async Task<Models.GitHub.PullRequest> ClosePullRequest()
+        public async Task<Models.GitHub.PullRequest> ClosePullRequestAsync()
         {
-            var pullRequest = await repository.client?.PullRequest.Update(repository.owner, repository.repName, repository.pullRequestNumber,
+            var pullRequest = await data.client?.PullRequest.Update(data.owner, data.repName, data.pullRequestNumber,
                 new PullRequestUpdate { State = ItemState.Closed });
-            var commits = await repository.client?.PullRequest.Commits(repository.owner, repository.repName, repository.pullRequestNumber);
+            var commits = await data.client?.PullRequest.Commits(data.owner, data.repName, data.pullRequestNumber);
             return pullRequest.ToPullRequest(commits.ToCommits());
         }
     }
