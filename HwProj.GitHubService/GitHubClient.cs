@@ -17,16 +17,17 @@ namespace HwProj.GitHubService
 
         public CommentRepository CommentRepository { get; private set; }
 
-        public GitHubClient(string token)
+        public GitHubClient(string token, string repName)
         {
             var client = new Octokit.GitHubClient(new ProductHeaderValue("HwProj"))
             {
                 Credentials = new Credentials(token)
             };
             var owner = client?.User.Current().Result.Login;
-            PullRequest = new PullRequestRepository(client, owner);
-            ReviewRepository = new ReviewRepository(client, owner);
-            CommentRepository = new CommentRepository(client, owner);
+            var repository = new Repository(client, owner, repName);
+            PullRequest = new PullRequestRepository(repository);
+            ReviewRepository = new ReviewRepository(repository);
+            CommentRepository = new CommentRepository(repository);
         }       
     }
 }

@@ -7,10 +7,14 @@ using System.Threading.Tasks;
 
 namespace HwProj.GitHubService
 {
-    public class ReviewRepository : Repository
+    public class ReviewRepository
     {
-        public ReviewRepository(Octokit.GitHubClient client, string owner) :
-            base(client, owner){ }
+        private readonly Repository repository;
+
+        internal ReviewRepository(Repository repository)
+        {
+            this.repository = repository;
+        }
 
         public async Task<Review> CreateReview()
         {

@@ -7,15 +7,18 @@ using Octokit;
 
 namespace HwProj.GitHubService
 {
-    public abstract class Repository
+    internal class Repository
     {
-        protected readonly Octokit.GitHubClient client;
-        protected readonly string owner;
+        public readonly Octokit.GitHubClient client;
+        public readonly string owner;
+        public readonly string repName;
+        public int? pullRequestNumber;
 
-        public Repository(Octokit.GitHubClient client, string owner)
+        public Repository(Octokit.GitHubClient client, string owner, string repName)
         {
             this.client = client;
             this.owner = owner;
+            this.repName = repName;
         }
     }
 }
