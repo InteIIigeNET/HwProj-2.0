@@ -18,14 +18,27 @@ namespace HwProj.GitHubService
     
         public async Task<Review> CreateReviewAsync(string body, IEnumerable<ReviewComment> comments, ReviewEvent reviewEvent)
         {
+            var draftComments = (from c in comments
+                                select new Octokit.DraftPullRequestReviewComment(c.Content, c.Path, c.Position)).ToList();
             var review = await data.client?.PullRequest.Review.Create(data.owner, data.repName, data.pullRequestNumber, new Octokit.PullRequestReviewCreate
             {
                 Body = body,
-                Comments = (from c in comments
-                            select new Octokit.DraftPullRequestReviewComment(c.Content, c.Path, c.Position)).ToList(),
+                Comments = draftComments,
                 Event = (Octokit.PullRequestReviewEvent)reviewEvent
             });
             return review.ToReview(comments);
+        }
+
+        public async Task<IEnumerable<Review>> GetAllReviewAsync()
+        {
+            var reviews = await data.client.PullRequest.Review.GetAll(data.owner, data.repName,
+                data.pullRequestNumber, Octokit.ApiOptions.None);
+            var commentRep = new CommentRepository(data);
+            var comments = await commentRep.GetAllReviewCommentsAsync();
+            return from r in reviews
+                   select r.ToReview(from c in comments
+                                     where c.ReviewId == r.Id
+                                     select c);
         }
     }
 }

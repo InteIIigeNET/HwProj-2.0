@@ -28,7 +28,7 @@ namespace HwProj.GitHubService
         }
 
 
-        public static PullRequest ToPullRequest(this Octokit.PullRequest pullRequest, IEnumerable<Commit> commits)
+        public static PullRequest ToPullRequest(this Octokit.PullRequest pullRequest, IEnumerable<Commit> commits, IEnumerable<Review> reviews)
         {
             var user = pullRequest.User;
             var diffParser = new DiffParser(pullRequest.Url);
@@ -44,7 +44,8 @@ namespace HwProj.GitHubService
                 },
                 CreatedAt = pullRequest.CreatedAt.DateTime,
                 Commits = commits,
-                DiffFiles = diffParser.DiffFiles
+                DiffFiles = diffParser.DiffFiles,
+                Reviews = reviews
             };
         }
 
@@ -60,7 +61,8 @@ namespace HwProj.GitHubService
                 Url = comment.User.Url
             },
             Path = comment.Path,
-            Position = (int)comment.Position
+            Position = (int)comment.Position,
+            ReviewId = comment.PullRequestReviewId
         };
 
         public static Review ToReview(this Octokit.PullRequestReview review, IEnumerable<ReviewComment> comments)
@@ -76,7 +78,8 @@ namespace HwProj.GitHubService
                         Url = review.User.Url
                     }
                 },
-                ReviewComments = comments
+                ReviewComments = comments,
+                Id = review.Id
             };
         }
     }

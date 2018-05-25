@@ -31,22 +31,25 @@ namespace HwProj.GitHubService
         public async Task<PullRequestManager> GetExistPullRequestManagerAsync(string repName, int pullRequestNumber)
         {
             var owner = (await client.User.Current()).Login;
-            var pullRequest = await GetPullRequestAsync(repName, pullRequestNumber, owner);
-            return new PullRequestManager(pullRequest, new PullRequestData(client, owner, repName, pullRequest.Number));
+            var data = new PullRequestData(client, owner, repName, pullRequestNumber);
+            var pullRequest = await GetPullRequestAsync(data);
+            return new PullRequestManager(pullRequest, data);
         }
 
-        private async Task<Models.GitHub.PullRequest> GetPullRequestAsync(string repName, int pullRequestNumber, string owner)
+        private async Task<Models.GitHub.PullRequest> GetPullRequestAsync(PullRequestData data)
         {
-            var pullRequest = await client?.PullRequest.Get(owner, repName, pullRequestNumber);
-            var commits = await client?.PullRequest.Commits(owner, repName, pullRequestNumber);
-            return pullRequest.ToPullRequest(commits.ToCommits());
+            var pullRequest = await client?.PullRequest.Get(data.owner, data.repName, data.pullRequestNumber);
+            var commits = await client?.PullRequest.Commits(data.owner, data.repName, data.pullRequestNumber);
+            var reviewRep = new ReviewRepository(data);
+            var reviews = await reviewRep.GetAllReviewAsync();
+            return pullRequest.ToPullRequest(commits.ToCommits(), reviews);
         }
 
         private async Task<Models.GitHub.PullRequest> CreatePullRequestAsync(string title, string repName, string branchRef, string owner)
         {
             var pullRequest = await client?.PullRequest.Create(owner, repName, new NewPullRequest(title, "master", branchRef));
             var commits = await client?.PullRequest.Commits(owner, repName, pullRequest.Number);
-            return pullRequest.ToPullRequest(commits.ToCommits());
+            return pullRequest.ToPullRequest(commits.ToCommits(), null);
         }
     }
 }

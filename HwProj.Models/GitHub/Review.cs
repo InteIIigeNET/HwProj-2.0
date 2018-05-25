@@ -11,5 +11,7 @@ namespace HwProj.Models.GitHub
         public IEnumerable<ReviewComment> ReviewComments { get; set; }
 
         public Comment HeadComment { get; set; }
+
+        public long Id { get; set; }
     }
 }

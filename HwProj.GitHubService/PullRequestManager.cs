@@ -31,7 +31,8 @@ namespace HwProj.GitHubService
             var pullRequest = await data.client?.PullRequest.Update(data.owner, data.repName, data.pullRequestNumber,
                 new PullRequestUpdate { State = ItemState.Closed });
             var commits = await data.client?.PullRequest.Commits(data.owner, data.repName, data.pullRequestNumber);
-            return pullRequest.ToPullRequest(commits.ToCommits());
+            var reviews = await ReviewRepository.GetAllReviewAsync();
+            return pullRequest.ToPullRequest(commits.ToCommits(), reviews);
         }
     }
 }
