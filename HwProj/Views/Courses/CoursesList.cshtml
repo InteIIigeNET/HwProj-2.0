@@ -3,39 +3,40 @@
 @model IEnumerable<HwProj.Models.Course>
 
 <br />
-    <div class="offset-lg-2 col-lg-8 offset-md-2 col-md-8 offset-sm-1 col-sm-10 offset-1 col-10 pt-0">
-        <div class="jumbotron grey lighten-4">
+    <div class="offset-lg-1 col-lg-10 col-md-10 offset-sm-1 col-sm-10 offset-1 col-10">
+        <div class="jumbotron jumbotron_border_gray">
             @if (User.Identity.GetUserRole() == RoleType.Преподаватель.ToString())
             {
                 <div class="row float-xl-right float-lg-right float-md-right">
                     <div class="col-sm-12 col-12">
-                        <button class="btn btn-block btn-mdb-color" onclick="location.href='@Url.Action("Create", "Courses")'">Создать курс</button>
+                        <button class="btn btn-block btn-primary" onclick="location.href='@Url.Action("Create", "Courses")'">
+                            Создать курс
+                        </button>
                     </div>
                 </div>
                 <div class="clearfix"></div>
                 <br />
             }
-            <div class="row">
-                <div id="results">
-                @foreach (var course in Model)
-                {
-                    <div class="offset-lg-0 col-lg-4 offset-md-0 col-md-6 offset-sm-0 col-sm-6 col-12 pb-lg-4 pb-md-4">
-                        <div class="card">
-                            <div class="view overlay">
-                                <img src="~/Content/Images/robot_head.png" class="img-fluid">
-                                <a href=@Url.Action("Index", "Courses", new {courseId = course.Id})>
-                                    <div class="mask rgba-stylish-light"></div>
-                                </a>
+            <div class="row text-center">
+                <div class="col-xs-12 col-12 courses-list_card-row_inline">
+                    <div id="results">
+                        @foreach (var course in Model)
+                        {
+                            <div class="courses-list_card_inline ">
+                                <div class="card border-primary mb-3">
+                                    <a href=@Url.Action("Index", "Courses", new {courseId = course.Id})>
+                                        <img src="~/Content/Images/robot_head.png" class="img-fluid">
+                                    </a>
+                                    <div class="card-body">
+                                        <h5 class="card-title course-list_card-text_limit">@course.Name</h5>
+                                        <hr/>
+                                        <p class="card-text course-list_card-text_limit">@course.Mentor.UserName</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card-body">
-                                <p>@course.Name</p>
-                                <hr/>
-                                <p class="card-text">@course.Mentor.UserName</p>
-                            </div>
+                        }
                         </div>
-                    </div>
-                }
-                    </div>
+                </div>
             </div>
         </div>
 </div>

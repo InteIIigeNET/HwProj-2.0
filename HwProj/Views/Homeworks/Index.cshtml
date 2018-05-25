@@ -5,7 +5,7 @@
 <br />
 <div class="col-lg-8 col-md-8 col-sm-12 col-12">
     @if (Model.StudentId == User.Identity.GetUserId() ||
- User.Identity.GetUserName() == Model.Task.Course.Mentor.Email)
+        User.Identity.GetUserId() == Model.Task.Course.Mentor.Id)
     {
         @Html.LabelFor(m => m.Task.Title) @Html.ValueFor(m => m.Task.Title) <br/>
         @Html.LabelFor(m => m.Task.Description) @Html.ValueFor(m => m.Task.Description) <br />

@@ -21,15 +21,40 @@ code {
 }
 
 .header.header__logo_size_small {
-    background-image: url(Images/logo_5_mini_new.png);
+    background-image: url(Images/logo_5_mini.png);
     background-repeat: no-repeat;
     height: 34px;
     width: 119px;
 }
 
-.social-login-form.social-login-form_margin-top_negative {
-    margin-top: -100px;
+@media(min-width: 768px) {
+    .social-login-form.social-login-form_margin-top_negative {
+        margin-top: -150px;
+    }
 }
+
+@media(min-width: 992px) {
+    .courses-list_card_inline {
+        display: inline-block;
+        width: 30%;
+        padding: 5px;
+        vertical-align: top;
+        height: 100%;
+    }
+
+    .courses-list_card-row_inline {
+        display: table;
+        width: 100%;
+        padding: 5px;
+    }
+}
+
+@media(max-width: 767px) {
+    .social-login-form.social-login-form_margin-top_negative {
+        margin-top: -100px;
+    }
+}
+
 
 .particles-js.particles-js_position_absolute {
     position: absolute;
@@ -43,4 +68,21 @@ code {
 
 .body.body_position_relative {
     position: relative;
+}
+
+.jumbotron.jumbotron_border_gray {
+    border: 1px solid #A4A4A4;
+}
+
+.jumbotron.jumbotron_lower-border_gray {
+    border-left: 1px solid #A4A4A4;
+    border-right: 1px solid #A4A4A4;
+    border-bottom: 1px solid #A4A4A4;
+}
+
+.course-list_card-text_limit {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

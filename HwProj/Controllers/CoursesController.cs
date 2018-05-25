@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using HwProj.Models;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -13,7 +16,7 @@ namespace HwProj.Controllers
 	[Authorize]
 	public class CoursesController : Controller
 	{
-		private readonly MainEduRepository _eduRepository = MainEduRepository.Instance;
+		private readonly MainRepository _repository = MainRepository.Instance;
 
 		[Authorize(Roles = "Преподаватель")]
 		public ActionResult Create()
@@ -32,17 +35,16 @@ namespace HwProj.Controllers
 			var course = new Course(courseView)
 			{
 				MentorId = User.Identity.GetUserId(),
-				Mentor = _eduRepository.UserManager.Get(u => u.Id == User.Identity.GetUserEmail()),
+				Mentor = _repository.UserManager.Get(u => u.Id == User.Identity.GetUserId()),
 			};
-
-			if (_eduRepository.CourseManager.Contains(t => t.CompareTo(course) == 0))
-				ModelState.AddModelError("", "Курс с таким описанием уже существует");
+			if (_repository.CourseManager.Contains(t => t.CompareTo(course) == 0))
+				ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
 			else
 			{
-				if (_eduRepository.CourseManager.Add(course))
+				if (_repository.CourseManager.Add(course))
 					return RedirectToAction("Index", new { courseId = course.Id });
 
-				else ModelState.AddModelError("", "Ошибка при созданни курса. Повторите попытку позже.");
+				else ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
 			}
 			return View();
 		}
@@ -51,18 +53,32 @@ namespace HwProj.Controllers
 		public ActionResult Index(long? courseId)
 		{
 			return courseId.HasValue ?
-				  View(_eduRepository.CourseManager.Get(c => c.Id == courseId)) 
-				: View("CoursesList", _eduRepository.CourseManager.GetAll());
+				  View(_repository.CourseManager.Get(c => c.Id == courseId)) 
+				: View("CoursesList", _repository.CourseManager.GetAll());
 		}
 
 		[AllowAnonymous]
-		public ActionResult Find(string pattern)
+		public ActionResult FindCourses(string pattern)
 		{
-			return PartialView("CoursesList", String.IsNullOrEmpty(pattern) ? 
-				_eduRepository.CourseManager.GetAll() : 
-				_eduRepository.CourseManager.GetAll(c => c.Name.Contains(pattern) 
-				|| c.Mentor.Email.Contains(pattern) || c.Mentor.UserName.Contains(pattern)));
+			return PartialView("CoursesList", Find(pattern));
 			/* неоптимально */
+		}
+
+		[AllowAnonymous]
+		public JsonResult GetSearchResult(string search)
+		{
+			var data = Find(search).Select(c => new CourseSearchViewModel(c));
+			return new JsonResult {Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet};
+		}
+
+		private IEnumerable<Course> Find(string search)
+		{
+			var data = String.IsNullOrEmpty(search)
+				? _repository.CourseManager.GetAll()
+				: _repository.CourseManager.GetAll(c => c.Name.Contains(search)
+				                                        || c.Mentor.Email.Contains(search)
+				                                        || c.Mentor.UserName.Contains(search));
+			return data;
 		}
 
 		[Authorize(Roles = "Преподаватель")]
@@ -76,7 +92,7 @@ namespace HwProj.Controllers
 		{
 			if (courseId == null) return View("CoursesList");
 
-			var course = _eduRepository.CourseManager.Get(t => t.MentorId == User.Identity.GetUserId());
+			var course = _repository.CourseManager.Get(t => t.MentorId == User.Identity.GetUserId());
 			if (course == null) return View("CoursesList");
 			return View("~/Views/Tasks/Create.cshtml",
 				new TaskCreateViewModel()
@@ -89,16 +105,15 @@ namespace HwProj.Controllers
 		[Authorize]
 		public async Task<ActionResult> SingInCourse(long courseId)
 		{
-			var course = _eduRepository.CourseManager.Get(c => c.Id == courseId);
-			var user = _eduRepository.UserManager.Get(u => u.Email == User.Identity.Name);
+			var course = _repository.CourseManager.Get(c => c.Id == courseId);
+			var user = _repository.UserManager.Get(u => u.Id == User.Identity.GetUserId());
 
-			if (!_eduRepository.CourseMateManager.Add((course, user)))
-		        ModelState.AddModelError("", "Ошибка при обновлении базы данных");
+			if (!_repository.CourseMateManager.Add((course, user)))
+		        ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
 	        else
 	        {
-				/* Надо подумать, как тут через UserManager генерировать токены */
 				await NotificationsService.SendNotifications(new [] {course.Mentor},
-					  u => $"Пользователь {u.Email} вступил в курс {course.Name}" +
+					  u => $"Пользователь {u.Email} вступил в курс {course.Name}\n" +
 					  (course.IsOpen? "" : new Button(Request.RequestContext, "Принять", "AcceptUser", "Courses", 
 										   new { courseId = courseId, userId = user.Id, notifyId = Notification.ContextId}) +
 										   new Button(Request.RequestContext, "Отклонить", "RejectUser", "Courses",
@@ -110,21 +125,21 @@ namespace HwProj.Controllers
 		[Authorize(Roles = "Преподаватель")]
 		public async Task<ActionResult> AcceptUser(long courseId, string userId, long? notifyId)
 		{
-			var course = _eduRepository.CourseManager.Get(c => c.Id == courseId);
+			var course = _repository.CourseManager.Get(c => c.Id == courseId);
 			if (course.MentorId != User.Identity.GetUserId())
 			{
 				/* Если это не ментор, не показываем этого */
 				return RedirectToAction("Index", "Home");
 			}
-			var user = _eduRepository.UserManager.Get(u => u.Id == userId);
+			var user = _repository.UserManager.Get(u => u.Id == userId);
 
-			if (!_eduRepository.CourseMateManager.Accept((course, user)))
-				ModelState.AddModelError("", "Ошибка при обновлении базы данных");
+			if (!_repository.CourseMateManager.Accept((course, user)))
+				ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
 			else
 			{
 				await NotificationsService.SendNotifications(new[] { user },
 					u => $"Ваша заявка на курс <b>{course.Name}</b> была принята преподавателем");
-				if (notifyId.HasValue) _eduRepository.NotificationsManager.Delete(notifyId.Value);
+				if (notifyId.HasValue) _repository.NotificationsManager.Delete(notifyId.Value);
 			}
 			return View("Index", course);
 		}
@@ -132,24 +147,24 @@ namespace HwProj.Controllers
 		[Authorize(Roles = "Преподаватель")]
 		public async Task<ActionResult> RejectUser(long courseId, string userId, long? notifyId)
 		{
-			var course = _eduRepository.CourseManager.Get(c => c.Id == courseId);
+			var course = _repository.CourseManager.Get(c => c.Id == courseId);
 
 			if (course.MentorId != User.Identity.GetUserId())
 			{
-				/* Если это не ментор */
+				/* Если это не ментор, то не показываем */
 				return RedirectToAction("Index", "Home");
 			}
-			var user = _eduRepository.UserManager.Get(u => u.Id == userId);
+			var user = _repository.UserManager.Get(u => u.Id == userId);
 
-			if (!_eduRepository.CourseMateManager.Delete((course, user)))
+			if (!_repository.CourseMateManager.Delete((course, user)))
 			{
-				ModelState.AddModelError("", "Ошибка при обновлении базы данных");
+				ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
 			}
 			else
 			{
 				await NotificationsService.SendNotifications(new[] {user},
 					u => $"Ваша заявка на курс <b>{course.Name}</b> была отклонена преподавателем");
-				if (notifyId.HasValue) _eduRepository.NotificationsManager.Delete(notifyId.Value);
+				if (notifyId.HasValue) _repository.NotificationsManager.Delete(notifyId.Value);
 			}
 			return RedirectToAction("Index", "Home");
 		}

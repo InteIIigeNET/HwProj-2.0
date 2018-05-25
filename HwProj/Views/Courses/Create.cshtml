@@ -8,7 +8,7 @@
         @using (Html.BeginForm("Create",
             "Courses",
             FormMethod.Post,
-            new { @class = "jumbotron", @id = "register-form", role = "form" }))
+            new { @class = "jumbotron jumbotron_border_gray", @id = "register-form", role = "form" }))
         { 
             @Html.AntiForgeryToken()
             <h3 class="text-center">@ViewBag.Title</h3>
@@ -23,7 +23,8 @@
                 @Html.ValidationMessageFor(m => m.GroupName, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                @Html.CheckBoxFor(model => model.IsOpen, new { @checked = true, placeholder = @Html.DisplayNameFor(m => m.IsOpen) })
+                @Html.CheckBoxFor(model => model.IsOpen, new { @checked = true})
+                @Html.LabelFor(m => m.IsOpen)
             </div>
             <div class="form-group">
                 <button class="btn btn-block btn-primary" type="submit">Создать</button>

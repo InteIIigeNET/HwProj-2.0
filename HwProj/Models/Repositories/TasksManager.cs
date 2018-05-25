@@ -8,49 +8,68 @@ using HwProj.Models.ViewModels;
 
 namespace HwProj.Models.Repositories
 {
-    public class TasksManager : BaseManager, IControlWithRights<Task>
+    internal class TasksManager : BaseManager<Task>, IControlWithRights<Task>
     {
-        public TasksManager(ApplicationDbContext context) : base(context)
-        {
-        }
 
 	    public IEnumerable<Task> GetAll(Func<Task, bool> predicate)
 	    {
-		    return Context.Tasks.Include(t => t.Course).Include(t => t.Homeworks).AsEnumerable();
-		}
+		    return Execute
+		    (
+			    context => context.Include(t => t.Course).Include(t => t.Homeworks).ToList()
+			);
+	    }
 
 	    public bool Contains(Func<Task, bool> predicate)
-        {
-			return Get(predicate) != null;
-		}
+	    {
+		    return Execute
+		    (
+			    context => Get(predicate) != null
+		    );
+	    }
 
 	    public bool Delete(Task item)
 	    {
-			if (Contains(c => c.Id == item.Id)) return false;
-		    Context.Tasks.Remove(item);
-		    Context.SaveChanges();
-		    return true;
-		}
+		    return Execute
+		    (
+			    context =>
+			    {
+				    if (Contains(c => c.Id == item.Id)) return false;
+				    context.Remove(item);
+					SaveChanges();
+					return true;
+			    }
+		    );
+	    }
 		public Task Get(Func<Task, bool> predicate)
-        {
-            return Context.Tasks.Include(t => t.Course).Include(t => t.Homeworks).FirstOrDefault(predicate);
+		{
+			return Execute
+			(
+				context => context.Include(t => t.Course).Include(t => t.Homeworks).FirstOrDefault(predicate)
+			);
 		}
 
         public IEnumerable<Task> GetAll()
         {
-	        return Context.Tasks.Include(t => t.Course).Include(t => t.Homeworks).AsEnumerable();
+	        return Execute
+	        (
+		        context => context.Include(t => t.Course).Include(t => t.Homeworks).ToList()
+			);
         }
 
 	    public bool Add(string userRights, Task item)
 	    {
-			if (Contains(c => c.Id == item.Id)) return false;
+		    return Execute
+		    (
+			    context =>
+			    {
+				    if (Contains(c => c.Id == item.Id)) return false;
+				    if (item.Course.MentorId != userRights) return false;
 
-		    var course = Context.Courses.FirstOrDefault(c => c.Id == item.CourseId);
-			if (course == null || course.MentorId != userRights) return false;
-
-		    Context.Tasks.Add(item);
-		    Context.SaveChanges();
-		    return true;
+				    context.Add(item);
+					SaveChanges();
+					return true;
+			    }
+		    );
 	    }
 
 	    /// <summary>
@@ -61,16 +80,22 @@ namespace HwProj.Models.Repositories
 		/// <returns>true, если успешно</returns>
 	    public bool Delete(string userRights, long objId)
 	    {
-		    var task = Get(t => t.Id == objId);
-		    if (task == null) return false;
+		    return Execute
+		    (
+			    context =>
+			    {
+				    var task = Get(t => t.Id == objId);
+				    if (task == null) return false;
 
-		    if (task.Course.MentorId == userRights)
-		    {
-			    Context.Tasks.Remove(task);
-			    Context.SaveChanges();
-			    return true;
-		    }
-		    return false;
+				    if (task.Course.MentorId == userRights)
+				    {
+					    context.Remove(task);
+						SaveChanges();
+						return true;
+				    }
+				    return false;
+			    }
+			);
 	    }
 
 	    /// <summary>
@@ -81,17 +106,27 @@ namespace HwProj.Models.Repositories
 	    /// <returns>true, если успешно</returns>
 		public bool Update(string userRights, Task updateObj)
 	    {
-			var task = Get(t => t.Id == updateObj.Id);
-		    if (task == null) return false;
+		    return Execute
+		    (
+			    context =>
+			    {
+				    var task = Get(t => t.Id == updateObj.Id);
+				    if (task == null) return false;
 
-		    if (task.Course.MentorId == userRights)
-		    {
-			    task.Description = updateObj.Description;
-			    task.Title = updateObj.Title;
-				Context.SaveChanges();
-			    return true;
-		    }
-		    return false;
-		}
+				    if (task.Course.MentorId == userRights)
+				    {
+					    task.Description = updateObj.Description;
+					    task.Title = updateObj.Title;
+						SaveChanges();
+						return true;
+				    }
+				    return false;
+			    }
+		    );
+	    }
+
+	    public TasksManager(AppDbContext context) : base(context)
+	    {
+	    }
     }
 }
