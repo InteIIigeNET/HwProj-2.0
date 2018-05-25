@@ -35,8 +35,8 @@ namespace HwProj.Models.Repositories
 			    {
 				    if (Contains(c => c.Id == item.Id)) return false;
 				    context.Remove(item);
-				    
-				    return true;
+					SaveChanges();
+					return true;
 			    }
 		    );
 	    }
@@ -66,8 +66,8 @@ namespace HwProj.Models.Repositories
 				    if (item.Course.MentorId != userRights) return false;
 
 				    context.Add(item);
-				    
-				    return true;
+					SaveChanges();
+					return true;
 			    }
 		    );
 	    }
@@ -89,10 +89,9 @@ namespace HwProj.Models.Repositories
 
 				    if (task.Course.MentorId == userRights)
 				    {
-					    context.Attach(task);
 					    context.Remove(task);
-					    
-					    return true;
+						SaveChanges();
+						return true;
 				    }
 				    return false;
 			    }
@@ -118,8 +117,8 @@ namespace HwProj.Models.Repositories
 				    {
 					    task.Description = updateObj.Description;
 					    task.Title = updateObj.Title;
-					    
-					    return true;
+						SaveChanges();
+						return true;
 				    }
 				    return false;
 			    }

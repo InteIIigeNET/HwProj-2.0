@@ -29,12 +29,11 @@ namespace HwProj.Models.Repositories
 				        item.Attempt = lastAttempt.Attempt + 1;
 				        /* Удаляем старую домашку */
 				        context.Remove(lastAttempt);
-				         //?
 			        }
 			        item.Date = DateTime.Now;
 			        context.Add(item);
-			        
-			        return true;
+					SaveChanges();
+					return true;
 		        }
 	        );
         }
@@ -71,8 +70,8 @@ namespace HwProj.Models.Repositories
 
 				    homework.IsCompleted = model.IsAccepted;
 				    homework.ReviewComment = model.ReviewComment;
-				    
-				    return true;
+					SaveChanges();
+					return true;
 			    }
 		    );
 	    }
@@ -85,7 +84,7 @@ namespace HwProj.Models.Repositories
 				{
 					if (!Contains(h => h.Id == item.Id)) return false;
 					context.Remove(item);
-					
+					SaveChanges();
 					return true;
 				}
 			);

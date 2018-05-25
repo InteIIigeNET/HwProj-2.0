@@ -61,6 +61,7 @@ namespace HwProj.Models.Repositories
 					                   cm.CourseId == item.course.Id))
 					return false;
 					context.Add(courseMate);
+					SaveChanges();
 					return true;
 				}
 			);
@@ -76,6 +77,7 @@ namespace HwProj.Models.Repositories
 					if (courseMate == null)
 						return false;
 					courseMate.IsAccepted = true;
+					SaveChanges();
 					return true;
 				}
 			);
@@ -92,6 +94,7 @@ namespace HwProj.Models.Repositories
 					if (courseMate == null)
 						return false;
 					context.Remove(courseMate);
+					SaveChanges();
 					return true;
 				}
 			);

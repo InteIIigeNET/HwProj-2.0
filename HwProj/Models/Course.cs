@@ -74,9 +74,9 @@ namespace HwProj.Models
 
 		}
 
-        public bool UserExist(string email)
+        public bool UserExist(string id)
         {
-	        return Users.FirstOrDefault(u => u.User.Email == email) != null;
+	        return Users.FirstOrDefault(u => u.User.Id == id) != null;
         }
     }
 }

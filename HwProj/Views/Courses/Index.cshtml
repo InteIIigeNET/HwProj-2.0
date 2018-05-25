@@ -2,6 +2,7 @@
 @using HwProj.Models.Enums
 @using HwProj.Models.ViewModels
 @using HwProj.Tools
+@using Microsoft.AspNet.Identity
 @model Course
 
 
@@ -13,7 +14,7 @@
                 <h4>@Model.Mentor.Name @Model.Mentor.Surname</h4>
 
                 @Html.ValidationSummary("", new { @class = "text-danger" })
-                @if (User.Identity.Name != Model.Mentor.Email && !Model.UserExist(User.Identity.Name))
+                @if (User.Identity.Name != Model.Mentor.Email && !Model.UserExist(User.Identity.GetUserId()))
                 {
                     @Html.ActionLink("Вступить в курс", "SingInCourse", new { courseId = Model.Id }, new { })
                 } else
@@ -30,14 +31,11 @@
                 <div>
                     <h5 class="">@Model.GroupName группа</h5>
                    
-                    @if (User.Identity.Name == Model.Mentor.Email)
+                    @if (User.Identity.GetUserId() == Model.Mentor.Id)
                     {
                         <button   class="btn btn-primary" title="Редактировать курс" onclick="location.href='@Url.Action("Edit", "Courses", null, null)'">
                             <i class="fas fa-pencil-alt"></i>
                         </button>
-                    }
-                    @if (User.Identity.Name == Model.Mentor.Email)
-                    {
                         <button class="btn btn-primary" title="Добавить задание" onclick="location.href='@Url.Action("AddTask", "Courses", new { courseId = Model.Id}, null)'">
                             <i class="fas fa-plus"></i>
                         </button>

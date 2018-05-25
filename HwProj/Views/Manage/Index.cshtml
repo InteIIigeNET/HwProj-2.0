@@ -1,5 +1,5 @@
 ﻿@using HwProj.Models.ViewModels
-
+@model HwProj.Models.User
 @{
     ViewBag.Title = "Редактирование профиля";
 }
@@ -12,6 +12,7 @@
     <div class="col-lg-8 col-md-8 col-sm-12 col-12">
         @*should be one of the partials*@
         <div id="profile_partial">
+            @Html.Partial("_EditProfileInfoPartial", new EditViewModel(Model))
         </div>
     </div>
 </div>

@@ -16,7 +16,6 @@ namespace HwProj.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-
         public ManageController()
         {
         }
@@ -41,9 +40,10 @@ namespace HwProj.Controllers
 
 		//
 		// GET: /Manage/Index
-		public ActionResult Index()
+		public async Task<ActionResult> Index()
 		{
-            return View();
+			var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            return View(user);
 		}
 
 		[HttpPost]

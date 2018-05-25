@@ -17,10 +17,10 @@ namespace HwProj.Models.Repositories
 				{
 					if (Contains(n => n.Id == item.Id)) return false;
 					context.Add(item);
-					
+					SaveChanges();
 					/* Замыкание id */
 					item.Text = item.Text.Replace(Notification.ContextId, item.Id.ToString());
-					
+					SaveChanges();
 					return true;
 				}
 			);
@@ -34,7 +34,7 @@ namespace HwProj.Models.Repositories
 				{
 					if (Contains(c => c.Id == item.Id)) return false;
 					context.Remove(item);
-					
+					SaveChanges();
 					return true;
 				}
 			);
@@ -48,7 +48,7 @@ namespace HwProj.Models.Repositories
 					var item = Get(n => n.Id == id);
 					if (item == null) return false;
 					context.Remove(item);
-					
+					SaveChanges();
 					return true;
 				}
 			);

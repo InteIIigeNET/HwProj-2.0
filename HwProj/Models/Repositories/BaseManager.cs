@@ -19,15 +19,12 @@ namespace HwProj.Models.Repositories
 	    protected T Execute<T>(Func<DbSet<U>, T> action)
 	    {
 		    var result = action(_context.Set<U>());
-		    try
-		    {
-			    _context.SaveChanges();
-		    }
-		    catch(Exception ex)
-		    {
-			    return default(T);
-		    }
 		    return result;
+	    }
+
+	    protected int SaveChanges()
+	    {
+		    return _context.SaveChanges();
 	    }
     }
 }

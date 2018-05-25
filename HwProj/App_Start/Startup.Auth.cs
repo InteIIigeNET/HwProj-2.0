@@ -12,6 +12,7 @@ using Microsoft.Owin.Security.Google;
 using Owin.Security.Providers.GitHub;
 //TODO:
 // вынести одинаковые строки в константы
+// пофиксить уведомления
 namespace HwProj
 {
     public partial class Startup

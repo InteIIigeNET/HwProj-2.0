@@ -106,14 +106,14 @@ namespace HwProj.Controllers
 		public async Task<ActionResult> SingInCourse(long courseId)
 		{
 			var course = _repository.CourseManager.Get(c => c.Id == courseId);
-			var user = _repository.UserManager.Get(u => u.Email == User.Identity.Name);
+			var user = _repository.UserManager.Get(u => u.Id == User.Identity.GetUserId());
 
 			if (!_repository.CourseMateManager.Add((course, user)))
 		        ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
 	        else
 	        {
 				await NotificationsService.SendNotifications(new [] {course.Mentor},
-					  u => $"Пользователь {u.Email} вступил в курс {course.Name}" +
+					  u => $"Пользователь {u.Email} вступил в курс {course.Name}\n" +
 					  (course.IsOpen? "" : new Button(Request.RequestContext, "Принять", "AcceptUser", "Courses", 
 										   new { courseId = courseId, userId = user.Id, notifyId = Notification.ContextId}) +
 										   new Button(Request.RequestContext, "Отклонить", "RejectUser", "Courses",

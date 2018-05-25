@@ -38,7 +38,7 @@
                     else
                     {
                         var notReadNotifi = Model.NoReadNotifications;
-                        foreach (var notifi in notReadNotifi)
+                        foreach (var notifi in notReadNotifi.OrderByDescending(n => n.SendingTime))
                         {
                             <div class="alert alert-info alert-dismissible">
                                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
