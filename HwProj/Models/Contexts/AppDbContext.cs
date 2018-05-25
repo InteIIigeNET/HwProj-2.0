@@ -11,39 +11,39 @@ using System.Reflection.Emit;
 
 namespace HwProj.Models.Contexts
 {
-     internal class AppDbContext : IdentityDbContext<User>
-    {
-        public AppDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
-        {
-        }
+	internal class AppDbContext : IdentityDbContext<User>
+	{
+		public AppDbContext()
+			: base("DefaultConnection", throwIfV1Schema: false)
+		{
+		}
 
-        public static AppDbContext Create()
-        {
-            return new AppDbContext();
-        }
+		public static AppDbContext Create()
+		{
+			return new AppDbContext();
+		}
 
-        /// <summary>
-        /// Все курсы
-        /// </summary>
-        public DbSet<Course> Courses { get; set; }
-	    /// <summary>
-	    /// Все уведомления
-	    /// </summary>
-	    public DbSet<Notification> Notifications{ get; set; }
+		/// <summary>
+		/// Все курсы
+		/// </summary>
+		public DbSet<Course> Courses { get; set; }
+		/// <summary>
+		/// Все уведомления
+		/// </summary>
+		public DbSet<Notification> Notifications { get; set; }
 		/// <summary>
 		/// База всех заданий
 		/// </summary>
 		public DbSet<Task> Tasks { get; set; }
-        /// <summary>
-        /// База домашних заданий студентов
-        /// </summary>
-        public DbSet<Homework> Homeworks { get; set; }
-        /// <summary>
-        /// Сопоставление курсов и юзеров
-        /// </summary>
-        public DbSet<CourseMate> CourseMates { get; set; }
+		/// <summary>
+		/// База домашних заданий студентов
+		/// </summary>
+		public DbSet<Homework> Homeworks { get; set; }
+		/// <summary>
+		/// Сопоставление курсов и юзеров
+		/// </summary>
+		public DbSet<CourseMate> CourseMates { get; set; }
 
-    }
+	}
 
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using HwProj.Models.Enums;
+using HwProj.Models.Interfaces;
 using HwProj.Models.ViewModels;
 using HwProj.Models.Roles;
 using Microsoft.Ajax.Utilities;
@@ -16,8 +17,8 @@ namespace HwProj.Models
 	/// <summary>
 	/// Модель пользователя сервиса
 	/// </summary>
-    [Table("Users")]
-    public sealed class User : IdentityUser
+    [Table("UsersDbContext")]
+    public class User : IdentityUser, IModel
     {
         #region Properties
 		public Gender Gender { get; set; }

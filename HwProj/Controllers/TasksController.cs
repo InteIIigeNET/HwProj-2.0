@@ -26,7 +26,12 @@ namespace HwProj.Controllers
             {
                 return View();
             }
-            var newTask = new Task(model);
+	        var course = _db.CourseManager.Get(c => c.Id == model.CourseId);
+	        var newTask = new Task(model)
+	        {
+		        CourseId = model.CourseId,
+		        Course = course
+	        };
             if (_db.TaskManager.Add(User.Identity.GetUserId(), newTask))
             {
 	            await NotificationsService.SendNotifications(newTask.Course.Users.Select(m => m.User),

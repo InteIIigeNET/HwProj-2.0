@@ -8,14 +8,14 @@ using HwProj.Models.ViewModels;
 
 namespace HwProj.Models.Repositories
 {
-    internal class TasksManager : BaseManager, IControlWithRights<Task>
+    internal class TasksManager : BaseManager<Task>, IControlWithRights<Task>
     {
 
 	    public IEnumerable<Task> GetAll(Func<Task, bool> predicate)
 	    {
 		    return Execute
 		    (
-			    context => context.Tasks.Include(t => t.Course).Include(t => t.Homeworks).ToList()
+			    context => context.Include(t => t.Course).Include(t => t.Homeworks).ToList()
 			);
 	    }
 
@@ -34,8 +34,8 @@ namespace HwProj.Models.Repositories
 			    context =>
 			    {
 				    if (Contains(c => c.Id == item.Id)) return false;
-				    context.Tasks.Remove(item);
-				    context.SaveChanges();
+				    context.Remove(item);
+				    
 				    return true;
 			    }
 		    );
@@ -44,7 +44,7 @@ namespace HwProj.Models.Repositories
 		{
 			return Execute
 			(
-				context => context.Tasks.Include(t => t.Course).Include(t => t.Homeworks).FirstOrDefault(predicate)
+				context => context.Include(t => t.Course).Include(t => t.Homeworks).FirstOrDefault(predicate)
 			);
 		}
 
@@ -52,7 +52,7 @@ namespace HwProj.Models.Repositories
         {
 	        return Execute
 	        (
-		        context => context.Tasks.Include(t => t.Course).Include(t => t.Homeworks).ToList()
+		        context => context.Include(t => t.Course).Include(t => t.Homeworks).ToList()
 			);
         }
 
@@ -63,12 +63,10 @@ namespace HwProj.Models.Repositories
 			    context =>
 			    {
 				    if (Contains(c => c.Id == item.Id)) return false;
+				    if (item.Course.MentorId != userRights) return false;
 
-				    var course = context.Courses.FirstOrDefault(c => c.Id == item.CourseId);
-				    if (course == null || course.MentorId != userRights) return false;
-
-				    context.Tasks.Add(item);
-				    context.SaveChanges();
+				    context.Add(item);
+				    
 				    return true;
 			    }
 		    );
@@ -91,8 +89,9 @@ namespace HwProj.Models.Repositories
 
 				    if (task.Course.MentorId == userRights)
 				    {
-					    context.Tasks.Remove(task);
-					    context.SaveChanges();
+					    context.Attach(task);
+					    context.Remove(task);
+					    
 					    return true;
 				    }
 				    return false;
@@ -119,12 +118,16 @@ namespace HwProj.Models.Repositories
 				    {
 					    task.Description = updateObj.Description;
 					    task.Title = updateObj.Title;
-					    context.SaveChanges();
+					    
 					    return true;
 				    }
 				    return false;
 			    }
 		    );
+	    }
+
+	    public TasksManager(AppDbContext context) : base(context)
+	    {
 	    }
     }
 }

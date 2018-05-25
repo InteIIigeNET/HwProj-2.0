@@ -4,11 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using HwProj.Models.Interfaces;
 
 namespace HwProj.Models
 {
     [Table("CourseMates")]
-    public class CourseMate
+    public class CourseMate : IModel
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }

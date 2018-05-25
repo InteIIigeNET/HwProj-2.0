@@ -7,13 +7,13 @@ using HwProj.Models.Contexts;
 
 namespace HwProj.Models.Repositories
 {
-    internal class UserManager : BaseManager, IReadOnlyRepository<User>
+    internal class UserManager : BaseManager<User>, IReadOnlyRepository<User>
     {
 	    public IEnumerable<User> GetAll(Func<User, bool> predicate)
 	    {
 		    return Execute
 		    (
-			    context => context.Users.Include(u => u.Notifications).Where(predicate).ToList()
+			    context => context.Include(u => u.Notifications).Where(predicate).ToList()
 			);
 	    }
 
@@ -29,7 +29,7 @@ namespace HwProj.Models.Repositories
         {
 	        return Execute
 	        (
-		        context => context.Users.Include(u => u.Notifications).FirstOrDefault(predicate)
+		        context => context.Include(u => u.Notifications).FirstOrDefault(predicate)
 			);
         }
 
@@ -37,8 +37,12 @@ namespace HwProj.Models.Repositories
         {
 	        return Execute
 	        (
-		        context => context.Users.Include(u => u.Notifications).ToList()
+		        context => context.Include(u => u.Notifications).ToList()
 			);
         }
+
+	    public UserManager(AppDbContext context) : base(context)
+	    {
+	    }
     }
 }

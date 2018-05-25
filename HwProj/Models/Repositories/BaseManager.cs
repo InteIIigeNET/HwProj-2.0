@@ -1,28 +1,33 @@
 ﻿using HwProj.Models.Contexts;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using HwProj.Models.Interfaces;
+using Microsoft.Ajax.Utilities;
 
 namespace HwProj.Models.Repositories
 {
-    internal abstract class BaseManager
+    internal abstract class BaseManager<U> where U: class, IModel
     {
-        protected BaseManager()
-        {
-        }
-	    protected T Execute<T>(Func<AppDbContext, T> action)
+	    protected BaseManager(AppDbContext context)
 	    {
-		    using (var context = AppDbContext.Create())
-		    {
-			    try
-			    {
-					return action(context);
-			    }
-			    finally
-			    {
-			    }
-		    }
+		    _context = context;
 	    }
-	}
+		private AppDbContext _context;
+	    protected T Execute<T>(Func<DbSet<U>, T> action)
+	    {
+		    var result = action(_context.Set<U>());
+		    try
+		    {
+			    _context.SaveChanges();
+		    }
+		    catch(Exception ex)
+		    {
+			    return default(T);
+		    }
+		    return result;
+	    }
+    }
 }

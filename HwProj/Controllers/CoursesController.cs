@@ -35,9 +35,8 @@ namespace HwProj.Controllers
 			var course = new Course(courseView)
 			{
 				MentorId = User.Identity.GetUserId(),
-				Mentor = _repository.UserManager.Get(u => u.Id == User.Identity.GetUserEmail()),
+				Mentor = _repository.UserManager.Get(u => u.Id == User.Identity.GetUserId()),
 			};
-
 			if (_repository.CourseManager.Contains(t => t.CompareTo(course) == 0))
 				ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
 			else

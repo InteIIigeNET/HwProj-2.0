@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using HwProj.Controllers;
+using HwProj.Models.Interfaces;
 using HwProj.Models.ViewModels;
 using static System.String;
 
@@ -14,7 +15,7 @@ namespace HwProj.Models
 	/// Модель курса занятий
 	/// </summary>
     [Table("Courses")]
-    public class Course  : IComparable
+    public class Course  : IComparable, IModel
 	{
         /// <summary>
         /// Уникальный идентификатор курса

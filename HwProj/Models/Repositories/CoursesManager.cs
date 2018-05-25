@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using HwProj.Models.Contexts;
 
 namespace HwProj.Models.Repositories
 {
-    internal class CoursesManager : BaseManager, IRepository<Course>
+    internal class CoursesManager : BaseManager<Course>, IRepository<Course>
     {
 
         public bool Add(Course item)
@@ -17,8 +18,7 @@ namespace HwProj.Models.Repositories
 			        item.IsComplete = false;
 			        if (Contains(c => c.Id == item.Id)) return false;
 
-			        context.Courses.Add(item);
-			        context.SaveChanges();
+			        context.Add(item);
 			        return true;
 		        }
 	        );
@@ -30,7 +30,7 @@ namespace HwProj.Models.Repositories
 	        (
 		        context =>
 		        {
-			        return context.Courses.Include(c => c.Mentor)
+			        return context.Include(c => c.Mentor)
 				        .Include(c => c.Tasks)
 				        .Include(c => c.Users.Select(u => u.User)).ToList();
 		        }
@@ -43,7 +43,7 @@ namespace HwProj.Models.Repositories
 	        (
 		        context =>
 		        {
-			        return context.Courses.Include(c => c.Mentor)
+			        return context.Include(c => c.Mentor)
 				        .Include(c => c.Tasks)
 				        .Include(c => c.Users.Select(u => u.User)).Where(predicate).ToList();
 		        }
@@ -53,10 +53,10 @@ namespace HwProj.Models.Repositories
         public bool Contains(Func<Course, bool> predicate)
         {
 	        return Execute
-	        (
+			(
 		        context =>
 		        {
-			        return context.Courses.Include(c => c.Mentor)
+			        return context.Include(c => c.Mentor)
 				               .Include(c => c.Tasks)
 				               .Include(c => c.Users.Select(u => u.User))
 							   .FirstOrDefault(predicate) != null;
@@ -67,12 +67,11 @@ namespace HwProj.Models.Repositories
         public bool Delete(Course item)
         {
 	        return Execute
-	        (
+			(
 		        context =>
 		        {
 			        if (Contains(c => c.Id == item.Id)) return false;
-			        context.Courses.Remove(item);
-			        context.SaveChanges();
+			        context.Remove(item);
 			        return true;
 		        }
 	        );
@@ -84,12 +83,16 @@ namespace HwProj.Models.Repositories
 	        (
 		        context =>
 		        {
-			        return context.Courses.Include(c => c.Mentor)
+			        return context.Include(c => c.Mentor)
 				        .Include(c => c.Tasks)
 				        .Include(c => c.Users.Select(u => u.User))
 				        .FirstOrDefault(predicate);
 		        }
 	        );
         }
+
+	    public CoursesManager(AppDbContext context) : base(context)
+	    {
+	    }
     }
 }

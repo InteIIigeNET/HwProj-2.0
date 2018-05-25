@@ -9,7 +9,7 @@ using HwProj.Models.ViewModels;
 
 namespace HwProj.Models.Repositories
 {
-    internal class HomeworksManager : BaseManager, IRepository<Homework>
+    internal class HomeworksManager : BaseManager<Homework>, IRepository<Homework>
     {
         public bool Add(Homework item)
         {
@@ -28,12 +28,12 @@ namespace HwProj.Models.Repositories
 										 (h => h.Attempt == oldAttempts.Max(t => t.Attempt));
 				        item.Attempt = lastAttempt.Attempt + 1;
 				        /* Удаляем старую домашку */
-				        context.Homeworks.Remove(lastAttempt);
-				        context.SaveChanges(); //?
+				        context.Remove(lastAttempt);
+				         //?
 			        }
 			        item.Date = DateTime.Now;
-			        context.Homeworks.Add(item);
-			        context.SaveChanges();
+			        context.Add(item);
+			        
 			        return true;
 		        }
 	        );
@@ -43,7 +43,7 @@ namespace HwProj.Models.Repositories
 	    {
 		    return Execute
 		    (
-			    context => context.Homeworks.Where(predicate).ToList()
+			    context => context.Where(predicate).ToList()
 			);
 	    }
 
@@ -71,7 +71,7 @@ namespace HwProj.Models.Repositories
 
 				    homework.IsCompleted = model.IsAccepted;
 				    homework.ReviewComment = model.ReviewComment;
-				    context.SaveChanges();
+				    
 				    return true;
 			    }
 		    );
@@ -84,8 +84,8 @@ namespace HwProj.Models.Repositories
 				context =>
 				{
 					if (!Contains(h => h.Id == item.Id)) return false;
-					context.Homeworks.Remove(item);
-					context.SaveChanges();
+					context.Remove(item);
+					
 					return true;
 				}
 			);
@@ -97,7 +97,7 @@ namespace HwProj.Models.Repositories
 	        (
 		        context =>
 		        {
-			        return context.Homeworks.Include(h => h.Student)
+			        return context.Include(h => h.Student)
 				        .Include(h => h.Task)
 				        .Include(h => h.Task.Course).FirstOrDefault(predicate);
 		        }
@@ -110,11 +110,15 @@ namespace HwProj.Models.Repositories
 	        (
 		        context =>
 		        {
-			        return context.Homeworks.Include(h => h.Student)
+			        return context.Include(h => h.Student)
 				        .Include(h => h.Task)
 				        .Include(h => h.Task.Course).ToList();
 		        }
 	        );
         }
+
+	    public HomeworksManager(AppDbContext context) : base(context)
+	    {
+	    }
     }
 }

@@ -48,7 +48,7 @@ namespace HwProj.Controllers
 		    else
 		    {
 			    var task = _repository.TaskManager.Get(t => t.Id == model.TaskId);
-			    var student = _repository.UserManager.Get(u => u.Email == User.Identity.Name);
+			    var student = _repository.UserManager.Get(u => u.Id == User.Identity.GetUserId());
 			    var homework = new Homework(model, task, student);
 
 				if (!_repository.HomeworkManager.Add(homework))

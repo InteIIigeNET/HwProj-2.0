@@ -1,5 +1,6 @@
 ﻿using System;
 using HwProj.Models.Contexts;
+using Microsoft.Ajax.Utilities;
 
 namespace HwProj.Models.Repositories
 {
@@ -22,17 +23,18 @@ namespace HwProj.Models.Repositories
 
         private MainRepository()
         {
-            CourseManager        = new CoursesManager();
-            UserManager          = new UserManager();
-            HomeworkManager      = new HomeworksManager();
-            TaskManager          = new TasksManager();
-            NotificationsManager = new NotificationsManager();
-	        CourseMateManager    = new CourseMateManager();
+            CourseManager        = new CoursesManager(Context);
+            UserManager          = new UserManager(Context);
+            HomeworkManager      = new HomeworksManager(Context);
+            TaskManager          = new TasksManager(Context);
+            NotificationsManager = new NotificationsManager(Context);
+	        CourseMateManager    = new CourseMateManager(Context);
 		}
 
+	    private AppDbContext Context = AppDbContext.Create();
         public void Dispose()
         {
-			/* Hmmm */
+	        Context.IfNotNull(c => c.Dispose());
             GC.SuppressFinalize(this);
         }
     }

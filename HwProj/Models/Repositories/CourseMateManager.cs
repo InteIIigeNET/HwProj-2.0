@@ -7,7 +7,7 @@ using HwProj.Models.Contexts;
 
 namespace HwProj.Models.Repositories
 {
-	internal class CourseMateManager : BaseManager,
+	internal class CourseMateManager : BaseManager<CourseMate>,
 								     IBinaryRepository<(Course course, User user), CourseMate>
 
 	{
@@ -15,7 +15,7 @@ namespace HwProj.Models.Repositories
 		{
 			return Execute
 			(
-				context => context.CourseMates.Include(m => m.User).FirstOrDefault(predicate)
+				context => context.Include(m => m.User).FirstOrDefault(predicate)
 			);
 		}
 
@@ -23,7 +23,7 @@ namespace HwProj.Models.Repositories
 		{
 			return Execute
 			(
-				context => context.CourseMates.Include(c => c.User)
+				context => context.Include(c => c.User)
 											  .Include(c => c.Course).ToList()
 			);
 		}
@@ -32,7 +32,7 @@ namespace HwProj.Models.Repositories
 		{
 			return Execute
 			(
-				context => context.CourseMates.Include(c => c.User)
+				context => context.Include(c => c.User)
 											  .Include(c => c.Course)
 											  .Where(predicate).ToList()
 			);
@@ -59,9 +59,8 @@ namespace HwProj.Models.Repositories
 
 					if (Contains(cm => cm.UserId == item.user.Id &&
 					                   cm.CourseId == item.course.Id))
-						return false;
-					context.CourseMates.Add(courseMate);
-					context.SaveChanges();
+					return false;
+					context.Add(courseMate);
 					return true;
 				}
 			);
@@ -77,7 +76,6 @@ namespace HwProj.Models.Repositories
 					if (courseMate == null)
 						return false;
 					courseMate.IsAccepted = true;
-					context.SaveChanges();
 					return true;
 				}
 			);
@@ -93,11 +91,14 @@ namespace HwProj.Models.Repositories
 					                           cm.CourseId == item.course.Id);
 					if (courseMate == null)
 						return false;
-					context.CourseMates.Remove(courseMate);
-					context.SaveChanges();
+					context.Remove(courseMate);
 					return true;
 				}
 			);
+		}
+
+		public CourseMateManager(AppDbContext context) : base(context)
+		{
 		}
 	}
 }

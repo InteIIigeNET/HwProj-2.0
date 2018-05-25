@@ -7,7 +7,7 @@ using HwProj.Models.Contexts;
 
 namespace HwProj.Models.Repositories
 {
-	internal class NotificationsManager : BaseManager, IRepository<Notification>
+	internal class NotificationsManager : BaseManager<Notification>, IRepository<Notification>
 	{
 		public bool Add(Notification item)
 		{
@@ -16,11 +16,11 @@ namespace HwProj.Models.Repositories
 				context =>
 				{
 					if (Contains(n => n.Id == item.Id)) return false;
-					context.Notifications.Add(item);
-					context.SaveChanges();
+					context.Add(item);
+					
 					/* Замыкание id */
 					item.Text = item.Text.Replace(Notification.ContextId, item.Id.ToString());
-					context.SaveChanges();
+					
 					return true;
 				}
 			);
@@ -33,8 +33,8 @@ namespace HwProj.Models.Repositories
 				context =>
 				{
 					if (Contains(c => c.Id == item.Id)) return false;
-					context.Notifications.Remove(item);
-					context.SaveChanges();
+					context.Remove(item);
+					
 					return true;
 				}
 			);
@@ -47,8 +47,8 @@ namespace HwProj.Models.Repositories
 				{
 					var item = Get(n => n.Id == id);
 					if (item == null) return false;
-					context.Notifications.Remove(item);
-					context.SaveChanges();
+					context.Remove(item);
+					
 					return true;
 				}
 			);
@@ -58,7 +58,7 @@ namespace HwProj.Models.Repositories
 		{
 			return Execute
 			(
-				context => context.Notifications.FirstOrDefault(predicate)
+				context => context.FirstOrDefault(predicate)
 			);
 		}
 
@@ -66,7 +66,7 @@ namespace HwProj.Models.Repositories
 		{
 			return Execute
 			(
-				context => context.Notifications.Include(n => n.User).ToList()
+				context => context.Include(n => n.User).ToList()
 			);
 		}
 
@@ -74,7 +74,7 @@ namespace HwProj.Models.Repositories
 		{
 			return Execute
 			(
-				context => context.Notifications.Include(n => n.User).Where(predicate).ToList()
+				context => context.Include(n => n.User).Where(predicate).ToList()
 			);
 		}
 
@@ -84,6 +84,10 @@ namespace HwProj.Models.Repositories
 			(
 				context => Get(predicate) != null
 			);
+		}
+
+		public NotificationsManager(AppDbContext context) : base(context)
+		{
 		}
 	}
 }
