@@ -14,16 +14,27 @@ namespace HwProj.Controllers
 {
     public static class GitHubCreator
     {
-        private static GitHubClient instance;
+        private static GitHubRepositoryStorage storageInstance;
+        private static GitHubClient clientInstance;
 
-        public static GitHubClient GetInstance()
+        public static GitHubRepositoryStorage GetStorageInstance()
         {
-            if (instance == null)
+            if (storageInstance == null)
             {
                 var token = HttpContext.Current.User.Identity.GetGitHubToken();
-                instance = new GitHubClient(token);
+                storageInstance = new GitHubRepositoryStorage(token);
             }
-            return instance;
+            return storageInstance;
+        }
+
+        public static GitHubClient GetClientInstance(string repName)
+        {
+            if (clientInstance == null)
+            {
+                var token = HttpContext.Current.User.Identity.GetGitHubToken();
+                clientInstance = new GitHubClient(token, repName);
+            }
+            return clientInstance;
         }
     }
 
@@ -33,7 +44,7 @@ namespace HwProj.Controllers
         // GET: GitHub 
         public async Task<ActionResult> Index()
         {
-            ViewBag.Repos = await GitHubCreator.GetInstance().GetRepositories();
+            ViewBag.Repos = await GitHubCreator.GetStorageInstance().GetRepositories();
             return PartialView();
         }
 
@@ -41,12 +52,13 @@ namespace HwProj.Controllers
         [HttpPost]
         public async Task<ActionResult> Index(PullRequestCreateViewModel pullRequestModel)
         {
-            return PartialView("PullRequest", await GitHubCreator.GetInstance().CreatePullRequest(pullRequestModel.Title, pullRequestModel.BranchRef, pullRequestModel.RepositoryName));
+            return PartialView("PullRequest", await GitHubCreator.GetClientInstance(null).
+                PullRequest.CreatePullRequest(pullRequestModel.Title, pullRequestModel.RepositoryName, pullRequestModel.BranchRef));
         }
 
         public async Task<ActionResult> FillBranch(string repository)
         {
-            var branches = await GitHubCreator.GetInstance().GetBranches(repository);
+            var branches = await GitHubCreator.GetStorageInstance().GetBranches(repository);
             return Json(branches, JsonRequestBehavior.AllowGet);
         }
 
