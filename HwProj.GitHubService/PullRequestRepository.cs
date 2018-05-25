@@ -19,6 +19,7 @@ namespace HwProj.GitHubService
         public async Task<Models.GitHub.PullRequest> CreatePullRequest(string title, string repName, string branchRef)
         {
             var pullRequest = await repository.client?.PullRequest.Create(repository.owner, repName, new NewPullRequest(title, "master", branchRef));
+            repository.pullRequestNumber = pullRequest.Number;
             return await CreatePullRequestModel(pullRequest, repName, pullRequest.Number);
         }
 
@@ -39,7 +40,7 @@ namespace HwProj.GitHubService
         {
             var pullRequest = await repository.client?.PullRequest.Create(repository.owner, repository.repName, new NewPullRequest(title, "master", branchRef));
             repository.pullRequestNumber = pullRequest.Number;
-            return await CreatePullRequestModel(pullRequest, repository.repName, (int)repository.pullRequestNumber);
+            return await CreatePullRequestModel(pullRequest, repository.repName, pullRequest.Number);
         }
 
         public async Task<Models.GitHub.PullRequest> GetPullRequest()

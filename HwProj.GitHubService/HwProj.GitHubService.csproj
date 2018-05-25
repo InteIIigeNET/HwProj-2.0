@@ -127,6 +127,7 @@
     <Compile Include="GitHubClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository.cs" />
+    <Compile Include="ReviewEvent.cs" />
     <Compile Include="ReviewRepository.cs" />
   </ItemGroup>
   <ItemGroup>

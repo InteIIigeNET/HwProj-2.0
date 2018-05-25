@@ -62,5 +62,22 @@ namespace HwProj.GitHubService
             Path = comment.Path,
             Position = (int)comment.Position
         };
+
+        public static Review ToReview(this Octokit.PullRequestReview review, IEnumerable<ReviewComment> comments)
+        {
+            return new Review
+            {
+                HeadComment = new Comment
+                {
+                    Content = review.Body,
+                    Owner = new User
+                    {
+                        Login = review.User.Login,
+                        Url = review.User.Url
+                    }
+                },
+                ReviewComments = comments
+            };
+        }
     }
 }
