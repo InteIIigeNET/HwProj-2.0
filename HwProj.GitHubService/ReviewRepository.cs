@@ -18,7 +18,7 @@ namespace HwProj.GitHubService
     
         public async Task<Review> CreateReview(string body, IEnumerable<ReviewComment> comments, ReviewEvent reviewEvent)
         {
-            var review = await repository.client?.PullRequest.Review.Create(repository.owner, repository.repName, (int)repository.pullRequestNumber, new Octokit.PullRequestReviewCreate
+            var review = await repository.client?.PullRequest.Review.Create(repository.owner, repository.repName, repository.pullRequestNumber, new Octokit.PullRequestReviewCreate
             {
                 Body = body,
                 Comments = (from c in comments

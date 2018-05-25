@@ -12,13 +12,14 @@ namespace HwProj.GitHubService
         public readonly Octokit.GitHubClient client;
         public readonly string owner;
         public readonly string repName;
-        public int? pullRequestNumber;
+        public readonly int pullRequestNumber;
 
-        public Repository(Octokit.GitHubClient client, string owner, string repName)
+        public Repository(Octokit.GitHubClient client, string owner, string repName, int pullRequestNumber)
         {
             this.client = client;
             this.owner = owner;
             this.repName = repName;
+            this.pullRequestNumber = pullRequestNumber;
         }
     }
 }
