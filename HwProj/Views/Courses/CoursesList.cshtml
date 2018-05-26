@@ -2,9 +2,12 @@
 @using HwProj.Tools
 @model IEnumerable<HwProj.Models.Course>
 
-<br />
-    <div class="offset-lg-1 col-lg-10 col-md-10 offset-sm-1 col-sm-10 offset-1 col-10">
-        <div class="jumbotron jumbotron_border_gray">
+@*<br />*@
+    @*<div class="offset-lg-1 col-lg-10 col-md-10 offset-sm-1 col-sm-10 offset-1 col-10">
+        <div class="jumbotron jumbotron_border_gray">*@
+@*<div><div>*@
+    <div>
+        <div>
             @if (User.Identity.GetUserRole() == RoleType.Преподаватель.ToString())
             {
                 <div class="row float-xl-right float-lg-right float-md-right">
@@ -17,7 +20,8 @@
                 <div class="clearfix"></div>
                 <br />
             }
-            <div class="row text-center">
+            @*<div class="row text-center">*@
+            <div>
                 <div class="col-xs-12 col-12 courses-list_card-row_inline">
                     <div id="results">
                         @foreach (var course in Model)
@@ -35,7 +39,7 @@
                                 </div>
                             </div>
                         }
-                        </div>
+                    </div>
                 </div>
             </div>
         </div>

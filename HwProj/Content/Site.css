@@ -86,3 +86,11 @@ code {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.task.task_padding-bottom_20px {
+    padding-bottom: 20px;
+}
+
+.course-list.course-list_margin-top_negative {
+    margin-top: -140px
+}
