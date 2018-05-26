@@ -1,46 +1,8 @@
-﻿@using HwProj.Models.Enums
-@using HwProj.Tools
-@model IEnumerable<HwProj.Models.Course>
+﻿@model IEnumerable<HwProj.Models.Course>
 
-@*<br />*@
-    @*<div class="offset-lg-1 col-lg-10 col-md-10 offset-sm-1 col-sm-10 offset-1 col-10">
-        <div class="jumbotron jumbotron_border_gray">*@
-@*<div><div>*@
-    <div>
-        <div>
-            @if (User.Identity.GetUserRole() == RoleType.Преподаватель.ToString())
-            {
-                <div class="row float-xl-right float-lg-right float-md-right">
-                    <div class="col-sm-12 col-12">
-                        <button class="btn btn-block btn-primary" onclick="location.href='@Url.Action("Create", "Courses")'">
-                            Создать курс
-                        </button>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-                <br />
-            }
-            @*<div class="row text-center">*@
-            <div>
-                <div class="col-xs-12 col-12 courses-list_card-row_inline">
-                    <div id="results">
-                        @foreach (var course in Model)
-                        {
-                            <div class="courses-list_card_inline ">
-                                <div class="card border-primary mb-3">
-                                    <a href=@Url.Action("Index", "Courses", new {courseId = course.Id})>
-                                        <img src="~/Content/Images/robot_head.png" class="img-fluid">
-                                    </a>
-                                    <div class="card-body">
-                                        <h5 class="card-title course-list_card-text_limit">@course.Name</h5>
-                                        <hr/>
-                                        <p class="card-text course-list_card-text_limit">@course.Mentor.UserName</p>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
+<br />
+<div class="offset-lg-1 col-lg-10 col-md-10 offset-sm-1 col-sm-10 offset-1 col-10">
+    <div class="text-center jumbotron jumbotron_border_gray">
+        @Html.Partial("~/Views/Courses/_CoursesListPartial.cshtml", Model)
+    </div>
 </div>

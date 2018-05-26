@@ -60,7 +60,7 @@ namespace HwProj.Controllers
 		[AllowAnonymous]
 		public ActionResult FindCourses(string pattern)
 		{
-			return PartialView("CoursesList", Find(pattern));
+			return PartialView("_CoursesListPartial", Find(pattern));
 			/* неоптимально */
 		}
 
