@@ -11,7 +11,7 @@ namespace HwProj.Models.Repositories
 {
     internal abstract class BaseManager<T> where T: class, IModel
     {
-	    private AppDbContext _context;
+	    private readonly AppDbContext _context;
 		protected BaseManager(AppDbContext context)
 	    {
 		    _context = context;

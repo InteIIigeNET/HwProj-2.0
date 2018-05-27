@@ -43,16 +43,19 @@
                         <button   class="btn btn-primary" title="Редактировать курс" onclick="location.href='@Url.Action("Edit", "Courses", null, null)'">
                             <i class="fas fa-pencil-alt"></i>
                         </button>
-
-                        <button class="btn btn-primary" title="Добавить задание" onclick="location.href='@Url.Action("AddTask", "Courses", new { courseId = Model.Id}, null)'">
-                            <i class="fas fa-plus"></i>
-                        </button>
                     }
                 </div>
             </div>
             <div class="clearfix"></div>     
             <hr />
-            <h4>Задания</h4>
+            <h4>Задания
+                @if (User.Identity.GetUserId() == Model.Mentor.Id)
+                {
+                    <button class="btn btn-primary" title="Добавить задание" onclick="location.href='@Url.Action("AddTask", "Courses", new { courseId = Model.Id}, null)'">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                }
+            </h4>
             <br />
             @foreach (var task in Model.Tasks.Reverse())
             {
