@@ -16,9 +16,9 @@ namespace HwProj.GitHubService.Test
         public void ShouldCreateNewPullRequest()
         {
             //arrange
-            const string branchName = "test2";
+            const string branchName = "MaxVortman-patch-1";
             const string repName = "TestGitHubIntegration";
-            const string title = "test";
+            const string title = "test2";
             const string owner = "MaxVortman";
             var client = new GitHubClient(token);
             //act
