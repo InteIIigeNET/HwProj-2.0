@@ -15,11 +15,11 @@ namespace HwProj.GitHubService
             return from c in commits
                    select new Commit
                    {
-                       Sha = c.Commit.Sha,
+                       Sha = c.Sha,
                        Owner = new Models.GitHub.User
                        {
-                           Login = c.Commit.User.Login,
-                           Url = c.Commit.User.Url
+                           Login = c.Author.Name,
+                           Url = c.Commit.User?.Url
                        },
                        CreatedAt = c.Author.Date.DateTime,
                        Title = c.Commit.Message,

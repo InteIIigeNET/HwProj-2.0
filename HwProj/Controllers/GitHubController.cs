@@ -54,7 +54,8 @@ namespace HwProj.Controllers
         public async Task<ActionResult> Index(PullRequestCreateViewModel pullRequestModel)
         {
             return PartialView("PullRequest", (await GitHubCreator.GetClientInstance().
-                GetNewPullRequestManagerAsync(pullRequestModel.Title, pullRequestModel.RepositoryName, pullRequestModel.BranchRef)).PullRequest);
+                GetNewPullRequestManagerAsync(pullRequestModel.Title, pullRequestModel.RepositoryName, 
+                pullRequestModel.HeadBranchName, pullRequestModel.BaseBranchName)).PullRequest);
         }
 
         public async Task<ActionResult> FillBranch(string repository)

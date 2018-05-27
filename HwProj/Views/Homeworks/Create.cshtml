@@ -57,9 +57,14 @@
                 dataType: "JSON",
                 data: { repository: repositoryName },
                 success: function (branches) {
-                    $("#BranchRef").html(""); // clear before appending new list
+                    $("#HeadBranchName").html(""); // clear before appending new list
                     $.each(branches, function (i, branch) {
-                        $("#BranchRef").append(
+                        $("#HeadBranchName").append(
+                            $('<option></option>').val(branch).html(branch));
+                    });
+                    $("#BaseBranchName").html("");
+                    $.each(branches, function (i, branch) {
+                        $("#BaseBranchName").append(
                             $('<option></option>').val(branch).html(branch));
                     });
                 }

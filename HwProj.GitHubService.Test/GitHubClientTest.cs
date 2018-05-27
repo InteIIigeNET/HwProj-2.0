@@ -16,13 +16,14 @@ namespace HwProj.GitHubService.Test
         public void ShouldCreateNewPullRequest()
         {
             //arrange
-            const string branchName = "MaxVortman-patch-1";
+            const string headBranchName = "MaxVortman-patch-1";
             const string repName = "TestGitHubIntegration";
             const string title = "test2";
             const string owner = "MaxVortman";
+            const string baseBranchName = "master";
             var client = new GitHubClient(token);
             //act
-            var pr = client.GetNewPullRequestManagerAsync(title, repName, branchName).Result;
+            var pr = client.GetNewPullRequestManagerAsync(title, repName, headBranchName, baseBranchName).Result;
             //assert
             Assert.AreEqual(owner, pr.PullRequest.Owner.Login);
         }
