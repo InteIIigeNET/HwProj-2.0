@@ -453,6 +453,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HomeworksController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PullRequestController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Filters\AnonymousOnlyAttribute.cs" />
     <Compile Include="Filters\GitHubAccessAttribute.cs" />
@@ -501,6 +502,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="Tools\AsyncManager.cs" />
     <Compile Include="Tools\CourseBoard.cs" />
+    <Compile Include="Tools\GitHubInstance.cs" />
     <Compile Include="Tools\IAsyncManager.cs" />
     <Compile Include="Tools\IdentityExtensions.cs" />
     <Compile Include="Tools\MarkdownInterpreter.cs" />
@@ -602,13 +604,14 @@
     <Content Include="Views\Manage\_EditProfileInfoPartial.cshtml" />
     <Content Include="Views\Manage\_EditProfileEmailPartial.cshtml" />
     <Content Include="Views\Tasks\_EditPartial.cshtml" />
-    <Content Include="Views\GitHub\Index.cshtml" />
     <Content Include="Views\GitHub\PullRequest.cshtml" />
     <Content Include="Views\Homeworks\Review.cshtml" />
     <Content Include="Views\Tasks\TaskPartial.cshtml" />
     <Content Include="Views\Courses\_CoursesListPartial.cshtml" />
     <Content Include="Views\Courses\_EditPartial.cshtml" />
     <Content Include="Views\Courses\CoursePartial.cshtml" />
+    <Content Include="Views\PullRequest\Create.cshtml" />
+    <Content Include="Views\PullRequest\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Test\" />

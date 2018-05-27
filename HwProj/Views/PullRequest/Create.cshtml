@@ -1,7 +1,7 @@
 ﻿@using HwProj.Models.ViewModels
 @model PullRequestCreateViewModel
 
-@using (Html.BeginForm("Index", "GitHub",
+@using (Html.BeginForm("Create", "PullRequest",
         FormMethod.Post, new { @class = "jumbotron grey lighten-5 pt-5", @id = "login-form", role = "form" }))
 {
     var repos = new SelectList(ViewBag.Repos as IEnumerable<string>);
