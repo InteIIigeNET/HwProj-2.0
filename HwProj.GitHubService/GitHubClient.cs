@@ -19,12 +19,20 @@ namespace HwProj.GitHubService
             {
                 Credentials = new Credentials(token)
             };
-        }       
+         }
 
-        public async Task<PullRequestManager> GetNewPullRequestManagerAsync(string title, string repName, string branchRef)
+        public GitHubClient(string login, string password)
+        {
+            client = new Octokit.GitHubClient(new ProductHeaderValue("HwProj"))
+            {
+                Credentials = new Credentials(login, password)
+            };
+        }
+
+        public async Task<PullRequestManager> GetNewPullRequestManagerAsync(string title, string repName, string branchName)
         {
             var owner = (await client.User.Current()).Login;
-            var pullRequest = await CreatePullRequestAsync(title, repName, branchRef, owner);
+            var pullRequest = await CreatePullRequestAsync(title, repName, branchName, owner);
             return new PullRequestManager(pullRequest, new PullRequestData(client, owner, repName, pullRequest.Number));
         }
 
@@ -45,9 +53,9 @@ namespace HwProj.GitHubService
             return pullRequest.ToPullRequest(commits.ToCommits(), reviews);
         }
 
-        private async Task<Models.GitHub.PullRequest> CreatePullRequestAsync(string title, string repName, string branchRef, string owner)
+        private async Task<Models.GitHub.PullRequest> CreatePullRequestAsync(string title, string repName, string branchName, string owner)
         {
-            var pullRequest = await client?.PullRequest.Create(owner, repName, new NewPullRequest(title, branchRef, "master"));
+            var pullRequest = await client?.PullRequest.Create(owner, repName, new NewPullRequest(title, branchName, "master"));
             var commits = await client?.PullRequest.Commits(owner, repName, pullRequest.Number);
             return pullRequest.ToPullRequest(commits.ToCommits(), null);
         }

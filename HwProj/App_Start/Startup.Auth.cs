@@ -76,16 +76,15 @@ namespace HwProj
 			{
 				ClientId = "05f28aee6fc34fa4be32",
 				ClientSecret = "15e227ae3fcd20a08dc3a533735a9b477e6e4cce",
-				Scope = { "repo" },
-				Provider = new GitHubAuthenticationProvider()
+				Scope = { "gist", "repo" },
+			Provider = new GitHubAuthenticationProvider()
+			{
+				OnAuthenticated = context =>
 				{
-					OnAuthenticated = context =>
-					{
-						context.Identity.AddClaim(new Claim("GitHubAccessToken", context.AccessToken));
-						return System.Threading.Tasks.Task.CompletedTask;
-					}
+					context.Identity.AddClaim(new Claim("GitHubAccessToken", context.AccessToken));
+					return System.Threading.Tasks.Task.CompletedTask;
 				}
-			});
+			}});
         }
 	}
 }
