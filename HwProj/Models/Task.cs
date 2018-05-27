@@ -8,8 +8,6 @@ using HwProj.Models.ViewModels;
 
 namespace HwProj.Models
 {
-	//TODO: Task deadline
-
 	/// <summary>
 	/// Модель домашнего задания
 	/// </summary>
@@ -42,13 +40,13 @@ namespace HwProj.Models
         /// Дз, в которых есть этот таск
         /// </summary>
         public ICollection<Homework> Homeworks { get; set; } = new List<Homework>();
-		public Task(TaskCreateViewModel model) : base()
+		public Task(TaskCreateViewModel model) 
 		{
 			CourseId = model.CourseId;
 			Description = model.Description;
 			Title = model.Title;
 		}
-		public Task() : base() { }
+		public Task() { }
 
 		public Task(TaskEditViewModel model)
 		{

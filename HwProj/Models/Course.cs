@@ -57,8 +57,15 @@ namespace HwProj.Models
 			Name = model.Name;
 			IsOpen = model.IsOpen;
 		}
+		public Course(CourseEditViewModel model)
+		{
+			Name = model.Name;
+			GroupName = model.GroupName;
+			Id = model.CourseId;
+			IsOpen = model.IsOpen;
+		}
 
-        public int CompareTo(object obj)
+		public int CompareTo(object obj)
         {
             var other = obj as Course;
 

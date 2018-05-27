@@ -9,6 +9,7 @@ using Microsoft.Owin.Security;
 using HwProj.Models;
 using HwProj.Models.Enums;
 using HwProj.Models.ViewModels;
+using HwProj.Tools;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity.Owin;
 

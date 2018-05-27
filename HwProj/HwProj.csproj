@@ -460,9 +460,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201805272205445_init.cs" />
-    <Compile Include="Migrations\201805272205445_init.Designer.cs">
-      <DependentUpon>201805272205445_init.cs</DependentUpon>
+    <Compile Include="Log\LogInfo.cs" />
+    <Compile Include="Log\Log.cs" />
+    <Compile Include="Migrations\201805271557111_init.cs" />
+    <Compile Include="Migrations\201805271557111_init.Designer.cs">
+      <DependentUpon>201805271557111_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Contexts\AppDbContext.cs" />
@@ -609,6 +611,8 @@
     <Content Include="Views\Homeworks\Review.cshtml" />
     <Content Include="Views\Tasks\TaskPartial.cshtml" />
     <Content Include="Views\Courses\_CoursesListPartial.cshtml" />
+    <Content Include="Views\Courses\_EditPartial.cshtml" />
+    <Content Include="Views\Courses\CoursePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Test\" />

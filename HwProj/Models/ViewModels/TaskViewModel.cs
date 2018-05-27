@@ -66,7 +66,7 @@ namespace HwProj.Models.ViewModels
 		/// <summary>
 		/// Просматривает ли таск преподаватель (для возможности редактирования, удаления)
 		/// </summary>
-		public string MentorEmail { get; set; }
+		public string MentorId { get; set; }
 		/// <summary>
 		/// Номер задания
 		/// </summary>
@@ -88,7 +88,7 @@ namespace HwProj.Models.ViewModels
 			Description = task.Description;
 			TaskId = task.Id;
 			CourseId = task.Course.Id;
-			MentorEmail = task.Course.Mentor.Email;
+			MentorId = task.Course.Mentor.Id;
 		}
 		public TaskViewModel(TaskEditViewModel model)
 		{

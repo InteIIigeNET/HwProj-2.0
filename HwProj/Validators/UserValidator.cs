@@ -20,7 +20,7 @@ namespace HwProj.Validators
 		public override async Task<IdentityResult> ValidateAsync(User user)
 		{
 			IdentityResult result = await base.ValidateAsync(user);
-			if (user.Name.Any(t => !Char.IsLetter(t)) || user.Surname.Any(t => !Char.IsLetter(t)))
+			if (user.Name.Any(t => !char.IsLetter(t)) || user.Surname.Any(t => !char.IsLetter(t)))
 			{
 				var errors = result.Errors.Concat(new [] { "Имя и фамилия должны содержать только буквенные значения." });
 				result = new IdentityResult(errors);
