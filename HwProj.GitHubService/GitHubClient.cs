@@ -19,7 +19,15 @@ namespace HwProj.GitHubService
             {
                 Credentials = new Credentials(token)
             };
-        }       
+         }
+
+        public GitHubClient(string login, string password)
+        {
+            client = new Octokit.GitHubClient(new ProductHeaderValue("HwProj"))
+            {
+                Credentials = new Credentials(login, password)
+            };
+        }
 
         public async Task<PullRequestManager> GetNewPullRequestManagerAsync(string title, string repName, string branchName)
         {
