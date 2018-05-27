@@ -8,6 +8,8 @@ namespace HwProj.Models.GitHub
 {
     public class PullRequest
     {
+        public string Title { get; set; }
+
         public User Owner { get; set; }
 
         public IEnumerable<Review> Reviews { get; set; }
