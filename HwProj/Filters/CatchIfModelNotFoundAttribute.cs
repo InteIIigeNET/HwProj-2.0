@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace HwProj.Filters
 {
-	public class ModelNotFoundAttribute : FilterAttribute, IExceptionFilter
+	public class CatchIfModelNotFoundAttribute : FilterAttribute, IExceptionFilter
 	{
 
 		public void OnException(ExceptionContext exceptionContext)

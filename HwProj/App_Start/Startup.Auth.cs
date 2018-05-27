@@ -69,8 +69,11 @@ namespace HwProj
 			    ClientId = "822435394647-2r22d16i8nrfgsj4eoin5io7ir1n0u58.apps.googleusercontent.com",
 			    ClientSecret = "vMR0V7d9VgQ1T8ORQ_yoPJk2"
 			});
+
 	        app.UseVkontakteAuthentication("6413355", "uo12VNcp8qK5Wc7cpXXW", "email");
-            app.UseGitHubAuthentication(new GitHubAuthenticationOptions(){
+
+            app.UseGitHubAuthentication(new GitHubAuthenticationOptions()
+			{
 				ClientId = "05f28aee6fc34fa4be32",
 				ClientSecret = "15e227ae3fcd20a08dc3a533735a9b477e6e4cce",
 				Scope = { "gist", "repo" },

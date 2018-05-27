@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -34,6 +35,7 @@ namespace HwProj.Models.ViewModels
 		/// Название задания
 		/// </summary>
 		[Required]
+		[DisplayName("Название задания")]
 		public string Title { get; set; }
 		/// <summary>
 		/// Номер задания
@@ -47,6 +49,7 @@ namespace HwProj.Models.ViewModels
 		/// Описание задания 
 		/// </summary>
 		[Required]
+		[DisplayName("Описание задания")]
 		public string Description { get; set; }
 		public TaskEditViewModel() { }
 		public TaskEditViewModel(TaskViewModel model)
