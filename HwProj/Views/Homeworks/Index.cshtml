@@ -2,14 +2,8 @@
 @using Microsoft.AspNet.Identity
 @model HwProj.Models.Homework
 @{
-    if (User.Identity.GetUserName() == Model.Task.Course.Mentor.Email)
-    {
-        ViewBag.Title = "Отправка рецензии";
-    }
-    else
-    {
-        ViewBag.Title = "Просмотр решения";
-    }
+    ViewBag.Title = User.Identity.GetUserId() == Model.Task.Course.Mentor.Id ? "Отправка рецензии" :
+                                                                               "Просмотр решения";
 }
 
 <br />

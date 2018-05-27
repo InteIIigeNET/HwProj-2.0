@@ -456,6 +456,7 @@
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Filters\AnonymousOnlyAttribute.cs" />
     <Compile Include="Filters\GitHubAccessAttribute.cs" />
+    <Compile Include="Filters\ModelNotFoundAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
