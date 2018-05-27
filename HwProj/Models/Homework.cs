@@ -1,9 +1,11 @@
 ﻿using HwProj.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using HwProj.Models.Interfaces;
 
 namespace HwProj.Models
 {
@@ -13,7 +15,7 @@ namespace HwProj.Models
 	/// Модель задание, выполненное студентом
 	/// </summary>
     [Table("StudentsHomework")]
-	public class Homework
+	public class Homework : IModel
 	{
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
@@ -35,6 +37,7 @@ namespace HwProj.Models
         /// <summary>
         /// Пользователь по этому userId
         /// </summary>
+        [ForeignKey("StudentId")]
         public User Student { get; set; }
 		/// <summary>
 		/// Зачтена ли данная попытка сдачи выполненного задания

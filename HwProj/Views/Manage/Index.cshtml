@@ -1,17 +1,18 @@
 ﻿@using HwProj.Models.ViewModels
-
+@model HwProj.Models.User
 @{
     ViewBag.Title = "Редактирование профиля";
 }
 
 <br />
 <div class="row">
-    <div class="col-lg-4 col-md-4">
-        @Html.Partial("_EditProfileMenuPartial")
-    </div>
-    <div class="col-lg-8 col-md-8 col-sm-12 col-12">
-        @*should be one of the partials*@
-        <div id="profile_partial">
+    <div class="offset-xl-1 col-xl-10 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-12">
+        <div class="jumbotron jumbotron_border_gray">
+            <h4 class="text-center">@ViewBag.Title</h4>
+            <hr />
+            <div class="offset-xl-1 col-xl-10 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-12">
+                @Html.Partial("_EditProfileInfoPartial", new EditViewModel(Model))
+            </div>
         </div>
     </div>
 </div>
@@ -19,3 +20,11 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+@*<div class="col-lg-4 col-md-4">
+        @Html.Partial("_EditProfileMenuPartial")
+</div>*@
+
+@*<div id="profile_partial">
+    @Html.Partial("_EditProfileInfoPartial", new EditViewModel(Model))
+</div>*@

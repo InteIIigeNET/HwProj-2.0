@@ -41,8 +41,9 @@ namespace HwProj.Controllers
     [GitHubAccess]
     public class GitHubController : Controller
     {
-        // GET: GitHub 
-        public async Task<ActionResult> Index()
+	    MainRepository Db = MainRepository.Instance;
+		// GET: GitHub 
+		public async Task<ActionResult> Index()
         {
             ViewBag.Repos = await GitHubCreator.GetStorageInstance().GetRepositoriesAsync();
             return PartialView();

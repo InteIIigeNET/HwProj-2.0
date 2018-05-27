@@ -3,60 +3,75 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
-using System.Web.Http;
 using System.Web.Mvc;
 using HwProj.Models.Repositories;
 using HwProj.Models.ViewModels;
 using HwProj.Services;
+using HwProj.Tools;
+using Microsoft.AspNet.Identity;
 using Task = HwProj.Models.Task;
 
 namespace HwProj.Controllers
 {
-    [System.Web.Mvc.Authorize]
+    [Authorize]
     public class TasksController : Controller
     {
-	    readonly MainEduRepository _db = MainEduRepository.Instance;
+	    readonly MainRepository _db = MainRepository.Instance;
 
-        [System.Web.Http.HttpPost]
-        [System.Web.Mvc.Authorize(Roles = "Преподаватель")]
+        [HttpPost]
+        [Authorize(Roles = "Преподаватель")]
         public async Task<ActionResult> Create(TaskCreateViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View();
             }
-            var newTask = new Task(model);
-            if (_db.TaskManager.Add(newTask))
+	        var course = _db.CourseManager.Get(c => c.Id == model.CourseId);
+	        var newTask = new Task(model)
+	        {
+		        CourseId = model.CourseId,
+		        Course = course
+	        };
+            if (_db.TaskManager.Add(User.Identity.GetUserId(), newTask))
             {
 	            await NotificationsService.SendNotifications(newTask.Course.Users.Select(m => m.User),
 		            u => $"В курсе {newTask.Course.Name} добавлено задание {newTask.Title}");
 
                 return RedirectToAction("Index", "Courses", new { courseId = model.CourseId });
             }
-            ModelState.AddModelError("", "Не удалось добавить задание");
+            ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
             return View();
         }
 
-	    [System.Web.Mvc.Authorize(Roles = "Преподаватель")]
+	    [Authorize(Roles = "Преподаватель")]
 	    public ActionResult _EditPartial(TaskEditViewModel model)
 	    {
 			return PartialView(model);
 		}
 
-		[System.Web.Mvc.Authorize(Roles = "Преподаватель")]
+		[Authorize(Roles = "Преподаватель")]
         public ActionResult Edit(TaskEditViewModel model)
 		{
-			return PartialView("TaskPartial", new TaskViewModel(model));
+			if (!ModelState.IsValid)
+			{
+				return PartialView("_EditPartial", model);
+			}
+			if (!_db.TaskManager.Update(User.Identity.GetUserId(), new Task(model)))
+			{
+				ModelState.AddModelError("", @"Ошибка при обновлении базы данных"); 
+				return PartialView("_EditPartial", model);
+			}
+			return PartialView("TaskPartial", new TaskViewModel(model) { MentorEmail = User.Identity.GetUserEmail()});
 		}
 
-	    [System.Web.Http.Authorize(Roles = "Преподаватель")]
-        public ActionResult Delete(long? taskId, long? courseId)
+	    [Authorize(Roles = "Преподаватель")]
+        public ActionResult Delete(long taskId, long courseId)
         {
-            if (taskId == null || !_db.TaskManager.Delete(taskId.Value))
-            {
-                ModelState.AddModelError("", "Не удалось удалить задание");
-            }
-            return RedirectToAction("Index", "Courses", new { courseId });
+	        if (!_db.TaskManager.Delete(User.Identity.GetUserId(), taskId))
+	        {
+				ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
+			}
+			return RedirectToAction("Index", "Courses", new { courseId });
         }
     }
 }

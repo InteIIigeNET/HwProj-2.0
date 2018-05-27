@@ -1,27 +1,77 @@
 ﻿@using HwProj.Models.ViewModels
 @using Microsoft.AspNet.Identity
 @model HwProj.Models.Homework
+@{
+    if (User.Identity.GetUserName() == Model.Task.Course.Mentor.Email)
+    {
+        ViewBag.Title = "Отправка рецензии";
+    }
+    else
+    {
+        ViewBag.Title = "Просмотр решения";
+    }
+}
 
 <br />
-<div class="col-lg-8 col-md-8 col-sm-12 col-12">
-    @if (Model.StudentId == User.Identity.GetUserId() ||
- User.Identity.GetUserName() == Model.Task.Course.MentorsEmail)
-    {
-        @Html.LabelFor(m => m.Task.Title) @Html.ValueFor(m => m.Task.Title) <br/>
-        @Html.LabelFor(m => m.Task.Description) @Html.ValueFor(m => m.Task.Description) <br />
-        @Html.LabelFor(m => m.IsCompleted) @Html.ValueFor(m => m.IsCompleted) <br />
-        @Html.LabelFor(m => m.ReviewComment) @Html.ValueFor(m => m.ReviewComment) <br />
-        @Html.LabelFor(m => m.GitHub) @Html.ValueFor(m => m.GitHub) <br />
-        
-        if (User.Identity.GetUserName() == Model.Task.Course.MentorsEmail)
-        {
-            <br />
-            @Html.Partial("Review", new HomeworkAcceptViewModel() { HomeworkId = @Model.Id })
-        }
-            <div id="git-partial">
-                @Ajax.ActionLink("GitHub", "Index", "GitHub", new AjaxOptions { UpdateTargetId = "git-partial" });
-            </div> 
-    }
+<div class="row">
+    <div class="offset-xl-1 col-xl-10 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-12">
+        <div class="jumbotron jumbotron_border_gray">
+            <h3 class="text-center">@ViewBag.Title</h3>
+            <hr />
+
+            @if (Model.StudentId == User.Identity.GetUserId() ||
+            User.Identity.GetUserId() == Model.Task.Course.Mentor.Id)
+            {
+                <div class="form-group row">
+                    <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
+                        <b>@Html.LabelFor(m => m.Task.Title)</b>
+                    </div>
+                    <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
+                        @Html.ValueFor(m => m.Task.Title)
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
+                        <b>@Html.LabelFor(m => m.Task.Description)</b>
+                    </div>
+                    <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
+                        @Html.ValueFor(m => m.Task.Description)
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
+                        <b>@Html.LabelFor(m => m.IsCompleted)</b>
+                    </div>
+                    <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
+                        @Html.ValueFor(m => m.IsCompleted)
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
+                        <b>@Html.LabelFor(m => m.GitHub)</b>
+                    </div>
+                    <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
+                        @Html.ValueFor(m => m.GitHub)
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
+                        <b>@Html.LabelFor(m => m.ReviewComment)</b>
+                    </div>
+                    <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
+                        @Html.ValueFor(m => m.ReviewComment)
+                    </div>
+                </div>
+                if (User.Identity.GetUserName() == Model.Task.Course.Mentor.Email)
+                {
+                    @Html.Partial("Review", new HomeworkAcceptViewModel() { HomeworkId = @Model.Id })
+                }
+                <div id="git-partial">
+                        @Ajax.ActionLink("GitHub", "Index", "GitHub", new AjaxOptions { UpdateTargetId = "git-partial" })
+                </div>
+            }
+        </div>
+    </div>
 </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

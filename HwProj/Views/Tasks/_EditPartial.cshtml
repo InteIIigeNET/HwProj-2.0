@@ -2,25 +2,23 @@
 @using HwProj.Models.Enums
 @model TaskEditViewModel
 
-@Html.ValidationSummary("", new { @class = "text-danger" })
-<div class="form-group">
-    @Html.HiddenFor(t => t.TaskId)
-</div>
-<div class="form-group">
-    @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "Название задания" })
-    @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
-</div>
-<div class="form-group">
-    @Html.TextBoxFor(m => m.Description, new { @class = "form-control", placeholder = "Описание задания" })
-    @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
-</div>
-<div class="form-group">
-    <button class="btn btn-block btn-primary">
-        @Ajax.ActionLink("Изменить", "Edit", "Tasks", Model,
-                 new AjaxOptions { UpdateTargetId = "task_partial_" + Model.TaskId })
-    </button>
-</div>
-
-<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/jquery-3.3.1.min.js")" type="text/javascript"></script>
-
+@using (Ajax.BeginForm("Edit", new AjaxOptions {UpdateTargetId = "task_partial_" + Model.TaskId}))
+{
+    @Html.ValidationSummary("", new {@class = "text-danger"})
+    <div class="form-group">
+        @Html.HiddenFor(t => t.TaskId)
+        @Html.HiddenFor(t => t.CourseId)
+    </div>
+        <div class="form-group">
+        @Html.TextBoxFor(m => m.Title, new {@class = "form-control", placeholder = "Название задания"})
+        @Html.ValidationMessageFor(m => m.Title, "", new {@class = "text-danger"})
+    </div>
+    <div class="form-group">
+        @Html.TextAreaFor(m => m.Description, new {@class = "form-control", placeholder = "Описание задания", rows = 5})
+        @Html.ValidationMessageFor(m => m.Description, "", new {@class = "text-danger"})
+        
+    </div>
+    <div class="form-group">
+        <input class="btn btn-outline-primary" type="submit" value="Изменить"/>
+    </div>
+}

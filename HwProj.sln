@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HwProj", "HwProj\HwProj.csproj", "{2DBC85DC-7CC4-4F66-99A4-C90DA83B21BA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{63C7091B-B9EE-412C-8AC9-08254C78BCF1} = {63C7091B-B9EE-412C-8AC9-08254C78BCF1}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HwProj.Tests", "HwProj.Tests\HwProj.Tests.csproj", "{635CD50D-4064-42A2-ABBA-2E635BE575E1}"
 EndProject
@@ -12,6 +15,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HwProj.Models", "HwProj.Models\HwProj.Models.csproj", "{51E07460-9BB9-4C14-9E2A-8C3E6A167825}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HwProj.GitHubService.Test", "HwProj.GitHubService.Test\HwProj.GitHubService.Test.csproj", "{B997D51E-4437-4A28-8903-12857ABB4510}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "Logger\Logger.csproj", "{63C7091B-B9EE-412C-8AC9-08254C78BCF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +44,10 @@ Global
 		{B997D51E-4437-4A28-8903-12857ABB4510}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B997D51E-4437-4A28-8903-12857ABB4510}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B997D51E-4437-4A28-8903-12857ABB4510}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63C7091B-B9EE-412C-8AC9-08254C78BCF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63C7091B-B9EE-412C-8AC9-08254C78BCF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63C7091B-B9EE-412C-8AC9-08254C78BCF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63C7091B-B9EE-412C-8AC9-08254C78BCF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

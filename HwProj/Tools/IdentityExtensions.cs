@@ -21,20 +21,6 @@ namespace HwProj.Tools
 			var result = Getter(ci);
 			return result;
 		}
-		public static T GetUserId<T>(this IIdentity identity) where T : IConvertible
-		{
-			return GetClaim(identity,
-				ci =>
-				{
-					var id = ci.FindFirst(ClaimTypes.NameIdentifier);
-					if (id != null)
-					{
-						return (T)Convert.ChangeType(id.Value, typeof(T), CultureInfo.InvariantCulture);
-					}
-					return default(T);
-				});
-		}
-
 		public static string GetUserRole(this IIdentity identity)
 		{
 			return GetClaim(identity,

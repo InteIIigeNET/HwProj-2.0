@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using HwProj.Models.Interfaces;
 using HwProj.Models.ViewModels;
 
 namespace HwProj.Models
@@ -13,7 +14,7 @@ namespace HwProj.Models
 	/// Модель домашнего задания
 	/// </summary>
     [Table("Tasks")]
-    public class Task
+    public class Task : IModel
 	{
         /// <summary>
         /// Уникальный идентификатор задания 
@@ -48,5 +49,12 @@ namespace HwProj.Models
 			Title = model.Title;
 		}
 		public Task() : base() { }
+
+		public Task(TaskEditViewModel model)
+		{
+			Description = model.Description;
+			Title = model.Title;
+			Id = model.TaskId;
+		}
 	}
 }

@@ -5,24 +5,50 @@
 }
 
 <br />
-<div class="row">
-    <div class="offset-lg-2 col-lg-8 offset-md-2 col-md-8 offset-sm-1 col-sm-10 offset-1 col-10 pb-0">
-        <div class="jumbotron grey lighten-5">
-            <h3 class="display-4">HwProj</h3>
-            <h4><s>сайт</s> больше, чем сайт для проверки домашних работ</h4>
-            <input class="form-control" placeholder="Поиск названию курса" />
-            <hr />
+    @using (Ajax.BeginForm("FindCourses", "Courses", new AjaxOptions {UpdateTargetId = "results"}))
+    {
+        <div class="offset-lg-1 col-lg-10 col-md-10 offset-sm-1 col-sm-10 offset-1 col-10">
+            <div class="jumbotron jumbotron_border_gray">
+                <h3 class="display-4">HwProj</h3>
+                <h4><s>сайт</s> больше, чем сайт для проверки домашних работ</h4>
+                <br />
+                <div class="input-group mb-3">
+                    <input class="form-control" type="text" placeholder="Поиск названию курса" name="pattern" id = "searchInput" />
+                    <div class="input-group-append">
+                        <input class="btn btn-primary" type="submit" value="Поиск" />
+                    </div>
+                </div>
+                <br />
+            </div>
         </div>
+    }
+<div class="offset-lg-1 col-lg-10 col-md-10 offset-sm-1 col-sm-10 offset-1 col-10">
+    <div class="text-center jumbotron jumbotron_lower-border_gray course-list course-list_margin-top_negative ">
+        @Html.Partial("~/Views/Courses/_CoursesListPartial.cshtml", Model)
     </div>
-    @Html.Partial("~/Views/Courses/CoursesList.cshtml", Model)
-
 </div>
 
-@*<div class="row">
-        <div class="offset-lg-2 col-lg-8 offset-md-2 col-md-8 offset-sm-1 col-sm-10 col-12">
-            
-           
-        </div>
-    </div>*@
 
+<script src="@Url.Content("~/Scripts/jquery-3.3.1.min.js")" type="text/javascript"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+<script type ="text/javascript">
+    $("#searchInput").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: '@Url.Action("GetSearchResult","Courses")',
+                dataType: "json",
+                data: { search: $("#searchInput").val() },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                        return { label: item.Description, value: item.CourseName };
+                    }));
+                },
+                error: function (xhr, status, error) {
+                    alert("Ошибка");
+                }
+            });
+        }
+    });
+</script>

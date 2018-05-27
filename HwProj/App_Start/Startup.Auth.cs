@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Security.Claims;
-using System.Threading;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
@@ -10,11 +8,10 @@ using Owin;
 using HwProj.Models;
 using HwProj.Models.Contexts;
 using HwProj.Models.Roles;
-using KatanaContrib.Security.VK;
 using Microsoft.Owin.Security.Google;
 using Owin.Security.Providers.GitHub;
-using HwProj.Models.Repositories;
-
+//TODO:
+// вынести одинаковые строки в константы
 namespace HwProj
 {
     public partial class Startup
@@ -23,7 +20,7 @@ namespace HwProj
         public void ConfigureAuth(IAppBuilder app)
         {
 			// Настройка контекста базы данных, диспетчера пользователей и диспетчера входа для использования одного экземпляра на запрос
-			app.CreatePerOwinContext(ApplicationDbContext.Create);
+			app.CreatePerOwinContext(AppDbContext.Create);
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
 	        app.CreatePerOwinContext<ApplicationRoleManager>(ApplicationRoleManager.Create);

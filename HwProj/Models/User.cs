@@ -1,27 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
 using HwProj.Models.Enums;
+using HwProj.Models.Interfaces;
 using HwProj.Models.ViewModels;
 using HwProj.Models.Roles;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using WebGrease.Css.Extensions;
 
 namespace HwProj.Models
 {
 	/// <summary>
 	/// Модель пользователя сервиса
 	/// </summary>
-    [Table("Users")]
-    public sealed class User : IdentityUser
+    [Table("UsersDbContext")]
+    public class User : IdentityUser, IModel
     {
         #region Properties
 		public Gender Gender { get; set; }
@@ -83,6 +80,7 @@ namespace HwProj.Models
         {
             // Обратите внимание, что authenticationType должен совпадать с типом, определенным в CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+
 	        userIdentity.AddClaim(new Claim(ClaimTypes.Surname, this.Surname));
             userIdentity.AddClaim(new Claim(ClaimTypes.Name, this.Name));
 
