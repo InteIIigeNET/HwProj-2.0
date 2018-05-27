@@ -44,23 +44,34 @@ namespace HwProj.Controllers
 	    [HttpPost]
 	    public async Task<ActionResult> Create(HomeworkCreateViewModel model)
 	    {
-		    if (!ModelState.IsValid) ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
-		    else
+		    if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
+                ViewBag.Message = "Ошибка при обновлении базы данных";
+                ViewBag.Color = "danger";
+            }
+            else
 		    {
 			    var task = _repository.TaskManager.Get(t => t.Id == model.TaskId);
 			    var student = _repository.UserManager.Get(u => u.Id == User.Identity.GetUserId());
 			    var homework = new Homework(model, task, student);
 
 				if (!_repository.HomeworkManager.Add(homework))
-				    ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
-			    else
+                {
+                    ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
+                    ViewBag.Message = "Ошибка при обновлении базы данных";
+                    ViewBag.Color = "danger";
+                }
+                else
 			    {
 				    await NotificationsService.SendNotifications(new [] {task.Course.Mentor},
 					    u => $"Пользователь <b>{User.Identity.Name}</b> отправил решение к задаче " +
 					         $"<a href = \"{UrlGenerator.GetRouteUrl(Request.RequestContext, "Index", "Homeworks", new { homeworkId = homework.Id})}" +
 					         $"\">{task.Title}</>");
-			    }
-		    }
+                    ViewBag.Message = "Решение было успешно добавлено!";
+                    ViewBag.Color = "success";
+                }
+            }
 		    return View();
         }
 

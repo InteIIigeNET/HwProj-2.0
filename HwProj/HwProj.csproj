@@ -607,6 +607,7 @@
     <Content Include="Views\GitHub\PullRequest.cshtml" />
     <Content Include="Views\Homeworks\Review.cshtml" />
     <Content Include="Views\Tasks\TaskPartial.cshtml" />
+    <Content Include="Views\Courses\_CoursesListPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Test\" />

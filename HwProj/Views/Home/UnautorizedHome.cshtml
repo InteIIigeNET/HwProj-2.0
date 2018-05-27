@@ -11,21 +11,23 @@
             <div class="jumbotron jumbotron_border_gray">
                 <h3 class="display-4">HwProj</h3>
                 <h4><s>сайт</s> больше, чем сайт для проверки домашних работ</h4>
-                <input class="form-control" placeholder="Поиск названию курса" name="pattern" id = "searchInput" />
                 <br />
-                <div class="row float-xl-right float-lg-right float-md-right">
-                    <div class="col-sm-12 col-12">
-                        <input class="btn btn-block btn-primary" type="submit" value="Поиск" />
+                <div class="input-group mb-3">
+                    <input class="form-control" type="text" placeholder="Поиск названию курса" name="pattern" id = "searchInput" />
+                    <div class="input-group-append">
+                        <input class="btn btn-primary" type="submit" value="Поиск" />
                     </div>
                 </div>
-                <div class="clearfix"></div>
                 <br />
             </div>
         </div>
     }
-<div style="margin-top: -100px">
-    `@Html.Partial("~/Views/Courses/CoursesList.cshtml", Model)
+<div class="offset-lg-1 col-lg-10 col-md-10 offset-sm-1 col-sm-10 offset-1 col-10">
+    <div class="text-center jumbotron jumbotron_lower-border_gray course-list course-list_margin-top_negative ">
+        @Html.Partial("~/Views/Courses/_CoursesListPartial.cshtml", Model)
+    </div>
 </div>
+
 
 <script src="@Url.Content("~/Scripts/jquery-3.3.1.min.js")" type="text/javascript"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">

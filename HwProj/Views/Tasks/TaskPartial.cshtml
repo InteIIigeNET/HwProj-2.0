@@ -8,13 +8,36 @@
 </div>
 @if (User.Identity.Name == Model.MentorEmail)
 {
-<div>
-    @Ajax.ActionLink("Редактировать", "_EditPartial", "Tasks",
-                 new TaskEditViewModel(Model),
-                 new AjaxOptions { UpdateTargetId = "task_partial_" + Model.TaskId },
-                 new { @class = "btn btn-outline-primary" })
-    @Html.ActionLink("Удалить", "Delete", "Tasks", new { taskId = Model.TaskId, courseId = Model.CourseId }, new { @class = "btn btn-outline-primary" })
-</div>
+    <div>
+        @Ajax.ActionLink("Редактировать", "_EditPartial", "Tasks",
+                        new TaskEditViewModel(Model),
+                        new AjaxOptions { UpdateTargetId = "task_partial_" + Model.TaskId },
+                        new { @class = "btn btn-outline-primary" })
+        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#deleteTaskModal">Удалить</button>
+    </div>
+    <div class="modal fade" id="deleteTaskModal" tabindex="-1" role="dialog" aria-labelledby="deleteTaskModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteTaskModalLabel">Удаление задания</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Вы действительно действительно хотите удалить задание?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Отменить
+                    </button>
+                    <button type="button" class="btn btn-danger" onclick="location.href='@Url.Action("Delete", "Tasks", new { taskId = Model.TaskId, courseId = Model.CourseId })'">
+                        Удалить
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 }
 else
 {
