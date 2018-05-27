@@ -14,7 +14,6 @@ namespace HwProj.Tools
 			AutoNewLines = true,
 			LinkEmails = true,
 			QuoteSingleLine = true
-			//StrictBoldItalic = true	
 		});
 
 		public static string AsMarkdown(this string text)
@@ -23,9 +22,9 @@ namespace HwProj.Tools
 			{
 				return Engine.Transform(text);
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
-				//TODO: logging
+				Log.Log.Instance.Error(ex);
 				return text;
 			}
 		}

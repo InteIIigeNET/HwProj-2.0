@@ -8,6 +8,7 @@ using NLog.Config;
 namespace HwProj.Log
 {
 	public class Log
-	{ 
+	{
 		public static Logger Instance = LogManager.GetCurrentClassLogger();
 	}
+}

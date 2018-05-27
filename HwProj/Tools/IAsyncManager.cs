@@ -9,6 +9,6 @@ namespace HwProj.Tools
 	interface IAsyncManager
 	{
 		Task Run(Action action);
-		Task<U> Run<U>(Func<U> func);
+		Task<T> Run<T>(Func<T> func);
 	}
 }
