@@ -1,2 +1,27 @@
-﻿
-<h1>ЗАЕБИСЬ</h1>
+﻿@model HwProj.Models.GitHub.PullRequest
+
+<h5><a href=@Model.Owner.Url>@Model.Owner.Login</a></h5>
+<p>@Model.CreatedAt</p>
+<hr />
+<h6>Commits</h6>
+@foreach (var commit in Model.Commits)
+{
+    <p>@commit.CreatedAt</p>
+    <a href=@commit.Owner.Url>@commit.Owner.Login</a>
+    <a href=@commit.Url>@commit.Title</a>
+}
+<hr />
+<div id="comments">
+    <h6>Comments</h6>
+    @foreach (var comment in Model.ReviewComments)
+    {
+        <a href=@comment.Owner.Url>@comment.Owner.Login</a>
+        <p>@comment.Content</p>
+    }
+</div>
+
+@using (Ajax.BeginForm("SendComment", new AjaxOptions { UpdateTargetId = "comments", InsertionMode = InsertionMode.InsertAfter }))
+{
+    <input type="text" name="content" />
+    <input type="submit" value="Отправить" />
+}

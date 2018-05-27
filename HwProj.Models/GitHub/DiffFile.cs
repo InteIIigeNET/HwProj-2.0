@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace HwProj.Models.GitHub
 {
-    public class Comment
+    public class DiffFile
     {
-        public string Content { get; set; }
-
-        public User Owner { get; set; }
+        public string Name { get; set; }
+        public IEnumerable<DiffLine> DiffLines { get; set; }
     }
 }

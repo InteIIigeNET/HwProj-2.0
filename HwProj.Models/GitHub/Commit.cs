@@ -15,5 +15,7 @@ namespace HwProj.Models.GitHub
         public string Url { get; set; }
 
         public DateTime CreatedAt { get; set; }
+
+        public string Sha { get; set; }
     }
 }

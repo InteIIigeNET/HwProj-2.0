@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace HwProj.Models.GitHub
 {
-    public class Comment
+    public class DiffLine
     {
-        public string Content { get; set; }
-
-        public User Owner { get; set; }
+        public string CssClass { get; set; }
+        public int Number { get; set; }
+        public string Line { get; set; }
     }
 }
