@@ -1,14 +1,19 @@
-﻿@model HwProj.Models.ViewModels.HomeworkCreateViewModel
+﻿@using HwProj.Tools;
+@model HwProj.Models.ViewModels.HomeworkCreateViewModel
 @{
     ViewBag.Title = "Отправить домашнее задание";
 }
 <br />
 <div class="row">
-    <div class="offset-xl-1 col-xl-10 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-12">
+    <div id="homework_create" class="offset-xl-1 col-xl-10 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-12">
+        @if (!string.IsNullOrEmpty(User.Identity.GetGitHubToken()))
+        {
+            @Ajax.ActionLink("Отправить через github", "Index", "GitHub", Model, new AjaxOptions { UpdateTargetId = "homework_create" })
+        }
         @using (Html.BeginForm("Create",
-            "Homeworks",
-            FormMethod.Post,
-            new { @class = "jumbotron", @id = "register-form", role = "form" }))
+        "Homeworks",
+        FormMethod.Post,
+        new { @class = "jumbotron", @id = "register-form", role = "form" }))
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(h => h.TaskId)
@@ -35,7 +40,24 @@
         }
     </div>
 </div>
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval");
+    <script type="text/javascript">
+        function FillBranch() {
+            var repositoryName = $('#RepositoryName').val();
+            $.ajax({
+                url: '/GitHub/FillBranch',
+                type: "GET",
+                dataType: "JSON",
+                data: { repository: repositoryName },
+                success: function (branches) {
+                    $("#BranchRef").html(""); // clear before appending new list
+                    $.each(branches, function (i, branch) {
+                        $("#BranchRef").append(
+                            $('<option></option>').val(branch).html(branch));
+                    });
+                }
+            });
+        }
+    </script>
 }
-

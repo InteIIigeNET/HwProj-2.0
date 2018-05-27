@@ -47,7 +47,7 @@ namespace HwProj.GitHubService
 
         private async Task<Models.GitHub.PullRequest> CreatePullRequestAsync(string title, string repName, string branchRef, string owner)
         {
-            var pullRequest = await client?.PullRequest.Create(owner, repName, new NewPullRequest(title, "master", branchRef));
+            var pullRequest = await client?.PullRequest.Create(owner, repName, new NewPullRequest(title, branchRef, "master"));
             var commits = await client?.PullRequest.Commits(owner, repName, pullRequest.Number);
             return pullRequest.ToPullRequest(commits.ToCommits(), null);
         }
