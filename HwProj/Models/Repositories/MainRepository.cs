@@ -14,27 +14,27 @@ namespace HwProj.Models.Repositories
 	    public CourseMateManager    CourseMateManager    { get; }
 
 		#region Singleton
-		private static readonly Lazy<MainRepository> lazy =
+		private static readonly Lazy<MainRepository> Lazy =
         new Lazy<MainRepository>(() => new MainRepository());
 
-        public static MainRepository Instance => lazy.Value;
+        public static MainRepository Instance => Lazy.Value;
 
 	    #endregion
 
         private MainRepository()
         {
-            CourseManager        = new CoursesManager(Context);
-            UserManager          = new UserManager(Context);
-            HomeworkManager      = new HomeworksManager(Context);
-            TaskManager          = new TasksManager(Context);
-            NotificationsManager = new NotificationsManager(Context);
-	        CourseMateManager    = new CourseMateManager(Context);
+            CourseManager        = new CoursesManager      (_context);
+            UserManager          = new UserManager         (_context);
+            HomeworkManager      = new HomeworksManager    (_context);
+            TaskManager          = new TasksManager        (_context);
+            NotificationsManager = new NotificationsManager(_context);
+	        CourseMateManager    = new CourseMateManager   (_context);
 		}
 
-	    private AppDbContext Context = AppDbContext.Create();
+	    private AppDbContext _context = AppDbContext.Create();
         public void Dispose()
         {
-	        Context.IfNotNull(c => c.Dispose());
+	        _context.IfNotNull(c => c.Dispose());
             GC.SuppressFinalize(this);
         }
     }

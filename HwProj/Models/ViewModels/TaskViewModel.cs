@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -34,6 +35,7 @@ namespace HwProj.Models.ViewModels
 		/// Название задания
 		/// </summary>
 		[Required]
+		[DisplayName("Название задания")]
 		public string Title { get; set; }
 		/// <summary>
 		/// Номер задания
@@ -47,6 +49,7 @@ namespace HwProj.Models.ViewModels
 		/// Описание задания 
 		/// </summary>
 		[Required]
+		[DisplayName("Описание задания")]
 		public string Description { get; set; }
 		public TaskEditViewModel() { }
 		public TaskEditViewModel(TaskViewModel model)
@@ -66,7 +69,7 @@ namespace HwProj.Models.ViewModels
 		/// <summary>
 		/// Просматривает ли таск преподаватель (для возможности редактирования, удаления)
 		/// </summary>
-		public string MentorEmail { get; set; }
+		public string MentorId { get; set; }
 		/// <summary>
 		/// Номер задания
 		/// </summary>
@@ -88,7 +91,7 @@ namespace HwProj.Models.ViewModels
 			Description = task.Description;
 			TaskId = task.Id;
 			CourseId = task.Course.Id;
-			MentorEmail = task.Course.Mentor.Email;
+			MentorId = task.Course.Mentor.Id;
 		}
 		public TaskViewModel(TaskEditViewModel model)
 		{

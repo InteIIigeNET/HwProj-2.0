@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HwProj.Models.GitHub
+{
+    public class DiffLine
+    {
+        public string CssClass { get; set; }
+        public int Number { get; set; }
+        public string Line { get; set; }
+    }
+}

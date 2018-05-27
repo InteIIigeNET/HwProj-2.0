@@ -14,18 +14,17 @@ namespace HwProj.Tools
 			AutoNewLines = true,
 			LinkEmails = true,
 			QuoteSingleLine = true
-			//StrictBoldItalic = true	
 		});
 
 		public static string AsMarkdown(this string text)
 		{
 			try
 			{
-				return Engine.Transform(text); //.Replace("<code>", "<code style = \"color: brown; background-color: ivory;\">");
+				return Engine.Transform(text);
 			}
-			catch (Exception)
+			catch (Exception ex)
 			{
-				//TODO: logging
+				Log.Log.Instance.Error(ex);
 				return text;
 			}
 		}

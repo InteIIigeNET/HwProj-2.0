@@ -1,0 +1,16 @@
+﻿@using HwProj.Models.ViewModels
+@using Microsoft.AspNet.Identity
+@model CourseViewModel
+
+    <h4>@Model.Name</h4>
+    <div>
+        <h5 class="">@Model.GroupName группа</h5>
+
+        @if (User.Identity.GetUserId() == Model.MentorId)
+        {
+            @Ajax.ActionLink("📝", "_EditPartial", "Courses", new CourseEditViewModel(Model), 
+                new AjaxOptions {UpdateTargetId = "course_info"},
+                new { @class = "btn btn-outline-primary" })
+        }
+
+    </div>

@@ -40,7 +40,7 @@
                         var notReadNotifi = Model.NoReadNotifications;
                         foreach (var notifi in notReadNotifi.OrderByDescending(n => n.SendingTime))
                         {
-                            <div class="alert alert-info alert-dismissible">
+                            <div class="alert alert-info alert-dismissible fade show">
                                 <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                 @Html.Raw(@notifi.Text)<br />
                                 <b>@notifi.SendingTime.Value.ToLongDateString()</b>

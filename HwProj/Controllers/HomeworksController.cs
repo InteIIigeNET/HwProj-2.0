@@ -24,7 +24,11 @@ namespace HwProj.Controllers
 		    if (homeworkId.HasValue)
 		    {
 			    var homework = _repository.HomeworkManager.Get(h => h.Id == homeworkId.Value);
-			    return View(homework);
+			    var userId = User.Identity.GetUserId();
+				if (homework != null && 
+				   (userId == homework.Task.Course.Mentor.Id ||
+					userId == homework.StudentId))
+					return View(homework);
 		    }
 			return RedirectToAction("Index", "Home");
 		}
@@ -44,23 +48,27 @@ namespace HwProj.Controllers
 	    [HttpPost]
 	    public async Task<ActionResult> Create(HomeworkCreateViewModel model)
 	    {
-		    if (!ModelState.IsValid) ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
-		    else
+		    if (!ModelState.IsValid) AddViewBagError(@"Ошибка при обновлении базы данных");
+            else
 		    {
 			    var task = _repository.TaskManager.Get(t => t.Id == model.TaskId);
 			    var student = _repository.UserManager.Get(u => u.Id == User.Identity.GetUserId());
 			    var homework = new Homework(model, task, student);
 
 				if (!_repository.HomeworkManager.Add(homework))
-				    ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
-			    else
+                {
+					AddViewBagError(@"Ошибка при обновлении базы данных");
+				}
+                else
 			    {
 				    await NotificationsService.SendNotifications(new [] {task.Course.Mentor},
 					    u => $"Пользователь <b>{User.Identity.Name}</b> отправил решение к задаче " +
 					         $"<a href = \"{UrlGenerator.GetRouteUrl(Request.RequestContext, "Index", "Homeworks", new { homeworkId = homework.Id})}" +
-					         $"\">{task.Title}</>");
-			    }
-		    }
+					         $"\">{task.Title}</a>");
+                    ViewBag.Message = "Решение было успешно добавлено!";
+                    ViewBag.Color = "success";
+                }
+            }
 		    return View();
         }
 
@@ -85,5 +93,13 @@ namespace HwProj.Controllers
 		    return RedirectToAction("Index", "Courses", homework.Task.Course.Id);
 		}
 
+		#region Local Tools
+	    private void AddViewBagError(string errorMessage)
+	    {
+			ModelState.AddModelError("", errorMessage);
+		    ViewBag.Message = errorMessage;
+		    ViewBag.Color = "danger";
+		}
+		#endregion
 	}
 }

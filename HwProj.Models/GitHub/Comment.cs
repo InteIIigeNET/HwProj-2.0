@@ -8,8 +8,8 @@ namespace HwProj.Models.GitHub
 {
     public class Comment
     {
-        public User Owner { get; set; }
-
         public string Content { get; set; }
+
+        public User Owner { get; set; }
     }
 }

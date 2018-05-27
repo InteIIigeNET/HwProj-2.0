@@ -61,7 +61,7 @@ namespace HwProj.Controllers
 				ModelState.AddModelError("", @"Ошибка при обновлении базы данных"); 
 				return PartialView("_EditPartial", model);
 			}
-			return PartialView("TaskPartial", new TaskViewModel(model) { MentorEmail = User.Identity.GetUserEmail()});
+			return PartialView("TaskPartial", new TaskViewModel(model) { MentorId = User.Identity.GetUserId()});
 		}
 
 	    [Authorize(Roles = "Преподаватель")]

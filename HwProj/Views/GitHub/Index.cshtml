@@ -1,52 +1,20 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    @using HwProj.Models.ViewModels
-    @model PullRequestCreateViewModel
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/scripts")
-    @Scripts.Render("~/bundles/unobtrusive")
+﻿@using HwProj.Models.ViewModels
+@model PullRequestCreateViewModel
 
-        <script type="text/javascript">
-            function FillBranch() {
-                var repositoryName = $('#RepositoryName').val();
-                $.ajax({
-                    url: '/GitHub/FillBranch',
-                    type: "GET",
-                    dataType: "JSON",
-                    data: { repository: repositoryName },
-                    success: function (branches) {
-                        $("#BranchRef").html(""); // clear before appending new list
-                        $.each(branches, function (i, branch) {
-                            $("#BranchRef").append(
-                                $('<option></option>').val(branch).html(branch));
-                        });
-                    }
-                });
-            }
-        </script>
-    
-    </head>
-<body>
-
-    @using (Html.BeginForm("Index", "GitHub",
-               FormMethod.Post,
-               new { @class = "jumbotron grey lighten-5 pt-5", @id = "login-form", role = "form" }))
-    {
-        <div class="form-group">
-            @Html.DropDownListFor(model => model.RepositoryName, new SelectList(ViewBag.Repos as IEnumerable<string>), "Выберите репозиторий", new { @class = "form-control", @onchange = "FillBranch()" })
-        </div>
-        <div class="form-group">
-            @Html.DropDownListFor(model => model.BranchRef, new SelectList(Enumerable.Empty<SelectListItem>()), "Выберите ветку", new { @class = "form-control" })
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Title, "Название")
-            @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Title) })
-        </div>
-        <div class="form-group">
-            <button class="btn btn-block btn-primary" type="submit">Создать pull request</button>
-        </div>
-    }
-    </body>
-</html>
+@using (Html.BeginForm("Index", "GitHub",
+        FormMethod.Post, new { @class = "jumbotron grey lighten-5 pt-5", @id = "login-form", role = "form" }))
+{
+    <div class="form-group">
+        @Html.DropDownListFor(model => model.RepositoryName, new SelectList(ViewBag.Repos as IEnumerable<string>), "Выберите репозиторий", new { @class = "form-control", @onchange = "FillBranch()" })
+    </div>
+    <div class="form-group">
+        @Html.DropDownListFor(model => model.BranchRef, new SelectList(Enumerable.Empty<SelectListItem>()), "Выберите ветку", new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Title, "Название")
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Title) })
+    </div>
+    <div class="form-group">
+        <button class="btn btn-block btn-primary" type="submit">Создать pull request</button>
+    </div>
+}

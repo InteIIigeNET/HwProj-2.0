@@ -3,24 +3,24 @@
 @{    
     using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }))
     {
-                        @Html.AntiForgeryToken()
-                        <div>
-                            <p>Привяжите аккаунт из социальных сетей:</p>
-                            <div class="text-center" id="social-login-list">
-                    @foreach (var p in Model.LoginProviders)
-                    {
-                        string provider = (p == "Vkontakte") ? "vk" : p.ToLower();
+        @Html.AntiForgeryToken()
+        <div>
+            <p>Привяжите аккаунт из социальных сетей:</p>
+            <div class="text-center" id="social-login-list">
+                @foreach (var p in Model.LoginProviders)
+                {
+                    string provider = (p == "Vkontakte") ? "vk" : p.ToLower();
 
-                        <button class="btn btn-dark"
-                                type="submit"
-                                id="@p"
-                                name="provider"
-                                value="@p"
-                                title="Привязать аккаунт из @p">
-                            <i class="fab fa-@provider fa-lg" data-fa-mask="fas fa-square"></i>
-                        </button>
-                    }
-                </div>
-            </div>            
-        }
+                    <button class="btn btn-dark"
+                            type="submit"
+                            id="@p"
+                            name="provider"
+                            value="@p"
+                            title="Привязать аккаунт из @p">
+                        <i class="fab fa-@provider fa-lg" data-fa-mask="fas fa-square"></i>
+                    </button>
+                }
+            </div>
+        </div>            
     }
+}

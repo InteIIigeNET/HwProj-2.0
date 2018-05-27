@@ -18,8 +18,8 @@ namespace HwProj.Models.Repositories
 		        context =>
 		        {
 			        if (Contains(h => h.Id == item.Id)) return false;
-			        var oldAttempts = GetAll(h => h.TaskId == item.TaskId
-			                                      && h.StudentId == item.StudentId);
+			        var oldAttempts = GetAll(h => h.TaskId    == item.TaskId && 
+												  h.StudentId == item.StudentId);
 
 			        if (oldAttempts == null || !oldAttempts.Any()) item.Attempt = 1;
 			        else

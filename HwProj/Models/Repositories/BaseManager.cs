@@ -9,19 +9,18 @@ using Microsoft.Ajax.Utilities;
 
 namespace HwProj.Models.Repositories
 {
-    internal abstract class BaseManager<U> where U: class, IModel
+    internal abstract class BaseManager<T> where T: class, IModel
     {
-	    protected BaseManager(AppDbContext context)
+	    private readonly AppDbContext _context;
+		protected BaseManager(AppDbContext context)
 	    {
 		    _context = context;
 	    }
-		private AppDbContext _context;
-	    protected T Execute<T>(Func<DbSet<U>, T> action)
+	    protected U Execute<U>(Func<DbSet<T>, U> action)
 	    {
-		    var result = action(_context.Set<U>());
+		    var result = action(_context.Set<T>());
 		    return result;
 	    }
-
 	    protected int SaveChanges()
 	    {
 		    return _context.SaveChanges();

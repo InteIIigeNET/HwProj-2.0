@@ -1,35 +1,69 @@
-﻿@model HwProj.Models.ViewModels.HomeworkCreateViewModel
+﻿@using HwProj.Tools;
+@model HwProj.Models.ViewModels.HomeworkCreateViewModel
 @{
     ViewBag.Title = "Отправить домашнее задание";
+    var alertVisibility = ViewBag.Message == null ? "none" : "block";
+    var alertAutohide = ViewBag.Message == null ? string.Empty : "alert-autohide";
 }
+
+
 <br />
 <div class="row">
-    <div class="offset-lg-4 col-lg-4 offset-md-3 col-md-6 offset-sm-4 col-sm-8 col-12">
+    <div id="homework_create" class="offset-xl-1 col-xl-10 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-12">
+        @if (!string.IsNullOrEmpty(User.Identity.GetGitHubToken()))
+        {
+            @Ajax.ActionLink("Отправить через github", "Index", "GitHub", Model, new AjaxOptions { UpdateTargetId = "homework_create" })
+        }
         @using (Html.BeginForm("Create",
         "Homeworks",
         FormMethod.Post,
-        new { @class = "jumbotron", @id = "register-form", role = "form" }))
-    {
-        @Html.AntiForgeryToken()
-        @Html.HiddenFor(h => h.TaskId)
-        <h3 class="text-center">@ViewBag.Title</h3>
-        <hr />
-        @Html.DisplayTextFor(h => h.Description)
-        @Html.ValidationSummary("", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.TextBoxFor(m => m.GitHub, new { @class = "form-control", placeholder = @Html.DisplayTextFor(t => t.GitHub) })
-            @Html.ValidationMessageFor(m => m.GitHub, "", new { @class = "text-danger" })
-        </div>
-        <div class="form-group">
-            @Html.TextBoxFor(m => m.Comment, new { @class = "form-control", placeholder = @Html.DisplayTextFor(t => t.GitHub) })
-        </div>
-        <div class="form-group">
-            <button class="btn btn-block btn-primary" type="submit">Отправить</button>
-        </div>
-}
+        new { @class = "jumbotron jumbotron_border_gray", @id = "register-form", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(h => h.TaskId)
+            <h3 class="text-center">@ViewBag.Title</h3>
+            <hr />
+
+            <div class="alert alert-@ViewBag.Color alert-dismissible @alertAutohide fade show" role="alert" style="display: @alertVisibility">
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                @ViewBag.Message
+            </div>
+
+            @Html.DisplayTextFor(h => h.Description)
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.TextBoxFor(m => m.GitHub, new { @class = "form-control", placeholder = Html.DisplayNameFor(t => t.GitHub) })
+                @Html.ValidationMessageFor(m => m.GitHub, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.TextAreaFor(m => m.Comment, new { @class = "form-control", placeholder = Html.DisplayNameFor(t => t.Comment), rows = 5 })
+            </div>
+            <div class="form-group">
+                <button class="btn btn btn-primary" type="submit">Отправить</button>
+            </div>
+        }
     </div>
 </div>
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval");
+    <script type="text/javascript">
+        function FillBranch() {
+            var repositoryName = $('#RepositoryName').val();
+            $.ajax({
+                url: '/GitHub/FillBranch',
+                type: "GET",
+                dataType: "JSON",
+                data: { repository: repositoryName },
+                success: function (branches) {
+                    $("#BranchRef").html(""); // clear before appending new list
+                    $.each(branches, function (i, branch) {
+                        $("#BranchRef").append(
+                            $('<option></option>').val(branch).html(branch));
+                    });
+                }
+            });
+        }
+    </script>
 }
-

@@ -1,12 +1,17 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/scripts")
+    @Scripts.Render("~/bundles/unobtrusive")
+    @RenderSection("scripts", required: false)
 </head>
 <body class="body body_background-color_gray">
     <nav class="navbar navbar-expand-sm navbar-dark bg-primary fixed-top">
@@ -32,11 +37,5 @@
             <p>&copy; @DateTime.Now.Year HwProj 2.0</p>
         </footer>
     </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/scripts")
-    @Scripts.Render("~/bundles/unobtrusive")
-    @RenderSection("scripts", required: false)
 </body>
 </html>

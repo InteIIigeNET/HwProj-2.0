@@ -24,7 +24,7 @@ namespace HwProj.Controllers
 			if (User.Identity.IsAuthenticated)
             {
                 var user = _db.UserManager.Get(u => u.Email == User.Identity.Name);
-				return View(user);
+                return View(user);
             }
             var courses = _db.CourseManager.GetAll();
             return View(courses);

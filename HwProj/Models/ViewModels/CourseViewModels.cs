@@ -77,7 +77,7 @@ namespace HwProj.Models.ViewModels
 		/// Уникальный идентификатор курса
 		/// </summary>
         [ScaffoldColumn(false)]
-        public Guid Id { get; set; }
+        public long Id { get; set; }
         /// <summary>
         /// Название курса
         /// </summary>
@@ -100,7 +100,24 @@ namespace HwProj.Models.ViewModels
 		/// </summary>
 		[Display(Name = "Преподаватель")]
         public string MentorName { get; set; }
-    }
+	    public string MentorId { get; set; }
+
+	    public CourseViewModel(CourseEditViewModel model)
+	    {
+			Name = model.Name;
+		    GroupName = model.GroupName;
+		    Id = model.CourseId;
+		    IsOpen = model.IsOpen;
+	    }
+	    public CourseViewModel(Course model)
+	    {
+		    Name = model.Name;
+		    GroupName = model.GroupName;
+		    Id = model.Id;
+		    IsOpen = model.IsOpen;
+		    MentorId = model.MentorId;
+	    }
+	}
 
 	public class CourseSearchViewModel
 	{
@@ -111,6 +128,37 @@ namespace HwProj.Models.ViewModels
 		{
 			CourseName = model.Name;
 			Description = CourseName + " :: " + model.Mentor.UserName;
+		}
+	}
+
+	public class CourseEditViewModel
+	{
+		/// <summary>
+		/// Название курса
+		/// </summary>
+		[Required]
+		[Display(Name = "Название курса")]
+		public string Name { get; set; }
+		/// <summary>
+		/// Название группы
+		/// </summary>
+		[Required]
+		[Display(Name = "Номер группы")]
+		public string GroupName { get; set; }
+		/// <summary>
+		/// номер курса
+		/// </summary>
+		[Required]
+		[Display(Name = "Курс открыт для всех?")]
+		public bool IsOpen { get; set; }
+		public long CourseId { get; set; }
+		public CourseEditViewModel() { }
+		public CourseEditViewModel(CourseViewModel model)
+		{
+			Name = model.Name;
+			GroupName = model.GroupName;
+			CourseId = model.Id;
+			IsOpen = model.IsOpen;
 		}
 	}
 }
