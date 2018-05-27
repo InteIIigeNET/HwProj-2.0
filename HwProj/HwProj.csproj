@@ -460,6 +460,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Log\LogInfo.cs" />
+    <Compile Include="Log\Log.cs" />
     <Compile Include="Migrations\201805271557111_init.cs" />
     <Compile Include="Migrations\201805271557111_init.Designer.cs">
       <DependentUpon>201805271557111_init.cs</DependentUpon>
