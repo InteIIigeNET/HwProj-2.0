@@ -1,4 +1,5 @@
-﻿@using HwProj.Models
+﻿@using System.Diagnostics.Eventing.Reader
+@using HwProj.Models
 @using HwProj.Models.Enums
 @using HwProj.Models.ViewModels
 @using HwProj.Tools
@@ -12,12 +13,18 @@
         <div class="jumbotron jumbotron_border_gray">
             <div class="float-xl-right float-lg-right float-md-left">
                 <h4>@Model.Mentor.Name @Model.Mentor.Surname</h4>
-
+                
                 @Html.ValidationSummary("", new { @class = "text-danger" })
-                @if (User.Identity.Name != Model.Mentor.Email && !Model.UserExist(User.Identity.GetUserId()))
+                @{ var user = Model.Users.FirstOrDefault(u => u.UserId == User.Identity.GetUserId()); }
+                @if (User.Identity.GetUserId() != Model.Mentor.Id && user == null)
                 {
                     @Html.ActionLink("Вступить в курс", "SingInCourse", new { courseId = Model.Id }, new { })
-                } else
+                }
+                else if (user != null && !user.IsAccepted)
+                {
+                    <p>Ваша заявка была отправлена преподавателю</p>
+                }
+                else
                 {
                     @helper EmailTextBot(string email, string title)
                     {
@@ -36,6 +43,7 @@
                         <button   class="btn btn-primary" title="Редактировать курс" onclick="location.href='@Url.Action("Edit", "Courses", null, null)'">
                             <i class="fas fa-pencil-alt"></i>
                         </button>
+
                         <button class="btn btn-primary" title="Добавить задание" onclick="location.href='@Url.Action("AddTask", "Courses", new { courseId = Model.Id}, null)'">
                             <i class="fas fa-plus"></i>
                         </button>
