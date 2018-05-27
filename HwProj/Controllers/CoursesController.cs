@@ -87,9 +87,24 @@ namespace HwProj.Controllers
 		}
 
 		[Authorize(Roles = "Преподаватель")]
-		public ActionResult Edit()
+		public ActionResult _EditPartial(CourseEditViewModel model)
 		{
-			return null;
+			return PartialView(model);
+		}
+
+		[Authorize(Roles = "Преподаватель")]
+		public ActionResult Edit(CourseEditViewModel model)
+		{
+			if (!ModelState.IsValid)
+			{
+				return PartialView("_EditPartial", model);
+			}
+			if (!_repository.CourseManager.Update(User.Identity.GetUserId(), new Course(model)))
+			{
+				ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
+				return PartialView("_EditPartial", model);
+			}
+			return PartialView("CoursePartial", new CourseViewModel(model) { MentorId = User.Identity.GetUserId() });
 		}
 
 		[Authorize(Roles = "Преподаватель")]

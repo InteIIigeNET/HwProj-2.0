@@ -1,12 +1,13 @@
 ﻿@using HwProj.Models.ViewModels
 @using HwProj.Tools
+@using Microsoft.AspNet.Identity
 @model HwProj.Models.ViewModels.TaskViewModel
 
 <div>
     <strong>@Model.Title</strong>
     @Html.Raw(@Model.Description.AsMarkdown())
 </div>
-@if (User.Identity.Name == Model.MentorEmail)
+@if (User.Identity.GetUserId() == Model.MentorId)
 {
     <div>
         @Ajax.ActionLink("Редактировать", "_EditPartial", "Tasks",

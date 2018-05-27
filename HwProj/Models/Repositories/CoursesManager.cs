@@ -6,8 +6,9 @@ using HwProj.Models.Contexts;
 
 namespace HwProj.Models.Repositories
 {
-    internal class CoursesManager : BaseManager<Course>, IRepository<Course>
-    {
+    internal class CoursesManager : BaseManager<Course>, IRepository<Course>,
+														 IControlWithRights<Course>
+	{
 
         public bool Add(Course item)
         {
@@ -96,5 +97,41 @@ namespace HwProj.Models.Repositories
 	    public CoursesManager(AppDbContext context) : base(context)
 	    {
 	    }
-    }
+
+		public bool Add(string userRights, Course item)
+		{
+			return Add(item);
+		}
+
+		public bool Delete(string userRights, long objId)
+		{
+			throw new NotImplementedException();
+		}
+		/// <summary>
+		/// Обнолвляет курс, если пройдена валидация юзера
+		/// </summary>
+		/// <param name="userRights">Id пользователя</param>
+		/// <param name="updateObj">Изменения</param>
+		/// <returns>true, если успешно</returns>
+		public bool Update(string userRights, Course updateObj)
+		{
+			return Execute
+			(
+				context =>
+				{
+					var course = Get(c => c.Id == updateObj.Id);
+					if (course == null) return false;
+
+					if (course.MentorId == userRights)
+					{
+						course.Name = updateObj.Name;
+						course.GroupName = updateObj.GroupName;
+						SaveChanges();
+						return true;
+					}
+					return false;
+				}
+			);
+		}
+	}
 }

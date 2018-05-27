@@ -13,12 +13,12 @@
         <div class="jumbotron jumbotron_border_gray">
             <div class="float-xl-right float-lg-right float-md-left">
                 <h4>@Model.Mentor.Name @Model.Mentor.Surname</h4>
-                
+
                 @Html.ValidationSummary("", new { @class = "text-danger" })
                 @{ var user = Model.Users.FirstOrDefault(u => u.UserId == User.Identity.GetUserId()); }
                 @if (User.Identity.GetUserId() != Model.Mentor.Id && user == null)
                 {
-                    @Html.ActionLink("Вступить в курс", "SingInCourse", new { courseId = Model.Id }, new { })
+                    @Html.ActionLink("Вступить в курс", "SingInCourse", new {courseId = Model.Id}, new {})
                 }
                 else if (user != null && !user.IsAccepted)
                 {
@@ -28,44 +28,35 @@
                 {
                     @helper EmailTextBot(string email, string title)
                     {
-                        <a href="mailto:@email?subject=@title">@email</a>
+                    <a href="mailto:@email?subject=@title">@email</a>
                     }
                     @EmailTextBot(Model.Mentor.Email, "Письмо от надоедливого студента")
                 }
             </div>
             <div class="float-xl-left float-lg-left float-md-left">
-                <h4>@Model.Name</h4>
-                <div>
-                    <h5 class="">@Model.GroupName группа</h5>
-                   
-                    @if (User.Identity.GetUserId() == Model.Mentor.Id)
-                    {
-                        <button   class="btn btn-primary" title="Редактировать курс" onclick="location.href='@Url.Action("Edit", "Courses", null, null)'">
-                            <i class="fas fa-pencil-alt"></i>
-                        </button>
-                    }
+                <div id="course_info">
+                    @Html.Partial("CoursePartial", new CourseViewModel(Model))
                 </div>
             </div>
-            <div class="clearfix"></div>     
-            <hr />
-            <h4>Задания
-                @if (User.Identity.GetUserId() == Model.Mentor.Id)
-                {
-                    <button class="btn btn-primary" title="Добавить задание" onclick="location.href='@Url.Action("AddTask", "Courses", new { courseId = Model.Id}, null)'">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                }
-            </h4>
-            <br />
-            @foreach (var task in Model.Tasks.Reverse())
-            {
-                <div class="task task_padding-bottom_20px" id="task_partial_@task.Id">
-                    @Html.Partial("~/Views/Tasks/TaskPartial.cshtml", new TaskViewModel(task))
-                </div>
-            }
+                <div class="clearfix"></div>
+                <hr />
+                <h4>
+                    Задания
+                    @if (User.Identity.GetUserId() == Model.Mentor.Id)
+                    {
+                        <button class="btn btn-primary" title="Добавить задание" onclick="location.href = '@Url.Action("AddTask", "Courses", new {courseId = Model.Id}, null)'">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    }
+                </h4>
+                <br />
+                @foreach (var task in Model.Tasks.Reverse())
+        {
+            <div class="task task_padding-bottom_20px" id="task_partial_@task.Id">
+                @Html.Partial("~/Views/Tasks/TaskPartial.cshtml", new TaskViewModel(task))
+            </div>
+}
+            </div>
         </div>
-    </div>
 </div>
-
-<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery-3.3.1.min.js")" type="text/javascript"></script>

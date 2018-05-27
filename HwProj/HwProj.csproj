@@ -611,6 +611,8 @@
     <Content Include="Views\Homeworks\Review.cshtml" />
     <Content Include="Views\Tasks\TaskPartial.cshtml" />
     <Content Include="Views\Courses\_CoursesListPartial.cshtml" />
+    <Content Include="Views\Courses\_EditPartial.cshtml" />
+    <Content Include="Views\Courses\CoursePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Test\" />
