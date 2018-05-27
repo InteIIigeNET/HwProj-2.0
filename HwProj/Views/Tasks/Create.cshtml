@@ -14,11 +14,11 @@
             <hr />
             @Html.ValidationSummary("", new { @class = "text-danger" })
             <div class="form-group">
-                @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "Название задания" })
+                @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = @Html.DisplayNameFor(t => t.Title)})
                 @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
-                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Описание задания", rows = 10 })
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = @Html.DisplayNameFor(t => t.Description), rows = 10 })
                 @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
             </div>
                 @Html.HiddenFor(model => model.CourseId)

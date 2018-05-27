@@ -66,7 +66,6 @@ namespace HwProj.Controllers
 		public ActionResult FindCourses(string pattern)
 		{
 			return PartialView("_CoursesListPartial", Find(pattern));
-			/* неоптимально */
 		}
 
 		[AllowAnonymous]
@@ -123,7 +122,7 @@ namespace HwProj.Controllers
 		}
 
 		[Authorize]
-		[ModelNotFound]
+		[CatchIfModelNotFound]
 		public async Task<ActionResult> SingInCourse(long? courseId)
 		{
 			if (courseId.HasValue)
@@ -150,7 +149,7 @@ namespace HwProj.Controllers
 		}
 
 		[Authorize(Roles = "Преподаватель")]
-		[ModelNotFound]
+		[CatchIfModelNotFound]
 		public async Task<ActionResult> AcceptUser(long? courseId, string userId, long? notifyId)
 		{
 			if (courseId.HasValue)
@@ -177,7 +176,7 @@ namespace HwProj.Controllers
 		}
 
 		[Authorize(Roles = "Преподаватель")]
-		[ModelNotFound]
+		[CatchIfModelNotFound]
 		public async Task<ActionResult> RejectUser(long? courseId, string userId, long? notifyId)
 		{
 			if (courseId.HasValue)
