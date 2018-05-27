@@ -126,6 +126,7 @@ namespace HwProj.Models.Repositories
 					{
 						course.Name = updateObj.Name;
 						course.GroupName = updateObj.GroupName;
+						course.IsOpen = updateObj.IsOpen;
 						SaveChanges();
 						return true;
 					}
