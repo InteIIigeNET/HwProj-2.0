@@ -18,24 +18,3 @@
         <button class="btn btn-block btn-primary" type="submit">Создать pull request</button>
     </div>
 }
-
-@section Scripts {
-    <script type="text/javascript">
-        function FillBranch() {
-            var repositoryName = $('#RepositoryName').val();
-            $.ajax({
-                url: '/GitHub/FillBranch',
-                type: "GET",
-                dataType: "JSON",
-                data: { repository: repositoryName },
-                success: function (branches) {
-                    $("#BranchRef").html(""); // clear before appending new list
-                    $.each(branches, function (i, branch) {
-                        $("#BranchRef").append(
-                            $('<option></option>').val(branch).html(branch));
-                    });
-                }
-            });
-        }
-    </script>
-}

@@ -12,11 +12,16 @@
 }
 <hr />
 <div id="comments">
-    <h6>Comments</h6>
-    @foreach (var comment in Model.ReviewComments)
+    <h6>Reviews</h6>
+    @foreach (var review in Model.Reviews)
     {
-        <a href=@comment.Owner.Url>@comment.Owner.Login</a>
-        <p>@comment.Content</p>
+        <a href=@review.HeadComment.Owner.Url>@review.HeadComment.Owner.Login</a>
+        <p>@review.HeadComment.Content</p>
+        foreach (var comment in review.ReviewComments)
+        {
+            <a href=@comment.Owner.Url>@comment.Owner.Login</a>
+            <p>@comment.Content</p>
+        }
     }
 </div>
 
