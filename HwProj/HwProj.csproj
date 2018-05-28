@@ -504,10 +504,13 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Services\NotificationPatterns\CourseNotifications.cs" />
+    <Compile Include="Services\NotificationPatterns\HomeworkNotifications.cs" />
+    <Compile Include="Services\NotificationPatterns\NotificationPattern.cs" />
     <Compile Include="Services\NotificationsService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Tools\AsyncManager.cs" />
-    <Compile Include="Tools\CourseBoard.cs" />
+    <Compile Include="Tools\CourseBoardGenerator.cs" />
     <Compile Include="Tools\GitHubInstance.cs" />
     <Compile Include="Tools\IAsyncManager.cs" />
     <Compile Include="Tools\IdentityExtensions.cs" />

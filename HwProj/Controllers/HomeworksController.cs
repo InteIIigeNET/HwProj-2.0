@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using HwProj.Services;
+using HwProj.Services.NotificationPatterns;
 using HwProj.Tools;
 using Microsoft.AspNet.Identity;
 
@@ -60,11 +61,8 @@ namespace HwProj.Controllers
 					AddViewBagError(@"Ошибка при обновлении базы данных");
 				}
                 else
-			    {
-				    await NotificationsService.SendNotifications(new [] {task.Course.Mentor},
-					    u => $"Пользователь <b>{User.Identity.Name}</b> отправил решение к задаче " +
-					         $"<a href = \"{UrlGenerator.GetRouteUrl(Request.RequestContext, "Index", "Homeworks", new { homeworkId = homework.Id})}" +
-					         $"\">{task.Title}</a>");
+				{
+					await (new NewHomeworkNotification(task, student, homework, Request)).Send();
                     ViewBag.Message = "Решение было успешно добавлено!";
                     ViewBag.Color = "success";
                 }
@@ -85,10 +83,7 @@ namespace HwProj.Controllers
 			    ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
 		    else
 		    {
-			    await NotificationsService.SendNotifications(u => u.Id == homework.StudentId,
-				    u => $"Задача <b>{homework.Task.Title}</b> проверена <i>(" + (model.IsAccepted
-					         ? "зачтена"
-					         : $"есть замечания: \"{model.ReviewComment.Substring(0, Math.Min(model.ReviewComment.Length, 15))}...\"") + ")</i>");
+			    await (new ReviewAddedNotification(homework, model)).Send();
 		    }
 		    return RedirectToAction("Index", "Courses", homework.Task.Course.Id);
 		}

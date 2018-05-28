@@ -9,6 +9,7 @@ using HwProj.Filters;
 using HwProj.Models.ViewModels;
 using HwProj.Models.Repositories;
 using HwProj.Services;
+using HwProj.Services.NotificationPatterns;
 using HwProj.Tools;
 using Microsoft.AspNet.Identity;
 
@@ -134,14 +135,7 @@ namespace HwProj.Controllers
 					ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
 				else
 				{
-					await NotificationsService.SendNotifications(new[] {course.Mentor},
-						u => $"Пользователь {u.Email} вступил в курс {course.Name}\n" +
-						     (course.IsOpen
-							     ? ""
-							     : new Button(Request.RequestContext, "Принять", "AcceptUser", "Courses",
-								       new {courseId = courseId, userId = user.Id, notifyId = Notification.ContextId}) +
-							       new Button(Request.RequestContext, "Отклонить", "RejectUser", "Courses",
-								       new {courseId = courseId, userId = user.Id, notifyId = Notification.ContextId})));
+					await (new UserJoinedNotification(course, user, Request)).Send();
 				}
 				return View("Index", course);
 			}
@@ -166,8 +160,7 @@ namespace HwProj.Controllers
 					ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
 				else
 				{
-					await NotificationsService.SendNotifications(new[] {user},
-						u => $"Ваша заявка на курс <b>{course.Name}</b> была принята преподавателем");
+					await (new IsUserAcceptedNotification(course, user, isAccepted: true)).Send();
 					if (notifyId.HasValue) _repository.NotificationsManager.Delete(notifyId.Value);
 				}
 				return View("Index", course);
@@ -195,8 +188,7 @@ namespace HwProj.Controllers
 				}
 				else
 				{
-					await NotificationsService.SendNotifications(new[] {user},
-						u => $"Ваша заявка на курс <b>{course.Name}</b> была отклонена преподавателем");
+					await (new IsUserAcceptedNotification(course, user, isAccepted: false)).Send();
 					if (notifyId.HasValue) _repository.NotificationsManager.Delete(notifyId.Value);
 				}
 			}
