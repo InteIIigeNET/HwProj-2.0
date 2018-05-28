@@ -33,14 +33,14 @@ namespace HwProj.Tools
 
 			foreach (var user in course.Users.Where(u => u.IsAccepted))
 			{
-				text.AppendLine($"<tr><th>{user.User.Name + " " + user.User.Surname}</th>");
+				text.AppendLine($"<tr><td title=\"{user.User.Email}\">{user.User.Name + " " + user.User.Surname}</td>");
 				text.AppendLine
-					($"<th>{course.Tasks.Sum(t => Convert.ToByte(!t.Homeworks.Where(h => h.IsCompleted).GroupBy(h => h.StudentId).Select(h => h.Key).Contains(user.UserId)))}</th>");
+					($"<td>{course.Tasks.Sum(t => Convert.ToByte(!t.Homeworks.Where(h => h.IsCompleted).GroupBy(h => h.StudentId).Select(h => h.Key).Contains(user.UserId)))}</td>");
 				foreach (var task in course.Tasks)
 				{
 					text.AppendLine(task.Homeworks.FirstOrDefault(h => h.StudentId == user.UserId).GetHomeworkStatusHtmlString());
 					text.AppendLine(achievments[task.Id].TryGetValue(user.UserId, out var achievement)?
-									$"<th>{achievement}</th>": $"<th></th>");
+									$"<td>{achievement}</td>": $"<td></td>");
 				}
 				text.AppendLine("</tr>");
 			}
@@ -67,9 +67,9 @@ namespace HwProj.Tools
 
 		public static string GetHomeworkStatusHtmlString(this Homework homework)
 		{
-			if (homework == null) return "<th></th>";
-			return !homework.IsCompleted ? "<th style=\"background-color: #ccffcc\"></th>" :
-										   "<th style=\"background-color: #33cc33\"></th>";
+			if (homework == null) return "<td></td>";
+			return !homework.IsCompleted ? "<td style=\"background-color: #ccffcc\"></td>" :
+										   "<td style=\"background-color: #33cc33\"></td>";
 		}
 
 		private static string AsHead(this string title)
