@@ -65,7 +65,7 @@ namespace HwProj.Controllers.GitHub
 
 
         #region Helper
-        public async void CreateHomeworkViaPullRequest(long taskId, string repName, int pullRequestNumber)
+        public async Task<bool> CreateHomeworkViaPullRequest(long taskId, string repName, int pullRequestNumber)
         {
             var task = _repository.TaskManager.Get(t => t.Id == taskId);
             var student = _repository.UserManager.Get(u => u.Id == User.Identity.GetUserId());
@@ -75,12 +75,13 @@ namespace HwProj.Controllers.GitHub
                 !_repository.PullRequestsDataManager.Add(new PullRequestData(_repository.HomeworkManager.GetLastAttempted(taskId, student.Id), repName, pullRequestNumber)))
             {
                 AddViewBagError(@"Ошибка при обновлении базы данных");
+                return false;
             }
             else
             {
                 await(new NewHomeworkNotification(task, student, homework, Request)).Send();
                 ViewBag.Message = "Решение было успешно добавлено!";
-                ViewBag.Color = "success";
+                return true;
             }
         }
 
