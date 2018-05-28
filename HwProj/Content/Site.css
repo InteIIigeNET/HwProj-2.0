@@ -94,3 +94,7 @@ code {
 .course-list.course-list_margin-top_negative {
     margin-top: -140px
 }
+
+.tasks.tasks_heading_inline {
+    display: inline;
+}
