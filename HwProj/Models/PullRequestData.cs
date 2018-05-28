@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HwProj.Models.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,11 +9,12 @@ using System.Web;
 namespace HwProj.Models
 {
     [Table("PullRequestsData")]
-    public class PullRequestData
+    public class PullRequestData : IModel
     {
         /// <summary>
         /// Идентификатор пула
         /// </summary>
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
         /// <summary>
         /// Название репозитория

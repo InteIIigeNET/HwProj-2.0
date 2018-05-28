@@ -6,12 +6,13 @@ namespace HwProj.Models.Repositories
 {
 	internal class MainRepository : IDisposable
     {
-        public CoursesManager       CourseManager        { get; }
-        public HomeworksManager     HomeworkManager      { get; }
-        public UserManager          UserManager          { get; }
-        public TasksManager         TaskManager          { get; }
-        public NotificationsManager NotificationsManager { get; }
-	    public CourseMateManager    CourseMateManager    { get; }
+        public CoursesManager           CourseManager               { get; }
+        public HomeworksManager         HomeworkManager             { get; }
+        public UserManager              UserManager                 { get; }
+        public TasksManager             TaskManager                 { get; }
+        public NotificationsManager     NotificationsManager        { get; }
+	    public CourseMateManager        CourseMateManager           { get; }
+        public PullRequestsDataManager  PullRequestsDataManager     { get; }
 
 		#region Singleton
 		private static readonly Lazy<MainRepository> Lazy =
@@ -23,12 +24,13 @@ namespace HwProj.Models.Repositories
 
         private MainRepository()
         {
-            CourseManager        = new CoursesManager      (_context);
-            UserManager          = new UserManager         (_context);
-            HomeworkManager      = new HomeworksManager    (_context);
-            TaskManager          = new TasksManager        (_context);
-            NotificationsManager = new NotificationsManager(_context);
-	        CourseMateManager    = new CourseMateManager   (_context);
+            CourseManager           = new CoursesManager            (_context);
+            UserManager             = new UserManager               (_context);
+            HomeworkManager         = new HomeworksManager          (_context);
+            TaskManager             = new TasksManager              (_context);
+            NotificationsManager    = new NotificationsManager      (_context);
+	        CourseMateManager       = new CourseMateManager         (_context);
+            PullRequestsDataManager = new PullRequestsDataManager   (_context);
 		}
 
 	    private AppDbContext _context = AppDbContext.Create();

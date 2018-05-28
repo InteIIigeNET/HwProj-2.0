@@ -4,6 +4,7 @@
 @using (Html.BeginForm("Chose", "PullRequest",
         new { @class = "jumbotron grey lighten-5 pt-5", @id = "login-form", role = "form" }))
 {
+    @Html.HiddenFor(m => m.TaskId);
     var repos = new SelectList(ViewBag.Repos as IEnumerable<string>);
     <div class="form-group">
         @Html.DropDownListFor(model => model.RepositoryName, repos, "Выберите репозиторий", new { @class = "form-control", @onchange = "FillPR()" })

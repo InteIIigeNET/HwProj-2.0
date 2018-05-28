@@ -476,6 +476,7 @@
     <Compile Include="Models\Repositories\CourseMateManager.cs" />
     <Compile Include="Models\Repositories\IRepository.cs" />
     <Compile Include="Models\Repositories\NotificationsManager.cs" />
+    <Compile Include="Models\Repositories\PullRequestsDataManager.cs" />
     <Compile Include="Models\Repositories\TasksManager.cs" />
     <Compile Include="Models\Repositories\UserManager.cs" />
     <Compile Include="Models\ViewModels\CourseViewModels.cs" />

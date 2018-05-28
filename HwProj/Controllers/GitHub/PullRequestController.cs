@@ -1,4 +1,5 @@
 ﻿using HwProj.Filters;
+using HwProj.Models.Repositories;
 using HwProj.Models.ViewModels;
 using HwProj.Tools;
 using System;
@@ -13,7 +14,8 @@ namespace HwProj.Controllers.GitHub
     [GitHubAccess]
     public class PullRequestController : Controller
     {
-        
+        MainRepository db = MainRepository.Instance;
+
         public async Task<ActionResult> Index(string repName, int number)
         {
             var pullRequest = (await GitHubInstance.GetClientInstance().
@@ -23,10 +25,10 @@ namespace HwProj.Controllers.GitHub
             return View(pullRequest);
         }
 
-        public async Task<ActionResult> Chose()
+        public async Task<ActionResult> Chose(long taskId)
         {
             ViewBag.Repos = await GitHubInstance.GetStorageInstance().GetRepositoriesAsync();
-            return PartialView();
+            return PartialView(new PullRequestChoseViewModel { TaskId = taskId });
         }
 
         [HttpPost]
@@ -39,10 +41,10 @@ namespace HwProj.Controllers.GitHub
             });
         }
 
-        public async Task<ActionResult> Create()
+        public async Task<ActionResult> Create(long taskId)
         {
             ViewBag.Repos = await GitHubInstance.GetStorageInstance().GetRepositoriesAsync();
-            return PartialView();
+            return PartialView(new PullRequestCreateViewModel { TaskId = taskId });
         }
 
         [HttpPost]
@@ -56,6 +58,14 @@ namespace HwProj.Controllers.GitHub
                 repName = pullRequestModel.RepositoryName,
                 number = pullRequest.Number
             });
-        }        
+        }
+
+
+        #region Helper
+        public void CreateHomework(long taskId)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
     }
 }
