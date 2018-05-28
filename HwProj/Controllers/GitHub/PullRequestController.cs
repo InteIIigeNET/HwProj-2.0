@@ -37,6 +37,7 @@ namespace HwProj.Controllers.GitHub
         [HttpPost]
         public ActionResult Chose(PullRequestChoseViewModel pullRequestModel)
         {
+            CreateHomeworkViaPullRequest(pullRequestModel.TaskId, pullRequestModel.RepositoryName, pullRequestModel.Number);
             return RedirectToAction("Index", new
             {
                 repName = pullRequestModel.RepositoryName,
@@ -52,10 +53,11 @@ namespace HwProj.Controllers.GitHub
 
         [HttpPost]
         public async Task<ActionResult> Create(PullRequestCreateViewModel pullRequestModel)
-        {
+        {            
             var pullRequest = (await GitHubInstance.GetClientInstance().
                 GetNewPullRequestManagerAsync(pullRequestModel.Title, pullRequestModel.RepositoryName,
                 pullRequestModel.HeadBranchName, pullRequestModel.BaseBranchName)).PullRequest;
+            CreateHomeworkViaPullRequest(pullRequestModel.TaskId, pullRequestModel.RepositoryName, pullRequest.Number);
             return RedirectToAction("Index", new
             {
                 repName = pullRequestModel.RepositoryName,
@@ -65,7 +67,7 @@ namespace HwProj.Controllers.GitHub
 
 
         #region Helper
-        public async Task<bool> CreateHomeworkViaPullRequest(long taskId, string repName, int pullRequestNumber)
+        public async void CreateHomeworkViaPullRequest(long taskId, string repName, int pullRequestNumber)
         {
             var task = _repository.TaskManager.Get(t => t.Id == taskId);
             var student = _repository.UserManager.Get(u => u.Id == User.Identity.GetUserId());
@@ -74,14 +76,13 @@ namespace HwProj.Controllers.GitHub
             if (!_repository.HomeworkManager.Add(homework) ||
                 !_repository.PullRequestsDataManager.Add(new PullRequestData(_repository.HomeworkManager.GetLastAttempted(taskId, student.Id), repName, pullRequestNumber)))
             {
-                AddViewBagError(@"Ошибка при обновлении базы данных");
-                return false;
+                //TODO : Сделать страницу ошибок
+                AddViewBagError("Ошибка при обновлении базы данных!");
             }
             else
             {
                 await(new NewHomeworkNotification(task, student, homework, Request)).Send();
                 ViewBag.Message = "Решение было успешно добавлено!";
-                return true;
             }
         }
 
