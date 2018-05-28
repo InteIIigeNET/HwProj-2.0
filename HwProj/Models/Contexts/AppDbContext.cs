@@ -43,7 +43,10 @@ namespace HwProj.Models.Contexts
 		/// Сопоставление курсов и юзеров
 		/// </summary>
 		public DbSet<CourseMate> CourseMates { get; set; }
-
+        /// <summary>
+        /// Данные о пулл реквестах к домашкам
+        /// </summary>
+        public DbSet<PullRequestData> PullRequestDatas { get; set; }
 	}
 
 }
