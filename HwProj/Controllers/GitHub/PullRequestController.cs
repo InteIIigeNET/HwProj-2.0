@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace HwProj.Controllers
+namespace HwProj.Controllers.GitHub
 {
     [GitHubAccess]
     public class PullRequestController : Controller
@@ -20,7 +20,7 @@ namespace HwProj.Controllers
                 GetExistPullRequestManagerAsync(repName,
                 number))
                 .PullRequest;
-            return PartialView(pullRequest);
+            return View(pullRequest);
         }
 
         public async Task<ActionResult> Chose()

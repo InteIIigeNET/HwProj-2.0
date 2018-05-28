@@ -10,7 +10,7 @@ using HwProj.Filters;
 using HwProj.Models.ViewModels;
 using System.Threading.Tasks;
 
-namespace HwProj.Controllers
+namespace HwProj.Controllers.GitHub
 {
     [GitHubAccess]
     public class GitHubController : Controller
