@@ -449,11 +449,12 @@
     <Compile Include="Controllers\AccountController.ChallengeResult.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
-    <Compile Include="Controllers\GitHubController.cs" />
+    <Compile Include="Controllers\GitHub\GitHubController.cs" />
+    <Compile Include="Controllers\GitHub\ReviewController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HomeworksController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\PullRequestController.cs" />
+    <Compile Include="Controllers\GitHub\PullRequestController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Filters\AnonymousOnlyAttribute.cs" />
     <Compile Include="Filters\GitHubAccessAttribute.cs" />
@@ -615,6 +616,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\GitHub\" />
+    <Folder Include="Views\Review\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>

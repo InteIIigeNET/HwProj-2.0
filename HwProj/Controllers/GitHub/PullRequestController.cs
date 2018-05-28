@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace HwProj.Controllers
+namespace HwProj.Controllers.GitHub
 {
     [GitHubAccess]
     public class PullRequestController : Controller
