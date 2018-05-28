@@ -50,7 +50,7 @@ namespace HwProj.GitHubService
             var commits = await client?.PullRequest.Commits(data.owner, data.repName, data.pullRequestNumber);
             var reviewRep = new ReviewRepository(data);
             var reviews = await reviewRep.GetAllReviewAsync();
-            return pullRequest.ToPullRequest(commits.ToCommits(), reviews);
+            return pullRequest.ToPullRequest(commits.ToCommits(), reviews, data.repName);
         }
 
         private async Task<Models.GitHub.PullRequest> CreatePullRequestAsync(string title, string repName, string headBranchName, string owner, string baseBranchName)
@@ -60,7 +60,7 @@ namespace HwProj.GitHubService
                 var pullRequest = await client?.PullRequest.Create(owner, repName, new NewPullRequest(title, headBranchName, baseBranchName));
             
             var commits = await client?.PullRequest.Commits(owner, repName, pullRequest.Number);
-            return pullRequest.ToPullRequest(commits.ToCommits(), null);
+            return pullRequest.ToPullRequest(commits.ToCommits(), null, repName);
             }
             catch (Octokit.ApiValidationException)
             {

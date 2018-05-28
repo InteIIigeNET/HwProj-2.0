@@ -56,6 +56,6 @@ namespace HwProj.Controllers
                 repName = pullRequestModel.RepositoryName,
                 number = pullRequest.Number
             });
-        }
+        }        
     }
 }

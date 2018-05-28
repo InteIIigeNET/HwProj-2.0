@@ -27,5 +27,7 @@ namespace HwProj.Models.GitHub
         public IEnumerable<DiffFile> DiffFiles { get; set; }
 
         public long Id { get; set; }
+
+        public string RepositoryName { get; set; }
     }
 }
