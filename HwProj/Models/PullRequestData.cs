@@ -11,6 +11,14 @@ namespace HwProj.Models
     [Table("PullRequestsData")]
     public class PullRequestData : IModel
     {
+        public PullRequestData(Homework homework, string repName, int pullRequestNumber)
+        {
+            Homework = homework;
+            RepositoryName = repName;
+            PullRequestNumber = pullRequestNumber;
+            HomeworkId = homework.Id;
+        }
+
         /// <summary>
         /// Идентификатор пула
         /// </summary>

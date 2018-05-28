@@ -1,7 +1,10 @@
 ﻿using HwProj.Filters;
+using HwProj.Models;
 using HwProj.Models.Repositories;
 using HwProj.Models.ViewModels;
+using HwProj.Services.NotificationPatterns;
 using HwProj.Tools;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +17,7 @@ namespace HwProj.Controllers.GitHub
     [GitHubAccess]
     public class PullRequestController : Controller
     {
-        MainRepository db = MainRepository.Instance;
+        private MainRepository _repository = MainRepository.Instance;
 
         public async Task<ActionResult> Index(string repName, int number)
         {
@@ -62,9 +65,30 @@ namespace HwProj.Controllers.GitHub
 
 
         #region Helper
-        public void CreateHomework(long taskId)
+        public async void CreateHomeworkViaPullRequest(long taskId, string repName, int pullRequestNumber)
         {
-            throw new NotImplementedException();
+            var task = _repository.TaskManager.Get(t => t.Id == taskId);
+            var student = _repository.UserManager.Get(u => u.Id == User.Identity.GetUserId());
+            var homework = new Homework(new HomeworkCreateViewModel { TaskId = taskId }, task, student);
+
+            if (!_repository.HomeworkManager.Add(homework) ||
+                !_repository.PullRequestsDataManager.Add(new PullRequestData(_repository.HomeworkManager.GetLastAttempted(taskId, student.Id), repName, pullRequestNumber)))
+            {
+                AddViewBagError(@"Ошибка при обновлении базы данных");
+            }
+            else
+            {
+                await(new NewHomeworkNotification(task, student, homework, Request)).Send();
+                ViewBag.Message = "Решение было успешно добавлено!";
+                ViewBag.Color = "success";
+            }
+        }
+
+        private void AddViewBagError(string errorMessage)
+        {
+            ModelState.AddModelError("", errorMessage);
+            ViewBag.Message = errorMessage;
+            ViewBag.Color = "danger";
         }
         #endregion
     }

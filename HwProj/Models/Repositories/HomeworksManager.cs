@@ -23,11 +23,8 @@ namespace HwProj.Models.Repositories
 
 			        if (oldAttempts == null || !oldAttempts.Any()) item.Attempt = 1;
 			        else
-			        {
-				        var lastAttempt = oldAttempts.FirstOrDefault
-										 (h => h.Attempt == oldAttempts.Max(t => t.Attempt));
-				        item.Attempt = lastAttempt.Attempt + 1;
-				        //context.Remove(lastAttempt);
+			        {				        
+				        item.Attempt = oldAttempts.Max(t => t.Attempt) + 1;
 			        }
 			        item.Date = DateTime.Now;
 			        context.Add(item);
@@ -35,6 +32,17 @@ namespace HwProj.Models.Repositories
 					return true;
 		        }
 	        );
+        }
+
+        public Homework GetLastAttempted(long taskId, string studentId)
+        {
+            var oldAttempts = GetAll(h => h.TaskId == taskId &&
+                                                  h.StudentId == studentId);
+
+            if (oldAttempts == null || !oldAttempts.Any()) return null;
+            var lastAttempt = oldAttempts.FirstOrDefault
+                                         (h => h.Attempt == oldAttempts.Max(t => t.Attempt));
+            return lastAttempt;
         }
 
 	    public IEnumerable<Homework> GetAll(Func<Homework, bool> predicate)
