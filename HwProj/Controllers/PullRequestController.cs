@@ -13,10 +13,14 @@ namespace HwProj.Controllers
     [GitHubAccess]
     public class PullRequestController : Controller
     {
-        // GET: PullRequest
-        public ActionResult Index()
+        
+        public async Task<ActionResult> Index(string repName, int number)
         {
-            return View();
+            var pullRequest = (await GitHubInstance.GetClientInstance().
+                GetExistPullRequestManagerAsync(repName,
+                number))
+                .PullRequest;
+            return PartialView(pullRequest);
         }
 
         public async Task<ActionResult> Chose()
@@ -26,12 +30,13 @@ namespace HwProj.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Chose(PullRequestChoseViewModel pullRequestModel)
+        public ActionResult Chose(PullRequestChoseViewModel pullRequestModel)
         {
-            return PartialView("Index", (await GitHubInstance.GetClientInstance().
-                GetExistPullRequestManagerAsync(pullRequestModel.RepositoryName, 
-                pullRequestModel.Number))
-                .PullRequest);
+            return RedirectToAction("Index", new
+            {
+                repName = pullRequestModel.RepositoryName,
+                number = pullRequestModel.Number
+            });
         }
 
         public async Task<ActionResult> Create()
@@ -43,9 +48,14 @@ namespace HwProj.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(PullRequestCreateViewModel pullRequestModel)
         {
-            return PartialView("Index", (await GitHubInstance.GetClientInstance().
+            var pullRequest = (await GitHubInstance.GetClientInstance().
                 GetNewPullRequestManagerAsync(pullRequestModel.Title, pullRequestModel.RepositoryName,
-                pullRequestModel.HeadBranchName, pullRequestModel.BaseBranchName)).PullRequest);
+                pullRequestModel.HeadBranchName, pullRequestModel.BaseBranchName)).PullRequest;
+            return RedirectToAction("Index", new
+            {
+                repName = pullRequestModel.RepositoryName,
+                number = pullRequest.Number
+            });
         }
     }
 }
