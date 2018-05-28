@@ -34,7 +34,7 @@
                 }
             </div>
             <div id="course_info">
-                @Html.Partial("CoursePartial", new CourseViewModel(Model))
+                @Html.Partial("CourseViewPartial", new CourseViewModel(Model))
             </div>
             <div>
                 @Html.Raw(Model.GenerateCourseboardHtmlString())

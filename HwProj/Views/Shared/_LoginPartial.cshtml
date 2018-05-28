@@ -1,4 +1,6 @@
-﻿@using Microsoft.AspNet.Identity
+﻿@using HwProj.Models.Enums
+@using HwProj.Tools
+@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "ml-auto" }))
@@ -14,6 +16,12 @@
                     <li>
                         @Html.ActionLink("Редактировать", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "dropdown-item" })
                     </li>
+                    @if (User.Identity.GetUserRole() == RoleType.Преподаватель.ToString())
+                    {
+                        <li>
+                            @Html.ActionLink("Добавить преподавателя", "Index", "Roles", routeValues: null, htmlAttributes: new {title = "Manage", @class = "dropdown-item"})
+                        </li>
+                    }
                     <li class="dropdown-divider"></li>
                     @Html.AntiForgeryToken()
                     <li><a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">Выйти</a></li>

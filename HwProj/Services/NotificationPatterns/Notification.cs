@@ -5,15 +5,15 @@ using HwProj.Models;
 
 namespace HwProj.Services.NotificationPatterns
 {
-	public class NotificationPattern
+	public class Notification
 	{
         private Func<Task<IEnumerable<long>>> sendNotification;
 
-		protected NotificationPattern(IEnumerable<User> users, Func<User, string> buildNotificationFor)
+		protected Notification(IEnumerable<User> users, Func<User, string> buildNotificationFor)
 		{
             sendNotification = () => NotificationsService.SendNotifications(users, buildNotificationFor);
 		}
-		protected NotificationPattern(Func<User, bool> usersPredicate, Func<User, string> buildNotificationFor)
+		protected Notification(Func<User, bool> usersPredicate, Func<User, string> buildNotificationFor)
 		{
             sendNotification = () => NotificationsService.SendNotifications(usersPredicate, buildNotificationFor);
         }

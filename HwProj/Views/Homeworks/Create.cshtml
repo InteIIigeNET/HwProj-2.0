@@ -23,6 +23,7 @@
     {
         @Html.AntiForgeryToken()
         @Html.HiddenFor(h => h.TaskId)
+        @Html.HiddenFor(h => h.Description)
         <h3 class="text-center">@ViewBag.Title</h3>
         <hr />
 
@@ -33,7 +34,7 @@
             @ViewBag.Message
         </div>
 
-        @Html.DisplayTextFor(h => h.Description)
+        @Html.Raw(@Model.Description.AsMarkdown())
         @Html.ValidationSummary("", new { @class = "text-danger" })
         <div class="form-group">
             @Html.TextBoxFor(m => m.GitHub, new { @class = "form-control", placeholder = Html.DisplayNameFor(t => t.GitHub) })
