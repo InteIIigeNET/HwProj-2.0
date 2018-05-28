@@ -36,6 +36,9 @@
             <div id="course_info">
                 @Html.Partial("CoursePartial", new CourseViewModel(Model))
             </div>
+            <div>
+                @Html.Raw(Model.GenerateCourseboardHtmlString())
+            </div>
             <div class="clearfix"></div>
             <hr />
             <div>

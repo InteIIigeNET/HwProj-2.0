@@ -27,8 +27,7 @@ namespace HwProj.Models.Repositories
 				        var lastAttempt = oldAttempts.FirstOrDefault
 										 (h => h.Attempt == oldAttempts.Max(t => t.Attempt));
 				        item.Attempt = lastAttempt.Attempt + 1;
-				        /* Удаляем старую домашку */
-				        context.Remove(lastAttempt);
+				        //context.Remove(lastAttempt);
 			        }
 			        item.Date = DateTime.Now;
 			        context.Add(item);
