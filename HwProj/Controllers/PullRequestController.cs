@@ -30,7 +30,7 @@ namespace HwProj.Controllers
         {
             return PartialView("Index", (await GitHubInstance.GetClientInstance().
                 GetExistPullRequestManagerAsync(pullRequestModel.RepositoryName, 
-                int.Parse(pullRequestModel.Title.Split()[0])))
+                pullRequestModel.Number))
                 .PullRequest);
         }
 

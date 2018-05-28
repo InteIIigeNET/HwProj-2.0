@@ -9,7 +9,7 @@
         @Html.DropDownListFor(model => model.RepositoryName, repos, "Выберите репозиторий", new { @class = "form-control", @onchange = "FillPR()" })
     </div>
     <div class="form-group">
-        @Html.DropDownListFor(model => model.Title, new SelectList(Enumerable.Empty<SelectListItem>()), "Выберите pull request", new { @class = "form-control" })
+        @Html.DropDownListFor(model => model.Number, new SelectList(Enumerable.Empty<SelectListItem>()), "Выберите pull request", new { @class = "form-control" })
     </div>
     <div class="form-group">
         <button class="btn btn-block btn-primary" type="submit">Выбрать</button>

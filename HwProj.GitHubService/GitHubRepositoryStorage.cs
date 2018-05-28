@@ -34,10 +34,10 @@ namespace HwProj.GitHubService
                    select b.Name;
         }
 
-        public async Task<IEnumerable<string>> GetPullRequests(string repName)
+        public async Task<IEnumerable<KeyValuePair<int, string>>> GetPullRequests(string repName)
         {
             return from pr in await client?.PullRequest.GetAllForRepository(owner, repName)
-                   select pr.Number + " " + pr.Title;
+                   select new KeyValuePair<int, string>(pr.Number, pr.Title);
         }
     }
 }
