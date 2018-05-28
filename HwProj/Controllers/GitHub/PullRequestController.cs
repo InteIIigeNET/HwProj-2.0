@@ -38,6 +38,7 @@ namespace HwProj.Controllers.GitHub
         public ActionResult Chose(PullRequestChoseViewModel pullRequestModel)
         {
             CreateHomeworkViaPullRequest(pullRequestModel.TaskId, pullRequestModel.RepositoryName, pullRequestModel.Number);
+
             return RedirectToAction("Index", new
             {
                 repName = pullRequestModel.RepositoryName,
@@ -57,7 +58,9 @@ namespace HwProj.Controllers.GitHub
             var pullRequest = (await GitHubInstance.GetClientInstance().
                 GetNewPullRequestManagerAsync(pullRequestModel.Title, pullRequestModel.RepositoryName,
                 pullRequestModel.HeadBranchName, pullRequestModel.BaseBranchName)).PullRequest;
+
             CreateHomeworkViaPullRequest(pullRequestModel.TaskId, pullRequestModel.RepositoryName, pullRequest.Number);
+
             return RedirectToAction("Index", new
             {
                 repName = pullRequestModel.RepositoryName,
