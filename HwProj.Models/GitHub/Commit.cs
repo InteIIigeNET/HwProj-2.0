@@ -13,9 +13,7 @@ namespace HwProj.Models.GitHub
         public string Title { get; set; }
 
         public string Url { get; set; }
-
-        public DateTime CreatedAt { get; set; }
-
+        
         public string Sha { get; set; }
     }
 }

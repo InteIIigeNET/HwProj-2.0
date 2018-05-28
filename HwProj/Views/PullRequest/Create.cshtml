@@ -1,8 +1,8 @@
 ﻿@using HwProj.Models.ViewModels
 @model PullRequestCreateViewModel
 
-@using (Html.BeginForm("Create", "PullRequest",
-        FormMethod.Post, new { @class = "jumbotron grey lighten-5 pt-5", @id = "login-form", role = "form" }))
+@using (Ajax.BeginForm("Create", "PullRequest",
+        new AjaxOptions { UpdateTargetId = "homework_create" }, new { @class = "jumbotron grey lighten-5 pt-5", @id = "login-form", role = "form" }))
 {
     var repos = new SelectList(ViewBag.Repos as IEnumerable<string>);
     <div class="form-group">

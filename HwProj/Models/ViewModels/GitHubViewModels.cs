@@ -15,7 +15,7 @@ namespace HwProj.Models.ViewModels
 
     public class PullRequestChoseViewModel
     {
-        public string Title { get; set; }
+        public int Number { get; set; }
         public string RepositoryName { get; set; }
     }
 }

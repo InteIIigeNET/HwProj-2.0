@@ -80,10 +80,10 @@
                 dataType: "JSON",
                 data: { repository: repositoryName },
                 success: function (prs) {
-                    $("#Title").html(""); // clear before appending new list
-                    $.each(prs, function (i, pr) {
-                        $("#Title").append(
-                            $('<option></option>').val(pr).html(pr));
+                    $("#Number").html(""); // clear before appending new list
+                    $.each(prs, function (i, pr) {                        
+                        $("#Number").append(
+                            $('<option></option>').val(pr.Key).html(pr.Value));
                     });                    
                 }
             });
