@@ -1,5 +1,6 @@
 ﻿using Octokit;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace HwProj.GitHubService
     public class GitHubRepositoryStorage
     {
         private Octokit.GitHubClient client;
+        private string owner;
 
         public GitHubRepositoryStorage(string token)
         {
@@ -17,6 +19,7 @@ namespace HwProj.GitHubService
             {
                 Credentials = new Credentials(token)
             };
+            owner = client?.User.Current().Result.Login;
         }
 
         public async Task<IEnumerable<string>> GetRepositoriesAsync()
@@ -27,9 +30,14 @@ namespace HwProj.GitHubService
 
         public async Task<IEnumerable<string>> GetBranchesAsync(string repName)
         {
-            var user = await client?.User.Current();
-            return from b in await client?.Repository.Branch.GetAll(user.Login, repName)
+            return from b in await client?.Repository.Branch.GetAll(owner, repName)
                    select b.Name;
+        }
+
+        public async Task<IEnumerable<string>> GetPullRequests(string repName)
+        {
+            return from pr in await client?.PullRequest.GetAllForRepository(owner, repName)
+                   select pr.Number + " " + pr.Title;
         }
     }
 }

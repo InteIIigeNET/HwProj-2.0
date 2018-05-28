@@ -19,9 +19,19 @@ namespace HwProj.Controllers
             return View();
         }
 
-        public ActionResult Chose()
+        public async Task<ActionResult> Chose()
         {
-            return View();
+            ViewBag.Repos = await GitHubInstance.GetStorageInstance().GetRepositoriesAsync();
+            return PartialView();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Chose(PullRequestChoseViewModel pullRequestModel)
+        {
+            return PartialView("Index", (await GitHubInstance.GetClientInstance().
+                GetExistPullRequestManagerAsync(pullRequestModel.RepositoryName, 
+                int.Parse(pullRequestModel.Title.Split()[0])))
+                .PullRequest);
         }
 
         public async Task<ActionResult> Create()

@@ -604,7 +604,6 @@
     <Content Include="Views\Manage\_EditProfileInfoPartial.cshtml" />
     <Content Include="Views\Manage\_EditProfileEmailPartial.cshtml" />
     <Content Include="Views\Tasks\_EditPartial.cshtml" />
-    <Content Include="Views\GitHub\PullRequest.cshtml" />
     <Content Include="Views\Homeworks\Review.cshtml" />
     <Content Include="Views\Tasks\TaskPartial.cshtml" />
     <Content Include="Views\Courses\_CoursesListPartial.cshtml" />
@@ -612,8 +611,10 @@
     <Content Include="Views\Courses\CoursePartial.cshtml" />
     <Content Include="Views\PullRequest\Create.cshtml" />
     <Content Include="Views\PullRequest\Index.cshtml" />
+    <Content Include="Views\PullRequest\Chose.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Views\GitHub\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>

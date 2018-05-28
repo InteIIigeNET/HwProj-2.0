@@ -72,5 +72,22 @@
                 }
             });
         }
+        function FillPR() {
+            var repositoryName = $('#RepositoryName').val();
+            $.ajax({
+                url: '/GitHub/FillPullRequest',
+                type: "GET",
+                dataType: "JSON",
+                data: { repository: repositoryName },
+                success: function (prs) {
+                    $("#Title").html(""); // clear before appending new list
+                    $.each(prs, function (i, pr) {
+                        $("#Title").append(
+                            $('<option></option>').val(pr).html(pr));
+                    });                    
+                }
+            });
+        }
     </script>
+
 }

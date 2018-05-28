@@ -12,4 +12,10 @@ namespace HwProj.Models.ViewModels
         public string RepositoryName { get; set; }
         public string BaseBranchName { get; set; }
     }
+
+    public class PullRequestChoseViewModel
+    {
+        public string Title { get; set; }
+        public string RepositoryName { get; set; }
+    }
 }

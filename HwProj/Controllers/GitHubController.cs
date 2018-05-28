@@ -20,5 +20,11 @@ namespace HwProj.Controllers
             var branches = await GitHubInstance.GetStorageInstance().GetBranchesAsync(repository);
             return Json(branches, JsonRequestBehavior.AllowGet);
         }
+
+        public async Task<ActionResult> FillPullRequest(string repository)
+        {
+            var pullRequests = await GitHubInstance.GetStorageInstance().GetPullRequests(repository);
+            return Json(pullRequests, JsonRequestBehavior.AllowGet);
+        }
     }
 }
