@@ -19,11 +19,10 @@ namespace HwProj.GitHubService
                        Owner = new Models.GitHub.User
                        {
                            Login = c.Author.Name,
-                           Url = c.Commit.User?.Url
+                           Url = c.Commit.User?.HtmlUrl
                        },
-                       CreatedAt = c.Author.Date.DateTime,
                        Title = c.Commit.Message,
-                       Url = c.Commit.Url
+                       Url = c.HtmlUrl
                    };
         }
 
@@ -32,16 +31,16 @@ namespace HwProj.GitHubService
         {
             var user = pullRequest.User;
             var diffParser = new DiffParser(pullRequest.DiffUrl);
-            return new Models.GitHub.PullRequest
+            return new PullRequest
             {
                 Title = pullRequest.Title,
                 Id = pullRequest.Id,
                 DiffUrl = pullRequest.DiffUrl,
                 Number = pullRequest.Number,
-                Owner = new Models.GitHub.User
+                Owner = new User
                 {
                     Login = user.Login,
-                    Url = user.Url
+                    Url = user.HtmlUrl
                 },
                 CreatedAt = pullRequest.CreatedAt.DateTime,
                 Commits = commits,
@@ -59,7 +58,7 @@ namespace HwProj.GitHubService
             Owner = new User
             {
                 Login = comment.User.Login,
-                Url = comment.User.Url
+                Url = comment.User.HtmlUrl
             },
             Path = comment.Path,
             Position = (int)comment.Position,
@@ -76,7 +75,7 @@ namespace HwProj.GitHubService
                     Owner = new User
                     {
                         Login = review.User.Login,
-                        Url = review.User.Url
+                        Url = review.User.HtmlUrl
                     }
                 },
                 ReviewComments = comments,

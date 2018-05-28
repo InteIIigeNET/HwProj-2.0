@@ -6,7 +6,6 @@
 <h6>Commits</h6>
 @foreach (var commit in Model.Commits)
 {
-    <p>@commit.CreatedAt</p>
     <a href=@commit.Owner.Url>@commit.Owner.Login</a>
     <a href=@commit.Url>@commit.Title</a>
 }
