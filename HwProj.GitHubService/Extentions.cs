@@ -27,12 +27,13 @@ namespace HwProj.GitHubService
         }
 
 
-        public static PullRequest ToPullRequest(this Octokit.PullRequest pullRequest, IEnumerable<Commit> commits, IEnumerable<Review> reviews)
+        public static PullRequest ToPullRequest(this Octokit.PullRequest pullRequest, IEnumerable<Commit> commits, IEnumerable<Review> reviews, string reposName)
         {
             var user = pullRequest.User;
             var diffParser = new DiffParser(pullRequest.DiffUrl);
             return new PullRequest
             {
+                RepositoryName = reposName,
                 Title = pullRequest.Title,
                 Id = pullRequest.Id,
                 DiffUrl = pullRequest.DiffUrl,

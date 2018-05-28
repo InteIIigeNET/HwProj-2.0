@@ -23,9 +23,3 @@
         }
     }
 </div>
-
-@using (Ajax.BeginForm("SendComment", new AjaxOptions { UpdateTargetId = "comments", InsertionMode = InsertionMode.InsertAfter }))
-{
-    <input type="text" name="content" />
-    <input type="submit" value="Отправить" />
-}
