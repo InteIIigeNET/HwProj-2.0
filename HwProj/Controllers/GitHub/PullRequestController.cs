@@ -20,7 +20,7 @@ namespace HwProj.Controllers.GitHub
                 GetExistPullRequestManagerAsync(repName,
                 number))
                 .PullRequest;
-            return PartialView(pullRequest);
+            return View(pullRequest);
         }
 
         public async Task<ActionResult> Chose()
