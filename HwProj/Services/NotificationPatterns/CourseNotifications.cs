@@ -7,7 +7,7 @@ using HwProj.Tools;
 
 namespace HwProj.Services.NotificationPatterns
 {
-	public class UserJoinedNotification : NotificationPattern
+	public class UserJoinedNotification : Notification
 	{
 		public UserJoinedNotification(Course course, User joinedUser, HttpRequestBase request)
 			: base(new[] {course.Mentor},
@@ -15,14 +15,14 @@ namespace HwProj.Services.NotificationPatterns
 			     (course.IsOpen
 				     ? ""
 				     : new Button(request.RequestContext, "Принять", "AcceptUser", "Courses",
-					       new {courseId = course.Id, userId = joinedUser.Id, notifyId = Notification.ContextId}) +
+					       new {courseId = course.Id, userId = joinedUser.Id, notifyId = Models.Notification.ContextId}) +
 				       new Button(request.RequestContext, "Отклонить", "RejectUser", "Courses",
-					       new {courseId = course.Id, userId = joinedUser.Id, notifyId = Notification.ContextId})))
+					       new {courseId = course.Id, userId = joinedUser.Id, notifyId = Models.Notification.ContextId})))
 		{
 		}
 	}
 
-	public class IsUserAcceptedNotification : NotificationPattern
+	public class IsUserAcceptedNotification : Notification
 	{
 		public IsUserAcceptedNotification(Course course, User acceptedUser, bool isAccepted)
 			: base(new[] { acceptedUser },

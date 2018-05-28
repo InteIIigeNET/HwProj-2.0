@@ -70,6 +70,7 @@ namespace HwProj.Controllers
 		}
 
 		[AllowAnonymous]
+		[HttpGet]
 		public JsonResult GetSearchResult(string search)
 		{
 			var data = Find(search).Select(c => new CourseSearchViewModel(c));
@@ -104,7 +105,7 @@ namespace HwProj.Controllers
 				ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
 				return PartialView("_EditPartial", model);
 			}
-			return PartialView("CoursePartial", new CourseViewModel(model) { MentorId = User.Identity.GetUserId() });
+			return PartialView("CourseViewPartial", new CourseViewModel(model) { MentorId = User.Identity.GetUserId() });
 		}
 
 		[Authorize(Roles = "Преподаватель")]

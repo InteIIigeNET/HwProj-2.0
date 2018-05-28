@@ -8,7 +8,7 @@ using HwProj.Tools;
 
 namespace HwProj.Services.NotificationPatterns
 {
-	public class NewHomeworkNotification : NotificationPattern
+	public class NewHomeworkNotification : Notification
 	{
 		public NewHomeworkNotification(Task task, User student, Homework homework, HttpRequestBase request)
 			: base(new[] { task.Course.Mentor },
@@ -19,7 +19,7 @@ namespace HwProj.Services.NotificationPatterns
 		}
 	}
 
-	public class ReviewAddedNotification : NotificationPattern
+	public class ReviewAddedNotification : Notification
 	{
 		public ReviewAddedNotification(Homework homework, HomeworkAcceptViewModel model) 
 			:base(u => u.Id == homework.StudentId,

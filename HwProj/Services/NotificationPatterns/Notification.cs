@@ -5,18 +5,18 @@ using HwProj.Models;
 
 namespace HwProj.Services.NotificationPatterns
 {
-	public class NotificationPattern
+	public class Notification
 	{
 		private readonly IEnumerable<User> _users;
 		private readonly Func<User, bool> _usersPredicate;
 		private readonly Func<User, string> _buildNotificationFor;
 
-		protected NotificationPattern(IEnumerable<User> users, Func<User, string> buildNotificationFor)
+		protected Notification(IEnumerable<User> users, Func<User, string> buildNotificationFor)
 		{
 			_users = users;
 			_buildNotificationFor = buildNotificationFor;
 		}
-		protected NotificationPattern(Func<User, bool> usersPredicate, Func<User, string> buildNotificationFor)
+		protected Notification(Func<User, bool> usersPredicate, Func<User, string> buildNotificationFor)
 		{
 			_usersPredicate = usersPredicate;
 			_buildNotificationFor = buildNotificationFor;

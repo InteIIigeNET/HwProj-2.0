@@ -67,7 +67,7 @@ namespace HwProj.Controllers
                     ViewBag.Color = "success";
                 }
             }
-		    return View();
+		    return View(model);
         }
 
 	    [Authorize(Roles = "Преподаватель")]
