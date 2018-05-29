@@ -11,7 +11,7 @@ namespace HwProj.Services.NotificationPatterns
 	{
 		public UserJoinedNotification(Course course, User joinedUser, HttpRequestBase request)
 			: base(new[] {course.Mentor},
-				u => $"Пользователь {u.Email} вступил в курс {course.Name}\n" +
+				u => $"Пользователь <b>{joinedUser.Name} {joinedUser.Surname}</b> ({new MailTo(joinedUser.Email)}) вступил в курс <b>{course.Name}</b>\n" +
 			     (course.IsOpen
 				     ? ""
 				     : new Button(request.RequestContext, "Принять", "AcceptUser", "Courses",

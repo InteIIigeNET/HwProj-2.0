@@ -471,6 +471,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Contexts\AppDbContext.cs" />
+    <Compile Include="Models\Contexts\ContextDispatcher.cs" />
     <Compile Include="Models\CourseMates.cs" />
     <Compile Include="Models\Interfaces\IModel.cs" />
     <Compile Include="Models\PullRequestData.cs" />
@@ -513,6 +514,7 @@
     <Compile Include="Services\NotificationsService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Tools\AsyncManager.cs" />
+    <Compile Include="Tools\ControllerExtensions.cs" />
     <Compile Include="Tools\CourseBoardGenerator.cs" />
     <Compile Include="Tools\GitHubInstance.cs" />
     <Compile Include="Tools\IAsyncManager.cs" />
