@@ -85,7 +85,7 @@ namespace HwProj.Controllers.GitHub
 
             if (_repository.HomeworkManager.Add(homework))
             {
-                var prd = new PullRequestData(_repository.HomeworkManager.GetLastAttempted(taskId, student.Id), repName, pullRequestNumber);
+                var prd = new PullRequestData(homework, repName, pullRequestNumber);
 
                 if (_repository.PullRequestsDataManager.Add(prd))
                 {
