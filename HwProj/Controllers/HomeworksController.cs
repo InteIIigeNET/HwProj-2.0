@@ -49,7 +49,7 @@ namespace HwProj.Controllers
 	    [HttpPost]
 	    public async Task<ActionResult> Create(HomeworkCreateViewModel model)
 	    {
-		    if (!ModelState.IsValid) AddViewBagError(@"Ошибка при обновлении базы данных");
+		    if (!ModelState.IsValid) this.AddViewBagError(@"Ошибка при обновлении базы данных");
             else
 		    {
 			    var task = _repository.TaskManager.Get(t => t.Id == model.TaskId);
@@ -58,13 +58,12 @@ namespace HwProj.Controllers
 
 				if (!_repository.HomeworkManager.Add(homework))
                 {
-					AddViewBagError(@"Ошибка при обновлении базы данных");
+					this.AddViewBagError(@"Ошибка при обновлении базы данных");
 				}
                 else
 				{
 					await (new NewHomeworkNotification(task, student, homework, Request)).Send();
-                    ViewBag.Message = "Решение было успешно добавлено!";
-                    ViewBag.Color = "success";
+                    this.AddViewBagMessage("Решение было успешно добавлено!");
                 }
             }
 		    return View(model);
@@ -88,13 +87,5 @@ namespace HwProj.Controllers
 		    return RedirectToAction("Index", "Courses", homework.Task.Course.Id);
 		}
 
-		#region Local Tools
-	    private void AddViewBagError(string errorMessage)
-	    {
-			ModelState.AddModelError("", errorMessage);
-		    ViewBag.Message = errorMessage;
-		    ViewBag.Color = "danger";
-		}
-		#endregion
 	}
 }

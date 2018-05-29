@@ -9,6 +9,7 @@ using HwProj.Models.Repositories;
 using HwProj.Models.Roles;
 using HwProj.Models.ViewModels;
 using HwProj.Services.NotificationPatterns;
+using HwProj.Tools;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 
@@ -50,10 +51,11 @@ namespace HwProj.Controllers
 				if (result.Succeeded)
 				{
 					await (new TeacherAddedNotification(currentUser, addedTeacher, Request)).Send();
+					this.AddViewBagMessage("Отличные новости: +1 преподаватель в сообщество HwProj");
 					return View();
 				}
 			}
-			ModelState.AddModelError("", "Не удалось изменить роль пользователя");
+			this.AddViewBagMessage("Плохие новости: не удалось добавить преподавателя");
 			return View();
 		}
 

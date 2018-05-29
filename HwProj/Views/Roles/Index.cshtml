@@ -1,20 +1,30 @@
 ﻿@{
     ViewBag.Title = "HwProj 2.0";
 }
+@{
+    ViewBag.Title = "Отправить домашнее задание";
+    var alertVisibility = ViewBag.Message == null ? "none" : "block";
+    var alertAutohide = ViewBag.Message == null ? string.Empty : "alert-autohide";
+}
 
 <br />
-@using (Html.BeginForm("Index", 
-    "Roles", 
-    FormMethod.Post, 
+@using (Html.BeginForm("Index",
+    "Roles",
+    FormMethod.Post,
     new { @class = "jumbotron", role = "form" }))
 {
     <div class="offset-lg-1 col-lg-10 col-md-10 offset-sm-1 col-sm-10 offset-1 col-10">
         <div class="jumbotron jumbotron_border_gray">
             <h4>Развивайте HwProj. Добавьте преподавателя.</h4>
             <br />
-            @Html.ValidationSummary()
+            <div class="alert alert-@ViewBag.Color alert-dismissible @alertAutohide fade show" role="alert" style="display: @alertVisibility">
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                @ViewBag.Message
+            </div>
             <div class="input-group mb-3">
-                <input class="form-control" type="text" placeholder="Поиск по ФИО/почте пользователя" name="email" id = "searchInput" />
+                <input class="form-control" type="text" placeholder="Поиск по ФИО/почте пользователя" name="email" id="searchInput" />
                 <div class="input-group-append">
                     <input class="btn btn-primary" type="submit" value="Добавить" />
                 </div>
@@ -28,7 +38,7 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<script type ="text/javascript">
+<script type="text/javascript">
     $("#searchInput").autocomplete({
         source: function (request, response) {
             $.ajax({

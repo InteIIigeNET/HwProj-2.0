@@ -7,6 +7,7 @@ using Microsoft.Owin.Security.Cookies;
 using Owin;
 using HwProj.Models;
 using HwProj.Models.Contexts;
+using HwProj.Models.Repositories;
 using HwProj.Models.Roles;
 using Microsoft.Owin.Security.Google;
 using Owin.Security.Providers.GitHub;

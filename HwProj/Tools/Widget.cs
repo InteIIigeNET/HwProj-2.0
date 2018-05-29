@@ -38,4 +38,12 @@ namespace HwProj.Tools
 		}
 	}
 
+	public class MailTo : Widget
+	{
+		public MailTo(string email, string title = "")
+		{
+			Text = $"<a href=\"mailto:{email}?subject={title}\">{email}</a>";
+		}
+	}
+
 }

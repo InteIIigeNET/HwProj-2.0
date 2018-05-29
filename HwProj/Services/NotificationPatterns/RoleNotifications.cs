@@ -11,7 +11,7 @@ namespace HwProj.Services.NotificationPatterns
 	{
 		public TeacherAddedNotification(User from, User to, HttpRequestBase request)
 			: base(new[] { to },
-				u => $"Пользователь {from.Name} {from.Surname} ({from.Email}) указал вас как преподавателя. " +
+				u => $"Пользователь <b>{from.Name} {from.Surname}</b> ({new MailTo(from.Email)}) указал вас как преподавателя. " +
 				     $"Создайте <a href = \"{UrlGenerator.GetRouteUrl(request.RequestContext, "Create", "Courses")}\">свой первый курс</a>")
 		{
 		}
