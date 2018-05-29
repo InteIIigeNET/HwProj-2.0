@@ -7,7 +7,7 @@ namespace HwProj.Services.NotificationPatterns
 {
 	public class Notification
 	{
-        private Func<Task<IEnumerable<long>>> sendNotification;
+        private readonly Func<Task<IEnumerable<long>>> sendNotification;
 
 		protected Notification(IEnumerable<User> users, Func<User, string> buildNotificationFor)
 		{

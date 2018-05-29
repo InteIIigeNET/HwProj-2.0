@@ -42,7 +42,7 @@ namespace HwProj.Tools
 	{
 		public MailTo(string email, string title = "")
 		{
-			Text = $"<a href=\"mailto:{email}?subject={title}\">@email</a>";
+			Text = $"<a href=\"mailto:{email}?subject={title}\">{email}</a>";
 		}
 	}
 
