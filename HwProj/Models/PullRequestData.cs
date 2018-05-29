@@ -11,6 +11,11 @@ namespace HwProj.Models
     [Table("PullRequestsData")]
     public class PullRequestData : IModel
     {
+        public PullRequestData()
+        {
+
+        }
+
         public PullRequestData(Homework homework, string repName, int pullRequestNumber)
         {
             Homework = homework;
