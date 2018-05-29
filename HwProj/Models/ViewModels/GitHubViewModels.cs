@@ -9,6 +9,7 @@ namespace HwProj.Models.ViewModels
 {
     public class PullRequestCreateViewModel
     {
+        public long TaskId { get; set; }
         public string Title { get; set; }
         public string HeadBranchName { get; set; }
         public string RepositoryName { get; set; }
@@ -17,6 +18,7 @@ namespace HwProj.Models.ViewModels
 
     public class PullRequestChoseViewModel
     {
+        public long TaskId { get; set; }
         public int Number { get; set; }
         public string RepositoryName { get; set; }
     }

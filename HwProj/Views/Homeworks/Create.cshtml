@@ -13,8 +13,8 @@
         @if (!string.IsNullOrEmpty(User.Identity.GetGitHubToken()))
     {
         <h6>Отправить через github</h6>
-        @Ajax.ActionLink("Создать pull request", "Create", "PullRequest", Model, new AjaxOptions { UpdateTargetId = "homework_create" })
-        @Ajax.ActionLink("Использовать существующий pull request", "Chose", "PullRequest", Model, new AjaxOptions { UpdateTargetId = "homework_create" })
+        @Ajax.ActionLink("Создать pull request", "Create", "PullRequest", new { taskId = Model.TaskId }, new AjaxOptions { UpdateTargetId = "homework_create" })
+        @Ajax.ActionLink("Использовать существующий pull request", "Chose", "PullRequest", new { taskId = Model.TaskId }, new AjaxOptions { UpdateTargetId = "homework_create" })
     }
         @using (Html.BeginForm("Create",
     "Homeworks",

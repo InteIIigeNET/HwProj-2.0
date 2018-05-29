@@ -6,12 +6,13 @@ namespace HwProj.Models.Repositories
 {
 	internal class MainRepository : IDisposable
     {
-        public CoursesManager       CourseManager        { get; }
-        public HomeworksManager     HomeworkManager      { get; }
-        public UserManager          UserManager          { get; }
-        public TasksManager         TaskManager          { get; }
-        public NotificationsManager NotificationsManager { get; }
-	    public CourseMateManager    CourseMateManager    { get; }
+        public CoursesManager           CourseManager               { get; }
+        public HomeworksManager         HomeworkManager             { get; }
+        public UserManager              UserManager                 { get; }
+        public TasksManager             TaskManager                 { get; }
+        public NotificationsManager     NotificationsManager        { get; }
+	    public CourseMateManager        CourseMateManager           { get; }
+        public PullRequestsDataManager  PullRequestsDataManager     { get; }
 
 		#region Singleton
 		private static readonly Lazy<MainRepository> Lazy =
