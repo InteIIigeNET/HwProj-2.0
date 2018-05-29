@@ -73,5 +73,10 @@ namespace HwProj.Controllers
 
 			return new JsonResult { Data = data, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
 		}
+
+		public ActionResult Invite()
+		{
+			return View();
+		}
 	}
 }

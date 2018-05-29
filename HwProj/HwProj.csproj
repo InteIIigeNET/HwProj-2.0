@@ -628,6 +628,7 @@
     <Content Include="Views\PullRequest\Index.cshtml" />
     <Content Include="Views\PullRequest\Chose.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Roles\Invite.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\GitHub\" />

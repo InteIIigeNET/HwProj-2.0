@@ -5,14 +5,14 @@
 }
 
 <br />
-@using (Html.BeginForm("Index",
+@using (Html.BeginForm("Invite",
     "Roles",
     FormMethod.Post,
     new { @class = "jumbotron", role = "form" }))
 {
     <div class="offset-lg-1 col-lg-10 col-md-10 offset-sm-1 col-sm-10 offset-1 col-10">
         <div class="jumbotron jumbotron_border_gray">
-            <h4>Развивайте HwProj. Добавьте преподавателя.</h4>
+            <h4>Пригласите преподавателя в HwProj Team.</h4>
             <br />
             <div class="alert alert-@ViewBag.Color alert-dismissible @alertAutohide fade show" role="alert" style="display: @alertVisibility">
                 <button type="button" class="close" data-dismiss="alert" aria-label="close">
@@ -26,7 +26,7 @@
                     <input class="btn btn-primary" type="submit" value="Добавить" />
                 </div>
             </div>
-            Или @Html.ActionLink("пригласите его в HwProj", "Invite", "Roles") 
+            Или @Html.ActionLink("пригласите его в HwProj", "Invite", "Roles")
             <br />
         </div>
     </div>
@@ -55,3 +55,4 @@
         }
     });
 </script>
+
