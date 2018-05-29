@@ -1,4 +1,5 @@
-﻿using HwProj.Models.ViewModels;
+﻿using HwProj.Models.Repositories;
+using HwProj.Models.ViewModels;
 using HwProj.Tools;
 using System;
 using System.Collections.Generic;
@@ -11,20 +12,22 @@ namespace HwProj.Controllers.GitHub
 {
     public class ReviewController : Controller
     {
-        // GET: Review
-        public ActionResult Index()
-        {
-            return View();
-        }
+        private MainRepository _repository = MainRepository.Instance;
 
         [HttpPost]
         public async Task<ActionResult> Create(ReviewCreateViewModel reviewCreateViewModel)
         {
+            var prd = _repository.PullRequestsDataManager.Get(p => p.Id == reviewCreateViewModel.PullRequestDataId);
             var pullRequestManager = await GitHubInstance.GetClientInstance().
-                GetExistPullRequestManagerAsync(reviewCreateViewModel.RepositoryName, reviewCreateViewModel.PullRequestNumber);
-            var review = await pullRequestManager.ReviewRepository.
+                GetExistPullRequestManagerAsync(prd.RepositoryName, prd.PullRequestNumber);
+
+            await pullRequestManager.ReviewRepository.
                 CreateReviewAsync(reviewCreateViewModel.Body, reviewCreateViewModel.ReviewComments, reviewCreateViewModel.ReviewEvent);
-            return View();
+
+            return RedirectToAction("Index", "PullRequest", new
+            {
+                pullRequestDataId = reviewCreateViewModel.PullRequestDataId
+            });
         }
     }
 }

@@ -43,5 +43,11 @@ namespace HwProj.Models
         public long HomeworkId { get; set; }
 
         public Homework Homework { get; set; }
+        /// <summary>
+        /// foreign key на ментора
+        /// </summary>
+        public long MentorId { get; set; }
+
+        public User Mentor { get; set; }
     }
 }

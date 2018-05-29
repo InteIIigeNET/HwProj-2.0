@@ -626,10 +626,10 @@
     <Content Include="Views\PullRequest\Index.cshtml" />
     <Content Include="Views\PullRequest\Chose.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Review\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\GitHub\" />
-    <Folder Include="Views\Review\" />
     <Folder Include="Views\Test\" />
   </ItemGroup>
   <ItemGroup>

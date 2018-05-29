@@ -24,11 +24,17 @@ namespace HwProj.Models.ViewModels
     }
 
     public class ReviewCreateViewModel
-    {
-        public string RepositoryName { get; set; }
-        public int PullRequestNumber { get; set; } 
+    { 
         public IEnumerable<ReviewComment> ReviewComments { get; set; }
         public string Body { get; set; }
         public ReviewEvent ReviewEvent { get; set; }
+        public long PullRequestDataId { get; set; }
+    }
+
+    public class PullRequestViewModel
+    {
+        public PullRequest PullRequest { get; set; }
+        public long PullRequestDataId { get; set; }
+        public long MentorId { get; set; }
     }
 }

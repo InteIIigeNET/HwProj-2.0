@@ -20,13 +20,20 @@ namespace HwProj.Controllers.GitHub
         private MainRepository _repository = MainRepository.Instance;
         private IAsyncManager _asyncManager = new AsyncManager();
 
-        public async Task<ActionResult> Index(string repName, int number)
+        public async Task<ActionResult> Index(long pullRequestDataId)
         {
+            var prd = _repository.PullRequestsDataManager.Get(p => p.Id == pullRequestDataId);
             var pullRequest = (await GitHubInstance.GetClientInstance().
-                GetExistPullRequestManagerAsync(repName,
-                number))
+                GetExistPullRequestManagerAsync(prd.RepositoryName,
+                prd.PullRequestNumber))
                 .PullRequest;
-            return View(pullRequest);
+            
+            return View(new PullRequestViewModel
+            {
+                PullRequest = pullRequest,
+                MentorId = prd.MentorId,
+                PullRequestDataId = pullRequestDataId
+            });
         }
 
         public async Task<ActionResult> Chose(long taskId)
@@ -38,12 +45,11 @@ namespace HwProj.Controllers.GitHub
         [HttpPost]
         public async Task<ActionResult> Chose(PullRequestChoseViewModel pullRequestModel)
         {
-            await CreateHomeworkViaPullRequest(pullRequestModel.TaskId, pullRequestModel.RepositoryName, pullRequestModel.Number);
+            var id = await CreateHomeworkViaPullRequest(pullRequestModel.TaskId, pullRequestModel.RepositoryName, pullRequestModel.Number);
 
             return RedirectToAction("Index", new
             {
-                repName = pullRequestModel.RepositoryName,
-                number = pullRequestModel.Number
+                pullRequestDataId = id
             });
         }
         
@@ -60,44 +66,35 @@ namespace HwProj.Controllers.GitHub
                 GetNewPullRequestManagerAsync(pullRequestModel.Title, pullRequestModel.RepositoryName,
                 pullRequestModel.HeadBranchName, pullRequestModel.BaseBranchName)).PullRequest;
 
-            await CreateHomeworkViaPullRequest(pullRequestModel.TaskId, pullRequestModel.RepositoryName, pullRequest.Number);
+            var id = await CreateHomeworkViaPullRequest(pullRequestModel.TaskId, pullRequestModel.RepositoryName, pullRequest.Number);
 
             return RedirectToAction("Index", new
             {
-                repName = pullRequestModel.RepositoryName,
-                number = pullRequest.Number
+                pullRequestDataId = id
             });
         }
 
 
         #region Helper
-        private System.Threading.Tasks.Task CreateHomeworkViaPullRequest(long taskId, string repName, int pullRequestNumber)
+        private async Task<long> CreateHomeworkViaPullRequest(long taskId, string repName, int pullRequestNumber)
         {
-            return _asyncManager.Run(async() =>
-            {
-                var task = _repository.TaskManager.Get(t => t.Id == taskId);
-                var student = _repository.UserManager.Get(u => u.Id == User.Identity.GetUserId());
-                var homework = new Homework(new HomeworkCreateViewModel { TaskId = taskId }, task, student);
 
-                if (!_repository.HomeworkManager.Add(homework) ||
-                    !_repository.PullRequestsDataManager.Add(new PullRequestData(_repository.HomeworkManager.GetLastAttempted(taskId, student.Id), repName, pullRequestNumber)))
-                {
-                    //TODO : Сделать страницу ошибок
-                    AddViewBagError("Ошибка при обновлении базы данных!");
-                }
-                else
+            var task = _repository.TaskManager.Get(t => t.Id == taskId);
+            var student = _repository.UserManager.Get(u => u.Id == User.Identity.GetUserId());
+            var homework = new Homework(new HomeworkCreateViewModel { TaskId = taskId }, task, student);
+
+            if (_repository.HomeworkManager.Add(homework))
+            {
+                var prd = new PullRequestData(_repository.HomeworkManager.GetLastAttempted(taskId, student.Id), repName, pullRequestNumber);
+
+                if (_repository.PullRequestsDataManager.Add(prd))
                 {
                     await (new NewPullRequestHomeworkNotification(task, student, repName, pullRequestNumber, Request)).Send();
-                    ViewBag.Message = "Решение было успешно добавлено!";
+                    return prd.Id;
                 }
-            });
-        }
-
-        private void AddViewBagError(string errorMessage)
-        {
-            ModelState.AddModelError("", errorMessage);
-            ViewBag.Message = errorMessage;
-            ViewBag.Color = "danger";
+            }
+            //TODO : Сделать страницу ошибок, добавить dbexception
+            throw new Exception("Ошибка при обновлении базы данных!");
         }
         #endregion
     }
