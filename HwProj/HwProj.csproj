@@ -450,11 +450,11 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\GitHub\GitHubController.cs" />
+    <Compile Include="Controllers\GitHub\PullRequestController.cs" />
     <Compile Include="Controllers\GitHub\ReviewController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HomeworksController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\PullRequestController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\TasksController.cs" />
     <Compile Include="Filters\AnonymousOnlyAttribute.cs" />
