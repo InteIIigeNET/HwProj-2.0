@@ -49,7 +49,8 @@ namespace HwProj.Models.Repositories
             (
                 context =>
                 {
-                    return context.Include(p => p.Homework).FirstOrDefault(predicate);
+                    //можно заинклудить hw и ментора, но они мне не нужны пока что.
+                    return context.FirstOrDefault(predicate);
                 }
             );
         }

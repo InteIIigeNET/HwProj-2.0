@@ -16,8 +16,8 @@ namespace HwProj.Migrations
 
         protected override void Seed(HwProj.Models.Contexts.AppDbContext context)
         {
-            context.Roles.Add(RolesFactory.GetById("1"));
-            context.Roles.Add(RolesFactory.GetById("2"));
+            //context.Roles.Add(RolesFactory.GetById("1"));
+            //context.Roles.Add(RolesFactory.GetById("2"));
 
             base.Seed(context);
         }

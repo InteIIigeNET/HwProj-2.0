@@ -1,10 +1,10 @@
-﻿@model HwProj.Models.GitHub.PullRequest
+﻿@model HwProj.Models.ViewModels.PullRequestViewModel
 
-<h5><a href=@Model.Owner.Url>@Model.Owner.Login</a></h5>
-<p>@Model.CreatedAt</p>
+<h5><a href=@Model.PullRequest.Owner.Url>@Model.PullRequest.Owner.Login</a></h5>
+<p>@Model.PullRequest.CreatedAt</p>
 <hr />
 <h6>Commits</h6>
-@foreach (var commit in Model.Commits)
+@foreach (var commit in Model.PullRequest.Commits)
 {
     <a href=@commit.Owner.Url>@commit.Owner.Login</a>
     <a href=@commit.Url>@commit.Title</a>
@@ -12,7 +12,7 @@
 <hr />
 <div id="comments">
     <h6>Reviews</h6>
-    @foreach (var review in Model?.Reviews)
+    @foreach (var review in Model.PullRequest?.Reviews)
     {
         <a href=@review.HeadComment.Owner.Url>@review.HeadComment.Owner.Login</a>
         <p>@review.HeadComment.Content</p>

@@ -34,17 +34,6 @@ namespace HwProj.Models.Repositories
 	        );
         }
 
-        public Homework GetLastAttempted(long taskId, string studentId)
-        {
-            var oldAttempts = GetAll(h => h.TaskId == taskId &&
-                                                  h.StudentId == studentId);
-
-            if (oldAttempts == null || !oldAttempts.Any()) return null;
-            var lastAttempt = oldAttempts.FirstOrDefault
-                                         (h => h.Attempt == oldAttempts.Max(t => t.Attempt));
-            return lastAttempt;
-        }
-
 	    public IEnumerable<Homework> GetAll(Func<Homework, bool> predicate)
 	    {
 		    return Execute

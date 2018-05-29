@@ -20,8 +20,6 @@ namespace HwProj.Models.GitHub
 
         public int Number { get; set; }
 
-        public IEnumerable<string> Files { get; set; }
-
         public string DiffUrl { get; set; }
 
         public IEnumerable<DiffFile> DiffFiles { get; set; }
