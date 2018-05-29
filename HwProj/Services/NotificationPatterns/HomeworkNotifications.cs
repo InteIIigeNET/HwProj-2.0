@@ -22,11 +22,23 @@ namespace HwProj.Services.NotificationPatterns
 	public class ReviewAddedNotification : Notification
 	{
 		public ReviewAddedNotification(Homework homework, HomeworkAcceptViewModel model) 
-			:base(u => u.Id == homework.StudentId,
+			: base(u => u.Id == homework.StudentId,
 				u => $"Задача <b>{homework.Task.Title}</b> проверена <i>(" + (model.IsAccepted
 					     ? "зачтена"
 					     : $"есть замечания: \"{model.ReviewComment.Substring(0, Math.Min(model.ReviewComment.Length, 15))}...\"") + ")</i>")
 		{
 		}
 	}
+
+    public class NewPullRequestHomeworkNotification : Notification
+    {
+        public NewPullRequestHomeworkNotification(Task task, User student, string repositoryName, int pullRequestNumber, HttpRequestBase request) 
+            : base(new[] { task.Course.Mentor },
+                u => $"Пользователь <b>{student.Name} {student.Surname} ({student.Email})</b> отправил решение к задаче " +
+                     $"<a href = \"" +
+                     $"{UrlGenerator.GetRouteUrl(request.RequestContext, "Index", "PullRequest", new { repName = repositoryName, number = pullRequestNumber })}" +
+                     $"\">{task.Title}</a>")
+        {
+        }
+    }
 }

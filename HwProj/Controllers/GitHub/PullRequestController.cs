@@ -84,7 +84,7 @@ namespace HwProj.Controllers.GitHub
             }
             else
             {
-                await(new NewHomeworkNotification(task, student, homework, Request)).Send();
+                await(new NewPullRequestHomeworkNotification(task, student, repName, pullRequestNumber, Request)).Send();
                 ViewBag.Message = "Решение было успешно добавлено!";
             }
         }
