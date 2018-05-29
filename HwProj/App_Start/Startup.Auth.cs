@@ -7,6 +7,7 @@ using Microsoft.Owin.Security.Cookies;
 using Owin;
 using HwProj.Models;
 using HwProj.Models.Contexts;
+using HwProj.Models.Repositories;
 using HwProj.Models.Roles;
 using Microsoft.Owin.Security.Google;
 using Owin.Security.Providers.GitHub;
@@ -14,6 +15,7 @@ using Owin.Security.Providers.GitHub;
 // вынести одинаковые строки в константы
 namespace HwProj
 {
+	//TODO: фикс уведомлений домашка, фикс уведомлений изменении ролей
     public partial class Startup
     {
         // Дополнительные сведения о настройке аутентификации см. на странице https://go.microsoft.com/fwlink/?LinkId=301864

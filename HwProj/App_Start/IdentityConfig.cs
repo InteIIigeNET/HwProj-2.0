@@ -11,6 +11,7 @@ using Microsoft.Owin.Security;
 using HwProj.Models;
 using Task = System.Threading.Tasks.Task;
 using HwProj.Models.Contexts;
+using HwProj.Models.Repositories;
 using HwProj.Properties;
 using HwProj.Validators;
 
@@ -57,9 +58,10 @@ namespace HwProj
         {
         }
 
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
+
+        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
-            var manager = new ApplicationUserManager(new UserStore<User>(context.Get<AppDbContext>()));
+	        var manager = new ApplicationUserManager(new UserStore<User>(context.GetContext()));//context.Get<AppDbContext>()));
             // Настройка логики проверки имен пользователей
             manager.UserValidator = new UserValidator(manager);
 

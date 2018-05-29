@@ -42,7 +42,7 @@ namespace HwProj.Models
 		/// <summary>
 		/// Зачтена ли данная попытка сдачи выполненного задания
 		/// </summary>
-		public bool IsCompleted { get; set;  }
+		public bool IsCompleted { get; set; }
 		/// <summary>
 		/// Комментарий к решению
 		/// </summary>

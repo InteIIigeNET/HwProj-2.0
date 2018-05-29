@@ -11,39 +11,42 @@
 <div class="row">
     <div id="homework_create" class="offset-xl-1 col-xl-10 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-12">
         @if (!string.IsNullOrEmpty(User.Identity.GetGitHubToken()))
-        {
-            @Ajax.ActionLink("Отправить через github", "Index", "GitHub", Model, new AjaxOptions { UpdateTargetId = "homework_create" })
-        }
+    {
+        <h6>Отправить через github</h6>
+        @Ajax.ActionLink("Создать pull request", "Create", "PullRequest", new { taskId = Model.TaskId }, new AjaxOptions { UpdateTargetId = "homework_create" })
+        @Ajax.ActionLink("Использовать существующий pull request", "Chose", "PullRequest", new { taskId = Model.TaskId }, new AjaxOptions { UpdateTargetId = "homework_create" })
+    }
         @using (Html.BeginForm("Create",
-        "Homeworks",
-        FormMethod.Post,
-        new { @class = "jumbotron jumbotron_border_gray", @id = "register-form", role = "form" }))
-        {
-            @Html.AntiForgeryToken()
-            @Html.HiddenFor(h => h.TaskId)
-            <h3 class="text-center">@ViewBag.Title</h3>
-            <hr />
+    "Homeworks",
+    FormMethod.Post,
+    new { @class = "jumbotron jumbotron_border_gray", @id = "register-form", role = "form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(h => h.TaskId)
+        @Html.HiddenFor(h => h.Description)
+        <h3 class="text-center">@ViewBag.Title</h3>
+        <hr />
 
-            <div class="alert alert-@ViewBag.Color alert-dismissible @alertAutohide fade show" role="alert" style="display: @alertVisibility">
-                <button type="button" class="close" data-dismiss="alert" aria-label="close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                @ViewBag.Message
-            </div>
+        <div class="alert alert-@ViewBag.Color alert-dismissible @alertAutohide fade show" role="alert" style="display: @alertVisibility">
+            <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            @ViewBag.Message
+        </div>
 
-            @Html.DisplayTextFor(h => h.Description)
-            @Html.ValidationSummary("", new { @class = "text-danger" })
-            <div class="form-group">
-                @Html.TextBoxFor(m => m.GitHub, new { @class = "form-control", placeholder = Html.DisplayNameFor(t => t.GitHub) })
-                @Html.ValidationMessageFor(m => m.GitHub, "", new { @class = "text-danger" })
-            </div>
-            <div class="form-group">
-                @Html.TextAreaFor(m => m.Comment, new { @class = "form-control", placeholder = Html.DisplayNameFor(t => t.Comment), rows = 5 })
-            </div>
-            <div class="form-group">
-                <button class="btn btn btn-primary" type="submit">Отправить</button>
-            </div>
-        }
+        @Html.Raw(@Model.Description.AsMarkdown())
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.TextBoxFor(m => m.GitHub, new { @class = "form-control", placeholder = Html.DisplayNameFor(t => t.GitHub) })
+            @Html.ValidationMessageFor(m => m.GitHub, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.TextAreaFor(m => m.Comment, new { @class = "form-control", placeholder = Html.DisplayNameFor(t => t.Comment), rows = 5 })
+        </div>
+        <div class="form-group">
+            <button class="btn btn btn-primary" type="submit">Отправить</button>
+        </div>
+}
     </div>
 </div>
 @section scripts {
@@ -57,13 +60,35 @@
                 dataType: "JSON",
                 data: { repository: repositoryName },
                 success: function (branches) {
-                    $("#BranchRef").html(""); // clear before appending new list
+                    $("#HeadBranchName").html(""); // clear before appending new list
                     $.each(branches, function (i, branch) {
-                        $("#BranchRef").append(
+                        $("#HeadBranchName").append(
+                            $('<option></option>').val(branch).html(branch));
+                    });
+                    $("#BaseBranchName").html("");
+                    $.each(branches, function (i, branch) {
+                        $("#BaseBranchName").append(
                             $('<option></option>').val(branch).html(branch));
                     });
                 }
             });
         }
+        function FillPR() {
+            var repositoryName = $('#RepositoryName').val();
+            $.ajax({
+                url: '/GitHub/FillPullRequest',
+                type: "GET",
+                dataType: "JSON",
+                data: { repository: repositoryName },
+                success: function (prs) {
+                    $("#Number").html(""); // clear before appending new list
+                    $.each(prs, function (i, pr) {                        
+                        $("#Number").append(
+                            $('<option></option>').val(pr.Key).html(pr.Value));
+                    });                    
+                }
+            });
+        }
     </script>
+
 }

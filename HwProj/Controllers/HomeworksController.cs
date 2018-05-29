@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using HwProj.Services;
+using HwProj.Services.NotificationPatterns;
 using HwProj.Tools;
 using Microsoft.AspNet.Identity;
 
@@ -48,7 +49,7 @@ namespace HwProj.Controllers
 	    [HttpPost]
 	    public async Task<ActionResult> Create(HomeworkCreateViewModel model)
 	    {
-		    if (!ModelState.IsValid) AddViewBagError(@"Ошибка при обновлении базы данных");
+		    if (!ModelState.IsValid) this.AddViewBagError(@"Ошибка при обновлении базы данных");
             else
 		    {
 			    var task = _repository.TaskManager.Get(t => t.Id == model.TaskId);
@@ -57,19 +58,15 @@ namespace HwProj.Controllers
 
 				if (!_repository.HomeworkManager.Add(homework))
                 {
-					AddViewBagError(@"Ошибка при обновлении базы данных");
+					this.AddViewBagError(@"Ошибка при обновлении базы данных");
 				}
                 else
-			    {
-				    await NotificationsService.SendNotifications(new [] {task.Course.Mentor},
-					    u => $"Пользователь <b>{User.Identity.Name}</b> отправил решение к задаче " +
-					         $"<a href = \"{UrlGenerator.GetRouteUrl(Request.RequestContext, "Index", "Homeworks", new { homeworkId = homework.Id})}" +
-					         $"\">{task.Title}</a>");
-                    ViewBag.Message = "Решение было успешно добавлено!";
-                    ViewBag.Color = "success";
+				{
+					await (new NewHomeworkNotification(task, student, homework, Request)).Send();
+                    this.AddViewBagMessage("Решение было успешно добавлено!");
                 }
             }
-		    return View();
+		    return View(model);
         }
 
 	    [Authorize(Roles = "Преподаватель")]
@@ -85,21 +82,10 @@ namespace HwProj.Controllers
 			    ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
 		    else
 		    {
-			    await NotificationsService.SendNotifications(u => u.Id == homework.StudentId,
-				    u => $"Задача <b>{homework.Task.Title}</b> проверена <i>(" + (model.IsAccepted
-					         ? "зачтена"
-					         : $"есть замечания: \"{model.ReviewComment.Substring(0, Math.Min(model.ReviewComment.Length, 15))}...\"") + ")</i>");
+			    await (new ReviewAddedNotification(homework, model)).Send();
 		    }
 		    return RedirectToAction("Index", "Courses", homework.Task.Course.Id);
 		}
 
-		#region Local Tools
-	    private void AddViewBagError(string errorMessage)
-	    {
-			ModelState.AddModelError("", errorMessage);
-		    ViewBag.Message = errorMessage;
-		    ViewBag.Color = "danger";
-		}
-		#endregion
 	}
 }

@@ -32,7 +32,7 @@ namespace HwProj.GitHubService
                 new PullRequestUpdate { State = ItemState.Closed });
             var commits = await data.client?.PullRequest.Commits(data.owner, data.repName, data.pullRequestNumber);
             var reviews = await ReviewRepository.GetAllReviewAsync();
-            return pullRequest.ToPullRequest(commits.ToCommits(), reviews);
+            return pullRequest.ToPullRequest(commits.ToCommits(), reviews, data.repName);
         }
     }
 }

@@ -23,12 +23,8 @@ namespace HwProj.Models.Repositories
 
 			        if (oldAttempts == null || !oldAttempts.Any()) item.Attempt = 1;
 			        else
-			        {
-				        var lastAttempt = oldAttempts.FirstOrDefault
-										 (h => h.Attempt == oldAttempts.Max(t => t.Attempt));
-				        item.Attempt = lastAttempt.Attempt + 1;
-				        /* Удаляем старую домашку */
-				        context.Remove(lastAttempt);
+			        {				        
+				        item.Attempt = oldAttempts.Max(t => t.Attempt) + 1;
 			        }
 			        item.Date = DateTime.Now;
 			        context.Add(item);

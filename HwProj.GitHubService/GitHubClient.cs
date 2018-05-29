@@ -29,10 +29,10 @@ namespace HwProj.GitHubService
             };
         }
 
-        public async Task<PullRequestManager> GetNewPullRequestManagerAsync(string title, string repName, string branchName)
+        public async Task<PullRequestManager> GetNewPullRequestManagerAsync(string title, string repName, string headBranchName, string baseBranchName)
         {
             var owner = (await client.User.Current()).Login;
-            var pullRequest = await CreatePullRequestAsync(title, repName, branchName, owner);
+            var pullRequest = await CreatePullRequestAsync(title, repName, headBranchName, owner, baseBranchName);
             return new PullRequestManager(pullRequest, new PullRequestData(client, owner, repName, pullRequest.Number));
         }
 
@@ -50,14 +50,22 @@ namespace HwProj.GitHubService
             var commits = await client?.PullRequest.Commits(data.owner, data.repName, data.pullRequestNumber);
             var reviewRep = new ReviewRepository(data);
             var reviews = await reviewRep.GetAllReviewAsync();
-            return pullRequest.ToPullRequest(commits.ToCommits(), reviews);
+            return pullRequest.ToPullRequest(commits.ToCommits(), reviews, data.repName);
         }
 
-        private async Task<Models.GitHub.PullRequest> CreatePullRequestAsync(string title, string repName, string branchName, string owner)
+        private async Task<Models.GitHub.PullRequest> CreatePullRequestAsync(string title, string repName, string headBranchName, string owner, string baseBranchName)
         {
-            var pullRequest = await client?.PullRequest.Create(owner, repName, new NewPullRequest(title, branchName, "master"));
+            try
+            {
+                var pullRequest = await client?.PullRequest.Create(owner, repName, new NewPullRequest(title, headBranchName, baseBranchName));
+            
             var commits = await client?.PullRequest.Commits(owner, repName, pullRequest.Number);
-            return pullRequest.ToPullRequest(commits.ToCommits(), null);
+            return pullRequest.ToPullRequest(commits.ToCommits(), null, repName);
+            }
+            catch (Octokit.ApiValidationException)
+            {
+                throw new ArgumentException($"PR from {headBranchName} to {baseBranchName} is already exist.");
+            }
         }
     }
 }
