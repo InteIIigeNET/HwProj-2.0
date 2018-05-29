@@ -469,6 +469,10 @@
     <Compile Include="Migrations\201805281955319_init.Designer.cs">
       <DependentUpon>201805281955319_init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805291122239_prd-mentor.cs" />
+    <Compile Include="Migrations\201805291122239_prd-mentor.Designer.cs">
+      <DependentUpon>201805291122239_prd-mentor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Contexts\AppDbContext.cs" />
     <Compile Include="Models\CourseMates.cs" />
@@ -660,6 +664,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201805281955319_init.resx">
       <DependentUpon>201805281955319_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805291122239_prd-mentor.resx">
+      <DependentUpon>201805291122239_prd-mentor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
