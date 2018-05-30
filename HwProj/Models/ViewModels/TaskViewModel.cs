@@ -13,7 +13,8 @@ namespace HwProj.Models.ViewModels
 		/// Название задания
 		/// </summary>
 		[Required]
-		public string Title { get; set; }
+        [DisplayName("Заголовок")]
+        public string Title { get; set; }
 		/// <summary>
 		/// Номер курса
 		/// </summary>
@@ -26,7 +27,8 @@ namespace HwProj.Models.ViewModels
 		/// Описание задания 
 		/// </summary>
 		[Required]
-		public string Description { get; set; }
+        [DisplayName("Описание")]
+        public string Description { get; set; }
 	}
 
 	public class TaskEditViewModel
