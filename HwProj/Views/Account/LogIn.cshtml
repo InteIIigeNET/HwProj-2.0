@@ -1,8 +1,9 @@
 ﻿@using HwProj.Models.ViewModels
 @model LoginViewModel
 @{
-    ViewBag.Title = "HwProj ждёт Вас";
+    ViewBag.Title = "Выполнить вход";
 }
+
 <br />
 <div class="row">
     <div class="offset-lg-4 col-lg-4 offset-md-3 col-md-6 offset-sm-4 col-sm-8 col-12">
@@ -12,6 +13,9 @@
         {
             @Html.AntiForgeryToken()
             <h4 class="text-center">@ViewBag.Title</h4>
+            <div class="text-muted text-center">
+                <em>HwProj ждёт Вас</em>
+            </div>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">

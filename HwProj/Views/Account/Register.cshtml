@@ -1,6 +1,6 @@
 ﻿@model HwProj.Models.ViewModels.RegisterViewModel
 @{
-    ViewBag.Title = "Станьте частью HwProj";
+    ViewBag.Title = "Регистрация";
 }
 
 <br />
@@ -13,6 +13,9 @@
         { 
             @Html.AntiForgeryToken()
             <h4 class="text-center">@ViewBag.Title</h4>
+            <div class="text-muted text-center">
+                <em>Станьте частью HwProj</em>
+            </div>
             <hr />
             @Html.ValidationSummary("", new { @class = "text-danger" })
             <div class="form-group">
