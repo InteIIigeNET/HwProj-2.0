@@ -524,7 +524,9 @@
     <Compile Include="Tools\GitHubInstance.cs" />
     <Compile Include="Tools\IAsyncManager.cs" />
     <Compile Include="Tools\IdentityExtensions.cs" />
-    <Compile Include="Tools\MarkdownInterpreter.cs" />
+    <Compile Include="Tools\Markdown\IMarkdownInterpreter.cs" />
+    <Compile Include="Tools\Markdown\MarkdownInterpreter.cs" />
+    <Compile Include="Tools\Markdown\StandartMarkdownInterpreter.cs" />
     <Compile Include="Tools\UrlGenerator.cs" />
     <Compile Include="Tools\Widget.cs" />
     <Compile Include="Validators\UserValidator.cs" />
