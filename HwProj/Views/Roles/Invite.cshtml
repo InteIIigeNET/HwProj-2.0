@@ -1,36 +1,42 @@
 ﻿@{
-    ViewBag.Title = "Развивайте HwProj";
+    ViewBag.Title = "Приглашение преподавателя";
     var alertVisibility = ViewBag.Message == null ? "none" : "block";
     var alertAutohide = ViewBag.Message == null ? string.Empty : "alert-autohide";
 }
 
 <br />
-@using (Html.BeginForm("Invite",
-    "Roles",
-    FormMethod.Post,
-    new { @class = "jumbotron", role = "form" }))
-{
-    <div class="offset-lg-1 col-lg-10 col-md-10 offset-sm-1 col-sm-10 offset-1 col-10">
-        <div class="jumbotron jumbotron_border_gray">
-            <h4>Пригласите преподавателя в HwProj Team.</h4>
-            <br />
-            <div class="alert alert-@ViewBag.Color alert-dismissible @alertAutohide fade show" role="alert" style="display: @alertVisibility">
-                <button type="button" class="close" data-dismiss="alert" aria-label="close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                @ViewBag.Message
-            </div>
-            <div class="input-group mb-3">
-                <input class="form-control" type="text" placeholder="Поиск по ФИО/почте пользователя" name="email" id="searchInput" />
-                <div class="input-group-append">
-                    <input class="btn btn-primary" type="submit" value="Добавить" />
+<div class="row">
+    <div class="offset-xl-1 col-xl-10 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-12">
+        @using (Html.BeginForm("Invite",
+            "Roles",
+            FormMethod.Post,
+            new { @class = "jumbotron jumbotron_border_gray", role = "form" }))
+        {
+            <div>
+                <h4 class="text-center">@ViewBag.Title</h4>
+                <div class="text-muted text-center">
+                    <em>Развивайте HwProj</em>
                 </div>
+                <hr />
+
+                @*for email*@
+                @*@Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Email) })*@
+                @*for comment*@
+                @*@Html.TextAreaFor(m => m.Comment, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Comment), rows = 5 })*@
+            
+                <input class="btn btn-primary" type="submit" value="Отправить" />
+
+                <div class="alert alert-@ViewBag.Color alert-dismissible @alertAutohide fade show" role="alert" style="display: @alertVisibility">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    @ViewBag.Message
+                </div>
+
             </div>
-            Или @Html.ActionLink("пригласите его в HwProj", "Invite", "Roles")
-            <br />
-        </div>
+        }
     </div>
-}
+</div>
 
 <script src="@Url.Content("~/Scripts/jquery-3.3.1.min.js")" type="text/javascript"></script>
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
