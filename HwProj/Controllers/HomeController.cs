@@ -29,5 +29,9 @@ namespace HwProj.Controllers
             var courses = _db.CourseManager.GetAll();
             return View(courses);
         }
+
+        public void ReadNotification(long Id)
+        {
+        }
     }
 }

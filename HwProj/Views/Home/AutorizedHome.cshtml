@@ -59,7 +59,7 @@
 <script>
     function onCloseAlert(Id) {
         $.ajax({
-            url: 'urlToController',
+            url: '@Url.Action("ReadNotification", "Home")',
             data: { Id: Id }
         }).done(function () {
             console.log('Test if it has been fired');
