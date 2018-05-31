@@ -76,6 +76,24 @@ namespace HwProj.Controllers
 
 		public ActionResult Invite()
 		{
+			return View(new UserInviteViewModel(true));
+		}
+
+		[HttpPost]
+		public async Task<ActionResult> Invite(UserInviteViewModel model)
+		{
+			//TODO: токен + проверка на существование + результат операции 
+			var sender = User.Identity;
+			await UserManager.EmailService.SendAsync(
+				new IdentityMessage()
+				{
+					Destination = model.Email,
+					Body = $"Пользователь <b>" +
+					       sender.GetUserFullName() + "</b> (" +
+					       (new MailTo(sender.GetUserEmail(), "Ответ на приглашение в команду HwProj")) +
+					       ") приглашает вас в команду HwProj:\n\n" + model.Message,
+					Subject = "Приглашение в команду HwProj"
+				});
 			return View();
 		}
 	}

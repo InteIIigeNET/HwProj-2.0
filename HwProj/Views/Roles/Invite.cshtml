@@ -3,6 +3,7 @@
     var alertVisibility = ViewBag.Message == null ? "none" : "block";
     var alertAutohide = ViewBag.Message == null ? string.Empty : "alert-autohide";
 }
+@model HwProj.Models.ViewModels.UserInviteViewModel
 
 <br />
 <div class="row">
@@ -13,16 +14,13 @@
             new { @class = "jumbotron jumbotron_border_gray", role = "form" }))
         {
             <div>
-                <h4 class="text-center">@ViewBag.Title</h4>
-                <div class="text-muted text-center">
-                    <em>Развивайте HwProj</em>
-                </div>
+                <h4 class="text-center">Пригласите преподавателя в команду HwProj</h4>
                 <hr />
-
+                @Html.HiddenFor(m => m.IsTeacher)
                 @*for email*@
-                @*@Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Email) })*@
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Email) })
                 @*for comment*@
-                @*@Html.TextAreaFor(m => m.Comment, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Comment), rows = 5 })*@
+                @Html.TextAreaFor(m => m.Message, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Message), rows = 5 })
             
                 <input class="btn btn-primary" type="submit" value="Отправить" />
 

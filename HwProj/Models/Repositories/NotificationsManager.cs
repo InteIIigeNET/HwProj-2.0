@@ -4,10 +4,11 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using HwProj.Models.Contexts;
+using WebGrease.Css.Extensions;
 
 namespace HwProj.Models.Repositories
 {
-	internal class NotificationsManager : BaseManager<Notification>, IRepository<Notification>
+	internal class NotificationsManager : BaseManager<Notification>, IRepositoryWithUpdate<Notification>
 	{
 		public bool Add(Notification item)
 		{
@@ -88,6 +89,25 @@ namespace HwProj.Models.Repositories
 
 		public NotificationsManager(AppDbContext context) : base(context)
 		{
+		}
+
+		public bool Update(Notification updateObj)
+		{
+			throw new NotImplementedException();
+		}
+
+		public bool Update(Func<Notification, bool> selector, Action<Notification> updateAction)
+		{
+			return Execute
+			(
+				context =>
+				{
+					var items = GetAll(selector);
+					items.ForEach(updateAction);
+					SaveChanges();
+					return true;
+				}	
+			);
 		}
 	}
 }

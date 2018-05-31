@@ -134,5 +134,10 @@ namespace HwProj.Models.Repositories
 				}
 			);
 		}
+
+		public bool Update(string userRights, Func<Course, bool> selector, Action<Course> updateAction)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

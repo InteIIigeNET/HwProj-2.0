@@ -57,10 +57,10 @@
 </div>
 
 <script>
-    function onCloseAlert(Id) {
+    function onCloseAlert(id) {
         $.ajax({
             url: '@Url.Action("ReadNotification", "Home")',
-            data: { Id: Id }
+            data: { id: id }
         }).done(function () {
             console.log('Test if it has been fired');
         });

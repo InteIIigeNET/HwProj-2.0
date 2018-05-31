@@ -1,16 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
-using System.Web.Mvc;
-using System.Web.Routing;
+﻿using System.Web.Mvc;
 using HwProj.Models.Repositories;
-using HwProj.Services;
-using HwProj.Tools;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 
 namespace HwProj.Controllers
 {
@@ -29,9 +18,13 @@ namespace HwProj.Controllers
             var courses = _db.CourseManager.GetAll();
             return View(courses);
         }
-
-        public void ReadNotification(long Id)
+		[Authorize]
+        public void ReadNotification(long? id)
         {
+	        if (id.HasValue)
+	        {
+		        _db.NotificationsManager.Update(n => n.Id == id, n => n.IsRead = true);
+	        }
         }
     }
 }
