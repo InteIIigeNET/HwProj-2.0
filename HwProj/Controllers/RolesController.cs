@@ -104,7 +104,7 @@ namespace HwProj.Controllers
 							Body = $"Пользователь <b>{sender.Name} {sender.Surname}</b> (" +
 							       (new MailTo(sender.Email, "Ответ на приглашение в команду HwProj")) +
 							       ") приглашает вас в команду HwProj:<br><br>\"" + model.Message + 
-								   $"\"<br><br>Перейдите по <a href={url}>ссылке</a>, чтобы подтвердить регистрацию.",
+								   $"\"<br><br>Чтобы подтвердить регистрацию, перейдите по <a href={url}>ссылке</a>.",
 							Subject = "Приглашение в команду HwProj"
 						});
 					this.AddViewBagMessage("Приглашение было успешно отправлено");
