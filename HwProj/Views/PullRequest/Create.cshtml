@@ -1,27 +1,57 @@
 ﻿@using HwProj.Models.ViewModels
 @model PullRequestCreateViewModel
-
-@using (Html.BeginForm("Create", "PullRequest",
-        new { @class = "jumbotron grey lighten-5 pt-5", @id = "login-form", role = "form" }))
-{
-    @Html.HiddenFor(m => m.TaskId);
-    var repos = new SelectList(ViewBag.Repos as IEnumerable<string>);
-    <div class="form-group">
-        @Html.DropDownListFor(model => model.RepositoryName, repos, "Выберите репозиторий", new { @class = "form-control", @onchange = "FillBranch()" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.HeadBranchName, "Откуда")
-        @Html.DropDownListFor(model => model.HeadBranchName, new SelectList(Enumerable.Empty<SelectListItem>()), "Выберите ветку", new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.HeadBranchName, "Куда")
-        @Html.DropDownListFor(model => model.BaseBranchName, new SelectList(Enumerable.Empty<SelectListItem>()), "Выберите ветку", new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Title, "Название")
-        @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Title) })
-    </div>
-    <div class="form-group">
-        <button class="btn btn-block btn-primary" type="submit">Создать pull request</button>
-    </div>
+@{
+    ViewBag.Title = "Создание pull request";
 }
+
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="jumbotron jumbotron_border_gray">
+            @using (Html.BeginForm("Create", "PullRequest",
+                    new { @class = "", @id = "login-form", role = "form" }))
+            {
+                <h3 class="text-center">@ViewBag.Title</h3>
+                <hr />
+                @Html.HiddenFor(m => m.TaskId);
+                var repos = new SelectList(ViewBag.Repos as IEnumerable<string>);
+                <div class="form-group row">
+                    <div class="col-lg-2 col-md-4 col-sm-12 col-12">
+                        @Html.LabelFor(user => user.RepositoryName)
+                    </div>
+                    <div class="col-lg-10 col-md-8 col-sm-12 col-12">
+                        @Html.DropDownListFor(model => model.RepositoryName, repos, "Выберите репозиторий", new { @class = "form-control", @onchange = "FillBranch()" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-2 col-md-4 col-sm-12 col-12">
+                        @Html.LabelFor(user => user.HeadBranchName)
+                    </div>
+                    <div class="col-lg-10 col-md-8 col-sm-12 col-12">
+                        @Html.DropDownListFor(model => model.HeadBranchName, new SelectList(Enumerable.Empty<SelectListItem>()), "Выберите ветку", new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-2 col-md-4 col-sm-12 col-12">
+                        @Html.LabelFor(user => user.BaseBranchName)
+                    </div>
+                    <div class="col-lg-10 col-md-8 col-sm-12 col-12">
+                        @Html.DropDownListFor(model => model.BaseBranchName, new SelectList(Enumerable.Empty<SelectListItem>()), "Выберите ветку", new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-lg-2 col-md-4 col-sm-12 col-12">
+                        @Html.LabelFor(user => user.Title)
+                    </div>
+                    <div class="col-lg-10 col-md-8 col-sm-12 col-12">
+                        @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Title) })
+                    </div>
+                </div>
+                <div class="form-group row float-xl-right float-lg-right float-md-right">
+                    <div class="col-sm-12 col-12">
+                        <button class="btn btn-primary" type="submit">Создать pull request</button>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
