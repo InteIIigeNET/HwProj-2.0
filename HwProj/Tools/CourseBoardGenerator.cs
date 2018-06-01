@@ -17,6 +17,7 @@ namespace HwProj.Tools
 		/// <returns></returns>
 		public static string GenerateCourseboardHtmlString(this Course course)
 		{
+			if (!course.Users.Any()) return "";
 			var achievments = new Dictionary<long, Dictionary<string, string>>();
 
 			StringBuilder text = new StringBuilder();

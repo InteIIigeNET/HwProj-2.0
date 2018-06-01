@@ -113,8 +113,19 @@ namespace HwProj.Controllers
             return View(model);
         }
 
-        // GET: /Account/ConfirmEmail
-        [AllowAnonymous]
+		[AllowAnonymous]
+	    public async Task<ActionResult> AcceptInvite(string invitedById, string email, string code, bool isTeacher)
+		{
+			var isDone = await UserManager.VerifyUserTokenAsync(invitedById, purpose: email + "_invite", token: code);
+			if (isDone)
+			{
+				//
+			}
+			return View();
+		}
+
+		// GET: /Account/ConfirmEmail
+		[AllowAnonymous]
 		public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
             if (userId == null || code == null)

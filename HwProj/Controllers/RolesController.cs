@@ -41,21 +41,23 @@ namespace HwProj.Controllers
 		[Authorize(Roles = "Преподаватель")]
 		public async Task<ActionResult> Index(string email)
 		{
-			var addedTeacher = await UserManager.FindByEmailAsync(email);
-			var currentUser  = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-
-			var result = await UserManager.RemoveFromRoleAsync(addedTeacher.Id, RoleType.Студент.ToString());
-			if (result.Succeeded)
+			if (!String.IsNullOrEmpty(email))
 			{
-				result = await UserManager.AddToRoleAsync(addedTeacher.Id, RoleType.Преподаватель.ToString());
+				var addedTeacher = await UserManager.FindByEmailAsync(email);
+				var currentUser = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+
+				var result = await UserManager.RemoveFromRoleAsync(addedTeacher.Id, RoleType.Студент.ToString());
 				if (result.Succeeded)
 				{
-					await (new TeacherAddedNotification(currentUser, addedTeacher, Request)).Send();
-					this.AddViewBagMessage("Отличные новости: +1 преподаватель в сообщество HwProj");
-					return View();
+					result = await UserManager.AddToRoleAsync(addedTeacher.Id, RoleType.Преподаватель.ToString());
+					if (result.Succeeded)
+					{
+						await (new TeacherAddedNotification(currentUser, addedTeacher, Request)).Send();
+						this.AddViewBagMessage("Отличные новости: +1 преподаватель в сообщество HwProj");
+					}
 				}
+				else this.AddViewBagMessage("Плохие новости: не удалось добавить преподавателя");
 			}
-			this.AddViewBagMessage("Плохие новости: не удалось добавить преподавателя");
 			return View();
 		}
 
@@ -76,24 +78,39 @@ namespace HwProj.Controllers
 
 		public ActionResult Invite()
 		{
-			return View(new UserInviteViewModel(true));
+			return View(new UserInviteViewModel(isTeacher: true));
 		}
 
 		[HttpPost]
+		[Authorize(Roles = "Преподаватель")]
 		public async Task<ActionResult> Invite(UserInviteViewModel model)
 		{
-			//TODO: токен + проверка на существование + результат операции 
-			var sender = User.Identity;
-			await UserManager.EmailService.SendAsync(
-				new IdentityMessage()
+			if (ModelState.IsValid)
+			{
+				if (await UserManager.FindByEmailAsync(model.Email) == null)
 				{
-					Destination = model.Email,
-					Body = $"Пользователь <b>" +
-					       sender.GetUserFullName() + "</b> (" +
-					       (new MailTo(sender.GetUserEmail(), "Ответ на приглашение в команду HwProj")) +
-					       ") приглашает вас в команду HwProj:\n\n" + model.Message,
-					Subject = "Приглашение в команду HwProj"
-				});
+					var sender = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+
+					string code = await UserManager.GenerateUserTokenAsync($"{model.Email}_invite", sender.Id);
+					string url = Url.Action("AcceptInvite", "Account", new { invitedById = sender.Id,
+																			       email = model.Email,
+																					code = code,
+																			   isTeacher = true }, protocol: Request.Url.Scheme);
+
+					await UserManager.EmailService.SendAsync(
+						new IdentityMessage()
+						{
+							Destination = model.Email,
+							Body = $"Пользователь <b>{sender.Name} {sender.Surname}</b> (" +
+							       (new MailTo(sender.Email, "Ответ на приглашение в команду HwProj")) +
+							       ") приглашает вас в команду HwProj:<br><br>\"" + model.Message + 
+								   $"\"<br><br>Перейдите по <a href={url}>ссылке</a>, чтобы подтвердить регистрацию.",
+							Subject = "Приглашение в команду HwProj"
+						});
+					this.AddViewBagMessage("Приглашение было успешно отправлено");
+				}
+				else this.AddViewBagError("Пользователь уже зарегистрирован на HwProj");
+			}
 			return View();
 		}
 	}
