@@ -18,6 +18,7 @@
             </div>
             <hr />
             @Html.ValidationSummary("", new { @class = "text-danger" })
+            @Html.HiddenFor(m => m.Role)
             <div class="form-group">
                 @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = Html.DisplayNameFor(m => m.Name)})
                 @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })

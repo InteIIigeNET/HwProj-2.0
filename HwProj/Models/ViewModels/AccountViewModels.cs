@@ -58,6 +58,13 @@ namespace HwProj.Models.ViewModels
 		[Display(Name = "Пол")]
 		[Required]
 		public Gender Gender { get; set; }
+
+		/// <summary>
+		/// Роль пользователя
+		/// </summary>
+		[Display(Name = "Роль")]
+		public string Role { get; set; } = RoleType.Студент.ToString();
+
 	}
 
 	public class ExternalLoginConfirmationViewModel

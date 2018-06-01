@@ -96,7 +96,7 @@ namespace HwProj.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-	                await UserManager.AddToRoleAsync(user.Id, RoleType.Преподаватель.ToString());
+	                await UserManager.AddToRoleAsync(user.Id, model.Role);
 					await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
                     // Отправка сообщения электронной почты для подтверждения
@@ -118,10 +118,11 @@ namespace HwProj.Controllers
 		{
 			var isDone = await UserManager.VerifyUserTokenAsync(invitedById, purpose: email + "_invite", token: code);
 			if (isDone)
-			{
-				//
-			}
-			return View();
+				return View("Register", new RegisterViewModel(){Email = email, Role = isTeacher? 
+											RoleType.Преподаватель.ToString() : RoleType.Студент.ToString()});
+
+			this.AddViewBagError(@"Срок действия ссылки закончился");
+			return RedirectToAction("Index", "Home");
 		}
 
 		// GET: /Account/ConfirmEmail
