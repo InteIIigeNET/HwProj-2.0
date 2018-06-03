@@ -1,25 +1,66 @@
 ﻿@model HwProj.Models.ViewModels.PullRequestViewModel
 
-<h5><a href=@Model.PullRequest.Owner.Url>@Model.PullRequest.Owner.Login</a></h5>
-<p>@Model.PullRequest.CreatedAt</p>
-<hr />
-<h6>Commits</h6>
-@foreach (var commit in Model.PullRequest.Commits)
-{
-    <a href=@commit.Owner.Url>@commit.Owner.Login</a>
-    <a href=@commit.Url>@commit.Title</a>
-}
-<hr />
-<div id="comments">
-    <h6>Reviews</h6>
-    @foreach (var review in Model.PullRequest.Reviews)
-    {
-        <a href=@review.HeadComment.Owner.Url>@review.HeadComment.Owner.Login</a>
-        <p>@review.HeadComment.Content</p>
-        foreach (var comment in review.ReviewComments)
-        {
-            <a href=@comment.Owner.Url>@comment.Owner.Login</a>
-            <p>@comment.Content</p>
-        }
-    }
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+        <div class="jumbotron jumbotron_border_gray">
+            <h3 class="text-center">@Model.PullRequest.Title</h3>
+            <a href=@Model.PullRequest.Owner.Url>@Model.PullRequest.Owner.Login</a>
+            <div class="float-xl-right float-lg-right">
+                @Model.PullRequest.CreatedAt
+            </div>
+            <hr />
+            <h4>Commits</h4>
+            <br />
+            <ul class="list-group commits commits-padding-zero">
+                @foreach (var commit in Model.PullRequest.Commits)
+                {
+                    <li class="list-group-item border-primary ">
+                        <a href=@commit.Owner.Url>@commit.Owner.Login</a>
+                        <a href=@commit.Url>@commit.Message</a>
+                    </li>
+                }
+            </ul>
+            <br />
+
+            <h4>Reviews</h4>
+            <br />
+            <div id="comments">
+                @foreach (var review in Model.PullRequest.Reviews)
+                {
+                    if (!String.IsNullOrEmpty(review.HeadComment.Content))
+                    {
+                        <div class="card border-primary mb-3">
+                            <div class="card-header bg-primary">
+                                <a class="active-link active-link_color_white" href=@review.HeadComment.Owner.Url>
+                                    @review.HeadComment.Owner.Login
+                                </a>
+                            </div>
+                            <div class="card-body">
+                                <h5 class="card-title">Итого</h5>
+                                <p class="card-text">
+                                    @review.HeadComment.Content
+                                </p>
+                            </div>
+                        </div>
+                    }
+
+                    foreach (var comment in review.ReviewComments)
+                    {
+                        <div class="card border-primary mb-3">
+                            <div class="card-header">
+                                <a href=@comment.Owner.Url>@comment.Owner.Login</a>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">@comment.Content</p>
+                            </div>
+                        </div>
+                    }
+
+                }
+            </div>
+
+        </div>
+    </div>
 </div>
+       
+        

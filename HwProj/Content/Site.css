@@ -98,3 +98,11 @@ code {
 .tasks.tasks_heading_inline {
     display: inline;
 }
+
+.active-link.active-link_color_white {
+    color: white !important
+}
+
+.commits.commits-padding-zero {
+    padding: 0px
+}
