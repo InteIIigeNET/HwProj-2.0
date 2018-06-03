@@ -105,10 +105,11 @@ namespace HwProj.Controllers
 
 	    private async Task<ActionResult> RegisterByInvite(RegisterViewModel model)
 	    {
-			var isDone = await UserManager.VerifyUserTokenAsync(model.InvitedBy, model.Email + "_invite", token: model.InviteToken);
+		    var isDone = await UserManager.VerifyUserTokenAsync(model.InvitedBy, model.Email + "_invite",
+			    token: model.InviteToken);
 		    if (isDone)
 		    {
-				var user = new User(model);
+			    var user = new User(model);
 			    var result = await UserManager.CreateAsync(user, model.Password);
 			    if (result.Succeeded)
 			    {
@@ -116,15 +117,14 @@ namespace HwProj.Controllers
 				    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 				    return RedirectToAction("Index", "Home");
 			    }
-				AddErrors(result);
+			    AddErrors(result);
 			    return View("Register");
-			}
-		    else
-		    {
-			    this.AddViewBagError(@"Срок действия пригласительной ссылки закончился");
-			    return RedirectToAction("Index", "Home");
 		    }
-		}
+		    else
+			    return RedirectToAction("Index", "Home",
+				    new {errorMessage = @"Срок действия пригласительной ссылки закончился"});
+	    }
+
 	    private async Task<ActionResult> RegisterByYourSelf(RegisterViewModel model)
 	    {
 		    var user = new User(model);

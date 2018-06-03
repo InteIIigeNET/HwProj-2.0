@@ -1,5 +1,7 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using HwProj.Models.Repositories;
+using HwProj.Tools;
 
 namespace HwProj.Controllers
 {
@@ -8,8 +10,12 @@ namespace HwProj.Controllers
     {
         MainRepository _db = MainRepository.Instance;
 
-        public ActionResult Index()
+        public ActionResult Index(string errorMessage = "")
         {
+	        if (!String.IsNullOrEmpty(errorMessage))
+	        {
+		        this.AddViewBagError(errorMessage);
+	        }
 			if (User.Identity.IsAuthenticated)
             {
                 var user = _db.UserManager.Get(u => u.Email == User.Identity.Name);
