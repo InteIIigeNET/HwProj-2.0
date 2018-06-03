@@ -62,7 +62,7 @@ namespace HwProj.GitHubService
                 Url = comment.User.HtmlUrl
             },
             Path = comment.Path,
-            Position = (int)comment.Position,
+            Position = comment.Position,
             ReviewId = comment.PullRequestReviewId
         };
 

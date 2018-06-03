@@ -11,7 +11,7 @@ namespace HwProj.Models.GitHub
 
         public string DiffHunk { get; set; }
 
-        public int Position { get; set; }
+        public int? Position { get; set; }
 
         public string Path { get; set; }
 
