@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using HwProj.Validators;
 
 namespace HwProj.Models.ViewModels
 {
@@ -25,6 +26,7 @@ namespace HwProj.Models.ViewModels
         public string RepositoryName { get; set; }
 
         [Display(Name = "Куда")]
+        [Inequality("HeadBranchName", ErrorMessage = "Нельзя создать pull request из тождественных веток")]
         [Required]
         public string BaseBranchName { get; set; }
     }
