@@ -12,7 +12,7 @@
 <hr />
 <div id="comments">
     <h6>Reviews</h6>
-    @foreach (var review in Model.PullRequest?.Reviews)
+    @foreach (var review in Model.PullRequest.Reviews)
     {
         <a href=@review.HeadComment.Owner.Url>@review.HeadComment.Owner.Login</a>
         <p>@review.HeadComment.Content</p>
