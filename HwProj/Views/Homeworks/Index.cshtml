@@ -1,4 +1,5 @@
 ﻿@using HwProj.Models.ViewModels
+@using HwProj.Tools
 @using Microsoft.AspNet.Identity
 @model HwProj.Models.Homework
 @{
@@ -18,7 +19,7 @@
             {
                 <div class="form-group row">
                     <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
-                        <b>@Html.LabelFor(m => m.Task.Title)</b>
+                        <b>@Html.DisplayTextFor(m => m.Task.Title)</b>
                     </div>
                     <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
                         @Html.ValueFor(m => m.Task.Title)
@@ -26,15 +27,15 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
-                        <b>@Html.LabelFor(m => m.Task.Description)</b>
+                        <b>@Html.DisplayTextFor(m => m.Task.Description)</b>
                     </div>
                     <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
-                        @Html.ValueFor(m => m.Task.Description)
+                        @Html.Raw(Model.Task.Description.AsMarkdown())
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
-                        <b>@Html.LabelFor(m => m.IsCompleted)</b>
+                        <b>@Html.DisplayTextFor(m => m.IsCompleted)</b>
                     </div>
                     <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
                         @Html.ValueFor(m => m.IsCompleted)
@@ -42,7 +43,7 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
-                        <b>@Html.LabelFor(m => m.GitHub)</b>
+                        <b>@Html.DisplayTextFor(m => m.GitHub)</b>
                     </div>
                     <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
                         @Html.ValueFor(m => m.GitHub)
@@ -50,7 +51,7 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
-                        <b>@Html.LabelFor(m => m.ReviewComment)</b>
+                        <b>@Html.DisplayTextFor(m => m.ReviewComment)</b>
                     </div>
                     <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
                         @Html.ValueFor(m => m.ReviewComment)

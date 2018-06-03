@@ -45,12 +45,9 @@ namespace HwProj.Controllers.GitHub
         [HttpPost]
         public async Task<ActionResult> Chose(PullRequestChoseViewModel pullRequestModel)
         {
-            var id = await CreateHomeworkViaPullRequest(pullRequestModel.TaskId, pullRequestModel.RepositoryName, pullRequestModel.Number);
-
-            return RedirectToAction("Index", new
-            {
-                pullRequestDataId = id
-            });
+	        var id = await CreateHomeworkViaPullRequest(pullRequestModel.TaskId, pullRequestModel.RepositoryName, pullRequestModel.Number);
+	        return id.HasValue ? RedirectToAction("Index", new { pullRequestDataId = id }) 
+							   : RedirectToAction("Index", "Home", new { errorMessage = "Ошибка при обновлении базы данных" });
         }
         
         public async Task<ActionResult> Create(long taskId)
@@ -67,18 +64,14 @@ namespace HwProj.Controllers.GitHub
                 pullRequestModel.HeadBranchName, pullRequestModel.BaseBranchName)).PullRequest;
 
             var id = await CreateHomeworkViaPullRequest(pullRequestModel.TaskId, pullRequestModel.RepositoryName, pullRequest.Number);
-
-            return RedirectToAction("Index", new
-            {
-                pullRequestDataId = id
-            });
-        }
+	        return id.HasValue ? RedirectToAction("Index", new { pullRequestDataId = id}) 
+							   : RedirectToAction("Index", "Home", new { errorMessage = "Ошибка при обновлении базы данных" });
+		}
 
 
         #region Helper
-        private async Task<long> CreateHomeworkViaPullRequest(long taskId, string repName, int pullRequestNumber)
+        private async Task<long?> CreateHomeworkViaPullRequest(long taskId, string repName, int pullRequestNumber)
         {
-
             var task = _repository.TaskManager.Get(t => t.Id == taskId);
             var student = _repository.UserManager.Get(u => u.Id == User.Identity.GetUserId());
             var homework = new Homework(new HomeworkCreateViewModel { TaskId = taskId }, task, student);
@@ -93,8 +86,7 @@ namespace HwProj.Controllers.GitHub
                     return prd.Id;
                 }
             }
-            //TODO : Сделать страницу ошибок, добавить dbexception
-            throw new Exception("Ошибка при обновлении базы данных!");
+	        return null;
         }
         #endregion
     }
