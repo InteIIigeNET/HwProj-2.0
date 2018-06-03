@@ -18,7 +18,6 @@ namespace HwProj.Controllers.GitHub
     public class PullRequestController : Controller
     {
         private MainRepository _repository = MainRepository.Instance;
-        private IAsyncManager _asyncManager = new AsyncManager();
 
         public async Task<ActionResult> Index(long pullRequestDataId)
         {
@@ -79,7 +78,6 @@ namespace HwProj.Controllers.GitHub
 			}
             else
             {
-                ModelState.AddModelError("", @"Заполните все поля!");
                 ViewBag.Repos = await GitHubInstance.GetStorageInstance().GetRepositoriesAsync();
                 return PartialView(pullRequestModel);
             }

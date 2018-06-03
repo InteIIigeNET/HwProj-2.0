@@ -21,8 +21,8 @@ namespace HwProj.GitHubService
                            Login = c.Author.Name,
                            Url = c.Commit.User?.HtmlUrl
                        },
-                       Title = c.Commit.Message,
-                       Url = c.HtmlUrl
+                       Url = c.HtmlUrl,
+                       Message = c.Commit.Message
                    };
         }
 
@@ -62,7 +62,7 @@ namespace HwProj.GitHubService
                 Url = comment.User.HtmlUrl
             },
             Path = comment.Path,
-            Position = (int)comment.Position,
+            Position = comment.Position,
             ReviewId = comment.PullRequestReviewId
         };
 
