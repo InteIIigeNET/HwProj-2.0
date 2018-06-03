@@ -24,10 +24,12 @@ namespace HwProj.Controllers
 	    {
 		    if (homeworkId.HasValue)
 		    {
-			    if (_repository.PullRequestsDataManager.Contains(h => h.HomeworkId == homeworkId))
+			    var pullRequestData = _repository.PullRequestsDataManager.Get(h => h.HomeworkId == homeworkId);
+				if (pullRequestData != null)
 			    {
-				    return RedirectToAction("", "Review");
+				    return RedirectToAction("Index", "PullRequest", new { pullRequestDataId = pullRequestData.Id});
 			    }
+
 			    var homework = _repository.HomeworkManager.Get(h => h.Id == homeworkId.Value);
 			    var userId = User.Identity.GetUserId();
 				if (homework != null && 

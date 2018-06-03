@@ -73,7 +73,7 @@ namespace HwProj.Controllers.GitHub
                         GetNewPullRequestManagerAsync(pullRequestModel.Title, pullRequestModel.RepositoryName,
                         pullRequestModel.HeadBranchName, pullRequestModel.BaseBranchName)).PullRequest;
 
-				var id = await CreateHomeworkViaPullRequest(pullRequestModel.TaskId, pullRequestModel.RepositoryName, pullRequestModel.Number);
+				var id = await CreateHomeworkViaPullRequest(pullRequestModel.TaskId, pullRequestModel.RepositoryName, pullRequest.Number);
 	            return id.HasValue ? RedirectToAction("Index", new { pullRequestDataId = id })
 								   : RedirectToAction("Index", "Home", new { errorMessage = "Ошибка при обновлении базы данных" });
 			}
