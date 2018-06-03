@@ -21,8 +21,9 @@ namespace HwProj.GitHubService
                            Login = c.Author.Name,
                            Url = c.Commit.User?.HtmlUrl
                        },
-                       Title = c.Commit.Message,
-                       Url = c.HtmlUrl
+                       Label = c.Commit.Label,
+                       Url = c.HtmlUrl,
+                       Message = c.Commit.Message
                    };
         }
 
