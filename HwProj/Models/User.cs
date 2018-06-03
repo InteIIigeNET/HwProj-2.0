@@ -41,9 +41,11 @@ namespace HwProj.Models
 	    public ICollection<Notification> Notifications { get; set; } 
 			= new List<Notification>();
 	    public IEnumerable<Notification> NoReadNotifications 
-			=> Notifications.Where(n => !n.IsRead);
+			=> Notifications.Where(n => !n.IsRead).ToList();
+	    public IEnumerable<Notification> ReadNotifications
+		    => Notifications.Where(n => n.IsRead).ToList();
 
-	    /// <summary>
+		/// <summary>
 		/// Домашка
 		/// </summary>
 		public ICollection<Homework> Homeworks { get; set; }

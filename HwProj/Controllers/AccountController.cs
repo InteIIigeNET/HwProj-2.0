@@ -10,6 +10,7 @@ using Microsoft.Owin.Security;
 using HwProj.Models;
 using HwProj.Models.Enums;
 using HwProj.Models.ViewModels;
+using HwProj.Services.NotificationPatterns;
 using HwProj.Tools;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity.Owin;
@@ -115,6 +116,7 @@ namespace HwProj.Controllers
 			    {
 				    await UserManager.AddToRoleAsync(user.Id, RoleType.Преподаватель.ToString());
 				    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+				    await (new UserAcceptedInviteNotification(model.InvitedBy, user)).Send();
 				    return RedirectToAction("Index", "Home");
 			    }
 			    AddErrors(result);
