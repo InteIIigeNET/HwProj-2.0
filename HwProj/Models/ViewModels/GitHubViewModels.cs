@@ -14,7 +14,7 @@ namespace HwProj.Models.ViewModels
         public long TaskId { get; set; }
 
         [Display(Name = "Название")]
-        [Required]
+        [Required(ErrorMessage = "Введите название!")]
         public string Title { get; set; }
 
         [Display(Name = "Откуда")]

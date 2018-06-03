@@ -85,7 +85,6 @@ namespace HwProj.Controllers.GitHub
             }
             else
             {
-                ModelState.AddModelError("", @"Заполните все поля!");
                 ViewBag.Repos = await GitHubInstance.GetStorageInstance().GetRepositoriesAsync();
                 return PartialView(pullRequestModel);
             }
