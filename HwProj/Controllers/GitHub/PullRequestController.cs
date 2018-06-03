@@ -45,9 +45,17 @@ namespace HwProj.Controllers.GitHub
         [HttpPost]
         public async Task<ActionResult> Chose(PullRequestChoseViewModel pullRequestModel)
         {
-	        var id = await CreateHomeworkViaPullRequest(pullRequestModel.TaskId, pullRequestModel.RepositoryName, pullRequestModel.Number);
-	        return id.HasValue ? RedirectToAction("Index", new { pullRequestDataId = id }) 
-							   : RedirectToAction("Index", "Home", new { errorMessage = "Ошибка при обновлении базы данных" });
+            if (ModelState.IsValid)
+            {
+				var id = await CreateHomeworkViaPullRequest(pullRequestModel.TaskId, pullRequestModel.RepositoryName, pullRequestModel.Number);
+	            return id.HasValue ? RedirectToAction("Index", new { pullRequestDataId = id })
+								   : RedirectToAction("Index", "Home", new { errorMessage = "Ошибка при обновлении базы данных" });
+			}
+            else
+            {
+                ViewBag.Repos = await GitHubInstance.GetStorageInstance().GetRepositoriesAsync();
+                return PartialView(pullRequestModel);
+            }  
         }
         
         public async Task<ActionResult> Create(long taskId)
@@ -58,15 +66,24 @@ namespace HwProj.Controllers.GitHub
         
         [HttpPost]
         public async Task<ActionResult> Create(PullRequestCreateViewModel pullRequestModel)
-        {            
-            var pullRequest = (await GitHubInstance.GetClientInstance().
-                GetNewPullRequestManagerAsync(pullRequestModel.Title, pullRequestModel.RepositoryName,
-                pullRequestModel.HeadBranchName, pullRequestModel.BaseBranchName)).PullRequest;
+        {
+            if (ModelState.IsValid)
+            {
+                var pullRequest = (await GitHubInstance.GetClientInstance().
+                        GetNewPullRequestManagerAsync(pullRequestModel.Title, pullRequestModel.RepositoryName,
+                        pullRequestModel.HeadBranchName, pullRequestModel.BaseBranchName)).PullRequest;
 
-            var id = await CreateHomeworkViaPullRequest(pullRequestModel.TaskId, pullRequestModel.RepositoryName, pullRequest.Number);
-	        return id.HasValue ? RedirectToAction("Index", new { pullRequestDataId = id}) 
-							   : RedirectToAction("Index", "Home", new { errorMessage = "Ошибка при обновлении базы данных" });
-		}
+				var id = await CreateHomeworkViaPullRequest(pullRequestModel.TaskId, pullRequestModel.RepositoryName, pullRequestModel.Number);
+	            return id.HasValue ? RedirectToAction("Index", new { pullRequestDataId = id })
+								   : RedirectToAction("Index", "Home", new { errorMessage = "Ошибка при обновлении базы данных" });
+			}
+            else
+            {
+                ModelState.AddModelError("", @"Заполните все поля!");
+                ViewBag.Repos = await GitHubInstance.GetStorageInstance().GetRepositoriesAsync();
+                return PartialView(pullRequestModel);
+            }
+        }
 
 
         #region Helper
