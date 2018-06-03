@@ -92,10 +92,8 @@ namespace HwProj.Controllers
 					var sender = await UserManager.FindByIdAsync(User.Identity.GetUserId());
 
 					string code = await UserManager.GenerateUserTokenAsync($"{model.Email}_invite", sender.Id);
-					string url = Url.Action("AcceptInvite", "Account", new { invitedById = sender.Id,
-																			       email = model.Email,
-																					code = code,
-																			   isTeacher = true }, protocol: Request.Url.Scheme);
+					string url = Url.Action("AcceptInvite", "Account", 
+						new { invitedById = sender.Id, email = model.Email, code = code, isTeacher = true }, protocol: Request.Url.Scheme);
 
 					await UserManager.EmailService.SendAsync(
 						new IdentityMessage()

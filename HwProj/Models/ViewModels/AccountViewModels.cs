@@ -62,8 +62,13 @@ namespace HwProj.Models.ViewModels
 		/// <summary>
 		/// Роль пользователя
 		/// </summary>
-		[Display(Name = "Роль")]
-		public string Role { get; set; } = RoleType.Студент.ToString();
+		[Display(Name = "Приглашён пользователем")]
+		public string InvitedBy { get; set; }
+		/// <summary>
+		/// Роль пользователя
+		/// </summary>
+		[Display(Name = "Токен приглашения")]
+		public string InviteToken { get; set; }
 
 	}
 
