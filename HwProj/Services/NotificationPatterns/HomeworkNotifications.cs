@@ -12,7 +12,7 @@ namespace HwProj.Services.NotificationPatterns
 	{
 		public NewHomeworkNotification(Task task, User student, Homework homework, HttpRequestBase request)
 			: base(new[] { task.Course.Mentor },
-				u => $"Пользователь <b>{student.Name} {student.Surname}<b/> ({new MailTo(student.Email)}) отправил решение к задаче " +
+				u => $"Пользователь <b>{student.Name} {student.Surname}</b> ({new MailTo(student.Email)}) отправил решение к задаче " +
 				     $"<a href = \"{UrlGenerator.GetRouteUrl(request.RequestContext, "Index", "Homeworks", new { homeworkId = homework.Id })}" +
 				     $"\">{task.Title}</a>")
 		{

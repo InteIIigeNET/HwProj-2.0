@@ -81,16 +81,17 @@ namespace HwProj.Controllers
 	    {
 		    if (!ModelState.IsValid)
 		    {
-			    ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
+			    this.AddViewBagError(@"Ошибка при добавлении рецензии");
 		    }
 		    var homework = _repository.HomeworkManager.Get(h => h.Id == model.HomeworkId);
 		    if (!_repository.HomeworkManager.AddReview(User.Identity.GetUserId(), model))
-			    ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
+			    this.AddViewBagError(@"Ошибка при добавлении рецензии");
 		    else
 		    {
-			    await (new ReviewAddedNotification(homework, model)).Send();
+			    this.AddViewBagMessage(@"Рецензия успешно добавлена!");
+				await (new ReviewAddedNotification(homework, model)).Send();
 		    }
-		    return RedirectToAction("Index", "Courses", homework.Task.Course.Id);
+		    return RedirectToAction("Index", "Courses", new {courseId = homework.Task.Course.Id});
 		}
 
 	}

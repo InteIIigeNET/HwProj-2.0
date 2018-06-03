@@ -39,7 +39,7 @@ namespace HwProj.Tools
 					($"<td>{course.Tasks.Sum(t => Convert.ToByte(!t.Homeworks.Where(h => h.IsCompleted).GroupBy(h => h.StudentId).Select(h => h.Key).Contains(user.UserId)))}</td>");
 				foreach (var task in course.Tasks)
 				{
-					text.AppendLine(task.Homeworks.FirstOrDefault(h => h.StudentId == user.UserId).GetHomeworkStatusHtmlString());
+					text.AppendLine(task.Homeworks.Where(h => h.StudentId == user.UserId).OrderByDescending(h => h.Attempt).FirstOrDefault().GetHomeworkStatusHtmlString());
 					text.AppendLine(achievments[task.Id].TryGetValue(user.UserId, out var achievement)?
 									$"<td>{achievement}</td>": $"<td></td>");
 				}
