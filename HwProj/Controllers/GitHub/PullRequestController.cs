@@ -45,12 +45,20 @@ namespace HwProj.Controllers.GitHub
         [HttpPost]
         public async Task<ActionResult> Chose(PullRequestChoseViewModel pullRequestModel)
         {
-            var id = await CreateHomeworkViaPullRequest(pullRequestModel.TaskId, pullRequestModel.RepositoryName, pullRequestModel.Number);
-
-            return RedirectToAction("Index", new
+            if (ModelState.IsValid)
             {
-                pullRequestDataId = id
-            });
+                var id = await CreateHomeworkViaPullRequest(pullRequestModel.TaskId, pullRequestModel.RepositoryName, pullRequestModel.Number);
+
+                return RedirectToAction("Index", new
+                {
+                    pullRequestDataId = id
+                });
+            }
+            else
+            {
+                ViewBag.Repos = await GitHubInstance.GetStorageInstance().GetRepositoriesAsync();
+                return PartialView(pullRequestModel);
+            }
         }
         
         public async Task<ActionResult> Create(long taskId)
@@ -61,17 +69,26 @@ namespace HwProj.Controllers.GitHub
         
         [HttpPost]
         public async Task<ActionResult> Create(PullRequestCreateViewModel pullRequestModel)
-        {            
-            var pullRequest = (await GitHubInstance.GetClientInstance().
-                GetNewPullRequestManagerAsync(pullRequestModel.Title, pullRequestModel.RepositoryName,
-                pullRequestModel.HeadBranchName, pullRequestModel.BaseBranchName)).PullRequest;
-
-            var id = await CreateHomeworkViaPullRequest(pullRequestModel.TaskId, pullRequestModel.RepositoryName, pullRequest.Number);
-
-            return RedirectToAction("Index", new
+        {
+            if (ModelState.IsValid)
             {
-                pullRequestDataId = id
-            });
+                var pullRequest = (await GitHubInstance.GetClientInstance().
+                        GetNewPullRequestManagerAsync(pullRequestModel.Title, pullRequestModel.RepositoryName,
+                        pullRequestModel.HeadBranchName, pullRequestModel.BaseBranchName)).PullRequest;
+
+                var id = await CreateHomeworkViaPullRequest(pullRequestModel.TaskId, pullRequestModel.RepositoryName, pullRequest.Number);
+
+                return RedirectToAction("Index", new
+                {
+                    pullRequestDataId = id
+                });
+            }
+            else
+            {
+                ModelState.AddModelError("", @"Заполните все поля!");
+                ViewBag.Repos = await GitHubInstance.GetStorageInstance().GetRepositoriesAsync();
+                return PartialView(pullRequestModel);
+            }
         }
 
 

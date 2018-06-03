@@ -13,15 +13,19 @@ namespace HwProj.Models.ViewModels
         public long TaskId { get; set; }
 
         [Display(Name = "Название")]
+        [Required]
         public string Title { get; set; }
 
         [Display(Name = "Откуда")]
+        [Required]
         public string HeadBranchName { get; set; }
 
         [Display(Name = "Репозиторий")]
+        [Required]
         public string RepositoryName { get; set; }
 
         [Display(Name = "Куда")]
+        [Required]
         public string BaseBranchName { get; set; }
     }
 
@@ -30,9 +34,11 @@ namespace HwProj.Models.ViewModels
         public long TaskId { get; set; }
 
         [Display(Name = "Название")]
+        [Range(1, int.MaxValue, ErrorMessage = "Выберите pull request")]
         public int Number { get; set; }
 
         [Display(Name = "Репозиторий")]
+        [Required]
         public string RepositoryName { get; set; }
     }
 

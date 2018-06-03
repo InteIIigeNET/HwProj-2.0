@@ -24,15 +24,16 @@ namespace HwProj.Models.Repositories
 
         private MainRepository()
         {
-	        _context             = this.GetContext();
+	        _context                    = this.GetContext();
 
-            CourseManager        = new CoursesManager      (_context);
-            UserManager          = new UserManager         (_context);
-            HomeworkManager      = new HomeworksManager    (_context);
-            TaskManager          = new TasksManager        (_context);
-            NotificationsManager = new NotificationsManager(_context);
-	        CourseMateManager    = new CourseMateManager   (_context);
-		}
+            CourseManager               = new CoursesManager            (_context);
+            UserManager                 = new UserManager               (_context);
+            HomeworkManager             = new HomeworksManager          (_context);
+            TaskManager                 = new TasksManager              (_context);
+            NotificationsManager        = new NotificationsManager      (_context);
+	        CourseMateManager           = new CourseMateManager         (_context);
+            PullRequestsDataManager     = new PullRequestsDataManager   (_context);
+        }
 
 	    private readonly AppDbContext _context;
         public void Dispose()
