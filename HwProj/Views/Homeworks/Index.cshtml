@@ -1,5 +1,6 @@
 ﻿@using HwProj.Models.ViewModels
 @using HwProj.Tools
+@using HwProj.Tools.Markdown
 @using Microsoft.AspNet.Identity
 @model HwProj.Models.Homework
 @{
@@ -16,9 +17,9 @@
             <span>@Model.Student.Name @Model.Student.Surname</span>
             <div class="float-xl-right float-lg-right">
                 @helper EmailTextBot(string email, string title)
-                {
-                    <a href="mailto:@email?subject=@title">@email</a>
-                }
+                    {
+                        <a href="mailto:@email?subject=@title">@email</a>
+}
                 @EmailTextBot(@Model.Student.Email, "Письмо от надоедливого студента")
             </div>
             <hr />

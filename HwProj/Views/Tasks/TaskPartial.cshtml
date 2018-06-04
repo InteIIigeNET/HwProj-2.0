@@ -1,5 +1,6 @@
 ﻿@using HwProj.Models.ViewModels
 @using HwProj.Tools
+@using HwProj.Tools.Markdown
 @using Microsoft.AspNet.Identity
 @model HwProj.Models.ViewModels.TaskViewModel
 
@@ -11,9 +12,9 @@
 {
     <div>
         @Ajax.ActionLink("Редактировать", "_EditPartial", "Tasks",
-                        new TaskEditViewModel(Model),
-                        new AjaxOptions { UpdateTargetId = "task_partial_" + Model.TaskId },
-                        new { @class = "btn btn-outline-primary" })
+                             new TaskEditViewModel(Model),
+                             new AjaxOptions { UpdateTargetId = "task_partial_" + Model.TaskId },
+                             new { @class = "btn btn-outline-primary" })
         <button class="btn btn-outline-primary" data-toggle="modal" data-target="#deleteTaskModal">Удалить</button>
     </div>
     <div class="modal fade" id="deleteTaskModal" tabindex="-1" role="dialog" aria-labelledby="deleteTaskModalLabel" aria-hidden="true">
