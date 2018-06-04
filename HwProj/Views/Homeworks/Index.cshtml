@@ -12,59 +12,73 @@
     <div class="offset-xl-1 col-xl-10 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-12">
         <div class="jumbotron jumbotron_border_gray">
             <h3 class="text-center">@ViewBag.Title</h3>
+            <br />
+            <span>@Model.Student.Name @Model.Student.Surname</span>
+            <div class="float-xl-right float-lg-right">
+                @helper EmailTextBot(string email, string title)
+                {
+                    <a href="mailto:@email?subject=@title">@email</a>
+                }
+                @EmailTextBot(@Model.Student.Email, "Письмо от надоедливого студента")
+            </div>
             <hr />
-        <div class="form-group row">
-            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
-                @Html.Raw(@Model.Student.Name + " " + @Model.Student.Surname + string.Format(" {0}", new MailTo(Model.Student.Email)))
+            <div class="form-group row">
+                <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
+                    <b>@Html.DisplayNameFor(m => m.Task.Title)</b>
+                </div>
+                <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
+                    @Html.ValueFor(m => m.Task.Title)
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
-                <b>@Html.DisplayNameFor(m => m.Task.Title)</b>
+            <div class="form-group row">
+                <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
+                    <b>@Html.DisplayNameFor(m => m.Task.Description)</b>
+                </div>
+                <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
+                    @Html.Raw(Model.Task.Description.AsMarkdown())
+                </div>
             </div>
-            <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
-                @Html.ValueFor(m => m.Task.Title)
+            <div class="form-group row">
+                <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
+                    <b>@Html.DisplayNameFor(m => m.IsCompleted)</b>
+                </div>
+                <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
+                    @Html.Raw(@Model.IsCompleted ? "✅" : "❌")
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
-                <b>@Html.DisplayNameFor(m => m.Task.Description)</b>
+            <div class="form-group row">
+                <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
+                    <b>@Html.DisplayNameFor(m => m.ReviewComment)</b>
+                </div>
+                <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
+                    @if (String.IsNullOrEmpty(Model.ReviewComment))
+                    {
+                        <span>Отсутствует</span>
+                    }
+                    else
+                    {
+                        @Html.ValueFor(m => m.ReviewComment)
+                    }
+                </div>
             </div>
-            <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
-                @Html.Raw(Model.Task.Description.AsMarkdown())
+            <div class="form-group row">
+                <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
+                    <b>@Html.DisplayNameFor(m => m.Attempt)</b>
+                </div>
+                <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
+                    <a href="@Model.GitHub">
+                        <i class="fas fa-code-branch"></i>
+                        <span>v.@Model.Attempt GitHub</span>
+                    </a>
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
-                <b>@Html.DisplayNameFor(m => m.IsCompleted)</b>
-            </div>
-            <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
-                @Html.Raw(@Model.IsCompleted ? "✅" : "❌")
-            </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
-                <b>@Html.DisplayNameFor(m => m.ReviewComment)</b>
-            </div>
-            <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
-                @Html.ValueFor(m => m.ReviewComment)
-            </div>
-        </div>
-        <div class="btn-group">
-            <span class="glyphicon glyphicon-cloud-download"></span> v.@Model.Attempt          
-            <a class="btn btn-default" href=@Model.GitHub>
-                <span class="glyphicon glyphicon-link"></span>GitHub
-            </a>          
-        </div>
-@if (User.Identity.GetUserId() == Model.Task.Course.Mentor.Id)
-{
-    @Html.Partial("Review", new HomeworkAcceptViewModel() {HomeworkId = @Model.Id})
-}
+            @if (User.Identity.GetUserId() == Model.Task.Course.Mentor.Id)
+            {
+                @Html.Partial("Review", new HomeworkAcceptViewModel() { HomeworkId = @Model.Id })
+            }
         </div>
     </div>
 </div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-
-
