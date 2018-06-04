@@ -63,13 +63,21 @@
             </div>
             <div class="form-group row">
                 <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
-                    <b>@Html.DisplayNameFor(m => m.Attempt)</b>
+                    <b>@Html.DisplayNameFor(m => m.GitHub)</b>
                 </div>
                 <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
                     <a href="@Model.GitHub">
                         <i class="fas fa-code-branch"></i>
-                        <span>v.@Model.Attempt GitHub</span>
+                        <span>v.@Model.Attempt github.com</span>
                     </a>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
+                    <b>@Html.DisplayNameFor(m => m.Comment)</b>
+                </div>
+                <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
+                    @Html.Raw(Model.Comment)
                 </div>
             </div>
             @if (User.Identity.GetUserId() == Model.Task.Course.Mentor.Id)
