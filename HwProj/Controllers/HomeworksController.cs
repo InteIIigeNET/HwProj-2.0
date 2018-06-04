@@ -89,7 +89,7 @@ namespace HwProj.Controllers
 		    else
 		    {
 			    this.AddViewBagMessage(@"Рецензия успешно добавлена!");
-				await (new ReviewAddedNotification(homework, model)).Send();
+				await (new ReviewAddedNotification(homework, model, Request)).Send();
 		    }
 		    return RedirectToAction("Index", "Courses", new {courseId = homework.Task.Course.Id});
 		}

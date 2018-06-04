@@ -65,7 +65,9 @@ namespace HwProj.Models.Repositories
 				    if (homework == null || homework.Task.Course.Mentor.Id != rights) return false;
 
 				    homework.IsCompleted = model.IsAccepted;
-				    homework.ReviewComment = model.ReviewComment;
+				    homework.ReviewComment = String.IsNullOrEmpty(model.ReviewComment)
+											 ? model.IsAccepted? "Задача зачтена" : "Задача не зачтена" 
+											 : model.ReviewComment;
 					SaveChanges();
 					return true;
 			    }
