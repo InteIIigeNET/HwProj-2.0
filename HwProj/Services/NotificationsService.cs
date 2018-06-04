@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Threading.Tasks;
+using HwProj.IoC;
 using HwProj.Models;
 using HwProj.Models.Repositories;
 using HwProj.Tools;
+using HwProj.Tools.Markdown;
+using Ninject;
 
 namespace HwProj.Services
 {
     public static class NotificationsService
     {
         private static readonly MainRepository Db = MainRepository.Instance;
-        private static readonly IAsyncManager     AsyncManager = new AsyncManager();
+        private static readonly IAsyncManager     AsyncManager = Kernel.Instance.Get<IAsyncManager>();
 
-        public static Task<IEnumerable<long>> SendNotifications(Func<User, bool> usersPredicate,
+		public static Task<IEnumerable<long>> SendNotifications(Func<User, bool> usersPredicate,
 																Func<User, string> buildNotificationFor)
         {
             return SendNotifications(Db.UserManager.GetAll(usersPredicate), buildNotificationFor);

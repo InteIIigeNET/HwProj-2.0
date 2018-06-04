@@ -23,7 +23,7 @@ namespace HwProj.Tools
 
 			StringBuilder text = new StringBuilder();
             text.Append("<div class=\"table-responsive\">");
-            text.AppendLine($"<table class=\"table table-bordered table-sm\"><thead class=\"thead-dark\"><tr>{"Студент".AsHead()}{"TODO".AsHead()}");
+            text.AppendLine($"<table class=\"table table-bordered table-sm\"><thead class=\"thead-dark\"><tr>{"Студент".AsHead(false)}{"TODO".AsHead()}");
 
             foreach (var task in course.Tasks)
 			{
@@ -39,12 +39,12 @@ namespace HwProj.Tools
 			{
                 text.AppendLine($"<tr><th scope=\"row\">{user.User.Name + " " + user.User.Surname}</th>");
                 text.AppendLine
-					($"<td>{course.Tasks.Sum(t => Convert.ToByte(!t.Homeworks.Where(h => h.IsCompleted).GroupBy(h => h.StudentId).Select(h => h.Key).Contains(user.UserId)))}</td>");
+					($"<td style=\"text-align: center\">{course.Tasks.Sum(t => Convert.ToByte(!t.Homeworks.Where(h => h.IsCompleted).GroupBy(h => h.StudentId).Select(h => h.Key).Contains(user.UserId)))}</td>");
 				foreach (var task in course.Tasks)
 				{
 					text.AppendLine(task.Homeworks.Where(h => h.StudentId == user.UserId).OrderByDescending(h => h.Attempt).FirstOrDefault().GetHomeworkStatusHtmlString());
 					text.AppendLine(achievments[task.Id].TryGetValue(user.UserId, out var achievement)?
-									$"<td>{achievement}</td>": $"<td></td>");
+									$"<td style=\"text-align: center\">{achievement}</td>": $"<td></td>");
 				}
 				text.AppendLine("</tr>");
 			}
@@ -77,9 +77,11 @@ namespace HwProj.Tools
 				: "<td class=\"bg-success\"></td>";
 		}
 
-		private static string AsHead(this string title)
+		private static string AsHead(this string title, bool inCenter = true)
 		{
-			return $"<th scope=\"col\">{title}</th>";
+			return inCenter
+				? $"<th style=\"text-align: center\" scope=\"col\">{title}</th>"
+				: $"<th scope=\"col\">{title}</th>";
 		}
 	}
 }

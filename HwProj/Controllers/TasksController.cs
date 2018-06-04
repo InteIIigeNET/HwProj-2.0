@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using HwProj.Models.Repositories;
 using HwProj.Models.ViewModels;
 using HwProj.Services;
+using HwProj.Services.NotificationPatterns;
 using HwProj.Tools;
 using Microsoft.AspNet.Identity;
 using Task = HwProj.Models.Task;
@@ -34,9 +35,7 @@ namespace HwProj.Controllers
 	        };
             if (_db.TaskManager.Add(User.Identity.GetUserId(), newTask))
             {
-	            await NotificationsService.SendNotifications(newTask.Course.Users.Select(m => m.User),
-		            u => $"В курсе {newTask.Course.Name} добавлено задание {newTask.Title}");
-
+	            await (new NewTaskNotification(course.Users.Select(u => u.User), newTask, Request)).Send();
                 return RedirectToAction("Index", "Courses", new { courseId = model.CourseId });
             }
             ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
