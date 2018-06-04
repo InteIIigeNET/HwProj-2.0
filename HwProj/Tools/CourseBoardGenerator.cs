@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 using HwProj.Models;
+using static System.String;
 
 namespace HwProj.Tools
 {
@@ -71,8 +72,9 @@ namespace HwProj.Tools
 		public static string GetHomeworkStatusHtmlString(this Homework homework)
 		{
 			if (homework == null) return "<td></td>";
-			return !homework.IsCompleted ? "<td class=\"table-success\"></td>" :
-                                           "<td class=\"bg-success\"></td>";
+			return !homework.IsCompleted
+				? IsNullOrEmpty(homework.ReviewComment)? "<td class=\"table-success\"></td>" : "<td></td>"
+				: "<td class=\"bg-success\"></td>";
 		}
 
 		private static string AsHead(this string title)

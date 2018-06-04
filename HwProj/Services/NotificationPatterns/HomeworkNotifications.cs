@@ -21,9 +21,10 @@ namespace HwProj.Services.NotificationPatterns
 
 	public class ReviewAddedNotification : Notification
 	{
-		public ReviewAddedNotification(Homework homework, HomeworkAcceptViewModel model) 
+		public ReviewAddedNotification(Homework homework, HomeworkAcceptViewModel model, HttpRequestBase request) 
 			: base(u => u.Id == homework.StudentId,
-				u => $"Задача <b>{homework.Task.Title}</b> проверена <i>(" + (model.IsAccepted
+				u => $"Задача <a href = \"{UrlGenerator.GetRouteUrl(request.RequestContext, "Index", "Homeworks", new { homeworkId = homework.Id })}" +
+				     $"\">{homework.Task.Title}</a> проверена <i>(" + (model.IsAccepted
 					     ? "зачтена"
 					     : $"есть замечания: \"{model.ReviewComment.Substring(0, Math.Min(model.ReviewComment.Length, 15))}...\"") + ")</i>")
 		{
