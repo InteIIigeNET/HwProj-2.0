@@ -52,10 +52,18 @@
                             </div>
                             <div class="card-body">
                                 <p class="card-text">@comment.Content</p>
-                            </div>                            
+                                <table class="diff-table">
+                                    @foreach (var diffLine in comment.DiffHunk)
+                                    {
+                                    <tr>
+                                        <td class="blob-num @diffLine.CssNumClass">@diffLine.Number</td>
+                                        <td class="blob-code @diffLine.CssCodeClass">@diffLine.Line</td>
+                                    </tr>
+                                    }
+                                </table>
+                            </div>
                         </div>
                     }
-
                 }
             </div>
 
