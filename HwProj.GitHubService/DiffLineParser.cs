@@ -11,10 +11,13 @@ namespace HwProj.GitHubService
 {
     public static class DiffLineParser
     {
-        #region Special for Dinara
-        public const string ADDITION_CSS_CLASS = "ADD";
-        public const string DELETION_CSS_CLASS = "DEL";
-        public const string NORMAL_CSS_CLASS = "NORM";
+        #region Special for Dinara or me :c
+        public const string ADDITION_CSS_CODE_CLASS = "blob-code-addition";
+        public const string DELETION_CSS_CODE_CLASS = "blob-code-deletion";
+        public const string NORMAL_CSS_CODE_CLASS = "";
+        public const string ADDITION_CSS_NUM_CLASS = "blob-num-addition";
+        public const string DELETION_CSS_NUM_CLASS = "blob-num-deletion";
+        public const string NORMAL_CSS_NUM_CLASS = "";
         #endregion
 
         private class ParsedDiff
@@ -52,13 +55,16 @@ namespace HwProj.GitHubService
             switch (line[0])
             {
                 case '+':
-                    diffLine.CssClass = ADDITION_CSS_CLASS;
+                    diffLine.CssCodeClass = ADDITION_CSS_CODE_CLASS;
+                    diffLine.CssNumClass = ADDITION_CSS_NUM_CLASS;
                     break;
                 case '-':
-                    diffLine.CssClass = DELETION_CSS_CLASS;
+                    diffLine.CssCodeClass = DELETION_CSS_CODE_CLASS;
+                    diffLine.CssNumClass = DELETION_CSS_NUM_CLASS;
                     break;
                 default:
-                    diffLine.CssClass = NORMAL_CSS_CLASS;
+                    diffLine.CssCodeClass = NORMAL_CSS_CODE_CLASS;
+                    diffLine.CssNumClass = NORMAL_CSS_NUM_CLASS;
                     break;
             }
             return diffLine;

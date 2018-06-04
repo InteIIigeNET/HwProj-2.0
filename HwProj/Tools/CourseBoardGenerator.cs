@@ -34,15 +34,15 @@ namespace HwProj.Tools
 			text.Append("</tr></thead>");
             text.AppendLine("<tbody>");
 
-            foreach (var user in course.Users.Where(u => u.IsAccepted))
+            foreach (var courseMate in course.Users.Where(u => u.IsAccepted))
 			{
-                text.AppendLine($"<tr><th scope=\"row\">{user.User.Name + " " + user.User.Surname}</th>");
+                text.AppendLine($"<tr><th scope=\"row\">{courseMate.User.Name + " " + courseMate.User.Surname}</th>");
                 text.AppendLine
-					($"<td>{course.Tasks.Sum(t => Convert.ToByte(!t.Homeworks.Where(h => h.IsCompleted).GroupBy(h => h.StudentId).Select(h => h.Key).Contains(user.UserId)))}</td>");
+					($"<td>{course.Tasks.Sum(t => Convert.ToByte(!t.Homeworks.Where(h => h.IsCompleted).GroupBy(h => h.StudentId).Select(h => h.Key).Contains(courseMate.UserId)))}</td>");
 				foreach (var task in course.Tasks)
 				{
-					text.AppendLine(task.Homeworks.Where(h => h.StudentId == user.UserId).OrderByDescending(h => h.Attempt).FirstOrDefault().GetHomeworkStatusHtmlString());
-					text.AppendLine(achievments[task.Id].TryGetValue(user.UserId, out var achievement)?
+					text.AppendLine(task.Homeworks.Where(h => h.StudentId == courseMate.UserId).OrderByDescending(h => h.Attempt).FirstOrDefault().GetHomeworkStatusHtmlString());
+					text.AppendLine(achievments[task.Id].TryGetValue(courseMate.UserId, out var achievement)?
 									$"<td>{achievement}</td>": $"<td></td>");
 				}
 				text.AppendLine("</tr>");

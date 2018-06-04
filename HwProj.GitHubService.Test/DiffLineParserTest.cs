@@ -19,9 +19,9 @@ namespace HwProj.GitHubService.Test
             //assert
             var first = diffLines.First();
             var last = diffLines.Last();
-            Assert.AreEqual(DiffLineParser.NORMAL_CSS_CLASS, first.CssClass);
+            Assert.AreEqual(DiffLineParser.NORMAL_CSS_CODE_CLASS, first.CssCodeClass);
             Assert.AreEqual(15, first.Number);
-            Assert.AreEqual(DiffLineParser.NORMAL_CSS_CLASS, last.CssClass);
+            Assert.AreEqual(DiffLineParser.NORMAL_CSS_CODE_CLASS, last.CssCodeClass);
             Assert.AreEqual(129, last.Number);
         }
 
