@@ -26,7 +26,7 @@ namespace HwProj.GitHubService
             public string Diff { get; set; }
         }
 
-        public static IEnumerable<DiffLine> GetDiffLines(string diffText)
+        public static IEnumerable<DiffLine> GetDiffLines(string diffText, string fileName)
         {
             var parsedDiffs = Parse(diffText + '\n');
             if (parsedDiffs == null)
