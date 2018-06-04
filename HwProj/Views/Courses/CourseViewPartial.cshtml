@@ -8,7 +8,7 @@
 
         @if (User.Identity.GetUserId() == Model.MentorId)
         {
-            @Ajax.ActionLink("📝", "_EditPartial", "Courses", new CourseEditViewModel(Model), 
+            @Ajax.ActionLink("Редактировать курс", "_EditPartial", "Courses", new CourseEditViewModel(Model), 
                 new AjaxOptions {UpdateTargetId = "course_info"},
                 new { @class = "btn btn-outline-primary" })
         }
