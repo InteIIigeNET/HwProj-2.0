@@ -16,9 +16,7 @@ namespace HwProj.GitHubService
         public static string GetAlias(string extension)
         {
             return (from xLanguage in LinguistXMl.Elements("languages")
-                    where (from xExtension in xLanguage.Elements("extensions")
-                           where xExtension.Value == extension
-                           select extension).Any()
+                    where xLanguage.Elements("extensions").Any(xExtension => xExtension.Value == extension)
                     select xLanguage.Element("alias").Value).FirstOrDefault();
         }
     }
