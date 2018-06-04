@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HwProj.GitHubService.Properties;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,15 +9,16 @@ using System.Xml.Linq;
 
 namespace HwProj.GitHubService
 {
-    internal static class LinguistManager
+    public static class LinguistManager
     {
-        private static string XMLFilePath = Path.Combine(Environment.CurrentDirectory, "Linguist.xml");
-        private static XDocument LinguistXMl = XDocument.Load(XMLFilePath);
+        private static string XMLFileString = Resources.Linguist;
+        private static XDocument LinguistXMl = XDocument.Parse(XMLFileString);
 
         public static string GetAlias(string extension)
         {
-            return (from xLanguage in LinguistXMl.Elements("languages")
-                    where xLanguage.Elements("extensions").Any(xExtension => xExtension.Value == extension)
+            return (from xLanguage in LinguistXMl.Element("languages").Elements("language")
+                    where   xLanguage.Element("extensions").Elements("extension")
+                            .Any(xExtension => xExtension.Value == extension)
                     select xLanguage.Element("alias").Value).FirstOrDefault();
         }
     }
