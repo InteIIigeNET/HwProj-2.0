@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using HwProj.Filters;
 using HwProj.Models.Enums;
 using HwProj.Models.Repositories;
 using HwProj.Models.Roles;
@@ -39,6 +40,7 @@ namespace HwProj.Controllers
 
 		[HttpPost]
 		[Authorize(Roles = "Преподаватель")]
+		[CatchIfModelNotFound]
 		public async Task<ActionResult> Index(string email)
 		{
 			if (!String.IsNullOrEmpty(email))

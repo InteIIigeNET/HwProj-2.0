@@ -80,8 +80,8 @@ namespace HwProj.Tools
 		private static string AsHead(this string title, bool inCenter = true)
 		{
 			return inCenter
-				? $"<th style=\"text-align: center\" scope=\"col\">{title}</th>"
-				: $"<th scope=\"col\">{title}</th>";
+				? $"<th style=\"text-align: center; background-color: #007bff; color: white\" scope=\"col\">{title}</th>"
+				: $"<th style=\"background-color: #007bff; color: white\" scope=\"col\">{title}</th>";
 		}
 	}
 }
