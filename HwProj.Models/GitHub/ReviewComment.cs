@@ -9,7 +9,7 @@ namespace HwProj.Models.GitHub
     public class ReviewComment : Comment
     {
 
-        public string DiffHunk { get; set; }
+        public IEnumerable<DiffLine> DiffHunk { get; set; }
 
         public int? Position { get; set; }
 

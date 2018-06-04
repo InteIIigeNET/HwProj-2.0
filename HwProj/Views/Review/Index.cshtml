@@ -2,7 +2,16 @@
 
 @foreach (var diffFile in Model.DiffFiles)
 {
-    //Тут должна быть табличка diff-ов 
+    //Тут должна быть табличка diff-ов
     //Хочу тут все обрабатывать:  заполнять ReviewCreateViewModel и отправлять на Review Create.
-
+    <table class="diff-table">
+        @foreach (var diffLine in diffFile.DiffLines)
+        {
+            <tr>
+                <td class="blob-num @diffLine.CssNumClass">@diffLine.Number</td>
+                <td class="blob-code @diffLine.CssCodeClass">@diffLine.Line</td>
+            </tr>
+        }
+    </table>
+    <hr />
 }

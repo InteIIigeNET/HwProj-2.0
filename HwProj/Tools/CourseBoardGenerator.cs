@@ -35,9 +35,9 @@ namespace HwProj.Tools
 			text.Append("</tr></thead>");
             text.AppendLine("<tbody>");
 
-            foreach (var user in course.Users.Where(u => u.IsAccepted))
+            foreach (var courseMate in course.Users.Where(u => u.IsAccepted))
 			{
-                text.AppendLine($"<tr><th scope=\"row\">{user.User.Name + " " + user.User.Surname}</th>");
+                text.AppendLine($"<tr><th scope=\"row\">{courseMate.User.Name + " " + courseMate.User.Surname}</th>");
                 text.AppendLine
 					($"<td style=\"text-align: center\">{course.Tasks.Sum(t => Convert.ToByte(!t.Homeworks.Where(h => h.IsCompleted).GroupBy(h => h.StudentId).Select(h => h.Key).Contains(user.UserId)))}</td>");
 				foreach (var task in course.Tasks)

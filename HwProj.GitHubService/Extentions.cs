@@ -55,7 +55,7 @@ namespace HwProj.GitHubService
             Id = comment.Id,
             ReplyToId = comment.InReplyToId,
             Content = comment.Body,
-            DiffHunk = comment.DiffHunk,
+            DiffHunk = DiffLineParser.GetDiffLines(comment.DiffHunk),
             Owner = new User
             {
                 Login = comment.User.Login,

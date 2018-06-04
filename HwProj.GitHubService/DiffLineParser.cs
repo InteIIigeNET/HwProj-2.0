@@ -11,16 +11,18 @@ namespace HwProj.GitHubService
 {
     public static class DiffLineParser
     {
-        #region Special for Dinara
-        public const string ADDITION_CSS_CLASS = "ADD";
-        public const string DELETION_CSS_CLASS = "DEL";
-        public const string NORMAL_CSS_CLASS = "NORM";
+        #region Special for Dinara or for me :c
+        public const string ADDITION_CSS_CODE_CLASS = "blob-code-addition";
+        public const string DELETION_CSS_CODE_CLASS = "blob-code-deletion";
+        public const string NORMAL_CSS_CODE_CLASS = "";
+        public const string ADDITION_CSS_NUM_CLASS = "blob-num-addition";
+        public const string DELETION_CSS_NUM_CLASS = "blob-num-deletion";
+        public const string NORMAL_CSS_NUM_CLASS = "";
         #endregion
 
         private class ParsedDiff
         {
             public int StartNumber { get; set; }
-            public int Count { get; set; }
             public string Diff { get; set; }
         }
 
@@ -34,7 +36,7 @@ namespace HwProj.GitHubService
             {
                 var lines = parsedDiff.Diff.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
                 diffLines.Add(CreateDiffLine(lines[0], parsedDiff.StartNumber - 1));
-                for (int i = 0; i < parsedDiff.Count; i++)
+                for (int i = 0; i < lines.Length - 1; i++)
                 {
                     diffLines.Add(CreateDiffLine(lines[i + 1], i + parsedDiff.StartNumber));
                 }
@@ -52,19 +54,22 @@ namespace HwProj.GitHubService
             switch (line[0])
             {
                 case '+':
-                    diffLine.CssClass = ADDITION_CSS_CLASS;
+                    diffLine.CssCodeClass = ADDITION_CSS_CODE_CLASS;
+                    diffLine.CssNumClass = ADDITION_CSS_NUM_CLASS;
                     break;
                 case '-':
-                    diffLine.CssClass = DELETION_CSS_CLASS;
+                    diffLine.CssCodeClass = DELETION_CSS_CODE_CLASS;
+                    diffLine.CssNumClass = DELETION_CSS_NUM_CLASS;
                     break;
                 default:
-                    diffLine.CssClass = NORMAL_CSS_CLASS;
+                    diffLine.CssCodeClass = NORMAL_CSS_CODE_CLASS;
+                    diffLine.CssNumClass = NORMAL_CSS_NUM_CLASS;
                     break;
             }
             return diffLine;
         }
 
-        private static Regex regex = new Regex($@"\@\@ \-\d+,\d+ \+(\d+),(\d+) \@\@ [\w|\W]*?\n(?=\@\@|$)", RegexOptions.Compiled);
+        private static Regex regex = new Regex($@"\@\@ \-\d+,\d+ \+(\d+),\d+ \@\@ [\w|\W]*?\n(?=\@\@|$)", RegexOptions.Compiled);
 
         private static ParsedDiff[] Parse(string diffText)
         { 
@@ -78,7 +83,6 @@ namespace HwProj.GitHubService
                 var groups = matches[i].Groups;
                 parsed[i] = new ParsedDiff
                 {
-                    Count = int.Parse(groups[2].Value),
                     StartNumber = int.Parse(groups[1].Value),
                     Diff = groups[0].Value
                 };
