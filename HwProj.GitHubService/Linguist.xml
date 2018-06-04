@@ -217,7 +217,7 @@
       <extension>.fsi</extension>
       <extension>.fsx</extension>
     </extensions>
-    <alias>fsharp</alias>
+    <alias>f#</alias>
     <filenames>
     </filenames>
   </language>

@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -31,14 +32,15 @@ namespace HwProj.GitHubService
             var parsedDiffs = Parse(diffText + '\n');
             if (parsedDiffs == null)
                 return null;
+            var codeAlias = LinguistManager.GetAlias(Path.GetExtension(fileName));
             var diffLines = new List<DiffLine>();
             foreach (var parsedDiff in parsedDiffs)
             {
                 var lines = parsedDiff.Diff.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-                diffLines.Add(CreateDiffLine(lines[0], parsedDiff.StartNumber - 1));
+                diffLines.Add(CreateDiffLine(lines[0], parsedDiff.StartNumber - 1).SetMarkdownCodeShell(codeAlias));
                 for (int i = 0; i < lines.Length - 1; i++)
                 {
-                    diffLines.Add(CreateDiffLine(lines[i + 1], i + parsedDiff.StartNumber));
+                    diffLines.Add(CreateDiffLine(lines[i + 1], i + parsedDiff.StartNumber).SetMarkdownCodeShell(codeAlias));
                 }
             }
             return diffLines;
@@ -67,6 +69,16 @@ namespace HwProj.GitHubService
                     break;
             }
             return diffLine;
+        }
+
+        private static DiffLine SetMarkdownCodeShell(this DiffLine line, string codeAlias)
+        {
+            if (codeAlias != null)
+            {
+                line.Line = $"```{codeAlias}\n{line.Line}\n```";
+                line.HasMarkdown = true;
+            }
+            return line;
         }
 
         private static Regex regex = new Regex($@"\@\@ \-\d+,\d+ \+(\d+),\d+ \@\@ [\w|\W]*?\n(?=\@\@|$)", RegexOptions.Compiled);

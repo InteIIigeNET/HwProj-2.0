@@ -12,5 +12,6 @@ namespace HwProj.Models.GitHub
         public string CssCodeClass { get; set; }
         public int Number { get; set; }
         public string Line { get; set; }
+        public bool HasMarkdown { get; set; }
     }
 }

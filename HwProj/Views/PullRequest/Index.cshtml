@@ -58,7 +58,7 @@
                                     {
                                         <tr>
                                             <td class="blob-num @diffLine.CssNumClass">@diffLine.Number</td>
-                                            <td class="blob-code @diffLine.CssCodeClass">@diffLine.Line</td>
+                                            <td class="blob-code @diffLine.CssCodeClass">@Html.Raw(diffLine.HasMarkdown ? diffLine.Line.AsMarkdown() : diffLine.Line)</td>
                                         </tr>
                                     }
                                 </table>
