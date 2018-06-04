@@ -21,7 +21,7 @@ namespace HwProj.IoC
 		private static void Initialize()
 		{
 			Instance.Bind<IAsyncManager>().To<AsyncManager>();
-			Instance.Bind<IMarkdownInterpreter>().To<StandartMarkdownInterpreter>();
+			Instance.Bind<IMarkdownInterpreter>().To<MarkdownWithLangProcessor>();
 		}
 	}
 }

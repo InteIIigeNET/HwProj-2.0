@@ -50,6 +50,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ColorCode, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ColorCode.Portable.1.0.3\lib\portable45-net45+win8+wp8+wpa81\ColorCode.dll</HintPath>
+    </Reference>
     <Reference Include="Duke.Owin.VkontakteMiddleware, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Duke.Owin.VkontakteMiddleware.1.2.0.0\lib\net45\Duke.Owin.VkontakteMiddleware.dll</HintPath>
     </Reference>
@@ -70,6 +73,12 @@
     </Reference>
     <Reference Include="KatanaContrib.Security.VK, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\KatanaContrib.Security.VK.1.0.1\lib\net45\KatanaContrib.Security.VK.dll</HintPath>
+    </Reference>
+    <Reference Include="Markdig, Version=0.15.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Markdig.0.15.0\lib\net40\Markdig.dll</HintPath>
+    </Reference>
+    <Reference Include="Markdig.SyntaxHighlighting, Version=1.1.7.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Markdig.SyntaxHighlighting.1.1.7\lib\portable45-net45+win8+wp8+wpa81\Markdig.SyntaxHighlighting.dll</HintPath>
     </Reference>
     <Reference Include="Markdown, Version=2.0.0.0, Culture=neutral, PublicKeyToken=1b320cc08ad5aa89, processorArchitecture=MSIL">
       <HintPath>..\packages\Markdown.2.2.1\lib\net451\Markdown.dll</HintPath>
@@ -531,6 +540,7 @@
     <Compile Include="Tools\IdentityExtensions.cs" />
     <Compile Include="Tools\Markdown\IMarkdownInterpreter.cs" />
     <Compile Include="Tools\Markdown\MarkdownInterpreter.cs" />
+    <Compile Include="Tools\Markdown\MarkdownWithLangProcessor.cs" />
     <Compile Include="Tools\Markdown\StandartMarkdownInterpreter.cs" />
     <Compile Include="Tools\UrlGenerator.cs" />
     <Compile Include="Tools\Widget.cs" />
