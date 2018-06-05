@@ -10,13 +10,13 @@
 </div>
 @if (User.Identity.GetUserId() == Model.MentorId)
 {
-    <div>
-        @Ajax.ActionLink("Редактировать", "_EditPartial", "Tasks",
-                             new TaskEditViewModel(Model),
-                             new AjaxOptions { UpdateTargetId = "task_partial_" + Model.TaskId },
-                             new { @class = "btn btn-outline-primary" })
-        <button class="btn btn-outline-primary" data-toggle="modal" data-target="#deleteTaskModal">Удалить</button>
-    </div>
+<div>
+    @Ajax.ActionLink("Редактировать", "_EditPartial", "Tasks",
+                              new TaskEditViewModel(Model),
+                              new AjaxOptions { UpdateTargetId = "task_partial_" + Model.TaskId },
+                              new { @class = "btn btn-outline-primary" })
+    <button class="btn btn-outline-primary" data-toggle="modal" onclick="location.href='@Url.Action("Delete", "Tasks", new { taskId = Model.TaskId, courseId = Model.CourseId })'">Удалить</button> <!--data-target="#deleteTaskModal"-->
+</div>
     <div class="modal fade" id="deleteTaskModal" tabindex="-1" role="dialog" aria-labelledby="deleteTaskModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
