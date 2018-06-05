@@ -331,19 +331,24 @@ namespace HwProj.Controllers
         }
 
 	    private async System.Threading.Tasks.Task AddGitHubToken(string userId)
-		{
-			async Task<Claim> GetGitHubToken()
-			{
-				var claimsIdentity = await AuthenticationManager.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
-				var gitHubAccessTokenClaim = claimsIdentity.Claims.FirstOrDefault(c => c.Type.Equals("GitHubAccessToken"));
-				return gitHubAccessTokenClaim;
-			}
+	    {
+		    async Task<Claim> GetGitHubToken()
+		    {
+			    var claimsIdentity =
+				    await AuthenticationManager.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
+			    var gitHubAccessTokenClaim = claimsIdentity.Claims.FirstOrDefault(c => c.Type.Equals("GitHubAccessToken"));
+			    return gitHubAccessTokenClaim;
+		    }
 
-			var claim = await GetGitHubToken();
-		    await claim.IfNotNull(async c => await UserManager.AddClaimAsync(userId, c));
-		}
+		    var gitClaim = await GetGitHubToken();
+		    var currentGitClaim =
+			    (await UserManager.GetClaimsAsync(userId)).FirstOrDefault(c => c.Type.Equals("GitHubAccessToken"));
 
-        // POST: /Account/LogOff
+		    await currentClaim.IfNotNull(async c => await UserManager.RemoveClaimAsync(userId, c));
+		    await UserManager.AddClaimAsync(userId, gitClaim);
+	    }
+
+	    // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
