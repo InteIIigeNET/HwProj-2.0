@@ -47,6 +47,7 @@ namespace HwProj.Models.ViewModels
     public class ReviewCreateViewModel
     { 
         public IEnumerable<ReviewComment> ReviewComments { get; set; }
+        public IEnumerable<DiffFile> DiffFiles { get; set; }
         public string Body { get; set; }
         public ReviewEvent ReviewEvent { get; set; }
         public long PullRequestDataId { get; set; }
@@ -62,6 +63,6 @@ namespace HwProj.Models.ViewModels
     {
         public PullRequest PullRequest { get; set; }
         public long PullRequestDataId { get; set; }
-        public long MentorId { get; set; }
+        public string MentorId { get; set; }
     }
 }

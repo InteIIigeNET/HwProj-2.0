@@ -1,4 +1,5 @@
 ﻿@using HwProj.Tools.Markdown
+@using Microsoft.AspNet.Identity
 @model HwProj.Models.ViewModels.PullRequestViewModel
 
 <div class="row">
@@ -12,10 +13,10 @@
             <hr />
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="pills-commits-tab" data-toggle="pill" href="#pills-commits" role="tab" aria-controls="pills-commits" aria-selected="true">Commits</a>
+                    <a class="nav-link active" id="pills-reviews-tab" data-toggle="pill" href="#pills-reviews" role="tab" aria-controls="pills-reviews" aria-selected="false">Reviews</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="pills-reviews-tab" data-toggle="pill" href="#pills-reviews" role="tab" aria-controls="pills-reviews" aria-selected="false">Reviews</a>
+                    <a class="nav-link" id="pills-commits-tab" data-toggle="pill" href="#pills-commits" role="tab" aria-controls="pills-commits" aria-selected="true">Commits</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="pills-diffs-tab" data-toggle="pill" href="#pills-diffs" role="tab" aria-controls="pills-diffs" aria-selected="false">Diff files</a>
@@ -61,16 +62,16 @@
                                         <a href=@comment.Owner.Url>@comment.Owner.Login</a>
                                     </div>
                                     <div class="card-body">
-                                        <p class="card-text">@comment.Content</p>                                      
+                                        <p class="card-text">@comment.Content</p>
                                     </div>
                                     <div class="table-responsive">
                                         <table class="diff-table">
                                             @foreach (var diffLine in comment.DiffHunk)
                                             {
-                                            <tr>
-                                                <td class="blob-num @diffLine.CssNumClass">@diffLine.Number</td>
-                                                <td class="blob-code @diffLine.CssCodeClass">@Html.Raw(diffLine.HasMarkdown ? diffLine.Line.AsMarkdown() : diffLine.Line)</td>
-                                            </tr>
+                                                <tr>
+                                                    <td class="blob-num @diffLine.CssNumClass">@diffLine.Number</td>
+                                                    <td class="blob-code @diffLine.CssCodeClass">@Html.Raw(diffLine.HasMarkdown ? diffLine.Line.AsMarkdown() : diffLine.Line)</td>
+                                                </tr>
                                             }
                                         </table>
                                     </div>
@@ -81,8 +82,16 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="pills-diffs" role="tabpanel" aria-labelledby="pills-diffs-tab">
-                    @Html.Partial("~/Views/Review/Index.cshtml", 
-                        new HwProj.Models.ViewModels.ReviewIndexViewModel { DiffFiles = Model.PullRequest.DiffFiles, PullRequestDataId = Model.PullRequestDataId })
+                    @*@if (User.Identity.GetUserId() == Model.MentorId)
+                        {*@
+                    @Html.Partial("~/Views/Review/Create.cshtml",
+                                  new HwProj.Models.ViewModels.ReviewCreateViewModel { DiffFiles = Model.PullRequest.DiffFiles, PullRequestDataId = Model.PullRequestDataId })
+                    @*}
+                        else
+                        {
+                            @Html.Partial("~/Views/Review/Index.cshtml",
+                                new HwProj.Models.ViewModels.ReviewIndexViewModel { DiffFiles = Model.PullRequest.DiffFiles, PullRequestDataId = Model.PullRequestDataId })
+                        }*@
                 </div>
             </div>
 
@@ -90,3 +99,23 @@
     </div>
 </div>
 
+@section scripts {
+    <script>
+        function show(diffLine, diffFile) {
+            var comments = document.getElementById("comment-" + diffFile.Name + "-" + diffLine.Number);
+            comments.style.display = (comments.style.display == "none") ? "block" : "none";
+        }
+    </script>
+}
+
+
+
+@*<script>
+                                //it doesnt workkkk!!!1
+                                $(document).ready(function () {
+                                    $("#btn-@diffFile.Name-@diffLine.Number").click(function () {
+                                        $("#comment-@diffFile.Name-@diffLine.Number").toggle();
+                                    })
+                                });
+
+    </script>*@

@@ -46,7 +46,7 @@ namespace HwProj.Models
         /// <summary>
         /// foreign key на ментора
         /// </summary>
-        public long MentorId { get; set; }
+        public string MentorId { get; set; }
 
         public User Mentor { get; set; }
     }

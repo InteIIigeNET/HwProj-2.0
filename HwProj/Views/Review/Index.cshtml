@@ -1,29 +1,28 @@
 ﻿@using HwProj.Tools.Markdown
 @model HwProj.Models.ViewModels.ReviewIndexViewModel
 
+
+
 @foreach (var diffFile in Model.DiffFiles)
 {
-    //Тут должна быть табличка diff-ов
-    //Хочу тут все обрабатывать:  заполнять ReviewCreateViewModel и отправлять на Review Create.
-
-
-<div class="card border-secondary mb-3">
-    <div class="card-header">
-        <span>@diffFile.Name</span>
+    <div class="card border-secondary mb-3">
+        <div class="card-header">
+            <span>@diffFile.Name</span>
+        </div>
+        <div class="table-responsive">
+            <table class="diff-table">
+                @foreach (var diffLine in diffFile.DiffLines)
+                {
+                    <tr>
+                        <td class="blob-num @diffLine.CssNumClass">
+                            @diffLine.Number
+                        </td>
+                        <td class="blob-code @diffLine.CssCodeClass">
+                            @Html.Raw(diffLine.HasMarkdown ? diffLine.Line.AsMarkdown() : diffLine.Line)
+                        </td>
+                    </tr>                    
+                }
+            </table>
+        </div>
     </div>
-    <div class="table-responsive">
-        <table class="diff-table">
-            @foreach (var diffLine in diffFile.DiffLines)
-            {
-                <tr>
-                    <td class="blob-num @diffLine.CssNumClass">@diffLine.Number</td>
-                    <td class="blob-code @diffLine.CssCodeClass">@Html.Raw(diffLine.HasMarkdown ? diffLine.Line.AsMarkdown() : diffLine.Line)</td>
-                </tr>
-            }
-        </table>
-    </div>
-</div>
 }
-
-
-
