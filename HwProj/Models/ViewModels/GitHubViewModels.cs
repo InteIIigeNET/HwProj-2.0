@@ -64,5 +64,6 @@ namespace HwProj.Models.ViewModels
         public PullRequest PullRequest { get; set; }
         public long PullRequestDataId { get; set; }
         public string MentorId { get; set; }
+        public long HomeworkId { get; set; }
     }
 }
