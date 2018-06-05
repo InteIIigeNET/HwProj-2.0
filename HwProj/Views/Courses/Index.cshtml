@@ -51,11 +51,11 @@
             <div class="clearfix"></div>
             <hr />
             <div>
-                <h4 class="tasks tasks_heading_inline">Задания</h4>
+                <h4>Задания</h4>
                 @if (User.Identity.GetUserId() == Model.Mentor.Id)
                 {
-                    <button class="btn btn-primary" title="Добавить задание" onclick="location.href = '@Url.Action("AddTask", "Courses", new {courseId = Model.Id}, null)'">
-                        <i class="fas fa-plus"></i>
+                    <button class="btn btn-primary" onclick="location.href = '@Url.Action("AddTask", "Courses", new {courseId = Model.Id}, null)'">
+                        Добавить задание
                     </button>
                 }
             </div>

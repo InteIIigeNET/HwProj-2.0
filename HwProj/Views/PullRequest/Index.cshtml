@@ -1,4 +1,5 @@
-﻿@model HwProj.Models.ViewModels.PullRequestViewModel
+﻿@using HwProj.Tools.Markdown
+@model HwProj.Models.ViewModels.PullRequestViewModel
 
 <div class="row">
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
@@ -9,66 +10,83 @@
                 @Model.PullRequest.CreatedAt
             </div>
             <hr />
-            <h4>Commits</h4>
-            <br />
-            <ul class="list-group commits commits_padding_zero">
-                @foreach (var commit in Model.PullRequest.Commits)
-                {
-                    <li class="list-group-item border-primary ">
-                        <a href=@commit.Owner.Url>@commit.Owner.Login</a>
-                        <a href=@commit.Url>@commit.Message</a>
-                    </li>
-                }
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="pills-commits-tab" data-toggle="pill" href="#pills-commits" role="tab" aria-controls="pills-commits" aria-selected="true">Commits</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-reviews-tab" data-toggle="pill" href="#pills-reviews" role="tab" aria-controls="pills-reviews" aria-selected="false">Reviews</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-diffs-tab" data-toggle="pill" href="#pills-diffs" role="tab" aria-controls="pills-diffs" aria-selected="false">Diff files</a>
+                </li>
             </ul>
-            <br />
+            <div class="tab-content" id="pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-commits" role="tabpanel" aria-labelledby="pills-commits-tab">
+                    <ul class="list-group commits commits_padding_zero">
+                        @foreach (var commit in Model.PullRequest.Commits)
+                        {
+                            <li class="list-group-item border-secondary">
+                                <a href=@commit.Owner.Url>@commit.Owner.Login</a>
+                                <a href=@commit.Url>@commit.Message</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="tab-pane fade" id="pills-reviews" role="tabpanel" aria-labelledby="pills-reviews-tab">
+                    <div id="comments">
+                        @foreach (var review in Model.PullRequest.Reviews)
+                        {
+                            if (!String.IsNullOrEmpty(review.HeadComment.Content))
+                            {
+                                <div class="card border-secondary mb-3">
+                                    <div class="card-header bg-primary">
+                                        <a class="active-link active-link_color_white" href=@review.HeadComment.Owner.Url>
+                                            @review.HeadComment.Owner.Login
+                                        </a>
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Итого</h5>
+                                        <p class="card-text">
+                                            @review.HeadComment.Content
+                                        </p>
+                                    </div>
+                                </div>
+                            }
 
-            <h4>Reviews</h4>
-            <br />
-            <div id="comments">
-                @foreach (var review in Model.PullRequest.Reviews)
-                {
-                    if (!String.IsNullOrEmpty(review.HeadComment.Content))
-                    {
-                        <div class="card border-primary mb-3">
-                            <div class="card-header bg-primary">
-                                <a class="active-link active-link_color_white" href=@review.HeadComment.Owner.Url>
-                                    @review.HeadComment.Owner.Login
-                                </a>
-                            </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Итого</h5>
-                                <p class="card-text">
-                                    @review.HeadComment.Content
-                                </p>
-                            </div>
-                        </div>
-                    }
+                            foreach (var comment in review.ReviewComments)
+                            {
+                                <div class="card border-secondary mb-3">
+                                    <div class="card-header">
+                                        <a href=@comment.Owner.Url>@comment.Owner.Login</a>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="card-text">@comment.Content</p>                                      
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="diff-table">
+                                            @foreach (var diffLine in comment.DiffHunk)
+                                            {
+                                            <tr>
+                                                <td class="blob-num @diffLine.CssNumClass">@diffLine.Number</td>
+                                                <td class="blob-code @diffLine.CssCodeClass">@Html.Raw(diffLine.HasMarkdown ? diffLine.Line.AsMarkdown() : diffLine.Line)</td>
+                                            </tr>
+                                            }
+                                        </table>
+                                    </div>
+                                </div>
+                            }
 
-                    foreach (var comment in review.ReviewComments)
-                    {
-                        <div class="card border-primary mb-3">
-                            <div class="card-header">
-                                <a href=@comment.Owner.Url>@comment.Owner.Login</a>
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text">@comment.Content</p>
-                                <table class="diff-table">
-                                    @foreach (var diffLine in comment.DiffHunk)
-                                    {
-                                    <tr>
-                                        <td class="blob-num @diffLine.CssNumClass">@diffLine.Number</td>
-                                        <td class="blob-code @diffLine.CssCodeClass">@diffLine.Line</td>
-                                    </tr>
-                                    }
-                                </table>
-                            </div>
-                        </div>
-                    }
-                }
+                        }
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="pills-diffs" role="tabpanel" aria-labelledby="pills-diffs-tab">
+                    @Html.Partial("~/Views/Review/Index.cshtml", 
+                        new HwProj.Models.ViewModels.ReviewIndexViewModel { DiffFiles = Model.PullRequest.DiffFiles, PullRequestDataId = Model.PullRequestDataId })
+                </div>
             </div>
 
         </div>
     </div>
 </div>
-       
-        
+

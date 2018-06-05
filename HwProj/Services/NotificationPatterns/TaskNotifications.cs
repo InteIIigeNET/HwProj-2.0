@@ -12,9 +12,9 @@ namespace HwProj.Services.NotificationPatterns
 		public NewTaskNotification(IEnumerable<User> users, Task newTask, HttpRequestBase request)
 			: base(users,
 				u =>
-					$"В курсе <a href=\"" +
+					$"В курсе <b><a href=\"" +
 					$"{UrlGenerator.GetRouteUrl(request.RequestContext, "Index", "Courses", new {courseId = newTask.CourseId})}" +
-					$"\">{newTask.Course.Name}</a> добавлено задание " +
+					$"\">{newTask.Course.Name}</a></b> добавлено задание " +
 					$"<a href=\"" +
 					$"{UrlGenerator.GetRouteUrl(request.RequestContext, "Create", "Homeworks", new { taskId = newTask.Id, description = newTask.Description })}" +
 					$"\">{newTask.Title}</a>")

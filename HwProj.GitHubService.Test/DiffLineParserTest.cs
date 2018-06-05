@@ -15,7 +15,7 @@ namespace HwProj.GitHubService.Test
             //arrange
             string diffText = Resources.DiffModule;
             //act
-            var diffLines = DiffLineParser.GetDiffLines(diffText);
+            var diffLines = DiffLineParser.GetDiffLines(diffText, null);
             //assert
             var first = diffLines.First();
             var last = diffLines.Last();
@@ -31,7 +31,7 @@ namespace HwProj.GitHubService.Test
             //arrange
             string diffText = "";
             //act
-            var diffLines = DiffLineParser.GetDiffLines(diffText);
+            var diffLines = DiffLineParser.GetDiffLines(diffText, null);
             //assert
             Assert.AreEqual(diffLines, null);
         }

@@ -7,7 +7,7 @@ using HwProj.IoC;
 using HwProj.Tools.Markdown;
 using Ninject;
 
-namespace HwProj.Tools
+namespace HwProj.Tools.Markdown
 {
 	public static class MarkdownInterpreter
 	{
