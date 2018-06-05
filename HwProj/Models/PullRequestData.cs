@@ -18,10 +18,10 @@ namespace HwProj.Models
 
         public PullRequestData(Homework homework, string repName, int pullRequestNumber)
         {
-            Homework = homework;
             RepositoryName = repName;
             PullRequestNumber = pullRequestNumber;
             HomeworkId = homework.Id;
+            StudentId = homework.StudentId;
         }
 
         /// <summary>
@@ -49,5 +49,12 @@ namespace HwProj.Models
         public string MentorId { get; set; }
 
         public User Mentor { get; set; }
+
+        /// <summary>
+        /// foreign key на владельца
+        /// </summary>
+        public string StudentId { get; set; }
+
+        public User Student { get; set; }
     }
 }

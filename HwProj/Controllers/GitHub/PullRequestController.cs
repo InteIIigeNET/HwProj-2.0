@@ -32,7 +32,8 @@ namespace HwProj.Controllers.GitHub
                 PullRequest = pullRequest,
                 MentorId = prd.MentorId,
                 PullRequestDataId = pullRequestDataId,
-                HomeworkId = prd.HomeworkId
+                HomeworkId = prd.HomeworkId,
+                OwnerId = prd.StudentId
             });
         }
 
