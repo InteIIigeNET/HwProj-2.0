@@ -92,7 +92,7 @@ code {
 }
 
 .course-list.course-list_margin-top_negative {
-    margin-top: -140px
+    margin-top: -140px;
 }
 
 .tasks.tasks_heading_inline {
@@ -100,9 +100,22 @@ code {
 }
 
 .active-link.active-link_color_white {
-    color: white !important
+    color: white !important;
 }
 
 .commits.commits_padding_zero {
-    padding: 0px
+    padding: 0px;
 }
+
+.btn.btn-xs {
+    padding: 1px 4px 1px 4px;
+}
+
+table.diff-table tr td div.btn-group {
+    display: none;
+}
+
+table.diff-table tr:hover td div.btn-group {
+    display: inline-block;
+}
+
