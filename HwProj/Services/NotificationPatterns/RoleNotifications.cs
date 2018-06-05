@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Routing;
 using HwProj.Models;
 using HwProj.Tools;
 
@@ -9,10 +10,10 @@ namespace HwProj.Services.NotificationPatterns
 {
 	public class TeacherAddedNotification : Notification
 	{
-		public TeacherAddedNotification(User from, User to, HttpRequestBase request)
+		public TeacherAddedNotification(User from, User to, RequestContext request)
 			: base(new[] { to },
 				u => $"Пользователь <b>{from.Name} {from.Surname}</b> ({new MailTo(from.Email)}) указал вас как преподавателя. " +
-				     $"Создайте <a href = \"{UrlGenerator.GetRouteUrl(request.RequestContext, "Create", "Courses")}\">свой первый курс</a>")
+				     $"Создайте <a href = \"{UrlGenerator.GetRouteUrl(request, "Create", "Courses")}\">свой первый курс</a>")
 		{
 		}
 	}
