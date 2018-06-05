@@ -5,10 +5,10 @@
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "ml-auto" }))
     {
-  
+
         <ul class="navbar-nav">
             <li class="nav-item">
-                @Html.ActionLink("Курсы", "Index", "Courses", routeValues: null, htmlAttributes: new { title = "Courses", @class = "nav-link"})
+                @Html.ActionLink("Курсы", "Index", "Courses", routeValues: null, htmlAttributes: new { title = "Courses", @class = "nav-link" })
             </li>
              <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbar-dropdown-menu-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Профиль</a>
@@ -19,7 +19,7 @@
                     @if (User.Identity.GetUserRole() == RoleType.Преподаватель.ToString())
                     {
                         <li>
-                            @Html.ActionLink("Добавить преподавателя", "Index", "Roles", routeValues: null, htmlAttributes: new {title = "Manage", @class = "dropdown-item"})
+                            @Html.ActionLink("Добавить преподавателя", "Index", "Roles", routeValues: null, htmlAttributes: new { title = "Manage", @class = "dropdown-item" })
                         </li>
                     }
                     <li class="dropdown-divider"></li>
@@ -27,10 +27,8 @@
                     <li><a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">Выйти</a></li>
                 </ul>
             </li>
-             <li class="nav-item" style="margin-top: 10px">
-                 @*<a href=@Url.Action("Index", "Home")>*@
-                     <i class="fas fa-bell fa-lg" style="color: white"></i>
-                 @*</a>*@
+             <li class="nav-item">
+                 <span class="badge badge-pill badge-secondary unread-notif-badge"></span>
              </li>
         </ul>
     }
@@ -40,11 +38,25 @@ else
     <ul class="navbar-nav ml-auto">
         <li class="nav-item">
             @Html.ActionLink("Вход", "Login", "Account", routeValues: null,
-                 htmlAttributes: new { id = "login-link", @class = "nav-link" })
+              htmlAttributes: new { id = "login-link", @class = "nav-link" })
         </li>
         <li class="nav-item">
             @Html.ActionLink("Регистрация", "Register", "Account", routeValues: null,
-                 htmlAttributes: new { id = "register-link", @class = "nav-link" })
+              htmlAttributes: new { id = "register-link", @class = "nav-link" })
         </li>
     </ul>
 }
+<script type="text/javascript">
+    $(document).ready(    
+        function onCloseAll() {
+          $.ajax({
+              url: '@Url.Action("GetUnreadNotificationCount", "Home")',
+              dataType: "json",
+              success: function (count) {
+                  $(".unread-notif-badge").html(count);
+                  console.log("count: " + count);
+              }
+          });
+        }
+    )
+</script>

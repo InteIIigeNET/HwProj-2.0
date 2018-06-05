@@ -2,6 +2,9 @@
 using System.Web.Mvc;
 using HwProj.Models.Repositories;
 using HwProj.Tools;
+using System.Linq;
+using Microsoft.AspNet.Identity;
+using System.Threading.Tasks;
 
 namespace HwProj.Controllers
 {
@@ -18,7 +21,7 @@ namespace HwProj.Controllers
 	        }
 			if (User.Identity.IsAuthenticated)
             {
-                var user = _db.UserManager.Get(u => u.Email == User.Identity.Name);
+                var user = _db.UserManager.Get(u => u.Id == User.Identity.GetUserId());
                 return View(user);
             }
             var courses = _db.CourseManager.GetAll();
@@ -31,6 +34,23 @@ namespace HwProj.Controllers
 	        {
 		        _db.NotificationsManager.Update(n => n.Id == id, n => n.IsRead = true);
 	        }
+        }
+
+        [Authorize]
+        public void ReadAllNotifications()
+        {
+            _db.NotificationsManager.GetAll()
+                .Where(n => n.UserId == User.Identity.GetUserId())
+                .ToList()
+                .ForEach(n => ReadNotification(n.Id));
+        }
+
+        [Authorize]
+        public ActionResult GetUnreadNotificationCount()
+        {
+            var user = _db.UserManager.Get(u => u.Id == User.Identity.GetUserId());
+            var count = user.NoReadNotifications.Count();
+            return Json(count, JsonRequestBehavior.AllowGet);
         }
     }
 }

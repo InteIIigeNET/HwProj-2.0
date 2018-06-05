@@ -7,7 +7,9 @@
 <br />
 <div class="row">
     <div class="offset-lg-1 col-lg-10 offset-md-1 col-md-10 col-sm-12 col-12">
-        <div class="jumbotron jumbotron_border_gray text-center ">
+        <div class="jumbotron jumbotron_border_gray text-center">
+            <button class="btn btn-outline-primary float-right" onclick="onCloseAll();">Прочитать все</button>
+            <div class="clearfix"></div>
             <h3 class="display-4">@ViewBag.Title</h3>
             <hr />
             <ul class="nav nav-pills nav-justified" id="notification-tabs" role="tablist">
@@ -23,16 +25,13 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="all-tab" href="#all" data-toggle="tab" aria-controls="all" aria-selected="false">
-                        Прочитанные
+                        Все
                         @if (Model.ReadNotifications.Count() != 0)
                         {
                             var readCount = " (" + Model.ReadNotifications.Count().ToString() + ")";
                             @Html.Raw(readCount)
                         }
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" id="important-tab" href="#important" data-toggle="tab" aria-controls="important" aria-selected="false">Важное</a>
                 </li>
             </ul>
             <hr />
@@ -47,7 +46,7 @@
                         var notReadNotifi = Model.NoReadNotifications;
                         foreach (var notifi in notReadNotifi.OrderByDescending(n => n.SendingTime))
                         {
-                            <div class="alert alert-info alert-dismissible fade show">
+                            <div class="alert alert-info alert-dismissible alert-unread fade show">
                                 <a href="#" onclick="onCloseAlert(@notifi.Id);" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                 @Html.Raw(@notifi.Text)
                                 <br/>
@@ -74,7 +73,6 @@
                         }
                     }
                 </div>
-                <div class="tab-pane fade" id="important" role="tabpanel" aria-labelledby="important-tab">Очень важные уведомления, которые никто не читает</div>
             </div>
         </div>
     </div>
@@ -82,11 +80,20 @@
 
 <script>
     function onCloseAlert(id) {
+        var unreadCount = 1 + $("#all-tab").html();
+        $("#all-tab").html(count);
+
         $.ajax({
             url: '@Url.Action("ReadNotification", "Home")',
             data: { id: id }
-        }).done(function () {
-            console.log('Test if it has been fired');
         });
+
+    }
+    function onCloseAll() {
+      $(".alert-unread").alert('close')
+
+      $.ajax({
+            url: '@Url.Action("ReadAllNotifications", "Home")'
+        });  
     }
 </script>

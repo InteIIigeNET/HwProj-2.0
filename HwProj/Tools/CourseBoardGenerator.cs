@@ -24,7 +24,7 @@ namespace HwProj.Tools
 
             StringBuilder text = new StringBuilder();
             text.Append("<div class=\"table-responsive\">");
-            text.AppendLine($"<table class=\"table table-bordered table-sm\"><thead class=\"thead-dark\"><tr>{"Студент".AsHead(false)}{"TODO".AsHead()}");
+            text.AppendLine($"<table class=\"table table-bordered table-sm\"><thead class=\"thead-light\"><tr>{"Студент".AsHead(false)}{"TODO".AsHead()}");
 
             foreach (var task in course.Tasks)
             {
