@@ -1,6 +1,7 @@
 ﻿using HwProj.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -42,27 +43,33 @@ namespace HwProj.Models
 		/// <summary>
 		/// Зачтена ли данная попытка сдачи выполненного задания
 		/// </summary>
+		[DisplayName("Решение засчитано")]
 		public bool IsCompleted { get; set; }
 		/// <summary>
 		/// Комментарий к решению
 		/// </summary>
+		[DisplayName("Комментарий студента")]
 		public string Comment { get; set; }
 		/// <summary>
 		/// Ссылка на код на GitHub
 		/// </summary>
+		[DisplayName("GitHub")]
 		public string GitHub { get; set; }
 		/// <summary>
 		/// Дата отправки
 		/// </summary>
+		[DisplayName("Дата отправки")]
 		public DateTime? Date { get; set; }
 		/// <summary>
 		/// Номер попытки
 		/// </summary>
+		[DisplayName("Номер попытки")]
 		public int Attempt { get; set; }
 
 		/// <summary>
 		/// Комментарий от преподавателя
 		/// </summary>
+		[DisplayName("Комментарий от преподавателя")]
 		public string ReviewComment { get; set; } = "";
 		public Homework() { }
 		public Homework(HomeworkCreateViewModel model, Task task, User student)

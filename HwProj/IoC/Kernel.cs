@@ -11,7 +11,7 @@ namespace HwProj.IoC
 {
 	internal class Kernel
 	{
-		public static IKernel Instance { get; private set; }= new StandardKernel();
+		public static IKernel Instance { get; }= new StandardKernel();
 
 		static Kernel()
 		{
