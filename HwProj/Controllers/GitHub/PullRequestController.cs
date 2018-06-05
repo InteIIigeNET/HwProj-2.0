@@ -97,7 +97,7 @@ namespace HwProj.Controllers.GitHub
 
                 if (_repository.PullRequestsDataManager.Add(prd))
                 {
-                    await (new NewPullRequestHomeworkNotification(task, student, repName, pullRequestNumber, Request)).Send();
+                    await (new NewPullRequestHomeworkNotification(task, student, prd.Id, Request)).Send();
                     return prd.Id;
                 }
             }

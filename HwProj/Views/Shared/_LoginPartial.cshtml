@@ -46,14 +46,17 @@ else
         </li>
     </ul>
 }
-<script>
-    function onCloseAll() {
-      $.ajax({
-          url: '@Url.Action("GetUnreadNotificationCount", "Home")',
-          success: function (count) {
-              $(".unread-notif-badge").html(count);
-              console.log("count: " + count);
-          }
-      });
-    }
+<script type="text/javascript">
+    $(document).ready(    
+        function onCloseAll() {
+          $.ajax({
+              url: '@Url.Action("GetUnreadNotificationCount", "Home")',
+              dataType: "json",
+              success: function (count) {
+                  $(".unread-notif-badge").html(count);
+                  console.log("count: " + count);
+              }
+          });
+        }
+    )
 </script>

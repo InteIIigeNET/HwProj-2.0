@@ -80,10 +80,14 @@
 
 <script>
     function onCloseAlert(id) {
+        var unreadCount = 1 + $("#all-tab").html();
+        $("#all-tab").html(count);
+
         $.ajax({
             url: '@Url.Action("ReadNotification", "Home")',
             data: { id: id }
         });
+
     }
     function onCloseAll() {
       $(".alert-unread").alert('close')
