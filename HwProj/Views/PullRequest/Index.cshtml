@@ -61,7 +61,9 @@
                                         <a href=@comment.Owner.Url>@comment.Owner.Login</a>
                                     </div>
                                     <div class="card-body">
-                                        <p class="card-text">@comment.Content</p>
+                                        <p class="card-text">@comment.Content</p>                                        
+                                    </div>
+                                    <div>
                                         <table class="diff-table">
                                             @foreach (var diffLine in comment.DiffHunk)
                                             {
@@ -79,7 +81,8 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="pills-diffs" role="tabpanel" aria-labelledby="pills-diffs-tab">
-                    @*@Html.Partial("Review", "Index")*@
+                    @Html.Partial("~/Views/Review/Index.cshtml", 
+                        new HwProj.Models.ViewModels.ReviewIndexViewModel { DiffFiles = Model.PullRequest.DiffFiles, PullRequestDataId = Model.PullRequestDataId })
                 </div>
             </div>
 

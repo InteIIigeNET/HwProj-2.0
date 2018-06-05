@@ -1,5 +1,5 @@
 ﻿@using HwProj.Tools.Markdown
-@model HwProj.Models.GitHub.PullRequest
+@model HwProj.Models.ViewModels.ReviewIndexViewModel
 
 @foreach (var diffFile in Model.DiffFiles)
 {
@@ -9,10 +9,10 @@
     <table class="diff-table">
         @foreach (var diffLine in diffFile.DiffLines)
         {
-            <tr>
-                <td class="blob-num @diffLine.CssNumClass">@diffLine.Number</td>
-                <td class="blob-code @diffLine.CssCodeClass">@Html.Raw(diffLine.HasMarkdown ? diffLine.Line.AsMarkdown() : diffLine.Line)</td>
-            </tr>
+                <tr>
+                    <td class="blob-num @diffLine.CssNumClass">@diffLine.Number</td>
+                    <td class="blob-code @diffLine.CssCodeClass">@Html.Raw(diffLine.HasMarkdown ? diffLine.Line.AsMarkdown() : diffLine.Line)</td>
+                </tr>
         }
     </table>
     <hr />

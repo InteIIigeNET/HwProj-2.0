@@ -52,6 +52,12 @@ namespace HwProj.Models.ViewModels
         public long PullRequestDataId { get; set; }
     }
 
+    public class ReviewIndexViewModel
+    {
+        public IEnumerable<DiffFile> DiffFiles { get; set; }
+        public long PullRequestDataId { get; set; }
+    }
+
     public class PullRequestViewModel
     {
         public PullRequest PullRequest { get; set; }
