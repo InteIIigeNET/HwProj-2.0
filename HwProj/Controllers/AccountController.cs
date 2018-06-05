@@ -270,6 +270,9 @@ namespace HwProj.Controllers
 			switch (result)
             {
                 case SignInStatus.Success:
+	                var user = UserManager.FindByEmail(loginInfo.Email);
+					if (loginInfo.Login.LoginProvider == "GitHub")
+						await AddGitHubToken((await UserManager.FindByEmailAsync(loginInfo.Email)).Id);
 					return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -308,11 +311,7 @@ namespace HwProj.Controllers
 		            }
 		            if (result.Succeeded)
 		            {
-			            if (info.Login.LoginProvider == "GitHub")
-			            {
-				            var claim = await GetGitHubToken();
-				            await claim.IfNotNull(async c => await UserManager.AddClaimAsync(user.Id, c));
-			            }
+			            if (info.Login.LoginProvider == "GitHub") await AddGitHubToken(user.Id);
 
 			            result = await UserManager.AddLoginAsync(user.Id, info.Login);
 			            if (result.Succeeded)
@@ -330,6 +329,19 @@ namespace HwProj.Controllers
             ViewBag.ReturnUrl = returnUrl;
             return View(model);
         }
+
+	    private async System.Threading.Tasks.Task AddGitHubToken(string userId)
+		{
+			async Task<Claim> GetGitHubToken()
+			{
+				var claimsIdentity = await AuthenticationManager.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
+				var gitHubAccessTokenClaim = claimsIdentity.Claims.FirstOrDefault(c => c.Type.Equals("GitHubAccessToken"));
+				return gitHubAccessTokenClaim;
+			}
+
+			var claim = await GetGitHubToken();
+		    await claim.IfNotNull(async c => await UserManager.AddClaimAsync(userId, c));
+		}
 
         // POST: /Account/LogOff
         [HttpPost]
@@ -380,13 +392,6 @@ namespace HwProj.Controllers
                 ModelState.AddModelError("", error);
             }
         }
-
-	    private async Task<Claim> GetGitHubToken()
-	    {
-			var claimsIdentity = await AuthenticationManager.GetExternalIdentityAsync(DefaultAuthenticationTypes.ExternalCookie);
-		    var gitHubAccessTokenClaim = claimsIdentity.Claims.FirstOrDefault(c => c.Type.Equals("GitHubAccessToken"));
-		    return gitHubAccessTokenClaim;
-	    }
 
         private ActionResult RedirectToLocal(string returnUrl)
         {
