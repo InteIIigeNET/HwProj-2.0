@@ -490,6 +490,10 @@
     <Compile Include="Migrations\201806051509536_mentor-id-int-to-string.Designer.cs">
       <DependentUpon>201806051509536_mentor-id-int-to-string.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201806052157104_studentid-in-prd.cs" />
+    <Compile Include="Migrations\201806052157104_studentid-in-prd.Designer.cs">
+      <DependentUpon>201806052157104_studentid-in-prd.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Contexts\AppDbContext.cs" />
     <Compile Include="Models\Contexts\ContextDispatcher.cs" />
@@ -698,6 +702,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201806051509536_mentor-id-int-to-string.resx">
       <DependentUpon>201806051509536_mentor-id-int-to-string.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201806052157104_studentid-in-prd.resx">
+      <DependentUpon>201806052157104_studentid-in-prd.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
