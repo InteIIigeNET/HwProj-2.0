@@ -33,11 +33,11 @@ namespace HwProj.Services.NotificationPatterns
 
     public class NewPullRequestHomeworkNotification : Notification
     {
-        public NewPullRequestHomeworkNotification(Task task, User student, string repositoryName, int pullRequestNumber, HttpRequestBase request) 
+        public NewPullRequestHomeworkNotification(Task task, User student, long pullRequestDataId, HttpRequestBase request) 
             : base(new[] { task.Course.Mentor },
                 u => $"Пользователь <b>{student.Name} {student.Surname} ({student.Email})</b> отправил решение к задаче " +
                      $"<a href = \"" +
-                     $"{UrlGenerator.GetRouteUrl(request.RequestContext, "Index", "PullRequest", new { repName = repositoryName, number = pullRequestNumber })}" +
+                     $"{UrlGenerator.GetRouteUrl(request.RequestContext, "Index", "PullRequest", new { pullRequestDataId })}" +
                      $"\">{task.Title}</a>")
         {
         }
