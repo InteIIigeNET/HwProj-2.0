@@ -341,11 +341,10 @@ namespace HwProj.Controllers
 		    }
 
 		    var gitClaim = await GetGitHubToken();
-		    var currentGitClaim =
-			    (await UserManager.GetClaimsAsync(userId)).FirstOrDefault(c => c.Type.Equals("GitHubAccessToken"));
-
-		    await currentClaim.IfNotNull(async c => await UserManager.RemoveClaimAsync(userId, c));
-		    await UserManager.AddClaimAsync(userId, gitClaim);
+            var claims = (await UserManager.GetClaimsAsync(userId)).Where(c => c.Type.Equals("GitHubAccessToken"));
+            if (claims != null)
+                claims.ToList().ForEach(c => UserManager.RemoveClaim(userId, c));
+            UserManager.AddClaim(userId, gitClaim);
 	    }
 
 	    // POST: /Account/LogOff
