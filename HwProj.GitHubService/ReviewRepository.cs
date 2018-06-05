@@ -19,7 +19,7 @@ namespace HwProj.GitHubService
         public async Task<Review> CreateReviewAsync(string body, IEnumerable<ReviewComment> comments, ReviewEvent reviewEvent)
         {
             var draftComments = (from c in comments
-                                select new Octokit.DraftPullRequestReviewComment(c.Content, c.Path, c.Position)).ToList();
+                                select new Octokit.DraftPullRequestReviewComment(c.Content, c.Path, (int)c.Position)).ToList();
             var review = await data.client?.PullRequest.Review.Create(data.owner, data.repName, data.pullRequestNumber, new Octokit.PullRequestReviewCreate
             {
                 Body = body,

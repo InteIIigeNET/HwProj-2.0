@@ -15,13 +15,13 @@ namespace HwProj.GitHubService.Test
             //arrange
             string diffText = Resources.DiffModule;
             //act
-            var diffLines = DiffLineParser.GetDiffLines(diffText);
+            var diffLines = DiffLineParser.GetDiffLines(diffText, null);
             //assert
             var first = diffLines.First();
             var last = diffLines.Last();
-            Assert.AreEqual(DiffLineParser.NORMAL_CSS_CLASS, first.CssClass);
+            Assert.AreEqual(DiffLineParser.NORMAL_CSS_CODE_CLASS, first.CssCodeClass);
             Assert.AreEqual(15, first.Number);
-            Assert.AreEqual(DiffLineParser.NORMAL_CSS_CLASS, last.CssClass);
+            Assert.AreEqual(DiffLineParser.NORMAL_CSS_CODE_CLASS, last.CssCodeClass);
             Assert.AreEqual(129, last.Number);
         }
 
@@ -31,7 +31,7 @@ namespace HwProj.GitHubService.Test
             //arrange
             string diffText = "";
             //act
-            var diffLines = DiffLineParser.GetDiffLines(diffText);
+            var diffLines = DiffLineParser.GetDiffLines(diffText, null);
             //assert
             Assert.AreEqual(diffLines, null);
         }

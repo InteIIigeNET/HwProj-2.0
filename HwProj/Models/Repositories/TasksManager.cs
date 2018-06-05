@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using HwProj.Models.Contexts;
 using HwProj.Models.ViewModels;
+using WebGrease.Css.Extensions;
 
 namespace HwProj.Models.Repositories
 {
@@ -124,6 +125,21 @@ namespace HwProj.Models.Repositories
 			    }
 		    );
 	    }
+
+	    public bool Update(string userRights, Func<Task, bool> selector, Action<Task> updateAction)
+	    {
+			return Execute
+			(
+				context =>
+				{
+					var tasks = GetAll(selector);
+					if (tasks.FirstOrDefault(t => t.Course.MentorId != userRights) != null) return false;
+
+					tasks.ForEach(updateAction);
+					return true;
+				}
+			);
+		}
 
 	    public TasksManager(AppDbContext context) : base(context)
 	    {

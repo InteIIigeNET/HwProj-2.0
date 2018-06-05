@@ -8,8 +8,10 @@ namespace HwProj.Models.GitHub
 {
     public class DiffLine
     {
-        public string CssClass { get; set; }
+        public string CssNumClass { get; set; }
+        public string CssCodeClass { get; set; }
         public int Number { get; set; }
         public string Line { get; set; }
+        public bool HasMarkdown { get; set; }
     }
 }

@@ -1,0 +1,53 @@
+﻿.diff-table {
+    width: 100%;
+    border-collapse: separate;
+}
+
+.tab-size[data-tab-size="8"] {
+    tab-size: 8;
+}
+
+.blob-code-addition {
+    background-color: #e6ffed;
+}
+
+.blob-code {
+    position: relative;
+    padding-right: 10px;
+    padding-left: 10px;
+    line-height: 20px;
+    vertical-align: top;
+}
+
+.blob-code-deletion {
+    background-color: #ffeef0;
+}
+
+.blob-num-deletion {
+    background-color: #ffdce0;
+    border-color: #fdaeb7;
+}
+
+.blob-num {
+    width: 1%;
+    min-width: 50px;
+    padding-right: 10px;
+    padding-left: 10px;
+    font-family: "SFMono-Regular",Consolas,"Liberation Mono",Menlo,Courier,monospace;
+    font-size: 12px;
+    line-height: 20px;
+    color: rgba(27,31,35,0.3);
+    text-align: right;
+    white-space: nowrap;
+    vertical-align: top;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.blob-num-addition {
+    background-color: #cdffd8;
+    border-color: #bef5cb;
+}

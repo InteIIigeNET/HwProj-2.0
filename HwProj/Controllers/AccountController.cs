@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
@@ -9,6 +10,7 @@ using Microsoft.Owin.Security;
 using HwProj.Models;
 using HwProj.Models.Enums;
 using HwProj.Models.ViewModels;
+using HwProj.Services.NotificationPatterns;
 using HwProj.Tools;
 using Microsoft.Ajax.Utilities;
 using Microsoft.AspNet.Identity.Owin;
@@ -92,29 +94,67 @@ namespace HwProj.Controllers
         {
             if (ModelState.IsValid)
             {
-	            var user = new User(model);
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
-                {
-	                await UserManager.AddToRoleAsync(user.Id, RoleType.Преподаватель.ToString());
-					await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-
-                    // Отправка сообщения электронной почты для подтверждения
-                     string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                     await UserManager.SendEmailAsync(user.Id, "Подтверждение учетной записи HwProj", "Подтвердите вашу учетную запись, перейдя по <a href=\"" + callbackUrl + "\">ссылке</a>");
-
-                    return RedirectToAction("Index", "Home");
-                }
-                AddErrors(result);
+	            if (!String.IsNullOrEmpty(model.InvitedBy))
+	            {
+		            return await RegisterByInvite(model);
+	            }
+	            return await RegisterByYourSelf(model);
             }
-
             // Появление этого сообщения означает наличие ошибки; повторное отображение формы
             return View(model);
         }
 
-        // GET: /Account/ConfirmEmail
-        [AllowAnonymous]
+	    private async Task<ActionResult> RegisterByInvite(RegisterViewModel model)
+	    {
+		    var isDone = await UserManager.VerifyUserTokenAsync(model.InvitedBy, model.Email + "_invite",
+			    token: model.InviteToken);
+		    if (isDone)
+		    {
+			    var user = new User(model);
+			    var result = await UserManager.CreateAsync(user, model.Password);
+			    if (result.Succeeded)
+			    {
+				    await UserManager.AddToRoleAsync(user.Id, RoleType.Преподаватель.ToString());
+				    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+				    await (new UserAcceptedInviteNotification(model.InvitedBy, user)).Send();
+				    return RedirectToAction("Index", "Home");
+			    }
+			    AddErrors(result);
+			    return View("Register");
+		    }
+		    else
+			    return RedirectToAction("Index", "Home",
+				    new {errorMessage = @"Срок действия пригласительной ссылки закончился"});
+	    }
+
+	    private async Task<ActionResult> RegisterByYourSelf(RegisterViewModel model)
+	    {
+		    var user = new User(model);
+			var result = await UserManager.CreateAsync(user, model.Password);
+		    if (result.Succeeded)
+		    {
+			    await UserManager.AddToRoleAsync(user.Id, RoleType.Студент.ToString());
+			    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+
+			    // Отправка сообщения электронной почты для подтверждения
+			    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+			    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+			    await UserManager.SendEmailAsync(user.Id, "Подтверждение учетной записи HwProj", "Подтвердите вашу учетную запись, перейдя по <a href=\"" + callbackUrl + "\">ссылке</a>");
+
+			    return RedirectToAction("Index", "Home");
+		    }
+		    AddErrors(result);
+		    return View("Register");
+	    }
+
+		[AllowAnonymous]
+	    public ActionResult AcceptInvite(string invitedById, string email, string code, bool isTeacher)
+	    {
+		    return View("Register", new RegisterViewModel() {Email = email, InvitedBy = invitedById, InviteToken = code});
+	    }
+
+	    // GET: /Account/ConfirmEmail
+		[AllowAnonymous]
 		public async Task<ActionResult> ConfirmEmail(string userId, string code)
         {
             if (userId == null || code == null)

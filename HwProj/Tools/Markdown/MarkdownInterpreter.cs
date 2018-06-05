@@ -3,24 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using HeyRed.MarkdownSharp;
+using HwProj.IoC;
+using HwProj.Tools.Markdown;
+using Ninject;
 
-namespace HwProj.Tools
+namespace HwProj.Tools.Markdown
 {
 	public static class MarkdownInterpreter
 	{
-		static readonly Markdown Engine = new Markdown(new MarkdownOptions
-		{
-			AutoHyperlink = true,
-			AutoNewLines = true,
-			LinkEmails = true,
-			QuoteSingleLine = true
-		});
+		private static readonly IMarkdownInterpreter Interpreter =
+			Kernel.Instance.Get<IMarkdownInterpreter>();
 
 		public static string AsMarkdown(this string text)
 		{
 			try
 			{
-				return Engine.Transform(text);
+				return Interpreter.ConvertToHtml(text);
 			}
 			catch (Exception ex)
 			{

@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
 using System.Web.Mvc;
-using System.Web.Routing;
 using HwProj.Models.Repositories;
-using HwProj.Services;
 using HwProj.Tools;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
 
 namespace HwProj.Controllers
 {
@@ -19,8 +10,12 @@ namespace HwProj.Controllers
     {
         MainRepository _db = MainRepository.Instance;
 
-        public ActionResult Index()
+        public ActionResult Index(string errorMessage = "")
         {
+	        if (!String.IsNullOrEmpty(errorMessage))
+	        {
+		        this.AddViewBagError(errorMessage);
+	        }
 			if (User.Identity.IsAuthenticated)
             {
                 var user = _db.UserManager.Get(u => u.Email == User.Identity.Name);
@@ -28,6 +23,14 @@ namespace HwProj.Controllers
             }
             var courses = _db.CourseManager.GetAll();
             return View(courses);
+        }
+		[Authorize]
+        public void ReadNotification(long? id)
+        {
+	        if (id.HasValue)
+	        {
+		        _db.NotificationsManager.Update(n => n.Id == id, n => n.IsRead = true);
+	        }
         }
     }
 }

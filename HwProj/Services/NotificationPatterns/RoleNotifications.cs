@@ -16,4 +16,14 @@ namespace HwProj.Services.NotificationPatterns
 		{
 		}
 	}
+
+	public class UserAcceptedInviteNotification : Notification
+	{
+		public UserAcceptedInviteNotification(string invitedById, User accepted)
+			: base(u => u.Id == invitedById,
+				u => $"Пользователь <b>{accepted.Name} {accepted.Surname}</b> ({new MailTo(accepted.Email)}) " +
+				     $" принял ваше приглашение и успешно зарегистрировался на <b>HwProj</b>")
+		{
+		}
+	}
 }

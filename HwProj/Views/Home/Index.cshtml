@@ -1,4 +1,15 @@
-﻿@if (!User.Identity.IsAuthenticated)
+﻿@{
+    var alertVisibility = ViewBag.Message == null ? "none" : "block";
+    var alertAutohide = ViewBag.Message == null ? string.Empty : "alert-autohide";
+}
+<div class="alert alert-@ViewBag.Color alert-dismissible @alertAutohide fade show" role="alert" style="display: @alertVisibility">
+    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    @ViewBag.Message
+</div>
+
+@if (!User.Identity.IsAuthenticated)
 {
     @Html.Partial("UnautorizedHome")
 }

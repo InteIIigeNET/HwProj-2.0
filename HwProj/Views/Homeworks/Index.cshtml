@@ -1,4 +1,6 @@
 ﻿@using HwProj.Models.ViewModels
+@using HwProj.Tools
+@using HwProj.Tools.Markdown
 @using Microsoft.AspNet.Identity
 @model HwProj.Models.Homework
 @{
@@ -11,58 +13,69 @@
     <div class="offset-xl-1 col-xl-10 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-12">
         <div class="jumbotron jumbotron_border_gray">
             <h3 class="text-center">@ViewBag.Title</h3>
+            <br />
+            <span>@Model.Student.Name @Model.Student.Surname</span>
+            <div class="float-xl-right float-lg-right">
+                @helper EmailTextBot(string email, string title)
+                    {
+                        <a href="mailto:@email?subject=@title">@email</a>
+}
+                @EmailTextBot(@Model.Student.Email, "Письмо от надоедливого студента")
+            </div>
             <hr />
-
-            @if (Model.StudentId == User.Identity.GetUserId() ||
-            User.Identity.GetUserId() == Model.Task.Course.Mentor.Id)
-            {
-                <div class="form-group row">
-                    <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
-                        <b>@Html.LabelFor(m => m.Task.Title)</b>
-                    </div>
-                    <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
-                        @Html.ValueFor(m => m.Task.Title)
-                    </div>
+            <div class="form-group row">
+                <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
+                    <b>@Html.DisplayNameFor(m => m.Task.Title)</b>
                 </div>
-                <div class="form-group row">
-                    <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
-                        <b>@Html.LabelFor(m => m.Task.Description)</b>
-                    </div>
-                    <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
-                        @Html.ValueFor(m => m.Task.Description)
-                    </div>
+                <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
+                    @Html.ValueFor(m => m.Task.Title)
                 </div>
-                <div class="form-group row">
-                    <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
-                        <b>@Html.LabelFor(m => m.IsCompleted)</b>
-                    </div>
-                    <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
-                        @Html.ValueFor(m => m.IsCompleted)
-                    </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
+                    <b>@Html.DisplayNameFor(m => m.Task.Description)</b>
                 </div>
-                <div class="form-group row">
-                    <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
-                        <b>@Html.LabelFor(m => m.GitHub)</b>
-                    </div>
-                    <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
-                        @Html.ValueFor(m => m.GitHub)
-                    </div>
+                <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
+                    @Html.Raw(Model.Task.Description.AsMarkdown())
                 </div>
-                <div class="form-group row">
-                    <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
-                        <b>@Html.LabelFor(m => m.ReviewComment)</b>
-                    </div>
-                    <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
+            </div>
+            <div class="form-group row">
+                <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
+                    <b>@Html.DisplayNameFor(m => m.IsCompleted)</b>
+                </div>
+                <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
+                    @Html.Raw(@Model.IsCompleted ? "Да" : "Нет")
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
+                    <b>@Html.DisplayNameFor(m => m.ReviewComment)</b>
+                </div>
+                <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
+                    @if (String.IsNullOrEmpty(Model.ReviewComment))
+                    {
+                        <span>Отсутствует</span>
+                    }
+                    else
+                    {
                         @Html.ValueFor(m => m.ReviewComment)
-                    </div>
+                    }
                 </div>
-                if (User.Identity.GetUserName() == Model.Task.Course.Mentor.Email)
-                {
-                    @Html.Partial("Review", new HomeworkAcceptViewModel() { HomeworkId = @Model.Id })
-                }
-                <div id="git-partial">
-                        @Ajax.ActionLink("GitHub", "Index", "GitHub", new AjaxOptions { UpdateTargetId = "git-partial" })
+            </div>
+            <div class="form-group row">
+                <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
+                    <b>@Html.DisplayNameFor(m => m.Attempt)</b>
                 </div>
+                <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
+                    <a href="@Model.GitHub">
+                        <i class="fas fa-code-branch"></i>
+                        <span>v.@Model.Attempt GitHub</span>
+                    </a>
+                </div>
+            </div>
+            @if (User.Identity.GetUserId() == Model.Task.Course.Mentor.Id)
+            {
+                @Html.Partial("Review", new HomeworkAcceptViewModel() { HomeworkId = @Model.Id })
             }
         </div>
     </div>
@@ -70,5 +83,3 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-
-

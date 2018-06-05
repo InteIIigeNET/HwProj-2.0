@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HwProj.Models.Interfaces
 {
-	interface IModel
+	public interface IModel
 	{
 	}
 }

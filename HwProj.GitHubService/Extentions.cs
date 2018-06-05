@@ -21,8 +21,8 @@ namespace HwProj.GitHubService
                            Login = c.Author.Name,
                            Url = c.Commit.User?.HtmlUrl
                        },
-                       Title = c.Commit.Message,
-                       Url = c.HtmlUrl
+                       Url = c.HtmlUrl,
+                       Message = c.Commit.Message
                    };
         }
 
@@ -50,21 +50,24 @@ namespace HwProj.GitHubService
             };
         }
 
-        public static ReviewComment ToReviewComment(this Octokit.PullRequestReviewComment comment) => new ReviewComment
+        public static ReviewComment ToReviewComment(this Octokit.PullRequestReviewComment comment)
         {
-            Id = comment.Id,
-            ReplyToId = comment.InReplyToId,
-            Content = comment.Body,
-            DiffHunk = comment.DiffHunk,
-            Owner = new User
+            return new ReviewComment
             {
-                Login = comment.User.Login,
-                Url = comment.User.HtmlUrl
-            },
-            Path = comment.Path,
-            Position = (int)comment.Position,
-            ReviewId = comment.PullRequestReviewId
-        };
+                Id = comment.Id,
+                ReplyToId = comment.InReplyToId,
+                Content = comment.Body,
+                DiffHunk = DiffLineParser.GetDiffLines(comment.DiffHunk, comment.Path),
+                Owner = new User
+                {
+                    Login = comment.User.Login,
+                    Url = comment.User.HtmlUrl
+                },
+                Path = comment.Path,
+                Position = comment.Position,
+                ReviewId = comment.PullRequestReviewId
+            };
+        }
 
         public static Review ToReview(this Octokit.PullRequestReview review, IEnumerable<ReviewComment> comments)
         {

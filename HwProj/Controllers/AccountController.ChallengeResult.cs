@@ -34,5 +34,5 @@ namespace HwProj.Controllers
                 context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
             }
         }
-    }
+	}
 }

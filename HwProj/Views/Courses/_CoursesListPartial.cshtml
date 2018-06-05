@@ -15,12 +15,21 @@
         <div class="clearfix"></div>
         <br />
     }
-    @*<div>*@
+
+    @if (Model.Count() == 0)
+    {
+        <div class="lead text-center">
+            <strong>Список курсов пока пуст </strong>
+            <i class="far fa-frown"></i>
+        </div>
+    }
+    else
+    {
         <div class="col-xs-12 col-12 courses-list_card-row_inline">
             <div id="results">
                 @foreach (var course in Model)
                 {
-                    <div class="courses-list_card_inline ">
+                    <div class="courses-list_card_inline">
                         <div class="card border-primary mb-3">
                             <a href=@Url.Action("Index", "Courses", new {courseId = course.Id})>
                                 <img src="~/Content/Images/robot_head.png" class="img-fluid">
@@ -35,5 +44,6 @@
                 }
             </div>
         </div>
-    @*</div>*@
+    }
+
 </div>

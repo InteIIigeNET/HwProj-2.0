@@ -1,54 +1,73 @@
-﻿@using HwProj.Tools;
+﻿@using HwProj.Tools.Markdown;
+@using HwProj.Tools;
 @model HwProj.Models.ViewModels.HomeworkCreateViewModel
 @{
     ViewBag.Title = "Отправить домашнее задание";
     var alertVisibility = ViewBag.Message == null ? "none" : "block";
     var alertAutohide = ViewBag.Message == null ? string.Empty : "alert-autohide";
+    var isGithubConnected = !string.IsNullOrEmpty(User.Identity.GetGitHubToken());
+    var githubNavDisabled = isGithubConnected ? string.Empty : "disabled";
 }
-
 
 <br />
 <div class="row">
     <div id="homework_create" class="offset-xl-1 col-xl-10 offset-lg-1 col-lg-10 col-md-12 col-sm-12 col-12">
-        @if (!string.IsNullOrEmpty(User.Identity.GetGitHubToken()))
-    {
-        <h6>Отправить через github</h6>
-        @Ajax.ActionLink("Создать pull request", "Create", "PullRequest", new { taskId = Model.TaskId }, new AjaxOptions { UpdateTargetId = "homework_create" })
-        @Ajax.ActionLink("Использовать существующий pull request", "Chose", "PullRequest", new { taskId = Model.TaskId }, new AjaxOptions { UpdateTargetId = "homework_create" })
-    }
         @using (Html.BeginForm("Create",
-    "Homeworks",
-    FormMethod.Post,
-    new { @class = "jumbotron jumbotron_border_gray", @id = "register-form", role = "form" }))
-    {
-        @Html.AntiForgeryToken()
-        @Html.HiddenFor(h => h.TaskId)
-        @Html.HiddenFor(h => h.Description)
-        <h3 class="text-center">@ViewBag.Title</h3>
-        <hr />
+            "Homeworks",
+            FormMethod.Post,
+            new { @class = "jumbotron jumbotron_border_gray", @id = "register-form", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(h => h.TaskId)
+            @Html.HiddenFor(h => h.Description)
+            <h3 class="text-center">@ViewBag.Title</h3>
+            <hr />
 
-        <div class="alert alert-@ViewBag.Color alert-dismissible @alertAutohide fade show" role="alert" style="display: @alertVisibility">
-            <button type="button" class="close" data-dismiss="alert" aria-label="close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            @ViewBag.Message
-        </div>
+            <ul class="nav nav-pills nav-fill" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="basic-hw-tab" data-toggle="tab" href="#nav-basic-hw" role="tab" aria-controls="basic-hw" aria-selected="true">Ссылка</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link @githubNavDisabled" id="github-hw-tab" data-toggle="tab" href="#nav-github-hw" role="tab" aria-controls="github-hw" aria-selected="false">Github</a>
+                </li>
+            </ul>
 
-        @Html.Raw(@Model.Description.AsMarkdown())
-        @Html.ValidationSummary("", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.TextBoxFor(m => m.GitHub, new { @class = "form-control", placeholder = Html.DisplayNameFor(t => t.GitHub) })
-            @Html.ValidationMessageFor(m => m.GitHub, "", new { @class = "text-danger" })
-        </div>
-        <div class="form-group">
-            @Html.TextAreaFor(m => m.Comment, new { @class = "form-control", placeholder = Html.DisplayNameFor(t => t.Comment), rows = 5 })
-        </div>
-        <div class="form-group">
-            <button class="btn btn btn-primary" type="submit">Отправить</button>
-        </div>
-}
+            <br />
+            <div class="alert alert-@ViewBag.Color alert-dismissible @alertAutohide fade show" role="alert" style="display: @alertVisibility">
+                <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                @ViewBag.Message
+            </div>
+
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-basic-hw" role="tabpanel" aria-labelledby="nav-basic-hw-tab">
+                    @Html.Raw(@Model.Description.AsMarkdown())
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                    <div class="form-group">
+                        @Html.TextBoxFor(m => m.GitHub, new { @class = "form-control", placeholder = Html.DisplayNameFor(t => t.GitHub) })
+                        @Html.ValidationMessageFor(m => m.GitHub, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.TextAreaFor(m => m.Comment, new { @class = "form-control", placeholder = Html.DisplayNameFor(t => t.Comment), rows = 5 })
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn btn-primary" type="submit">Отправить</button>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="nav-github-hw" role="tabpanel" aria-labelledby="nav-github-hw-tab">
+                    <div class="form-group">
+                        @Ajax.ActionLink("Создать pull request", "Create", "PullRequest", new { taskId = Model.TaskId }, new AjaxOptions { UpdateTargetId = "homework_create" })
+                    </div>
+                    <div class="form-group">
+                        @Ajax.ActionLink("Использовать существующий pull request", "Chose", "PullRequest", new { taskId = Model.TaskId }, new AjaxOptions { UpdateTargetId = "homework_create" })
+                    </div>
+                </div>
+            </div>
+        }
     </div>
 </div>
+
 @section scripts {
     @Scripts.Render("~/bundles/jqueryval");
     <script type="text/javascript">

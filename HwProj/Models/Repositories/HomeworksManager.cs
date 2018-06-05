@@ -62,10 +62,12 @@ namespace HwProj.Models.Repositories
 			    context =>
 			    {
 				    var homework = Get(h => h.Id == model.HomeworkId);
-				    if (homework == null || homework.Task.Course.Mentor.Id == rights) return false;
+				    if (homework == null || homework.Task.Course.Mentor.Id != rights) return false;
 
 				    homework.IsCompleted = model.IsAccepted;
-				    homework.ReviewComment = model.ReviewComment;
+				    homework.ReviewComment = String.IsNullOrEmpty(model.ReviewComment)
+											 ? model.IsAccepted? "Задача зачтена" : "Задача не зачтена" 
+											 : model.ReviewComment;
 					SaveChanges();
 					return true;
 			    }

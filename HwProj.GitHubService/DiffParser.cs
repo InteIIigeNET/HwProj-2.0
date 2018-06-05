@@ -74,8 +74,8 @@ namespace HwProj.GitHubService
                 var groups = matches[i].Groups;
                 diffFiles[i] = new DiffFile
                 {
-                    DiffLines = DiffLineParser.GetDiffLines(groups[2].Value),
-                    Name = groups[1].Value
+                    Name = groups[1].Value,
+                    DiffLines = DiffLineParser.GetDiffLines(groups[2].Value, groups[1].Value)                    
                 };
             }
             return diffFiles;

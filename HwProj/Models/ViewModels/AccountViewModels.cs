@@ -58,6 +58,18 @@ namespace HwProj.Models.ViewModels
 		[Display(Name = "Пол")]
 		[Required]
 		public Gender Gender { get; set; }
+
+		/// <summary>
+		/// Роль пользователя
+		/// </summary>
+		[Display(Name = "Приглашён пользователем")]
+		public string InvitedBy { get; set; }
+		/// <summary>
+		/// Роль пользователя
+		/// </summary>
+		[Display(Name = "Токен приглашения")]
+		public string InviteToken { get; set; }
+
 	}
 
 	public class ExternalLoginConfirmationViewModel

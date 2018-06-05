@@ -14,7 +14,7 @@
                 <li class="nav-item">
                     <a class="nav-link active" id="unread-tab" href="#unread" data-toggle="tab" role="tab" aria-controls="unread" aria-selected="true">
                         Непрочитанные
-                        @if (Model.Notifications.Count != 0)
+                        @if (Model.NoReadNotifications.Count() != 0)
                         {
                             var unreadCount = " (" + Model.NoReadNotifications.Count().ToString() + ")";
                             @Html.Raw(unreadCount)
@@ -22,7 +22,14 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="all-tab" href="#all" data-toggle="tab" aria-controls="all" aria-selected="false">Показать все</a>
+                    <a class="nav-link" id="all-tab" href="#all" data-toggle="tab" aria-controls="all" aria-selected="false">
+                        Прочитанные
+                        @if (Model.ReadNotifications.Count() != 0)
+                        {
+                            var readCount = " (" + Model.ReadNotifications.Count().ToString() + ")";
+                            @Html.Raw(readCount)
+                        }
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="important-tab" href="#important" data-toggle="tab" aria-controls="important" aria-selected="false">Важное</a>
@@ -41,16 +48,45 @@
                         foreach (var notifi in notReadNotifi.OrderByDescending(n => n.SendingTime))
                         {
                             <div class="alert alert-info alert-dismissible fade show">
-                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                @Html.Raw(@notifi.Text)<br />
-                                <b>@notifi.SendingTime.Value.ToLongDateString()</b>
+                                <a href="#" onclick="onCloseAlert(@notifi.Id);" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                @Html.Raw(@notifi.Text)
+                                <br/>
+                                @notifi.SendingTime.Value.ToLongDateString()
                             </div>
                         }
                     }
                 </div>
-                <div class="tab-pane fade" id="all" role="tabpanel" aria-labelledby="all-tab">Все уведомления..</div>
+                <div class="tab-pane fade" id="all" role="tabpanel" aria-labelledby="all-tab">
+                    @if (Model.Notifications.Count == 0)
+                    {
+                        <p>Нет уведомлений</p>
+                    }
+                    else
+                    {
+                        var notReadNotifi = Model.ReadNotifications;
+                        foreach (var notifi in notReadNotifi.OrderByDescending(n => n.SendingTime))
+                        {
+                            <div class="alert alert-info alert-dismissible fade show">
+                                @Html.Raw(@notifi.Text)
+                                <br/>
+                                @notifi.SendingTime.Value.ToLongDateString()
+                            </div>
+                        }
+                    }
+                </div>
                 <div class="tab-pane fade" id="important" role="tabpanel" aria-labelledby="important-tab">Очень важные уведомления, которые никто не читает</div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    function onCloseAlert(id) {
+        $.ajax({
+            url: '@Url.Action("ReadNotification", "Home")',
+            data: { id: id }
+        }).done(function () {
+            console.log('Test if it has been fired');
+        });
+    }
+</script>
