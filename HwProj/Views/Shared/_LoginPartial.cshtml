@@ -27,8 +27,8 @@
                     <li><a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">Выйти</a></li>
                 </ul>
             </li>
-             <li class="nav-item">
-                 <span class="badge badge-pill badge-secondary unread-notif-badge"></span>
+             <li class="nav-item" style="margin-top: 10px">
+                 <span class="badge badge-pill badge-light unread-notif-badge"></span>
              </li>
         </ul>
     }
@@ -54,7 +54,6 @@ else
               dataType: "json",
               success: function (count) {
                   $(".unread-notif-badge").html(count);
-                  console.log("count: " + count);
               }
           });
         }

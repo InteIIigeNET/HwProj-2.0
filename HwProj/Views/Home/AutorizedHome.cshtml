@@ -25,7 +25,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="all-tab" href="#all" data-toggle="tab" aria-controls="all" aria-selected="false">
-                        Все
+                        Прочитанные
                         @if (Model.ReadNotifications.Count() != 0)
                         {
                             var readCount = " (" + Model.ReadNotifications.Count().ToString() + ")";
@@ -78,21 +78,18 @@
     </div>
 </div>
 
-<script>
+<script type="text/javascript">
     function onCloseAlert(id) {
-        var unreadCount = 1 + $("#all-tab").html();
-        $("#all-tab").html(count);
-
         $.ajax({
             url: '@Url.Action("ReadNotification", "Home")',
             data: { id: id }
         });
-
     }
-    function onCloseAll() {
-      $(".alert-unread").alert('close')
 
-      $.ajax({
+    function onCloseAll() {
+        $(".alert-unread").alert('close');
+
+        $.ajax({
             url: '@Url.Action("ReadAllNotifications", "Home")'
         });  
     }
