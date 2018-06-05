@@ -81,7 +81,7 @@ namespace HwProj.GitHubService
             return line;
         }
 
-        private static Regex regex = new Regex($@"\@\@ \-\d+,\d+ \+(\d+),\d+ \@\@[\w|\W]*?\n(?=\@\@|$)", RegexOptions.Compiled);
+        private static Regex regex = new Regex($@"\@\@ \-\d+,\d+ \+(\d+),?\d* \@\@[\w|\W]*?\n(?=\@\@|$)", RegexOptions.Compiled);
 
         private static ParsedDiff[] Parse(string diffText)
         { 
