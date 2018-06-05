@@ -654,6 +654,7 @@
     <Content Include="Views\PullRequest\Chose.cshtml" />
     <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Views\Roles\Invite.cshtml" />
+    <Content Include="Views\Review\Create.cshtml" />
     <Content Include="Views\Review\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
