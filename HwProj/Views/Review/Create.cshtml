@@ -1,0 +1,43 @@
+﻿@using HwProj.Tools.Markdown
+@model HwProj.Models.ViewModels.ReviewIndexViewModel
+
+@foreach (var diffFile in Model.DiffFiles)
+{
+    //Тут должна быть табличка diff-ов
+    //Хочу тут все обрабатывать:  заполнять ReviewCreateViewModel и отправлять на Review Create.
+
+
+    <div class="card border-secondary mb-3">
+        <div class="card-header">
+            <span>@diffFile.Name</span>
+        </div>
+        <div class="table-responsive">
+            <table class="diff-table">
+                @foreach (var diffLine in diffFile.DiffLines)
+                {
+                    <tr>
+                        <td class="blob-num @diffLine.CssNumClass">
+                            <div class="btn-group float-left">
+                                <button type="button" class="btn btn-xs btn-primary" onclick="show(@diffLine.Number, @diffFile.Name)" id="btn-@diffFile.Name-@diffLine.Number">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                            @diffLine.Number
+                        </td>
+                        <td class="blob-code @diffLine.CssCodeClass">
+                            @Html.Raw(diffLine.HasMarkdown ? diffLine.Line.AsMarkdown() : diffLine.Line)
+                        </td>
+                    </tr>
+                    <tr id="comment-@diffFile.Name-@diffLine.Number" style="display: none;">
+                        <td>
+                            @*@Html.TextAreaFor(m => m.Comment, new { placeholder = Html.DisplayNameFor(m => m.Comment), rows = 5 })*@
+                            @Html.TextArea("Оставьте комментарий", new { rows = 5, @class = "form-control", placeholder = "Оставьте комментарий" })
+                            <br />
+                            <input class="btn btn-primary" type="submit" value="Добавить" />
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+}
