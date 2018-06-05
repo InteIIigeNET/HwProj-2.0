@@ -54,7 +54,7 @@ namespace HwProj.Controllers
 					result = await UserManager.AddToRoleAsync(addedTeacher.Id, RoleType.Преподаватель.ToString());
 					if (result.Succeeded)
 					{
-						await (new TeacherAddedNotification(currentUser, addedTeacher, Request)).Send();
+						await (new TeacherAddedNotification(currentUser, addedTeacher, Request.RequestContext)).Send();
 						this.AddViewBagMessage("Отличные новости: +1 преподаватель в сообщество HwProj");
 					}
 				}

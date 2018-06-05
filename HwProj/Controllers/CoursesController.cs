@@ -136,7 +136,7 @@ namespace HwProj.Controllers
 					ModelState.AddModelError("", @"Ошибка при обновлении базы данных");
 				else
 				{
-					await (new UserJoinedNotification(course, user, Request)).Send();
+					await (new UserJoinedNotification(course, user, Request.RequestContext)).Send();
 				}
 				return View("Index", course);
 			}
