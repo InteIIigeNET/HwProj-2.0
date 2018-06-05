@@ -62,16 +62,16 @@
                                         <a href=@comment.Owner.Url>@comment.Owner.Login</a>
                                     </div>
                                     <div class="card-body">
-                                        <p class="card-text">@comment.Content</p>                                      
+                                        <p class="card-text">@comment.Content</p>
                                     </div>
                                     <div class="table-responsive">
                                         <table class="diff-table">
                                             @foreach (var diffLine in comment.DiffHunk)
                                             {
-                                            <tr>
-                                                <td class="blob-num @diffLine.CssNumClass">@diffLine.Number</td>
-                                                <td class="blob-code @diffLine.CssCodeClass">@Html.Raw(diffLine.HasMarkdown ? diffLine.Line.AsMarkdown() : diffLine.Line)</td>
-                                            </tr>
+                                                <tr>
+                                                    <td class="blob-num @diffLine.CssNumClass">@diffLine.Number</td>
+                                                    <td class="blob-code @diffLine.CssCodeClass">@Html.Raw(diffLine.HasMarkdown ? diffLine.Line.AsMarkdown() : diffLine.Line)</td>
+                                                </tr>
                                             }
                                         </table>
                                     </div>
@@ -99,3 +99,23 @@
     </div>
 </div>
 
+@section Script {
+    <script>
+        function show(diffLine, diffFile) {
+            var comments = document.getElementById("comment-" + diffFile.Name + "-" + diffLine.Number);
+            comments.style.display = (comments.style.display == "none") ? "block" : "none";
+        }
+    </script>
+}
+
+
+
+@*<script>
+                                //it doesnt workkkk!!!1
+                                $(document).ready(function () {
+                                    $("#btn-@diffFile.Name-@diffLine.Number").click(function () {
+                                        $("#comment-@diffFile.Name-@diffLine.Number").toggle();
+                                    })
+                                });
+
+    </script>*@

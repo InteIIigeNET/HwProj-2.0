@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using HwProj.Tools;
 using HwProj.Tools.Markdown;
-using IdentityServer4;
 using Ninject;
 
 namespace HwProj.IoC
