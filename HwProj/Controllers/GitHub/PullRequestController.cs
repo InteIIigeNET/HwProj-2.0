@@ -88,7 +88,7 @@ namespace HwProj.Controllers.GitHub
         public async Task<ActionResult> ReviewRequest(long pullRequestDataId, long homeworkId)
         {
             var homework = _repository.HomeworkManager.Get(h => h.Id == homeworkId);
-            await (new NewPullRequestHomeworkNotification(homework.Task, homework.Student, pullRequestDataId, Request)).Send();
+            await (new NewPullRequestHomeworkNotification(homework.Task, homework.Student, pullRequestDataId, Request.RequestContext)).Send();
             return RedirectToAction("Index", "Courses", homework.Task.Course.Id);
         }
 
