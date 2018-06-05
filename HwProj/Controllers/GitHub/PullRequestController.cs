@@ -89,7 +89,7 @@ namespace HwProj.Controllers.GitHub
         {
             var homework = _repository.HomeworkManager.Get(h => h.Id == homeworkId);
             await (new NewPullRequestHomeworkNotification(homework.Task, homework.Student, pullRequestDataId, Request.RequestContext)).Send();
-            return RedirectToAction("Index", "Courses", homework.Task.Course.Id);
+            return RedirectToAction("Index", "Courses", new { courseId = homework.Task.Course.Id });
         }
 
         #region Helper

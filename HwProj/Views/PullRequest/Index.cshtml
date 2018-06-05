@@ -6,10 +6,15 @@
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
         <div class="jumbotron jumbotron_border_gray">
             <h3 class="text-center">@Model.PullRequest.Title</h3>
+            @if (Model.OwnerId == User.Identity.GetUserId())
+            {
+                <button class="btn btn-outline-primary float-right" onclick="location.href='@Url.Action("ReviewRequest", "PullRequest", new { pullRequestDataId = Model.PullRequestDataId, homeworkId = Model.HomeworkId }, null)'">
+                    Запросить рецензирование
+                </button>
+            }
             <a href=@Model.PullRequest.Owner.Url>@Model.PullRequest.Owner.Login</a>
-            <div class="float-xl-right float-lg-right">
-                @Model.PullRequest.CreatedAt
-            </div>
+            <span>@Model.PullRequest.CreatedAt</span>
+            <div class="clearfix"></div>
             <hr />
             <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
                 <li class="nav-item">
@@ -23,7 +28,7 @@
                 </li>
             </ul>
             <div class="tab-content" id="pills-tabContent">
-                <div class="tab-pane fade show active" id="pills-commits" role="tabpanel" aria-labelledby="pills-commits-tab">
+                <div class="tab-pane fade" id="pills-commits" role="tabpanel" aria-labelledby="pills-commits-tab">
                     <ul class="list-group commits commits_padding_zero">
                         @foreach (var commit in Model.PullRequest.Commits)
                         {
@@ -34,7 +39,7 @@
                         }
                     </ul>
                 </div>
-                <div class="tab-pane fade" id="pills-reviews" role="tabpanel" aria-labelledby="pills-reviews-tab">
+                <div class="tab-pane fade show active" id="pills-reviews" role="tabpanel" aria-labelledby="pills-reviews-tab">
                     <div id="comments">
                         @foreach (var review in Model.PullRequest.Reviews)
                         {
@@ -47,7 +52,6 @@
                                         </a>
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title">Итого</h5>
                                         <p class="card-text">
                                             @review.HeadComment.Content
                                         </p>
@@ -84,15 +88,15 @@
                 <div class="tab-pane fade" id="pills-diffs" role="tabpanel" aria-labelledby="pills-diffs-tab">
                     @*расскоментировать в релизе!*@
                     @*@if (User.Identity.GetUserId() == Model.MentorId)
-                        {*@
+                {*@
                     @Html.Partial("~/Views/Review/Create.cshtml",
-                                  new HwProj.Models.ViewModels.ReviewCreateViewModel { DiffFiles = Model.PullRequest.DiffFiles, PullRequestDataId = Model.PullRequestDataId })
+                              new HwProj.Models.ViewModels.ReviewCreateViewModel { DiffFiles = Model.PullRequest.DiffFiles, PullRequestDataId = Model.PullRequestDataId })
                     @*}
-                        else
-                        {
-                            @Html.Partial("~/Views/Review/Index.cshtml",
-                                new HwProj.Models.ViewModels.ReviewIndexViewModel { DiffFiles = Model.PullRequest.DiffFiles, PullRequestDataId = Model.PullRequestDataId })
-                        }*@
+                else
+                {
+                    @Html.Partial("~/Views/Review/Index.cshtml",
+                        new HwProj.Models.ViewModels.ReviewIndexViewModel { DiffFiles = Model.PullRequest.DiffFiles, PullRequestDataId = Model.PullRequestDataId })
+                }*@
                 </div>
             </div>
 
@@ -101,14 +105,18 @@
 </div>
 
 @section scripts {
-    <script>
+    <script type="text/javascript">
         function show(diffLine, diffFile) {
             var comments = document.getElementById("comment-" + diffFile.Name + "-" + diffLine.Number);
             comments.style.display = (comments.style.display == "none") ? "block" : "none";
+            console.log('wad');
         }
+        $(document).ready(function () {
+            $(".comments").toggle();
+        });
+
     </script>
 }
-
 
 
 @*<script>
