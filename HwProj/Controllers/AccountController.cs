@@ -341,7 +341,7 @@ namespace HwProj.Controllers
 		    }
 
 		    var gitClaim = await GetGitHubToken();
-		    var currentGitClaim =
+		    var currentClaim =
 			    (await UserManager.GetClaimsAsync(userId)).FirstOrDefault(c => c.Type.Equals("GitHubAccessToken"));
 
 		    await currentClaim.IfNotNull(async c => await UserManager.RemoveClaimAsync(userId, c));

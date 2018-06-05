@@ -15,7 +15,7 @@ namespace HwProj.Services
     public static class NotificationsService
     {
         private static readonly MainRepository Db = MainRepository.Instance;
-        private static readonly IAsyncManager     AsyncManager = Kernel.Instance.Get<IAsyncManager>();
+        private static readonly IAsyncManager  AsyncManager = Kernel.Instance.Get<IAsyncManager>();
 
 		public static Task<IEnumerable<long>> SendNotifications(Func<User, bool> usersPredicate,
 																Func<User, string> buildNotificationFor)
