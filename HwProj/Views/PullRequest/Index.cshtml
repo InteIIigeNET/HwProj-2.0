@@ -83,15 +83,15 @@
                 </div>
                 <div class="tab-pane fade" id="pills-diffs" role="tabpanel" aria-labelledby="pills-diffs-tab">
                     @*@if (User.Identity.GetUserId() == Model.MentorId)
-                    {*@
-                        @Html.Partial("~/Views/Review/Create.cshtml",
-                                 new HwProj.Models.ViewModels.ReviewCreateViewModel { DiffFiles = Model.PullRequest.DiffFiles, PullRequestDataId = Model.PullRequestDataId })
+                        {*@
+                    @Html.Partial("~/Views/Review/Create.cshtml",
+                                  new HwProj.Models.ViewModels.ReviewCreateViewModel { DiffFiles = Model.PullRequest.DiffFiles, PullRequestDataId = Model.PullRequestDataId })
                     @*}
-                    else
-                    {
-                        @Html.Partial("~/Views/Review/Index.cshtml",
-                            new HwProj.Models.ViewModels.ReviewIndexViewModel { DiffFiles = Model.PullRequest.DiffFiles, PullRequestDataId = Model.PullRequestDataId })
-                    }*@
+                        else
+                        {
+                            @Html.Partial("~/Views/Review/Index.cshtml",
+                                new HwProj.Models.ViewModels.ReviewIndexViewModel { DiffFiles = Model.PullRequest.DiffFiles, PullRequestDataId = Model.PullRequestDataId })
+                        }*@
                 </div>
             </div>
 
@@ -99,7 +99,7 @@
     </div>
 </div>
 
-@section Script {
+@section scripts {
     <script>
         function show(diffLine, diffFile) {
             var comments = document.getElementById("comment-" + diffFile.Name + "-" + diffLine.Number);
