@@ -26,7 +26,7 @@
                     <ul class="list-group commits commits_padding_zero">
                         @foreach (var commit in Model.PullRequest.Commits)
                         {
-                            <li class="list-group-item border-primary ">
+                            <li class="list-group-item border-secondary">
                                 <a href=@commit.Owner.Url>@commit.Owner.Login</a>
                                 <a href=@commit.Url>@commit.Message</a>
                             </li>
@@ -39,7 +39,7 @@
                         {
                             if (!String.IsNullOrEmpty(review.HeadComment.Content))
                             {
-                                <div class="card border-primary mb-3">
+                                <div class="card border-secondary mb-3">
                                     <div class="card-header bg-primary">
                                         <a class="active-link active-link_color_white" href=@review.HeadComment.Owner.Url>
                                             @review.HeadComment.Owner.Login
@@ -56,14 +56,14 @@
 
                             foreach (var comment in review.ReviewComments)
                             {
-                                <div class="card border-primary mb-3">
+                                <div class="card border-secondary mb-3">
                                     <div class="card-header">
                                         <a href=@comment.Owner.Url>@comment.Owner.Login</a>
                                     </div>
                                     <div class="card-body">
-                                        <p class="card-text">@comment.Content</p>                                        
+                                        <p class="card-text">@comment.Content</p>                                      
                                     </div>
-                                    <div>
+                                    <div class="table-responsive">
                                         <table class="diff-table">
                                             @foreach (var diffLine in comment.DiffHunk)
                                             {
