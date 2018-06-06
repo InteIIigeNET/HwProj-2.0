@@ -27,6 +27,7 @@ namespace HwProj.Models.ViewModels
 		/// Описание задания 
 		/// </summary>
 		[Required]
+		[StringLength(300, ErrorMessage = "Значение {0} должно содержать не менее {2} символов.", MinimumLength = 10)]
         [DisplayName("Описание")]
         public string Description { get; set; }
 	}

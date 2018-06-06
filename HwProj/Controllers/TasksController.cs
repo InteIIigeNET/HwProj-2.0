@@ -35,7 +35,7 @@ namespace HwProj.Controllers
 	        };
             if (_db.TaskManager.Add(User.Identity.GetUserId(), newTask))
             {
-	            await (new NewTaskNotification(course.Users.Select(u => u.User), newTask, Request)).Send();
+	            await (new NewTaskNotification(course.Users.Select(u => u.User), newTask, Request.RequestContext)).Send();
                 return RedirectToAction("Index", "Courses", new { courseId = model.CourseId });
             }
             ModelState.AddModelError("", @"Ошибка при обновлении базы данных");

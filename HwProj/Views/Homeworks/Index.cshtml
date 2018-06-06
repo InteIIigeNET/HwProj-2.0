@@ -24,34 +24,34 @@
             </div>
             <hr />
             <div class="form-group row">
-                <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
                     <b>@Html.DisplayNameFor(m => m.Task.Title)</b>
                 </div>
-                <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
+                <div class="col-xl-8 col-lg-8 col-md-6 col-sm-12 col-12">
                     @Html.ValueFor(m => m.Task.Title)
                 </div>
             </div>
             <div class="form-group row">
-                <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
                     <b>@Html.DisplayNameFor(m => m.Task.Description)</b>
                 </div>
-                <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
+                <div class="col-xl-8 col-lg-8 col-md-6 col-sm-12 col-12">
                     @Html.Raw(Model.Task.Description.AsMarkdown())
                 </div>
             </div>
             <div class="form-group row">
-                <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
                     <b>@Html.DisplayNameFor(m => m.IsCompleted)</b>
                 </div>
-                <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
+                <div class="col-xl-8 col-lg-8 col-md-6 col-sm-12 col-12">
                     @Html.Raw(@Model.IsCompleted ? "Да" : "Нет")
                 </div>
             </div>
             <div class="form-group row">
-                <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
                     <b>@Html.DisplayNameFor(m => m.ReviewComment)</b>
                 </div>
-                <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
+                <div class="col-xl-7 col-lg-8 col-md-6 col-sm-12 col-12">
                     @if (String.IsNullOrEmpty(Model.ReviewComment))
                     {
                         <span>Отсутствует</span>
@@ -63,14 +63,22 @@
                 </div>
             </div>
             <div class="form-group row">
-                <div class="col-xl-2 col-lg-2 col-md-4 col-sm-12 col-12">
-                    <b>@Html.DisplayNameFor(m => m.Attempt)</b>
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                    <b>@Html.DisplayNameFor(m => m.GitHub)</b>
                 </div>
-                <div class="col-xl-10 col-lg-10 col-md-8 col-sm-12 col-12">
+                <div class="col-xl-8 col-lg-8 col-md-6 col-sm-12 col-12">
                     <a href="@Model.GitHub">
                         <i class="fas fa-code-branch"></i>
-                        <span>v.@Model.Attempt GitHub</span>
+                        <span>v.@Model.Attempt github.com</span>
                     </a>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
+                    <b>@Html.DisplayNameFor(m => m.Comment)</b>
+                </div>
+                <div class="col-xl-8 col-lg-8 col-md-6 col-sm-12 col-12">
+                    @Html.Raw(Model.Comment)
                 </div>
             </div>
             @if (User.Identity.GetUserId() == Model.Task.Course.Mentor.Id)

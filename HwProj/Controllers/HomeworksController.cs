@@ -68,7 +68,7 @@ namespace HwProj.Controllers
 				}
                 else
 				{
-					await (new NewHomeworkNotification(task, student, homework, Request)).Send();
+					await (new NewHomeworkNotification(task, student, homework, Request.RequestContext)).Send();
                     this.AddViewBagMessage("Решение было успешно добавлено!");
                 }
             }
@@ -89,7 +89,7 @@ namespace HwProj.Controllers
 		    else
 		    {
 			    this.AddViewBagMessage(@"Рецензия успешно добавлена!");
-				await (new ReviewAddedNotification(homework, model, Request)).Send();
+				await (new ReviewAddedNotification(homework, model, Request.RequestContext)).Send();
 		    }
 		    return RedirectToAction("Index", "Courses", new {courseId = homework.Task.Course.Id});
 		}

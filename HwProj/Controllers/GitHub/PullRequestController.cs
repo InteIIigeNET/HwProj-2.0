@@ -31,7 +31,9 @@ namespace HwProj.Controllers.GitHub
             {
                 PullRequest = pullRequest,
                 MentorId = prd.MentorId,
-                PullRequestDataId = pullRequestDataId
+                PullRequestDataId = pullRequestDataId,
+                HomeworkId = prd.HomeworkId,
+                OwnerId = prd.StudentId
             });
         }
 
@@ -83,6 +85,12 @@ namespace HwProj.Controllers.GitHub
             }
         }
 
+        public async Task<ActionResult> ReviewRequest(long pullRequestDataId, long homeworkId)
+        {
+            var homework = _repository.HomeworkManager.Get(h => h.Id == homeworkId);
+            await (new NewPullRequestHomeworkNotification(homework.Task, homework.Student, pullRequestDataId, Request.RequestContext)).Send();
+            return RedirectToAction("Index", "Courses", new { courseId = homework.Task.Course.Id });
+        }
 
         #region Helper
         private async Task<long?> CreateHomeworkViaPullRequest(long taskId, string repName, int pullRequestNumber)
@@ -97,7 +105,7 @@ namespace HwProj.Controllers.GitHub
 
                 if (_repository.PullRequestsDataManager.Add(prd))
                 {
-                    await (new NewPullRequestHomeworkNotification(task, student, repName, pullRequestNumber, Request)).Send();
+                    await (new NewPullRequestHomeworkNotification(task, student, prd.Id, Request.RequestContext)).Send();
                     return prd.Id;
                 }
             }
